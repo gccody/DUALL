@@ -11,8 +11,10 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera in order to scan QR codes."
-      }
+        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera in order to scan QR codes.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.gccody.totp"
     },
     "android": {
       "adaptiveIcon": {

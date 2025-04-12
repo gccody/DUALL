@@ -36,7 +36,7 @@ export default function Index() {
         position: 'absolute',
         bottom: 20,
         right: 20,
-        backgroundColor: '#007BFF',
+        backgroundColor: colors.secondary,
         borderRadius: SEARCH_BUTTON_SIZE / 2,
         width: SEARCH_BUTTON_SIZE,
         height: SEARCH_BUTTON_SIZE,

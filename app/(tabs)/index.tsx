@@ -4,6 +4,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { FlashList } from '@shopify/flash-list';
 import { useEffect, useState } from "react";
 import { SafeAreaView, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleProp, ViewStyle } from "react-native";
 
 // Your TOTP secret key
 const TOTP_SECRET = "";
@@ -39,7 +40,12 @@ export default function Index() {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.black, position: 'relative' }}>
       <FlashList
         data={data}
-        renderItem={({ item, index }) => <Code secret={item} globalTimestamp={timestamp} style={{ margin: 20, backgroundColor: '#262626', padding: 5, borderRadius: 25 }} />}
+        renderItem={({ item, index }) => {
+          const isFirstElement = index === 0;
+          let style: StyleProp<ViewStyle> = { marginHorizontal: 20, marginBottom: 20, backgroundColor: '#262626', padding: 5, borderRadius: 25 };
+          if (isFirstElement) style.marginTop = 20;
+          return <Code secret={item} globalTimestamp={timestamp} style={style} />
+        }}
         estimatedItemSize={150}
         keyExtractor={(item, index) => `${item}-${index}`}
         extraData={timestamp}

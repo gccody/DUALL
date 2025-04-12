@@ -2,7 +2,7 @@ import { TOTP } from "@/TOTP";
 import { TOTPOptions, TOTPResult } from "@/types";
 import * as Clipboard from 'expo-clipboard';
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Alert, AppState, AppStateStatus, StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-native";
+import { Alert, StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-native";
 
 interface CodeProps {
     secret: string;
@@ -14,138 +14,60 @@ interface CodeProps {
     style?: StyleProp<ViewStyle>;
 }
 
-export default function Code(data: CodeProps) {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [isError, setIsError] = useState<boolean>(false);
+interface CodeProps {
+    secret: string;
+    opts?: TOTPOptions;
+    globalTimestamp: number; // <== new prop
+    style?: StyleProp<ViewStyle>;
+}
+
+export default function Code({ secret, opts, globalTimestamp, style }: CodeProps) {
     const [otpData, setOtpData] = useState<TOTPResult>({ otp: '------', expires: Date.now() });
+    const [isError, setIsError] = useState(false);
 
-    // ref to track the current app state
-    const appState = useRef(AppState.currentState);
-    // ref to store our animation frame id for cleanup
-    const frameRef = useRef<number | null>(null);
-
-    // Create a constant TOTP options object
-    const totpOptions = useRef<Required<Pick<TOTPOptions, 'digits' | 'period' | 'algorithm'>>>({
-        digits: data.opts?.digits ?? 6,
-        period: data.opts?.period ?? 30,
-        algorithm: data.opts?.algorithm ?? 'SHA-1',
+    const totpOptions = useRef({
+        digits: opts?.digits ?? 6,
+        period: opts?.period ?? 30,
+        algorithm: opts?.algorithm ?? 'SHA-1',
     }).current;
 
-    const [timeLeft, setTimeLeft] = useState(totpOptions.period);
-
-    // Generate the OTP and update state
-    const generateAndSetOTP = useCallback(async () => {
+    const generateAndSetOTP = useCallback(() => {
         try {
-            setIsError(false);
-            const newOtpData = TOTP.generate(data.secret, {
-                digits: totpOptions.digits,
-                period: totpOptions.period,
-                algorithm: totpOptions.algorithm
-            });
-            setOtpData(newOtpData);
-            return newOtpData;
-        } catch (error) {
-            console.error("Failed to generate TOTP:", error);
+            const newOtp = TOTP.generate(secret, totpOptions);
+            setOtpData(newOtp);
+        } catch (e) {
+            console.error(e);
             setIsError(true);
-            // Provide fallback OTP and expiry in error state
-            setOtpData({ otp: 'Error!', expires: Date.now() + totpOptions.period });
-            setTimeLeft(0);
-            return null;
-        } finally {
-            if (isLoading) {
-                setIsLoading(false);
-            }
+            setOtpData({ otp: 'Error!', expires: Date.now() + totpOptions.period * 1000 });
         }
-    }, [data.secret, totpOptions, isLoading]);
+    }, [secret, totpOptions]);
 
-    // Copy OTP to clipboard
-    const copyToClipboard = async () => {
-        await Clipboard.setStringAsync(otpData.otp);
-        Alert.alert('Success', 'Code was copied to clipboard!');
-    };
-
-    // Listen to app state changes to handle foreground/background transitions
+    // Refresh OTP when it expires
     useEffect(() => {
-        const handleAppStateChange = (nextAppState: AppStateStatus) => {
-            // Record the updated app state
-            appState.current = nextAppState;
-            // If coming back to active, force an immediate tick to recalc the remaining time.
-            if (nextAppState === 'active') {
-                tick();
-            }
-        };
-
-        const subscription = AppState.addEventListener('change', handleAppStateChange);
-        return () => {
-            subscription.remove();
-        };
-        // No dependencies needed here because the callback uses refs (which persist).
-    }, []);
-
-    // The ticker function – it calculates the current time left based on expires.
-    // If the OTP has expired, it triggers a new OTP generation.
-    const tick = () => {
-        // Only process ticks if the app is active.
-        if (appState.current !== 'active') {
-            return;
-        }
-
-        const now = Date.now();
-        const diff = otpData.expires - now;
-
-        if (diff <= 0) {
-            // When expired, generate a new OTP.
+        if (globalTimestamp >= otpData.expires) {
             generateAndSetOTP();
-        } else {
-            // Update time left (in full seconds)
-            setTimeLeft(Math.floor(diff / 1000));
         }
-    };
+    }, [globalTimestamp, otpData.expires, generateAndSetOTP]);
 
-    // Create an animation frame loop to update the countdown every frame.
-    useEffect(() => {
-        // Define the function that will keep scheduling itself
-        const tickLoop = () => {
-            tick();
-            frameRef.current = requestAnimationFrame(tickLoop);
-        };
-
-        // Start the loop only if the app state is active
-        if (appState.current === 'active') {
-            frameRef.current = requestAnimationFrame(tickLoop);
-        }
-
-        // Clean up by canceling the animation frame
-        return () => {
-            if (frameRef.current) {
-                cancelAnimationFrame(frameRef.current);
-                frameRef.current = null;
-            }
-        };
-    }, [otpData.expires, generateAndSetOTP]);
-
+    const timeLeft = Math.max(0, Math.floor((otpData.expires - globalTimestamp) / 1000));
     const textColor = isError ? 'red' : 'white';
 
     return (
-        <TouchableHighlight style={data.style} onPress={copyToClipboard}>
-            <View
-                style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    width: '100%',
-                    height: 90,
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: 20,
-                }}
-            >
-                <Text style={{ fontSize: 38, color: textColor }}>
-                    {otpData.otp}
-                </Text>
-                <Text style={{ fontSize: 38, color: 'white' }}>
-                    {timeLeft}
-                </Text>
+        <TouchableHighlight style={style} onPress={async () => {
+            await Clipboard.setStringAsync(otpData.otp);
+            Alert.alert('Success', 'Code was copied to clipboard!');
+        }}>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                height: 90,
+                paddingHorizontal: 20,
+            }}>
+                <Text style={{ fontSize: 38, color: textColor }}>{otpData.otp}</Text>
+                <Text style={{ fontSize: 38, color: 'white' }}>{timeLeft}</Text>
             </View>
         </TouchableHighlight>
     );
 }
+

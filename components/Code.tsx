@@ -53,9 +53,11 @@ export default function Code({ secret, opts, globalTimestamp, style }: CodeProps
     const textColor = isError ? 'red' : 'white';
 
     return (
-        <TouchableHighlight style={style} onPress={async () => {
-            await Clipboard.setStringAsync(otpData.otp);
-            Alert.alert('Success', 'Code was copied to clipboard!');
+        <TouchableHighlight style={style} onPress={() => {
+            requestAnimationFrame(async () => {
+                await Clipboard.setStringAsync(otpData.otp);
+                Alert.alert('Success', 'Code was copied to clipboard!');
+            })
         }}>
             <View style={{
                 flexDirection: 'row',

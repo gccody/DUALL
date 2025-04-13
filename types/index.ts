@@ -1,6 +1,6 @@
 export type TOTPAlgorithm = "SHA-1" | "SHA-256" | "SHA-384" | "SHA-512"
 export type TOTPEncoding = "hex" | "ascii" | "base32"
-type TokenType = "TOTP" | "HOTP";
+export type TokenType = "TOTP" | "HOTP";
 
 export type TOTPOptions = {
 	digits?: number
@@ -18,7 +18,7 @@ export interface TOTPFile {
     settings: Settings
 }
 
-interface Service {
+export interface Service {
     position: number,
     updatedAt: number,
     name: string,
@@ -28,11 +28,11 @@ interface Service {
     secret: string
 }
 
-interface Icon {
+export interface Icon {
     label: string
 }
 
-interface OTP {
+export interface OTP {
     link: string,
     algorithm: TOTPAlgorithm,
     period: number,
@@ -41,13 +41,13 @@ interface OTP {
     digits: number
 }
 
-interface Group {
+export interface Group {
     defaultExpanded: boolean,
     uid: string,
     name: string
 }
 
-interface Settings {
+export interface Settings {
     darkMode: boolean,
     searchOnStartup: boolean,
     hideTokens: boolean,
@@ -55,3 +55,36 @@ interface Settings {
     notifyWhenTokenCopied: boolean,
     
 }
+
+
+/**
+ * Defines the base structure for parsed OTP data.
+ */
+export interface BaseOtpData {
+    label: string;
+    secret: string;
+    issuer?: string; // Optional
+    algorithm: TOTPAlgorithm; // Allow known + other strings
+    digits: number;
+}
+
+/**
+ * Defines the structure for parsed TOTP (Time-based OTP) data.
+ */
+export interface TotpData extends BaseOtpData {
+    type: 'totp';
+    period: number; // Required for TOTP
+}
+
+/**
+ * Defines the structure for parsed HOTP (HMAC-based OTP) data.
+ */
+export interface HotpData extends BaseOtpData {
+    type: 'hotp';
+    counter: number; // Required for HOTP
+}
+
+/**
+ * Represents the possible successful return types from the parser.
+ */
+export type OtpAuthData = TotpData | HotpData;

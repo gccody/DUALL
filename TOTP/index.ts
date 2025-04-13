@@ -1,6 +1,35 @@
-import { TOTPAlgorithm, TOTPEncoding, TOTPOptions, TOTPResult } from "@/types"
-import CryptoES from "crypto-es"
-import base32 from "hi-base32"
+import { TOTPAlgorithm, TOTPEncoding, TOTPOptions, TOTPResult } from "@/types";
+import CryptoES from "crypto-es";
+import base32 from "hi-base32";
+
+/**
+ * OTP type: Time-based (TOTP) or HMAC-based (HOTP)
+ */
+type OtpType = 'totp' | 'hotp';
+
+/**
+ * Structure representing parsed OTP data
+ */
+interface OtpData {
+  /** Type of OTP (time-based or HMAC-based) */
+  type: OtpType;
+  /** Secret key (base32-encoded) */
+  secret: string;
+  /** Service provider name */
+  issuer: string;
+  /** User account identifier */
+  account: string;
+  /** Hashing algorithm */
+  algorithm: TOTPAlgorithm;
+  /** Number of digits in the OTP code */
+  digits: number;
+  /** Time period in seconds (for TOTP) */
+  period?: number;
+  /** Counter value (for HOTP) */
+  counter?: number;
+  /** Original URL string */
+  originalUrl: string;
+}
 
 export class TOTP {
 	static generate(key: string, options?: TOTPOptions): TOTPResult {
@@ -71,8 +100,82 @@ export class TOTP {
 				throw new Error(`Unsupported algorithm: ${algorithm}`)
 		}
 	}
-}
 
-export class FileHandler {
+	public static parseUrl(url: string): OtpData {
+		try {
+		  // Check if the URL starts with the required prefix
+		  if (!url.startsWith('otpauth://')) {
+        throw new Error('Invalid OTP URL format. URL must start with "otpauth://"');
+		  }
 	
+		  // Parse the URL
+		  const parsedUrl = new URL(url);
+		  
+		  // Extract OTP type (totp or hotp)
+		  const type = url.replace('otpauth://', '').split('/')[0] as OtpType;
+		  if (type !== 'totp' && type !== 'hotp') {
+        throw new Error(`Invalid OTP type: ${type}. Must be 'totp' or 'hotp'`);
+		  }
+		  
+		  // Extract the label (may contain issuer and account name)
+		  const label = decodeURIComponent(parsedUrl.pathname.substring(1));
+		  
+		  // Parse the parameters
+		  const params = new URLSearchParams(parsedUrl.search);
+		  const secret = params.get('secret');
+		  
+		  if (!secret) {
+        throw new Error('Missing required parameter: secret');
+		  }
+		  
+		  // Parse issuer from parameters and/or label
+		  let issuer = params.get('issuer') || '';
+		  let account = label;
+		  
+		  // If label contains issuer:account format, extract them
+		  const labelParts = label.split(':');
+		  if (labelParts.length > 1) {
+			if (!issuer) {
+			  issuer = labelParts[0];
+			}
+        account = labelParts.slice(1).join(':');
+		  }
+		  
+		  // Parse other parameters
+		  const algorithm = (params.get('algorithm') || 'SHA-1') as TOTPAlgorithm;
+		  const digits = parseInt(params.get('digits') || '6', 10);
+		  
+		  // Parse type-specific parameters
+		  let period: number | undefined;
+		  let counter: number | undefined;
+		  
+		  if (type === 'totp') {
+        period = parseInt(params.get('period') || '30', 10);
+		  } else if (type === 'hotp') {
+        const counterParam = params.get('counter');
+			if (!counterParam) {
+			  throw new Error('Missing required parameter for HOTP: counter');
+			}
+			counter = parseInt(counterParam, 10);
+		  }
+		  
+		  return {
+        type,
+        secret,
+        issuer,
+        account,
+        algorithm,
+        digits,
+        period,
+        counter,
+        originalUrl: url
+		  };
+		} catch (error) {
+		  // Rethrow with a more descriptive message if it's not our custom error
+		  if (error instanceof Error && !error.message.includes('Invalid OTP')) {
+        throw new Error(`Failed to parse OTP URL: ${error.message}`);
+		  }
+		  throw error;
+		}
+  }
 }

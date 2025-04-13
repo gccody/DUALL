@@ -1,6 +1,6 @@
 import { colors } from "@/global";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { GestureResponderEvent, TouchableOpacity } from "react-native";
+import { GestureResponderEvent, Keyboard, TouchableOpacity } from "react-native";
 
 
 
@@ -22,7 +22,7 @@ export default function SearchButton({ onPress, size = 60 }: { onPress?: ((event
             shadowOpacity: 0.3,
             shadowRadius: 3,
         }}
-            onPress={onPress}
+            onPress={(e) => { Keyboard; if (onPress) onPress(e) }}
         >
             <FontAwesome name="search" size={size / 2} />
         </TouchableOpacity>

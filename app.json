@@ -48,7 +48,8 @@
           "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera in order to scan QR codes.",
           "enableCodeScanner": true
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

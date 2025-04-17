@@ -2,12 +2,13 @@ import { TOTP } from "@/TOTP";
 import { Service, TOTPOptions, TOTPResult } from "@/types";
 import * as Clipboard from 'expo-clipboard';
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Alert, StyleProp, Text, TouchableHighlight, View, ViewStyle } from "react-native";
+import { Alert, StyleProp, StyleSheet, Text, TouchableHighlight, View, ViewStyle } from "react-native";
+import ProgressBar from "./ProgressBar";
 
 interface CodeProps {
     service: Service;
     opts?: TOTPOptions;
-    globalTimestamp: number; // <== new prop
+    globalTimestamp: number;
     style?: StyleProp<ViewStyle>;
 }
 
@@ -43,34 +44,71 @@ export default function Code({ service, opts, globalTimestamp, style }: CodeProp
     const textColor = isError ? 'red' : 'white';
 
     return (
-        <TouchableHighlight style={style} onPress={() => {
+        <TouchableHighlight style={[styles.buttonContainer, style]} onPress={() => {
             requestAnimationFrame(async () => {
                 await Clipboard.setStringAsync(otpData.otp);
                 Alert.alert('Success', 'Code was copied to clipboard!');
             })
         }}>
-            <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                height: 90,
-                paddingHorizontal: 20,
-            }}>
-                <View style={{
-                    flex: 1,
-                    flexDirection: 'column'
-                }}>
-                    <Text style={{ color: 'white' }}>
-                        {service.otp.issuer}
-                    </Text>
-                    <Text style={{ color: 'grey' }}>
-                        {service.name}
-                    </Text>
-                    <Text style={{ fontSize: 38, color: textColor }}>{otpData.otp}</Text>
+            <View>
+                <View style={styles.container}>
+                    <View style={styles.otpInfo}>
+                        <Text style={styles.whiteText}>
+                            {service.otp.issuer}
+                        </Text>
+                        <Text style={styles.greyText}>
+                            {service.name}
+                        </Text>
+                        <Text style={[styles.mainText, { color: textColor }]}>{otpData.otp}</Text>
+                    </View>
+                    <Text style={[styles.mainText, styles.whiteText]}>{timeLeft}</Text>
                 </View>
-                <Text style={{ fontSize: 38, color: 'white' }}>{timeLeft}</Text>
+                <ProgressBar
+                    progress={timeLeft / (service.otp.period - 1)}
+                    fillColor="green"
+                    backgroundColor="white"
+                    borderRadius={2}
+                    height={5}
+                    style={styles.progressBar}
+                />
             </View>
         </TouchableHighlight>
     );
 }
 
+const styles = StyleSheet.create({
+    buttonContainer: {
+        marginHorizontal: 20,
+        marginBottom: 20,
+        backgroundColor: '#262626',
+        padding: 5,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 125,
+    },
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    whiteText: {
+        color: 'white'
+    },
+    greyText: {
+        color: 'grey'
+    },
+    otpInfo: {
+        flex: 1,
+        flexDirection: 'column'
+    },
+    mainText: {
+        fontSize: 32
+    },
+    count: {
+
+    },
+    progressBar: {
+        paddingTop: 10
+    }
+})

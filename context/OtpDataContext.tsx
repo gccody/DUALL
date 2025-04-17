@@ -1,5 +1,5 @@
 // OtpDataContext.tsx
-import { useOtpData } from '@/hooks/useOtp';
+import { useOtpData } from '@/hooks/useOtpData';
 import { Group, Service, Settings, TOTPFile } from '@/types';
 import React, { createContext, ReactNode } from 'react';
 

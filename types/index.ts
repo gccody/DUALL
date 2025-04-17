@@ -18,6 +18,11 @@ export interface TOTPFile {
     settings: Settings
 }
 
+export interface PartialTOTPFile {
+    services: Service[],
+    groups: Group[],
+}
+
 export interface Service {
     position: number,
     updatedAt: number,

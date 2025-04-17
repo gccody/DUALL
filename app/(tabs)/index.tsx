@@ -9,8 +9,8 @@ import { FlashList } from '@shopify/flash-list';
 import * as Crypto from 'expo-crypto';
 import { useLocalSearchParams } from "expo-router";
 import Fuse from 'fuse.js';
-import { useContext, useEffect, useMemo, useState } from "react";
-import { Alert, SafeAreaView, StyleProp, Text, View, ViewStyle } from "react-native";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Alert, SafeAreaView, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 export default function Index() {
   const context = useContext(OtpDataContext);
@@ -20,6 +20,8 @@ export default function Index() {
   const [timestamp, setTimestamp] = useState(Date.now());
   const [searchBarVisible, setSearchBarVisible] = useState<boolean>(false);
   const { otpurl }: { otpurl: string } = useLocalSearchParams();
+  const [recentCodeIndex, setRecentCodeIndex] = useState<number | null>(null);
+  const flashListRef = useRef<FlashList<Service>>(null);
 
   // Memoize the Fuse instance so it’s created only when preSearchData changes.
   const fuse = useMemo(
@@ -32,40 +34,6 @@ export default function Index() {
       setPreSearchData(context.data.services);
     }
   }, [context?.data]);
-
-  // Add code from otpurl.
-  const addCode = (url: string) => {
-    const parsedURL = TOTP.parseUrl(url);
-    if (parsedURL === null) return Alert.alert("Error", "Unable to add code!");
-    if (parsedURL.type === 'hotp') return Alert.alert("Error", "HOTP is not supported yet");
-
-    const service: Service = {
-      otp: {
-        algorithm: parsedURL.algorithm,
-        digits: parsedURL.digits,
-        issuer: parsedURL.issuer,
-        link: url,
-        period: parsedURL.period ?? 30,
-        tokenType: 'TOTP'
-      },
-      position: preSearchData.length,
-      name: parsedURL.account,
-      secret: parsedURL.secret,
-      uid: Crypto.randomUUID(),
-      updatedAt: Date.now(),
-      icon: {
-        label: parsedURL.issuer.substring(0, 2)
-      }
-    };
-
-    for (const item of preSearchData) {
-      if (item.name.toLowerCase() === service.name.toLowerCase() && item.otp.issuer.toLowerCase() === service.otp.issuer.toLowerCase() && item.secret === service.secret)
-        return Alert.alert('Error', "Code already added");
-    }
-
-    setPreSearchData((oldData) => [...oldData, service]);
-    updateServices([...preSearchData, service])
-  };
 
   // Update search results when search query changes.
   useEffect(() => {
@@ -96,26 +64,74 @@ export default function Index() {
     return () => cancelAnimationFrame(frame);
   }, []);
 
+  useEffect(() => {
+    if (recentCodeIndex) {
+      console.log("Here");
+      flashListRef.current?.scrollToIndex({ index: recentCodeIndex, animated: true });
+    }
+  }, [recentCodeIndex]);
+
+  // Add code from otpurl.
+  const addCode = (url: string) => {
+    const parsedURL = TOTP.parseUrl(url);
+    if (parsedURL === null) return Alert.alert("Error", "Unable to add code!");
+    if (parsedURL.type === 'hotp') return Alert.alert("Error", "HOTP is not supported yet");
+
+    const service: Service = {
+      otp: {
+        algorithm: parsedURL.algorithm,
+        digits: parsedURL.digits,
+        issuer: parsedURL.issuer,
+        link: url,
+        period: parsedURL.period ?? 30,
+        tokenType: 'TOTP'
+      },
+      position: preSearchData.length,
+      name: parsedURL.account,
+      secret: parsedURL.secret,
+      uid: Crypto.randomUUID(),
+      updatedAt: Date.now(),
+      icon: {
+        label: parsedURL.issuer.substring(0, 2)
+      }
+    };
+
+    // In addCode function:
+    const codeExists = preSearchData.findIndex((item) =>
+      item.name.toLowerCase() === service.name.toLowerCase() &&
+      item.otp.issuer.toLowerCase() === service.otp.issuer.toLowerCase() &&
+      item.secret === service.secret
+    );
+
+    if (codeExists === -1) {
+      const newServices = [...preSearchData, service];
+      setPreSearchData(newServices);
+      updateServices(newServices);
+      setRecentCodeIndex(newServices.length);
+    } else {
+      setRecentCodeIndex(codeExists);
+    }
+  };
+
   // Handlers for search actions.
   const onSearch = (text: string) => setSearch(text);
   const onSearchButtonPress = () => setSearchBarVisible(!searchBarVisible);
 
   if (!context)
-    return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ><Text style={{ color: 'red' }}>Unable to load context? Contact the developer</Text></View>)
+    return (<View style={styles.centerContend} ><Text style={styles.redText}>Unable to load context? Contact the developer</Text></View>)
 
   const { data: contextData, loading: contextLoading, error: contextError, updateGroups, updateServices, updateSettings } = context;
 
   if (contextError)
-    return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ><Text style={{ color: 'red' }}>Error: {contextError}</Text></View>)
+    return (<View style={styles.centerContend} ><Text style={styles.redText}>Error: {contextError}</Text></View>)
 
   if (contextLoading)
-    return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} ><Text>Loading...</Text></View>)
+    return (<View style={styles.centerContend} ><Text>Loading...</Text></View>)
 
-  // At this point, all hooks have been called unconditionally.
-  // Now conditionally render based on context and data.
+
   if (!context) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={styles.centerContend}>
         <Text>Unable to provide context? Please contact the developer</Text>
       </View>
     );
@@ -125,7 +141,7 @@ export default function Index() {
 
   if (loading || !data) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={styles.centerContend}>
         <Text>Loading...</Text>
       </View>
     );
@@ -133,34 +149,49 @@ export default function Index() {
 
   if (error) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: 'red' }}>Error: {error}</Text>
+      <View style={styles.centerContend}>
+        <Text style={styles.redText}>Error: {error}</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.black, position: 'relative' }}>
+    <SafeAreaView style={styles.container}>
       <SearchBar text={search} isVisible={searchBarVisible} onSearch={onSearch} />
       <FlashList
+        ref={flashListRef}
+        onTouchStart={() => setRecentCodeIndex(null)}
         data={searchBarVisible ? services : preSearchData}
         renderItem={({ item, index }) => {
           const isFirstElement = index === 0;
-          let style: StyleProp<ViewStyle> = {
-            marginHorizontal: 20,
-            marginBottom: 20,
-            backgroundColor: '#262626',
-            padding: 5,
-            borderRadius: 25
+          let borderStyle: ViewStyle = {
+            borderColor: 'yellow',
+            borderWidth: recentCodeIndex === index ? 1 : 0
           };
-          if (isFirstElement) style.marginTop = 20;
-          return <Code service={item} globalTimestamp={timestamp} style={style} />;
+          if (isFirstElement) borderStyle.marginTop = 20;
+          return <Code service={item} globalTimestamp={timestamp} style={borderStyle} />;
         }}
         estimatedItemSize={150}
         keyExtractor={(item, index) => `${item.uid}-${index}`}
-        extraData={timestamp}
+        extraData={[timestamp]}
       />
       <SearchButton onPress={onSearchButtonPress} />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  redText: {
+    color: 'red'
+  },
+  centerContend: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.black,
+    position: 'relative'
+  }
+})

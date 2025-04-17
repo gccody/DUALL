@@ -1,10 +1,10 @@
 import {
-    Group,
-    Service,
-    Settings,
-    TOTPFile,
+  Group,
+  Service,
+  Settings,
+  TOTPFile,
 } from '@/types'; // Ensure your types are defined in types.ts
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 
 // Define a constant key for AsyncStorage.
 const STORAGE_KEY = 'otpData';
@@ -16,7 +16,7 @@ export class FileHandler {
    */
   static async loadData(): Promise<TOTPFile> {
     try {
-      const dataString = await AsyncStorage.getItem(STORAGE_KEY);
+      const dataString = await SecureStore.getItemAsync(STORAGE_KEY);
       if (!dataString) {
         const defaultData: TOTPFile = {
           services: [],
@@ -44,7 +44,7 @@ export class FileHandler {
   static async saveData(data: TOTPFile): Promise<void> {
     try {
       const jsonData = JSON.stringify(data, null, 2);
-      await AsyncStorage.setItem(STORAGE_KEY, jsonData);
+      await SecureStore.setItemAsync(STORAGE_KEY, jsonData);
     } catch (error) {
       throw new Error('Failed to save data: ' + error);
     }
@@ -52,7 +52,7 @@ export class FileHandler {
 
   static async removeData(): Promise<void> {
     try {
-        await AsyncStorage.removeItem(STORAGE_KEY);
+        await SecureStore.deleteItemAsync(STORAGE_KEY);
     } catch(error) {
         throw new Error('Failed to remove data: ' + error);
     }

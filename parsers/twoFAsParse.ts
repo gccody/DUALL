@@ -62,7 +62,7 @@ interface Group {
   name: string
 }
 
-export default async function parse2fas(existingServices: Service[], jsonString: string) {
+export default async function parse2fas(existingServices: Service[], jsonString: string) { // Implement filling in your own missing data
   const data = JSON.parse(jsonString) as twofas;
 
   const fileData: PartialTOTPFile = {
@@ -92,10 +92,9 @@ export default async function parse2fas(existingServices: Service[], jsonString:
     if (!item.otp.link)
       tempService.otp.link = generateTOTPUrl(tempService.otp.tokenType, tempService.name, tempService.secret, tempService.otp.digits, tempService.otp.period, tempService.otp.algorithm, tempService.otp.issuer)
     fileData.services.push(tempService)
-
   }
 
   for (const group of data.groups) {
-    
+    // TODO: Implement adding groups
   }
 }

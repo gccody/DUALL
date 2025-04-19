@@ -62,9 +62,8 @@ export default function HomeScreen() {
   // Handle search toggle
   const toggleSearch = () => setSearchBarVisible(!searchBarVisible);
 
-  // Handle touch on the list - dismiss keyboard and reset recent code index
+  // Handle touch on the list to reset recent code index
   const handleListTouch = () => {
-    // Keyboard.dismiss();
     resetRecentCodeIndex();
   };
 
@@ -94,7 +93,7 @@ export default function HomeScreen() {
       <FlashList
         ref={flashListRef}
         onTouchStart={handleListTouch}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
         data={searchBarVisible ? services : data.services}
         renderItem={({ item, index }) => (
           <CodeItem

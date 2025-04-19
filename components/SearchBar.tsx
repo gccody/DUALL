@@ -18,6 +18,18 @@ export function SearchBar({ isVisible, text, onSearch }: SearchBarProps) {
     const opacityAnim = useRef(new Animated.Value(isVisible ? 1 : 0)).current;
     const inputRef = useRef<TextInput>(null);
     const prevVisibleRef = useRef<boolean>(isVisible);
+    const initialMountRef = useRef<boolean>(true);
+
+    // Focus input on initial mount if isVisible is true
+    useEffect(() => {
+        if (initialMountRef.current && isVisible) {
+            // Small delay to ensure the component is fully rendered
+            setTimeout(() => {
+                inputRef.current?.focus();
+            }, 300);
+            initialMountRef.current = false;
+        }
+    }, []);
 
     // Update animation when isVisible changes
     useEffect(() => {

@@ -1,6 +1,7 @@
 import Code from "@/components/Code";
+import { useTheme } from "@/context/ThemeContext";
 import { Service } from '@/types';
-import { ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 
 interface CodeItemProps {
   service: Service;
@@ -15,17 +16,27 @@ export default function CodeItem({
   isHighlighted,
   isFirstItem
 }: CodeItemProps) {
-  const borderStyle: ViewStyle = {
-    borderColor: 'yellow',
-    borderWidth: isHighlighted ? 1 : 0,
-    marginTop: isFirstItem ? 20 : 0
-  };
+  const { theme } = useTheme();
+
+  const highlightStyle: ViewStyle = isHighlighted ? {
+    borderColor: theme.accent,
+    borderWidth: 2,
+  } : {};
 
   return (
     <Code
       service={service}
       globalTimestamp={globalTimestamp}
-      style={borderStyle}
+      style={[
+        highlightStyle,
+        isFirstItem && styles.firstItem
+      ]}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  firstItem: {
+    marginTop: 16
+  }
+});

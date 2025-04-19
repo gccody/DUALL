@@ -25,11 +25,11 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({
   progress,
   width = 300,
-  height = 20,
-  backgroundColor = '#e0e0e0',
-  fillColor = '#2196f3',
-  borderRadius = 4,
-  duration = 500,
+  height = 4,
+  backgroundColor = '#E0E0E0',
+  fillColor = '#4CAF50',
+  borderRadius = 2,
+  duration = 300,
   style,
 }) => {
   // Validate progress is between 0 and 1
@@ -90,7 +90,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
 });

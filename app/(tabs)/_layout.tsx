@@ -1,23 +1,26 @@
 import { OtpDataProvider } from '@/context/OtpDataContext';
-import { colors } from '@/global';
+import { useTheme } from '@/context/ThemeContext';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
+    const { theme } = useTheme();
+
     return (
         <OtpDataProvider>
             <Tabs screenOptions={{
-                tabBarActiveTintColor: colors.highlight,
-                tabBarInactiveTintColor: colors.secondary,
-                tabBarStyle: { backgroundColor: colors.black },
-                headerStyle: { backgroundColor: colors.black, borderBottomColor: 'grey', borderBottomWidth: 1 },
-                headerTitleStyle: { color: colors.white },
-                headerTitleAlign: 'center'
+                tabBarActiveTintColor: theme.tabBarActive,
+                tabBarInactiveTintColor: theme.tabBarInactive,
+                tabBarStyle: { backgroundColor: theme.tabBarBackground },
+                headerShown: false,
+                // headerStyle: { backgroundColor: theme.background, borderBottomColor: theme.border, borderBottomWidth: 1 },
+                // headerTitleStyle: { color: theme.text },
+                // headerTitleAlign: 'center'
             }}>
                 <Tabs.Screen
                     name="index"
                     options={{
-                        title: 'Codes',
+                        title: 'YOUR ACCOUNTS',
                         tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
                     }}
                 />

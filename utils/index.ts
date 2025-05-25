@@ -7,3 +7,7 @@ export function isTOTPAlgorithm (keyInput: string): keyInput is TOTPAlgorithm {
 export function generateTOTPUrl(tokenType: TokenType, label: string, secret: string, digits: number, period: number, algorithm: TOTPAlgorithm, issuer: string) {
   return `otpauth://${tokenType}/${label}?secret=${secret}&issuer=${issuer}&algorithm=${algorithm}&digits=${digits}&period=${period}`
 }
+
+// Re-export everything from IconLibrary for easier imports
+export * from './IconLibrary';
+

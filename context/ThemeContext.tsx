@@ -17,6 +17,8 @@ export const lightTheme = {
     tabBarActive: '#6C63FF',
     tabBarInactive: '#8E8E93',
     searchBackground: '#F0F0F0',
+    iconBackground: '#E9E7FF',
+    iconText: '#6C63FF',
 };
 
 export const darkTheme = {
@@ -33,6 +35,8 @@ export const darkTheme = {
     tabBarActive: '#6C63FF',
     tabBarInactive: '#8E8E93',
     searchBackground: '#333333',
+    iconBackground: '#2D2A5A',
+    iconText: '#A9A5FF',
 };
 
 // Type for theme

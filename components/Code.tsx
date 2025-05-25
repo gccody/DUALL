@@ -7,6 +7,7 @@ import * as Clipboard from 'expo-clipboard';
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
 import ProgressBar from "./ProgressBar";
+import ServiceIcon from "./ServiceIcon";
 
 interface CodeProps {
     service: Service;
@@ -163,9 +164,12 @@ export default function Code({ service, opts, globalTimestamp, style }: CodeProp
             <View>
                 <View style={styles.container}>
                     <View style={styles.otpInfo}>
-                        <Text style={[styles.issuerText, { color: theme.text }]}>
-                            {service.otp.issuer}
-                        </Text>
+                        <View style={styles.issuerContainer}>
+                            <ServiceIcon service={service} size={32} style={styles.serviceIcon} editable={true} />
+                            <Text style={[styles.issuerText, { color: theme.text }]}>
+                                {service.otp.issuer}
+                            </Text>
+                        </View>
                         <View style={styles.codeContainer}>
                             <Text style={[styles.codeText, { color: theme.text }]}>
                                 {formattedOTP(otpData.otp)}
@@ -236,10 +240,17 @@ const styles = StyleSheet.create({
     otpInfo: {
         flex: 1,
     },
+    issuerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    serviceIcon: {
+        marginRight: 8,
+    },
     issuerText: {
         fontSize: 16,
         fontWeight: '600',
-        marginBottom: 8,
     },
     codeContainer: {
         flexDirection: 'row',

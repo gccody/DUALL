@@ -59,11 +59,11 @@ export const builtInIcons: Record<string, BuiltInIcon[]> = {
         { id: 'tag', name: 'Tag', pack: 'fontAwesome', iconName: 'tag', color: '#607D8B' },
     ],
     entertainment: [
-        { id: 'netflix', name: 'Netflix', pack: 'fontAwesome', iconName: 'netflix', color: '#E50914' },
+        { id: 'netflix', name: 'Netflix', pack: 'materialCommunity', iconName: 'netflix', color: '#E50914' },
         { id: 'spotify', name: 'Spotify', pack: 'fontAwesome', iconName: 'spotify', color: '#1DB954' },
         { id: 'youtube', name: 'YouTube', pack: 'fontAwesome', iconName: 'youtube', color: '#FF0000' },
         { id: 'twitch', name: 'Twitch', pack: 'fontAwesome', iconName: 'twitch', color: '#9146FF' },
-        { id: 'steam', name: 'Steam', pack: 'fontAwesome', iconName: 'steam', color: '#171A21' },
+        { id: 'steam', name: 'Steam', pack: 'fontAwesome', iconName: 'steam', color: '#1A7498' },
         { id: 'headphones', name: 'Music', pack: 'fontAwesome', iconName: 'headphones', color: '#6200EA' },
         { id: 'gamepad', name: 'Gaming', pack: 'fontAwesome', iconName: 'gamepad', color: '#DD2C00' },
         { id: 'movie', name: 'Movies', pack: 'material', iconName: 'movie', color: '#0091EA' },
@@ -71,7 +71,6 @@ export const builtInIcons: Record<string, BuiltInIcon[]> = {
     productivity: [
         { id: 'trello', name: 'Trello', pack: 'fontAwesome', iconName: 'trello', color: '#0079BF' },
         { id: 'jira', name: 'Jira', pack: 'fontAwesome', iconName: 'jira', color: '#0052CC' },
-        { id: 'notion', name: 'Notion', pack: 'materialCommunity', iconName: 'notion', color: '#000000' },
         { id: 'calendar', name: 'Calendar', pack: 'material', iconName: 'event', color: '#F4511E' },
         { id: 'task', name: 'Tasks', pack: 'material', iconName: 'checklist', color: '#00897B' },
         { id: 'notes', name: 'Notes', pack: 'material', iconName: 'note', color: '#FFC107' },

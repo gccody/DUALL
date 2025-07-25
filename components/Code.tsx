@@ -82,7 +82,7 @@ export default function Code({ service, opts, globalTimestamp, style }: CodeProp
 
     const timeLeft = Math.max(0, Math.floor((otpData.expires - globalTimestamp) / 1000));
     const textColor = isError ? 'red' : theme.text;
-    const remainingPercentage = timeLeft / (service.otp.period - 1);
+    const remainingPercentage = timeLeft / (service.otp.period ?? 30 - 1);
     const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
     const showNextToken = settings.showNextToken && remainingPercentage < PERCENTAGE_LEFT_REVEAL && !isError && !hideToken;
 

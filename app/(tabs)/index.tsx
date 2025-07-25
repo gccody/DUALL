@@ -86,10 +86,6 @@ export default function HomeScreen() {
         onSearch={handleSearch}
       />
 
-      {/* <View style={styles.headerContainer}>
-        <Text style={[styles.headerText, { color: theme.text }]}>YOUR ACCOUNTS</Text>
-      </View> */}
-
       <FlashList
         ref={flashListRef}
         onTouchStart={handleListTouch}

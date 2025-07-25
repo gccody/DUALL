@@ -3,7 +3,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { FlashList } from '@shopify/flash-list';
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CodeItem from "@/components/CodeItem";
@@ -79,16 +79,16 @@ export default function HomeScreen() {
 
   // Display list of codes
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background, paddingTop: searchBarVisible ? 60 : 0 }]} edges={['top', 'left', 'right']}>
       <SearchBar
         text={search}
         isVisible={searchBarVisible}
         onSearch={handleSearch}
       />
 
-      <View style={styles.headerContainer}>
+      {/* <View style={styles.headerContainer}>
         <Text style={[styles.headerText, { color: theme.text }]}>YOUR ACCOUNTS</Text>
-      </View>
+      </View> */}
 
       <FlashList
         ref={flashListRef}

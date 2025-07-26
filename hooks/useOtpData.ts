@@ -8,9 +8,7 @@ export const useOtpData = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load data on component mount
-  useEffect(() => {
-    const loadData = async () => {
+  const loadData = useCallback(async () => {
       try {
         const otpData = await FileHandler.loadData();
         setData(otpData);
@@ -19,8 +17,10 @@ export const useOtpData = () => {
       } finally {
         setLoading(false);
       }
-    };
+    }, []);
 
+  // Load data on component mount
+  useEffect(() => {
     loadData();
   }, []);
 
@@ -60,5 +60,5 @@ export const useOtpData = () => {
     }
   }, [data]);
 
-  return { data, loading, error, updateServices, updateGroups, updateSettings };
+  return { data, loading, error, updateServices, updateGroups, updateSettings, fetchData: loadData };
 };

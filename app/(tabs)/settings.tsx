@@ -2,6 +2,7 @@ import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
 import { FontAwesome } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import React from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -131,7 +132,8 @@ export default function SettingsScreen() {
                             <FontAwesome name="info-circle" size={22} color={theme.text} style={styles.icon} />
                             <Text style={[styles.settingText, { color: theme.text }]}>App Version</Text>
                         </View>
-                        <Text style={[styles.settingValue, { color: theme.subText }]}>1.0.0</Text>
+                        <Text style={[styles.settingValue, { color: theme.subText }]}>{Constants.expoConfig?.version}</Text>
+                    </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} >
                         <View style={styles.settingContent}>

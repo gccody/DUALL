@@ -1,8 +1,8 @@
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FlashList } from '@shopify/flash-list';
-import { useLocalSearchParams } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -24,7 +24,7 @@ export default function HomeScreen() {
   const { settings } = useSettings();
 
   // Get OTP data from context
-  const { data, loading, error, updateServices } = useOtpData();
+  const { data, loading, error, updateServices, fetchData } = useOtpData();
 
   // Search functionality
   const [searchBarVisible, setSearchBarVisible] = useState<boolean>(settings.searchOnStartup);
@@ -58,6 +58,12 @@ export default function HomeScreen() {
       flashListRef.current?.scrollToIndex({ index: recentCodeIndex, animated: true });
     }
   }, [recentCodeIndex]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [fetchData])
+  );
 
   // Handle search toggle
   const toggleSearch = () => setSearchBarVisible(!searchBarVisible);

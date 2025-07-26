@@ -1,6 +1,6 @@
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
-import { FileHandler } from '@/utils/fileHandler';
+import { useOtpData } from '@/hooks/useOtpData';
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
     const { settings, updateSetting, isLoading } = useSettings();
+    const { updateServices } = useOtpData();
 
     if (isLoading) {
         return (
@@ -33,7 +34,7 @@ export default function SettingsScreen() {
                     style: 'destructive',
                     onPress: async (text?: string) => {
                         if (text !== "Delete Codes") return Alert.alert("Did not delete codes");
-                        await FileHandler.updateServices([]);
+                        await updateServices([]);
                         return Alert.alert("Codes are deleted");
                     }
                 }

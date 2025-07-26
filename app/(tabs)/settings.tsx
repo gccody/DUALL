@@ -5,6 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import pkg from '../../package.json';
 
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
@@ -131,6 +132,13 @@ export default function SettingsScreen() {
                             <Text style={[styles.settingText, { color: theme.text }]}>App Version</Text>
                         </View>
                         <Text style={[styles.settingValue, { color: theme.subText }]}>1.0.0</Text>
+
+                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} >
+                        <View style={styles.settingContent}>
+                            <FontAwesome name="github" size={22} color={theme.text} style={styles.icon} />
+                            <Text style={[styles.settingText, { color: theme.text }]}>Github Repo</Text>
+                        </View>
+                        <Text style={[styles.settingValue, { color: theme.subText }]}>{pkg.homepage.replace("https://github.com/", "")}</Text>
                     </TouchableOpacity>
                 </View>
 

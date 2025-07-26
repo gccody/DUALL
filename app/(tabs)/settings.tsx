@@ -1,8 +1,9 @@
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
+import { FileHandler } from '@/utils/fileHandler';
 import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SettingsScreen() {
@@ -15,6 +16,29 @@ export default function SettingsScreen() {
                 <ActivityIndicator size="large" color={theme.accent} />
             </SafeAreaView>
         );
+    }
+
+    const deleteCodes = async () => {
+        Alert.prompt(
+            "Danger!",
+            "Are you sure you want to delete everything? Type: Delete Codes",
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    isPreferred: true
+                },
+                {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: async (text?: string) => {
+                        if (text !== "Delete Codes") return Alert.alert("Did not delete codes");
+                        await FileHandler.updateServices([]);
+                        return Alert.alert("Codes are deleted");
+                    }
+                }
+            ],
+        )
     }
 
     return (
@@ -106,6 +130,17 @@ export default function SettingsScreen() {
                             <Text style={[styles.settingText, { color: theme.text }]}>App Version</Text>
                         </View>
                         <Text style={[styles.settingValue, { color: theme.subText }]}>1.0.0</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Danger!!!</Text>
+
+                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} onPress={deleteCodes}>
+                        <View style={styles.settingContent}>
+                            <FontAwesome name="exclamation-triangle" size={22} color={"red"} style={styles.icon} />
+                            <Text style={[styles.settingText, { color: "red" }]}>Delete Codes</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </ScrollView>

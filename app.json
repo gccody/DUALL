@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "totp",
-    "slug": "totp",
+    "name": "Expo2FA",
+    "slug": "Expo2FA",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icons/ios-light.png",

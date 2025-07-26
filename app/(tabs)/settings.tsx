@@ -3,6 +3,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
 import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -42,6 +43,10 @@ export default function SettingsScreen() {
                 }
             ],
         )
+    }
+
+    const openGithub = async () => {
+        await WebBrowser.openBrowserAsync(pkg.homepage);
     }
 
     return (
@@ -135,7 +140,7 @@ export default function SettingsScreen() {
                         <Text style={[styles.settingValue, { color: theme.subText }]}>{Constants.expoConfig?.version}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} >
+                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} onPress={openGithub} >
                         <View style={styles.settingContent}>
                             <FontAwesome name="github" size={22} color={theme.text} style={styles.icon} />
                             <Text style={[styles.settingText, { color: theme.text }]}>Github Repo</Text>

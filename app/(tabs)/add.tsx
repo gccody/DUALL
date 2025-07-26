@@ -1,4 +1,4 @@
-import { colors } from '@/global';
+import { useTheme } from '@/context/ThemeContext';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ export default function Add() {
     } = useCameraPermission();
     const route = useRoute();
     const router = useRouter();
+    const { theme } = useTheme();
 
     const handleTabSelected = () => {
         setCameraActive(true);
@@ -53,10 +54,10 @@ export default function Add() {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: colors.black
+                backgroundColor: theme.background
             }}>
                 <Text style={{
-                    color: colors.white
+                    color: theme.text
                 }}>
                     Do not have permission to use the camera
                 </Text>
@@ -84,10 +85,10 @@ export default function Add() {
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: colors.black
+            backgroundColor: theme.background
         }}>
             <Text style={{
-                color: colors.white
+                color: theme.text
             }}>
                 Unable to use Camera
             </Text>

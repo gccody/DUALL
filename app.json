@@ -12,7 +12,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera in order to scan QR codes.",
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSFaceIDUsageDescription": "Allow $(PRODUCT_NAME) to use Face ID to secure your codes."
       },
       "bundleIdentifier": "com.gccody.totp",
       "icon": {
@@ -59,7 +60,13 @@
           "enableCodeScanner": true
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to secure your codes."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

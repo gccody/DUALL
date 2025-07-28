@@ -1,3 +1,4 @@
+import SubText from '@/components/SubText';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
@@ -137,15 +138,15 @@ export default function SettingsScreen() {
                             <FontAwesome name="info-circle" size={22} color={theme.text} style={styles.icon} />
                             <Text style={[styles.settingText, { color: theme.text }]}>App Version</Text>
                         </View>
-                        <Text style={[styles.settingValue, { color: theme.subText }]}>{Constants.expoConfig?.version}</Text>
-                    </TouchableOpacity>
+                        <SubText text={Constants.expoConfig?.version?.toString() ?? "1.0.0"} />
+                    </View>
 
                     <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} onPress={openGithub} >
                         <View style={styles.settingContent}>
                             <FontAwesome name="github" size={22} color={theme.text} style={styles.icon} />
                             <Text style={[styles.settingText, { color: theme.text }]}>Github Repo</Text>
                         </View>
-                        <Text style={[styles.settingValue, { color: theme.subText }]}>{pkg.homepage.replace("https://github.com/", "")}</Text>
+                        <SubText text={pkg.homepage.replace("https://github.com/", "")} />
                     </TouchableOpacity>
                 </View>
 

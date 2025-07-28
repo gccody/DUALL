@@ -133,7 +133,7 @@ export default function SettingsScreen() {
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.text }]}>About</Text>
 
-                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
+                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
                         <View style={styles.settingContent}>
                             <FontAwesome name="info-circle" size={22} color={theme.text} style={styles.icon} />
                             <Text style={[styles.settingText, { color: theme.text }]}>App Version</Text>

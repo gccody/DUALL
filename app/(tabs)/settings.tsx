@@ -51,7 +51,7 @@ export default function SettingsScreen() {
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.text }]}>Appearance</Text>
 

@@ -35,7 +35,7 @@ export const darkTheme = {
     tabBarActive: '#6C63FF',
     tabBarInactive: '#8E8E93',
     searchBackground: '#333333',
-    iconBackground: '#2D2A5A',
+    iconBackground: '#4b4597ff',
     iconText: '#A9A5FF',
 };
 

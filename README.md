@@ -1,50 +1,164 @@
-# Welcome to your Expo app 👋
+# DUALL
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Dual Offline Authentication Local Layer**  
+A local-first, privacy-focused 2FA (two-factor authentication) mobile app built with Expo and TypeScript.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+- 🔒 Time-based One-Time Passwords (TOTP) fully managed on-device  
+- 📱 QR code & manual entry for account setup  
+- 🔑 Encrypted local storage of secrets (no cloud dependencies)  
+- 🛡️ Biometric unlock (Face ID / Touch ID)  
+- ⚙️ PIN fallback, dark mode, customizable code length & period  
+- 🔄 Encrypted backup & restore via local file or AirDrop  
+- 🌐 Offline-first: app works without network access  
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## 🧰 Tech Stack
 
-In the output, you'll find options to open the app in a
+- Expo (SDK 48+)  
+- React Native & TypeScript  
+- expo-secure-store for encrypted storage  
+- react-native-crypto / js-otp for TOTP  
+- expo-local-authentication for biometrics  
+- react-navigation for screen flows  
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📸 Demo
 
-## Get a fresh project
+![Home Screen](docs/screenshots/home.png)  
+![Add Account](docs/screenshots/add-account.png)  
+![Backup & Restore](docs/screenshots/backup-restore.png)  
 
-When you're ready, run:
+---
+
+## 📥 Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 16.x  
+- Yarn or npm  
+- Expo CLI  
+- iOS Simulator or Android Emulator (or a physical device)
 
 ```bash
-npm run reset-project
+npm install --global expo-cli
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Installation
 
-## Learn more
+```bash
+git clone https://github.com/<your-username>/duall.git
+cd duall
+yarn install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### Running the App
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Start Metro bundler:
 
-## Join the community
+```bash
+yarn start
+```
 
-Join our community of developers creating universal apps.
+Then, in the Expo DevTools:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Press **a** to launch on Android emulator/device  
+- Press **i** to launch on iOS simulator/device  
+
+Or run directly:
+
+```bash
+expo run:android
+# or
+expo run:ios
+```
+
+---
+
+## 📖 Usage
+
+1. **Onboard**  
+   - Set up a 4-6 digit PIN.  
+   - Enable Face ID / Touch ID (optional).
+
+2. **Add Account**  
+   - Tap **+**  
+   - Scan the QR code or enter the secret manually  
+   - Assign a friendly name & icon
+
+3. **Generate Codes**  
+   - View live TOTP codes on the home screen  
+   - Codes auto-refresh every 30 seconds (configurable)
+
+4. **Backup / Restore**  
+   - Export encrypted backup file (.json) to local storage  
+   - Import via file picker or AirDrop  
+
+---
+
+## ⚙️ Configuration
+
+You can tweak default settings in `app.json` under the `"expo.extra"` section:
+
+```json
+{
+  "expo": {
+    "extra": {
+      "defaultPeriod": 30,
+      "defaultDigits": 6,
+      "enableBiometrics": true
+    }
+  }
+}
+```
+
+At runtime these values are available via `Constants.expoConfig.extra`.
+
+---
+
+## 🗂 Project Structure
+
+```
+/duall
+├── App.tsx              # Entry point
+├── src/
+│   ├── screens/         # All React screens
+│   ├── components/      # Reusable UI components
+│   ├── hooks/           # Custom React hooks
+│   ├── utils/           # TOTP logic, storage helpers
+│   └── assets/          # Icons, images
+├── docs/
+│   └── screenshots/     # Demo images
+├── app.json             # Expo config
+├── package.json
+└── tsconfig.json
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo  
+2. Create a feature branch: `git checkout -b feat/your-feature`  
+3. Commit your changes: `git commit -m "feat: add your feature"`  
+4. Push to your branch: `git push origin feat/your-feature`  
+5. Open a Pull Request  
+
+Please ensure your code adheres to the existing style and passes linting/tests.
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License.  
+See [LICENSE](LICENSE) for details.
+
+---
+
+> Built with ❤️ using Expo & TypeScript  
+> Questions? File an issue or drop a 👍 on the repo!

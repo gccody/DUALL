@@ -1,12 +1,13 @@
+import SettingCategory from '@/components/SettingCategory';
+import SettingItem from '@/components/SettingItem';
 import SubText from '@/components/SubText';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
-import { FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import pkg from '../../package.json';
 
@@ -53,113 +54,71 @@ export default function SettingsScreen() {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Appearance</Text>
-
-                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name={isDark ? "moon-o" : "sun-o"} size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>Dark Mode</Text>
-                        </View>
+                <SettingCategory name='Appearance'>
+                    <SettingItem iconName={isDark ? "moon-o" : "sun-o"} text='Dark Mode'>
                         <Switch
                             value={isDark}
                             onValueChange={() => updateSetting('darkMode', !settings.darkMode)}
                             trackColor={{ false: '#767577', true: '#6C63FF' }}
                             thumbColor={'#f4f3f4'}
                         />
-                    </View>
-                </View>
+                    </SettingItem>
+                </SettingCategory>
 
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Tokens</Text>
-
-                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="eye-slash" size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>Hide Tokens</Text>
-                        </View>
+                <SettingCategory name='Tokens'>
+                    <SettingItem iconName='eye-slash' text='Hide Tokens'>
                         <Switch
                             value={settings.hideTokens}
                             onValueChange={(value) => updateSetting('hideTokens', value)}
                             trackColor={{ false: '#767577', true: '#6C63FF' }}
                             thumbColor={'#f4f3f4'}
                         />
-                    </View>
-
-                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="forward" size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>Show Next Token</Text>
-                        </View>
+                    </SettingItem>
+                    <SettingItem iconName='forward' text='Show Next Token'>
                         <Switch
                             value={settings.showNextToken}
                             onValueChange={(value) => updateSetting('showNextToken', value)}
                             trackColor={{ false: '#767577', true: '#6C63FF' }}
                             thumbColor={'#f4f3f4'}
                         />
-                    </View>
-
-                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="bell" size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>Notify When Token Copied</Text>
-                        </View>
+                    </SettingItem>
+                    <SettingItem iconName='bell' text='Notify When Token Copied'>
                         <Switch
                             value={settings.notifyWhenTokenCopied}
                             onValueChange={(value) => updateSetting('notifyWhenTokenCopied', value)}
                             trackColor={{ false: '#767577', true: '#6C63FF' }}
                             thumbColor={'#f4f3f4'}
                         />
-                    </View>
-                </View>
+                    </SettingItem>
+                </SettingCategory>
 
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Application</Text>
-
-                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="search" size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>Search On Startup</Text>
-                        </View>
+                <SettingCategory name='Application'>
+                    <SettingItem iconName='search' text='Search On Startup'>
                         <Switch
                             value={settings.searchOnStartup}
                             onValueChange={(value) => updateSetting('searchOnStartup', value)}
                             trackColor={{ false: '#767577', true: '#6C63FF' }}
                             thumbColor={'#f4f3f4'}
                         />
-                    </View>
-                </View>
+                    </SettingItem>
+                </SettingCategory>
 
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>About</Text>
-
-                    <View style={[styles.settingItem, { backgroundColor: theme.cardBackground }]}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="info-circle" size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>App Version</Text>
-                        </View>
+                <SettingCategory name='About'>
+                    <SettingItem iconName='info-circle' text='App Version'>
                         <SubText text={Constants.expoConfig?.version?.toString() ?? "1.0.0"} />
-                    </View>
-
-                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} onPress={openGithub} >
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="github" size={22} color={theme.text} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: theme.text }]}>Github Repo</Text>
-                        </View>
-                        <SubText text={pkg.homepage.replace("https://github.com/", "")} />
+                    </SettingItem>
+                    <TouchableOpacity onPress={openGithub}>
+                        <SettingItem iconName='github' text='Github Repo'>
+                            <SubText text={pkg.homepage.replace("https://github.com/", "")} />
+                        </SettingItem>
                     </TouchableOpacity>
-                </View>
+                </SettingCategory>
 
-                <View style={styles.section}>
-                    <Text style={[styles.sectionTitle, { color: theme.text }]}>Danger!!!</Text>
-
-                    <TouchableOpacity style={[styles.settingItem, { backgroundColor: theme.cardBackground }]} onPress={deleteCodes}>
-                        <View style={styles.settingContent}>
-                            <FontAwesome name="exclamation-triangle" size={22} color={"red"} style={styles.icon} />
-                            <Text style={[styles.settingText, { color: "red" }]}>Delete Codes</Text>
-                        </View>
+                <SettingCategory name='Danger!!!'>
+                    <TouchableOpacity onPress={deleteCodes}>
+                        <SettingItem iconName='exclamation-triangle' text='Delete Codes' />
                     </TouchableOpacity>
-                </View>
+                </SettingCategory>
             </ScrollView>
         </SafeAreaView>
     );
@@ -173,38 +132,5 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    section: {
-        marginTop: 24,
-        marginBottom: 8,
-        paddingHorizontal: 16,
-    },
-    sectionTitle: {
-        fontSize: 14,
-        fontWeight: '600',
-        marginBottom: 8,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-    },
-    settingItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: 16,
-        marginBottom: 8,
-        borderRadius: 12,
-    },
-    settingContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    icon: {
-        marginRight: 12,
-    },
-    settingText: {
-        fontSize: 16,
-    },
-    settingValue: {
-        fontSize: 16,
     },
 });

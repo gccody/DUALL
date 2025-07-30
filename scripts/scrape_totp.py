@@ -19,7 +19,8 @@ for site in data:
   except:
     img = None
   extension = img.split(".")[-1] if img else "svg"
-  if os.path.exists(f"{assets_path}/{site_name}.{extension}"):
+  if os.path.exists(f"{assets_path}/{domain}.{extension}"):
+    totps.append({'name': site_name, 'domain': domain, 'extension': extension})
     continue
   url = f"https://raw.githubusercontent.com/2factorauth/twofactorauth/master/img/{img[0] if img else domain[0]}/{img if img else domain+".svg"}"
   res = requests.get(url)

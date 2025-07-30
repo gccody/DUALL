@@ -31,6 +31,8 @@ for site in data:
     f.write(res.content)
   totps.append({'name': site_name, 'domain': domain})
   print(f"Got {extension} for {domain}")
+  
+print(f"Total of {len(totps)} sites!")
 
 with open('assets/totp.json', 'w', encoding='utf-8') as f:
   json.dump(totps, f, indent=4)

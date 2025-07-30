@@ -1,0 +1,6247 @@
+[
+    {
+        "name": "101domain",
+        "domain": "101domain.com",
+        "extension": "svg"
+    },
+    {
+        "name": "123 Form Builder",
+        "domain": "123formbuilder.com",
+        "extension": "svg"
+    },
+    {
+        "name": "123 Reg",
+        "domain": "123-reg.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "15Five",
+        "domain": "15five.com",
+        "extension": "svg"
+    },
+    {
+        "name": "1Password",
+        "domain": "1password.com",
+        "extension": "svg"
+    },
+    {
+        "name": "20i",
+        "domain": "20i.com",
+        "extension": "svg"
+    },
+    {
+        "name": "23andMe",
+        "domain": "23andme.com",
+        "extension": "svg"
+    },
+    {
+        "name": "2Checkout",
+        "domain": "2checkout.com",
+        "extension": "svg"
+    },
+    {
+        "name": "3Commas",
+        "domain": "3commas.io",
+        "extension": "svg"
+    },
+    {
+        "name": "500px",
+        "domain": "500px.com",
+        "extension": "svg"
+    },
+    {
+        "name": "A2 Hosting",
+        "domain": "a2hosting.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Abode",
+        "domain": "goabode.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Above.com",
+        "domain": "above.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Accelo",
+        "domain": "accelo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Accountable",
+        "domain": "accountable.eu",
+        "extension": "svg"
+    },
+    {
+        "name": "Acquia",
+        "domain": "acquia.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ActionID",
+        "domain": "ngpvan.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Actionstep",
+        "domain": "actionstep.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ACTIVE 24",
+        "domain": "active24.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ActiveCampaign",
+        "domain": "activecampaign.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ActiveState",
+        "domain": "activestate.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Activision",
+        "domain": "activision.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Adafruit",
+        "domain": "adafruit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Addiko Bank",
+        "domain": "addiko.hr",
+        "extension": "svg"
+    },
+    {
+        "name": "AdGuard",
+        "domain": "adguard.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Adyen",
+        "domain": "adyen.com",
+        "extension": "svg"
+    },
+    {
+        "name": "A\u00e9za",
+        "domain": "aeza.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Affinity",
+        "domain": "serif.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Afternic",
+        "domain": "afternic.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Airbrake",
+        "domain": "airbrake.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Airship",
+        "domain": "airship.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Airtable",
+        "domain": "airtable.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Aiven",
+        "domain": "aiven.io",
+        "extension": "svg"
+    },
+    {
+        "name": "AJ Bell Youinvest",
+        "domain": "youinvest.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Ajax Systems",
+        "domain": "ajax.systems",
+        "extension": "svg"
+    },
+    {
+        "name": "Alchemer",
+        "domain": "alchemer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Algolia",
+        "domain": "algolia.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AlibabaCloud",
+        "domain": "alibabacloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ALL-INKL.COM",
+        "domain": "all-inkl.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Allegro",
+        "domain": "allegro.pl",
+        "extension": "svg"
+    },
+    {
+        "name": "AllMyLinks",
+        "domain": "allmylinks.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AltCoinTrader",
+        "domain": "altcointrader.co.za",
+        "extension": "svg"
+    },
+    {
+        "name": "Alterdice",
+        "domain": "alterdice.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AltoIRA",
+        "domain": "altoira.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Amazing Marvin",
+        "domain": "amazingmarvin.com",
+        "extension": "png"
+    },
+    {
+        "name": "Amazon",
+        "domain": "amazon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Amazon Pay",
+        "domain": "pay.amazon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Amazon Web Services",
+        "domain": "aws.amazon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "America First Credit Union",
+        "domain": "americafirst.com",
+        "extension": "svg"
+    },
+    {
+        "name": "American Century Investments",
+        "domain": "americancentury.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ANY.RUN",
+        "domain": "any.run",
+        "extension": "svg"
+    },
+    {
+        "name": "Anycoin Direct",
+        "domain": "anycoindirect.eu",
+        "extension": "svg"
+    },
+    {
+        "name": "AnyDesk",
+        "domain": "anydesk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Aol Mail",
+        "domain": "mail.aol.com",
+        "extension": "svg"
+    },
+    {
+        "name": "APNIC",
+        "domain": "apnic.net",
+        "extension": "svg"
+    },
+    {
+        "name": "AppFolio",
+        "domain": "appfolio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Appodeal",
+        "domain": "appodeal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AppSignal",
+        "domain": "appsignal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AppVeyor",
+        "domain": "appveyor.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Appwrite",
+        "domain": "appwrite.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Arduino",
+        "domain": "arduino.cc",
+        "extension": "svg"
+    },
+    {
+        "name": "ARIN",
+        "domain": "arin.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Artifact Hub",
+        "domain": "artifacthub.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Aruba Instant On",
+        "domain": "arubainstanton.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Asana",
+        "domain": "asana.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ashes of Creation",
+        "domain": "ashesofcreation.com",
+        "extension": "png"
+    },
+    {
+        "name": "Assembla",
+        "domain": "assembla.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Atera",
+        "domain": "atera.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Aternos",
+        "domain": "aternos.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Atlassian Cloud",
+        "domain": "id.atlassian.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Audiense",
+        "domain": "audiense.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Auth0",
+        "domain": "auth0.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Autodesk",
+        "domain": "autodesk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Automater",
+        "domain": "automater.pl",
+        "extension": "svg"
+    },
+    {
+        "name": "AutoTask",
+        "domain": "autotask.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Availity Essentials",
+        "domain": "availity.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Avanza",
+        "domain": "avanza.se",
+        "extension": "svg"
+    },
+    {
+        "name": "Avast",
+        "domain": "avast.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AVG",
+        "domain": "avg.com",
+        "extension": "svg"
+    },
+    {
+        "name": "AwardWallet",
+        "domain": "awardwallet.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Awin",
+        "domain": "awin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Back4App",
+        "domain": "back4app.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Backblaze",
+        "domain": "backblaze.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Baidu AI cloud",
+        "domain": "cloud.baidu.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Balena",
+        "domain": "balena.io",
+        "extension": "svg"
+    },
+    {
+        "name": "BambooHR",
+        "domain": "bamboohr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Baremetrics",
+        "domain": "baremetrics.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Barmenia",
+        "domain": "barmenia.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Basecamp",
+        "domain": "basecamp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Basic Attention Token",
+        "domain": "publishers.basicattentiontoken.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Batch",
+        "domain": "batch.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Best Buy",
+        "domain": "bestbuy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Betfair",
+        "domain": "betfair.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bethesda",
+        "domain": "bethesda.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Betterment",
+        "domain": "betterment.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Betvictor",
+        "domain": "betvictor.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BGL Corporate Solutions",
+        "domain": "bglcorp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bibox",
+        "domain": "bibox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bill",
+        "domain": "bill.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Binance",
+        "domain": "binance.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BitBar",
+        "domain": "bitbar.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitbns",
+        "domain": "bitbns.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitbucket",
+        "domain": "bitbucket.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitbuy",
+        "domain": "bitbuy.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitcoin.de",
+        "domain": "bitcoin.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitdefender",
+        "domain": "bitdefender.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitfinex",
+        "domain": "bitfinex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitflyer",
+        "domain": "bitflyer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BitForex",
+        "domain": "bitforex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitget",
+        "domain": "bitget.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BitGo",
+        "domain": "bitgo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bithumb",
+        "domain": "bithumb.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BitMEX",
+        "domain": "bitmex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitpanda",
+        "domain": "bitpanda.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitpay",
+        "domain": "bitpay.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitrise",
+        "domain": "bitrise.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitrix24",
+        "domain": "bitrix24.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BitSkins",
+        "domain": "bitskins.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitso",
+        "domain": "bitso.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitstamp",
+        "domain": "bitstamp.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Bittrex",
+        "domain": "bittrex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "bitvavo",
+        "domain": "bitvavo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bitwarden",
+        "domain": "bitwarden.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BKEX",
+        "domain": "bkex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Black Desert",
+        "domain": "playblackdesert.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Blackbaud",
+        "domain": "blackbaud.com",
+        "extension": "png"
+    },
+    {
+        "name": "Blacknight",
+        "domain": "blacknight.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Blade & Soul",
+        "domain": "bladeandsoul.com",
+        "extension": "png"
+    },
+    {
+        "name": "Blockchain.com",
+        "domain": "blockchain.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BlockFi",
+        "domain": "blockfi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Blossom",
+        "domain": "blossom88.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bluehost",
+        "domain": "bluehost.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BlueSnap",
+        "domain": "bluesnap.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BnkToTheFuture",
+        "domain": "bnktothefuture.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bohemia Interactive",
+        "domain": "bohemia.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Bokio [SE]",
+        "domain": "bokio.se",
+        "extension": "svg"
+    },
+    {
+        "name": "Bonusly",
+        "domain": "bonus.ly",
+        "extension": "svg"
+    },
+    {
+        "name": "Booking.com",
+        "domain": "booking.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bourse Direct",
+        "domain": "boursedirect.fr",
+        "extension": "svg"
+    },
+    {
+        "name": "Box",
+        "domain": "box.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Braintree",
+        "domain": "braintreepayments.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Brandwatch",
+        "domain": "brandwatch.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Brevo",
+        "domain": "brevo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Brex",
+        "domain": "brex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Brigham Young University",
+        "domain": "byu.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "British Airways",
+        "domain": "britishairways.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Broadcom",
+        "domain": "broadcom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BTC BOX",
+        "domain": "btcbox.co.jp",
+        "extension": "svg"
+    },
+    {
+        "name": "BTC Markets",
+        "domain": "btcmarkets.net",
+        "extension": "svg"
+    },
+    {
+        "name": "BTCPOP",
+        "domain": "btcpop.co",
+        "extension": "svg"
+    },
+    {
+        "name": "BtcTurk",
+        "domain": "btcturk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bubble",
+        "domain": "bubble.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Buda",
+        "domain": "buda.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Buddy",
+        "domain": "buddy.works",
+        "extension": "svg"
+    },
+    {
+        "name": "Buffer",
+        "domain": "buffer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "bugcrowd",
+        "domain": "bugcrowd.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bugsnag",
+        "domain": "bugsnag.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bugzilla@Mozilla",
+        "domain": "bugzilla.mozilla.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Buhl",
+        "domain": "buhl.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Buildium",
+        "domain": "buildium.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Buildkite",
+        "domain": "buildkite.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BuiltWith",
+        "domain": "builtwith.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BullionStar",
+        "domain": "bullionstar.com",
+        "extension": "svg"
+    },
+    {
+        "name": "BullionVault",
+        "domain": "bullionvault.com",
+        "extension": "svg"
+    },
+    {
+        "name": "bunny.net",
+        "domain": "bunny.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Buy Me a Coffee",
+        "domain": "buymeacoffee.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Bybit",
+        "domain": "bybit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cal Poly Pomona",
+        "domain": "cpp.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "Cal.com",
+        "domain": "cal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Calendly",
+        "domain": "calendly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Campaign Monitor",
+        "domain": "campaignmonitor.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Canada Revenue Agency",
+        "domain": "canada.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Canva",
+        "domain": "canva.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Canvas",
+        "domain": "instructure.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Capcom ID",
+        "domain": "capcom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Capsule",
+        "domain": "capsulecrm.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cardmarket",
+        "domain": "cardmarket.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Carrd",
+        "domain": "carrd.co",
+        "extension": "svg"
+    },
+    {
+        "name": "Carta",
+        "domain": "carta.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cash App",
+        "domain": "cash.app",
+        "extension": "svg"
+    },
+    {
+        "name": "Caspio",
+        "domain": "caspio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cat",
+        "domain": "cat.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CDN77",
+        "domain": "cdn77.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CDNsun",
+        "domain": "cdnsun.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CEX.IO",
+        "domain": "cex.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Changelly",
+        "domain": "changelly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Chargebee",
+        "domain": "chargebee.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CharlieHR",
+        "domain": "charliehr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Chartbeat",
+        "domain": "chartbeat.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Chatwork",
+        "domain": "chatwork.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Checkfront",
+        "domain": "checkfront.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Choko.Link",
+        "domain": "choko.link",
+        "extension": "svg"
+    },
+    {
+        "name": "Circle",
+        "domain": "circle.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cisco",
+        "domain": "cisco.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cisco Meraki",
+        "domain": "meraki.cisco.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cisco Network Academy",
+        "domain": "netacad.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Citadel Credit Union",
+        "domain": "citadelbanking.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ClassLink",
+        "domain": "classlink.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ClearScore",
+        "domain": "clearscore.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CleverTap",
+        "domain": "clevertap.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ClickUp",
+        "domain": "clickup.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cliniko",
+        "domain": "cliniko.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Clio",
+        "domain": "clio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Close",
+        "domain": "close.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cloud 66",
+        "domain": "cloud66.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CloudAMQP",
+        "domain": "cloudamqp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CloudBees",
+        "domain": "cloudbees.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cloudbet",
+        "domain": "cloudbet.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CloudConvert",
+        "domain": "cloudconvert.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cloudflare",
+        "domain": "cloudflare.com",
+        "extension": "svg"
+    },
+    {
+        "name": "cloudHQ",
+        "domain": "cloudhq.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Cloudinary",
+        "domain": "cloudinary.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ClouDNS",
+        "domain": "cloudns.net",
+        "extension": "png"
+    },
+    {
+        "name": "Cloudways",
+        "domain": "cloudways.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Clover",
+        "domain": "clover.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cloze",
+        "domain": "cloze.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CMG",
+        "domain": "checkmategaming.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cobalt",
+        "domain": "cobalt.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Coda",
+        "domain": "coda.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Codebase",
+        "domain": "codebasehq.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Codeberg",
+        "domain": "codeberg.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Cognito Forms",
+        "domain": "cognitoforms.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinbase",
+        "domain": "coinbase.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinberry",
+        "domain": "coinberry.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coincheck",
+        "domain": "coincheck.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinDCX",
+        "domain": "coindcx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinDeal",
+        "domain": "coindeal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinFalcon",
+        "domain": "coinfalcon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinGate",
+        "domain": "coingate.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinify",
+        "domain": "coinify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinigy",
+        "domain": "coinigy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinjar",
+        "domain": "coinjar.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinLoan",
+        "domain": "coinloan.io",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinMarketCap",
+        "domain": "coinmarketcap.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinOne",
+        "domain": "coinone.co.kr",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinPayments",
+        "domain": "coinpayments.net",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinPayU",
+        "domain": "coinpayu.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinRemitter",
+        "domain": "coinremitter.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coins.ph",
+        "domain": "coins.ph",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinSmart",
+        "domain": "coinsmart.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinSpot",
+        "domain": "coinspot.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinTiger",
+        "domain": "cointiger.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinTracker",
+        "domain": "cointracker.io",
+        "extension": "svg"
+    },
+    {
+        "name": "CoinTracking",
+        "domain": "cointracking.info",
+        "extension": "svg"
+    },
+    {
+        "name": "Cointraffic",
+        "domain": "cointraffic.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinut",
+        "domain": "coinut.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coinzilla",
+        "domain": "coinzilla.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Combell",
+        "domain": "combell.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CommunityAmerica",
+        "domain": "communityamerica.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Comodo",
+        "domain": "comodo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Compose",
+        "domain": "compose.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Con Edison",
+        "domain": "coned.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Concur",
+        "domain": "concur.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ConnectWise Control (ScreenConnect)",
+        "domain": "connectwise.com",
+        "extension": "svg"
+    },
+    {
+        "name": "consentmanager",
+        "domain": "consentmanager.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Constellix",
+        "domain": "constellix.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Contabo",
+        "domain": "contabo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Contentful",
+        "domain": "contentful.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Contra Costa Community College District",
+        "domain": "4cd.edu",
+        "extension": "png"
+    },
+    {
+        "name": "ConvertKit",
+        "domain": "convertkit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "CookieYes",
+        "domain": "cookieyes.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cordial",
+        "domain": "cordial.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Corporate Finance Institute",
+        "domain": "corporatefinanceinstitute.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Coursera",
+        "domain": "coursera.org",
+        "extension": "svg"
+    },
+    {
+        "name": "CPOMS",
+        "domain": "cpoms.co.uk",
+        "extension": "png"
+    },
+    {
+        "name": "CQUniversity",
+        "domain": "cqu.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "CrashPlan",
+        "domain": "crashplan.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Credly",
+        "domain": "credly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "cron-job.org",
+        "domain": "cron-job.org",
+        "extension": "png"
+    },
+    {
+        "name": "Cronometer",
+        "domain": "cronometer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Crowd Supply",
+        "domain": "crowdsupply.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Crowdcube",
+        "domain": "crowdcube.com",
+        "extension": "png"
+    },
+    {
+        "name": "Crowdin",
+        "domain": "crowdin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Crypto",
+        "domain": "crypto.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Cryptonator",
+        "domain": "cryptonator.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Current RMS",
+        "domain": "current-rms.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Customer.io",
+        "domain": "customer.io",
+        "extension": "svg"
+    },
+    {
+        "name": "cyon",
+        "domain": "cyon.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "Dan.com",
+        "domain": "dan.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dashlane",
+        "domain": "dashlane.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Databox",
+        "domain": "databox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Datadog",
+        "domain": "datadoghq.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DataRobot",
+        "domain": "datarobot.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DATEV",
+        "domain": "datev.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Datto",
+        "domain": "datto.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DCS World",
+        "domain": "digitalcombatsimulator.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Deakin University",
+        "domain": "deakin.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Deel",
+        "domain": "deel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DeepL",
+        "domain": "deepl.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DEGIRO",
+        "domain": "degiro.nl",
+        "extension": "svg"
+    },
+    {
+        "name": "Delinea",
+        "domain": "delinea.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Demio",
+        "domain": "demio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DeployHQ",
+        "domain": "deployhq.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Deputy",
+        "domain": "deputy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Detectify",
+        "domain": "detectify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Deutsche Bahn (DB)",
+        "domain": "bahn.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Deutsche Post",
+        "domain": "deutschepost.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Deutsche Telekom",
+        "domain": "telekom.de",
+        "extension": "svg"
+    },
+    {
+        "name": "DeviantArt",
+        "domain": "deviantart.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dext Prepare",
+        "domain": "dext.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DigiCert",
+        "domain": "digicert.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Digital Surge",
+        "domain": "digitalsurge.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "DigitalOcean",
+        "domain": "digitalocean.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Digitec",
+        "domain": "digitec.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "Dinero",
+        "domain": "dinero.dk",
+        "extension": "svg"
+    },
+    {
+        "name": "DirectAdmin",
+        "domain": "directadmin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Directnic",
+        "domain": "directnic.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Discogs",
+        "domain": "discogs.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Discord",
+        "domain": "discord.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Disqus",
+        "domain": "disqus.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DMARC Analyzer",
+        "domain": "dmarcanalyzer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "dmarcian",
+        "domain": "dmarcian.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DMM",
+        "domain": "dmm.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DMOJ",
+        "domain": "dmoj.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "DNSFilter",
+        "domain": "dnsfilter.com",
+        "extension": "svg"
+    },
+    {
+        "name": "DNSimple",
+        "domain": "dnsimple.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Docker",
+        "domain": "docker.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Docusign",
+        "domain": "docusign.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Domeneshop",
+        "domain": "domeneshop.no",
+        "extension": "svg"
+    },
+    {
+        "name": "Domino Data Lab",
+        "domain": "dominodatalab.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Doppler",
+        "domain": "doppler.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dotloop",
+        "domain": "dotloop.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dreamhost",
+        "domain": "dreamhost.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Drift",
+        "domain": "drift.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dropbox",
+        "domain": "dropbox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dropbox Sign",
+        "domain": "hellosign.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Druide",
+        "domain": "druide.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Drupal.org",
+        "domain": "drupal.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Dwolla",
+        "domain": "dwolla.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dyn",
+        "domain": "dyn.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dynadot",
+        "domain": "dynadot.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Dynu",
+        "domain": "dynu.com",
+        "extension": "png"
+    },
+    {
+        "name": "E.ON",
+        "domain": "eon.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Earth Class Mail",
+        "domain": "earthclassmail.com",
+        "extension": "svg"
+    },
+    {
+        "name": "East Carolina University",
+        "domain": "ecu.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "EasyDMARC",
+        "domain": "easydmarc.com",
+        "extension": "svg"
+    },
+    {
+        "name": "easyDNS",
+        "domain": "easydns.com",
+        "extension": "svg"
+    },
+    {
+        "name": "EasySendy",
+        "domain": "easysendy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "eBay",
+        "domain": "ebay.com",
+        "extension": "svg"
+    },
+    {
+        "name": "eclincher",
+        "domain": "eclincher.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ecobee",
+        "domain": "ecobee.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Egnyte",
+        "domain": "egnyte.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Elastic Cloud",
+        "domain": "elastic.co",
+        "extension": "svg"
+    },
+    {
+        "name": "Electronic Arts (Origin)",
+        "domain": "ea.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Element",
+        "domain": "element.io",
+        "extension": "svg"
+    },
+    {
+        "name": "elmah.io",
+        "domain": "elmah.io",
+        "extension": "svg"
+    },
+    {
+        "name": "EmailMeForm",
+        "domain": "emailmeform.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Emma Email Marketing",
+        "domain": "myemma.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Emplifi",
+        "domain": "emplifi.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Eneba",
+        "domain": "eneba.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Engine Yard",
+        "domain": "engineyard.com",
+        "extension": "svg"
+    },
+    {
+        "name": "eNom",
+        "domain": "enom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ente",
+        "domain": "ente.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Envato",
+        "domain": "envato.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Envoyer",
+        "domain": "envoyer.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Epayslips",
+        "domain": "epayslips.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Epic Games",
+        "domain": "epicgames.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Epik",
+        "domain": "epik.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Equinix Metal",
+        "domain": "metal.equinix.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ESET HOME",
+        "domain": "eset.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ESL Play",
+        "domain": "play.eslgaming.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Esri",
+        "domain": "esri.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Etana Custody",
+        "domain": "etana.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Etsy",
+        "domain": "etsy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "eUKhost",
+        "domain": "eukhost.com",
+        "extension": "svg"
+    },
+    {
+        "name": "EuroDNS",
+        "domain": "eurodns.com",
+        "extension": "svg"
+    },
+    {
+        "name": "EVE Online",
+        "domain": "eveonline.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Everlaw",
+        "domain": "everlaw.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Evernote",
+        "domain": "evernote.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Exact Online",
+        "domain": "exact.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Exmo",
+        "domain": "exmo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Expensify",
+        "domain": "expensify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Expo",
+        "domain": "expo.dev",
+        "extension": "svg"
+    },
+    {
+        "name": "F-Secure",
+        "domain": "f-secure.com",
+        "extension": "svg"
+    },
+    {
+        "name": "F2Pool",
+        "domain": "f2pool.com",
+        "extension": "png"
+    },
+    {
+        "name": "Facebook",
+        "domain": "facebook.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FaceIT",
+        "domain": "faceit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fakturoid",
+        "domain": "fakturoid.cz",
+        "extension": "svg"
+    },
+    {
+        "name": "Fanatical",
+        "domain": "fanatical.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fandom",
+        "domain": "fandom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FanDuel",
+        "domain": "fanduel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FastComet",
+        "domain": "fastcomet.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fasthosts",
+        "domain": "fasthosts.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Fastly",
+        "domain": "fastly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fastmail",
+        "domain": "fastmail.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fathom",
+        "domain": "fathomhq.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fathom Analytics",
+        "domain": "usefathom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Faucet Crypto",
+        "domain": "faucetcrypto.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FaucetPay",
+        "domain": "faucetpay.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Fauna",
+        "domain": "fauna.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Favro",
+        "domain": "favro.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fax.Plus",
+        "domain": "fax.plus",
+        "extension": "svg"
+    },
+    {
+        "name": "Federal Student Aid",
+        "domain": "studentaid.gov",
+        "extension": "svg"
+    },
+    {
+        "name": "Feedly",
+        "domain": "feedly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Fidelity Investments",
+        "domain": "fidelity.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Figma",
+        "domain": "figma.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Filen",
+        "domain": "filen.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Files.com",
+        "domain": "files.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Finary",
+        "domain": "finary.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Findmyshift",
+        "domain": "findmyshift.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Finnair",
+        "domain": "finnair.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Firmex VDR",
+        "domain": "firmex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "First Tech Federal Credit Union",
+        "domain": "firsttechfed.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Flexera",
+        "domain": "flexera.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Flexera Software Vulnerability Research",
+        "domain": "app.flexera.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Flipsnack",
+        "domain": "flipsnack.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Floatplane",
+        "domain": "floatplane.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Flourish",
+        "domain": "flourish.studio",
+        "extension": "svg"
+    },
+    {
+        "name": "Fly.io",
+        "domain": "fly.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Flywheel",
+        "domain": "getflywheel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FogBugz",
+        "domain": "fogbugz.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FollowMyHealth",
+        "domain": "followmyhealth.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Formsite",
+        "domain": "formsite.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Formspree",
+        "domain": "formspree.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Formstack",
+        "domain": "formstack.com",
+        "extension": "svg"
+    },
+    {
+        "name": "fortrabbit",
+        "domain": "fortrabbit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FragDenStaat",
+        "domain": "fragdenstaat.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Frame.io",
+        "domain": "frame.io",
+        "extension": "svg"
+    },
+    {
+        "name": "FreeAgent",
+        "domain": "freeagent.com",
+        "extension": "svg"
+    },
+    {
+        "name": "freee",
+        "domain": "freee.co.jp",
+        "extension": "svg"
+    },
+    {
+        "name": "Freehostia",
+        "domain": "freehostia.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FreeTaxUSA",
+        "domain": "freetaxusa.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Freewallet",
+        "domain": "freewallet.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Freshworks",
+        "domain": "freshworks.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Front",
+        "domain": "front.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Frontify",
+        "domain": "frontify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "FuseBase",
+        "domain": "nimbusweb.me",
+        "extension": "svg"
+    },
+    {
+        "name": "Gaijin Entertainment",
+        "domain": "gaijin.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Galaxus",
+        "domain": "galaxus.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "GameBanana",
+        "domain": "gamebanana.com",
+        "extension": "png"
+    },
+    {
+        "name": "GameMaker",
+        "domain": "gamemaker.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Gandi",
+        "domain": "gandi.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Gate.io",
+        "domain": "gate.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Gatehub",
+        "domain": "gatehub.net",
+        "extension": "svg"
+    },
+    {
+        "name": "GeForce (Nvidia)",
+        "domain": "geforce.com",
+        "extension": "svg"
+    },
+    {
+        "name": "General Motors",
+        "domain": "gm.com",
+        "extension": "svg"
+    },
+    {
+        "name": "George Washington University",
+        "domain": "gwu.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "GetResponse",
+        "domain": "getresponse.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Getscreen.me",
+        "domain": "getscreen.me",
+        "extension": "svg"
+    },
+    {
+        "name": "GitHub",
+        "domain": "github.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GitLab",
+        "domain": "gitlab.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Glassdoor",
+        "domain": "glassdoor.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Gleam",
+        "domain": "gleam.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Gmail",
+        "domain": "mail.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GMX.com",
+        "domain": "gmx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GMX.net",
+        "domain": "gmx.net",
+        "extension": "svg"
+    },
+    {
+        "name": "GoCardless",
+        "domain": "gocardless.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GoDaddy",
+        "domain": "godaddy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GOG.com",
+        "domain": "gog.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Chat",
+        "domain": "chat.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Cloud Platform",
+        "domain": "cloud.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Drive",
+        "domain": "drive.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Fi",
+        "domain": "fi.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Fiber",
+        "domain": "fiber.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Fit",
+        "domain": "fit.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Meet",
+        "domain": "meet.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Nest",
+        "domain": "nest.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Pay",
+        "domain": "pay.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Google Play",
+        "domain": "play.google.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GoSquared",
+        "domain": "gosquared.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GoTo",
+        "domain": "goto.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GOV.UK",
+        "domain": "gov.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Gradintelligence",
+        "domain": "gradintel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Grammarly",
+        "domain": "grammarly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "GREE",
+        "domain": "product.gree.net",
+        "extension": "svg"
+    },
+    {
+        "name": "GreenGeeks",
+        "domain": "greengeeks.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Greenhost",
+        "domain": "greenhost.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Groups.io",
+        "domain": "groups.io",
+        "extension": "svg"
+    },
+    {
+        "name": "GrowingIO",
+        "domain": "growingio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Guideline",
+        "domain": "guideline.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Guild Wars 2",
+        "domain": "guildwars2.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Guilded",
+        "domain": "guilded.gg",
+        "extension": "svg"
+    },
+    {
+        "name": "Gumlet",
+        "domain": "gumlet.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Gusto",
+        "domain": "gusto.com",
+        "extension": "svg"
+    },
+    {
+        "name": "H&R Block",
+        "domain": "hrblock.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hack The Box",
+        "domain": "hackthebox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HackerOne",
+        "domain": "hackerone.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HappyFox",
+        "domain": "happyfox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Harvard University",
+        "domain": "harvard.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "HashiCorp Cloud Platform",
+        "domain": "cloud.hashicorp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HashiCorp Terraform Enterprise",
+        "domain": "app.terraform.io",
+        "extension": "svg"
+    },
+    {
+        "name": "HashiCorp Vagrant Cloud",
+        "domain": "app.vagrantup.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hatch",
+        "domain": "hatchinvest.nz",
+        "extension": "svg"
+    },
+    {
+        "name": "Hatena",
+        "domain": "hatena.ne.jp",
+        "extension": "svg"
+    },
+    {
+        "name": "Headway",
+        "domain": "headway.co",
+        "extension": "svg"
+    },
+    {
+        "name": "Heap",
+        "domain": "heap.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Help Scout",
+        "domain": "helpscout.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Heroku",
+        "domain": "heroku.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hetzner",
+        "domain": "hetzner.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hevo Data",
+        "domain": "hevodata.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hewlett Packard Enterprise",
+        "domain": "hpe.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hexonet",
+        "domain": "hexonet.net",
+        "extension": "svg"
+    },
+    {
+        "name": "HEY",
+        "domain": "hey.com",
+        "extension": "svg"
+    },
+    {
+        "name": "hide.me VPN",
+        "domain": "hide.me",
+        "extension": "svg"
+    },
+    {
+        "name": "HiDrive (STRATO)",
+        "domain": "hidrive.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hint Health",
+        "domain": "hint.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HitBTC",
+        "domain": "hitbtc.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HMRC",
+        "domain": "hmrc.gov.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Hogeschool van Amsterdam",
+        "domain": "hva.nl",
+        "extension": "svg"
+    },
+    {
+        "name": "Home Assistant",
+        "domain": "home-assistant.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Honeybadger",
+        "domain": "honeybadger.io",
+        "extension": "svg"
+    },
+    {
+        "name": "HootSuite",
+        "domain": "hootsuite.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hostek",
+        "domain": "hostek.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hostens",
+        "domain": "hostens.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hosting Ukraine",
+        "domain": "ukraine.com.ua",
+        "extension": "svg"
+    },
+    {
+        "name": "Hostinger",
+        "domain": "hostinger.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hostiso",
+        "domain": "hostiso.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HostMonster",
+        "domain": "hostmonster.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hostpoint",
+        "domain": "hostpoint.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "HostUS",
+        "domain": "hostus.us",
+        "extension": "svg"
+    },
+    {
+        "name": "Hostwinds",
+        "domain": "hostwinds.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hotjar",
+        "domain": "hotjar.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hover.com",
+        "domain": "hover.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HP",
+        "domain": "hp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Huawei Cloud",
+        "domain": "huaweicloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HubSpot",
+        "domain": "hubspot.com",
+        "extension": "svg"
+    },
+    {
+        "name": "HuggingFace",
+        "domain": "huggingface.co",
+        "extension": "svg"
+    },
+    {
+        "name": "Humble Bundle",
+        "domain": "humblebundle.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Huobi",
+        "domain": "huobi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hurricane Electric",
+        "domain": "he.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Hushmail",
+        "domain": "hushmail.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Hypixel",
+        "domain": "hypixel.net",
+        "extension": "png"
+    },
+    {
+        "name": "IBM Cloud",
+        "domain": "cloud.ibm.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ICDSoft",
+        "domain": "icdsoft.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Icedrive",
+        "domain": "icedrive.net",
+        "extension": "svg"
+    },
+    {
+        "name": "ID.me",
+        "domain": "id.me",
+        "extension": "svg"
+    },
+    {
+        "name": "IDrive",
+        "domain": "idrive.com",
+        "extension": "svg"
+    },
+    {
+        "name": "IFTTT",
+        "domain": "ifttt.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ImmobilienScout24",
+        "domain": "immobilienscout24.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Imperva",
+        "domain": "imperva.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ImprovMX",
+        "domain": "improvmx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Inbox.lv",
+        "domain": "inbox.lv",
+        "extension": "svg"
+    },
+    {
+        "name": "Independent Reserve",
+        "domain": "independentreserve.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Independer",
+        "domain": "independer.nl",
+        "extension": "svg"
+    },
+    {
+        "name": "Infomaniak",
+        "domain": "infomaniak.com",
+        "extension": "svg"
+    },
+    {
+        "name": "InMotion Hosting",
+        "domain": "inmotionhosting.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Instagram",
+        "domain": "instagram.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Instant-Gaming",
+        "domain": "instant-gaming.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Intercom",
+        "domain": "intercom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Internet.bs",
+        "domain": "internetbs.net",
+        "extension": "svg"
+    },
+    {
+        "name": "InterServer",
+        "domain": "interserver.net",
+        "extension": "svg"
+    },
+    {
+        "name": "intigriti",
+        "domain": "intigriti.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Intuit",
+        "domain": "intuit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Intuit TurboTax",
+        "domain": "turbotax.intuit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Invictus Capital",
+        "domain": "invictuscapital.com",
+        "extension": "svg"
+    },
+    {
+        "name": "INWX",
+        "domain": "inwx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "IO Zoom",
+        "domain": "iozoom.com",
+        "extension": "svg"
+    },
+    {
+        "name": "IONOS",
+        "domain": "ionos.com",
+        "extension": "svg"
+    },
+    {
+        "name": "IronVest",
+        "domain": "ironvest.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ISC2",
+        "domain": "isc2.org",
+        "extension": "svg"
+    },
+    {
+        "name": "ISL Online",
+        "domain": "islonline.com",
+        "extension": "svg"
+    },
+    {
+        "name": "IT Glue",
+        "domain": "itglue.com",
+        "extension": "svg"
+    },
+    {
+        "name": "itch.io",
+        "domain": "itch.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Iterable",
+        "domain": "iterable.com",
+        "extension": "svg"
+    },
+    {
+        "name": "itslearning",
+        "domain": "itslearning.com",
+        "extension": "svg"
+    },
+    {
+        "name": "IVPN",
+        "domain": "ivpn.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Jamf Now",
+        "domain": "jamfnow.com",
+        "extension": "svg"
+    },
+    {
+        "name": "JetBrains",
+        "domain": "jetbrains.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Jitbit Helpdesk",
+        "domain": "jitbit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Joker.com",
+        "domain": "joker.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Jotform",
+        "domain": "jotform.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Jottacloud",
+        "domain": "jottacloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Jovia Financial",
+        "domain": "jovia.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Joyent",
+        "domain": "joyent.com",
+        "extension": "svg"
+    },
+    {
+        "name": "JumpCloud",
+        "domain": "jumpcloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "justhost",
+        "domain": "justhost.com",
+        "extension": "png"
+    },
+    {
+        "name": "Justworks",
+        "domain": "justworks.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kagi",
+        "domain": "kagi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kajabi",
+        "domain": "kajabi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kanka",
+        "domain": "kanka.io",
+        "extension": "png"
+    },
+    {
+        "name": "Karlsruher Institut f\u00fcr Technologie",
+        "domain": "kit.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "Kaspersky",
+        "domain": "kaspersky.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kayako",
+        "domain": "kayako.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Keeper",
+        "domain": "keepersecurity.com",
+        "extension": "svg"
+    },
+    {
+        "name": "KeyCDN",
+        "domain": "keycdn.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kick",
+        "domain": "kick.com",
+        "extension": "svg"
+    },
+    {
+        "name": "KickEX",
+        "domain": "kickex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kickstarter",
+        "domain": "kickstarter.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kinsta",
+        "domain": "kinsta.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kintone",
+        "domain": "kintone.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Klaviyo",
+        "domain": "klaviyo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Knack",
+        "domain": "knack.com",
+        "extension": "svg"
+    },
+    {
+        "name": "KnowBe4",
+        "domain": "knowbe4.com",
+        "extension": "svg"
+    },
+    {
+        "name": "KnownHost",
+        "domain": "knownhost.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ko-fi",
+        "domain": "ko-fi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Koho",
+        "domain": "koho.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Koofr",
+        "domain": "koofr.eu",
+        "extension": "svg"
+    },
+    {
+        "name": "Korbit",
+        "domain": "korbit.co.kr",
+        "extension": "svg"
+    },
+    {
+        "name": "Kraken",
+        "domain": "kraken.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Kriptomat",
+        "domain": "kriptomat.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Krystal",
+        "domain": "krystal.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Kuna",
+        "domain": "kuna.io",
+        "extension": "svg"
+    },
+    {
+        "name": "La Trobe University",
+        "domain": "latrobe.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Labcorp Patient",
+        "domain": "patient.labcorp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Laravel Forge",
+        "domain": "forge.laravel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Laravel Vapor",
+        "domain": "vapor.laravel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Larian",
+        "domain": "larian.com",
+        "extension": "png"
+    },
+    {
+        "name": "LastPass",
+        "domain": "lastpass.com",
+        "extension": "svg"
+    },
+    {
+        "name": "LATOKEN",
+        "domain": "latoken.com",
+        "extension": "svg"
+    },
+    {
+        "name": "LaunchDarkly",
+        "domain": "launchdarkly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Launchpad",
+        "domain": "launchpad.net",
+        "extension": "svg"
+    },
+    {
+        "name": "LCN.com",
+        "domain": "lcn.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Leaseweb",
+        "domain": "leaseweb.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Lemmy",
+        "domain": "join-lemmy.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Lenovo",
+        "domain": "lenovo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Let's Do This",
+        "domain": "letsdothis.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Letterboxd",
+        "domain": "letterboxd.com",
+        "extension": "svg"
+    },
+    {
+        "name": "lexoffice",
+        "domain": "lexoffice.de",
+        "extension": "svg"
+    },
+    {
+        "name": "lichess.org",
+        "domain": "lichess.org",
+        "extension": "svg"
+    },
+    {
+        "name": "LIHKG",
+        "domain": "lihkg.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Line 6",
+        "domain": "line6.com",
+        "extension": "svg"
+    },
+    {
+        "name": "LinkedIn",
+        "domain": "linkedin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Linode",
+        "domain": "linode.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Liquid",
+        "domain": "liquid.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Liquid Web",
+        "domain": "liquidweb.com",
+        "extension": "svg"
+    },
+    {
+        "name": "LiteBit",
+        "domain": "litebit.eu",
+        "extension": "svg"
+    },
+    {
+        "name": "Lnk.Bio",
+        "domain": "lnk.bio",
+        "extension": "svg"
+    },
+    {
+        "name": "Lobsters",
+        "domain": "lobste.rs",
+        "extension": "svg"
+    },
+    {
+        "name": "Localize",
+        "domain": "localizejs.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Login.gov",
+        "domain": "login.gov",
+        "extension": "svg"
+    },
+    {
+        "name": "Logitech",
+        "domain": "logitech.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Lokalise",
+        "domain": "lokalise.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Lone Star College",
+        "domain": "lonestar.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "Looker",
+        "domain": "looker.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Lunch Money",
+        "domain": "lunchmoney.app",
+        "extension": "png"
+    },
+    {
+        "name": "Luno",
+        "domain": "luno.com",
+        "extension": "svg"
+    },
+    {
+        "name": "M1",
+        "domain": "m1.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MacStadium",
+        "domain": "macstadium.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Magnet.me",
+        "domain": "magnet.me",
+        "extension": "svg"
+    },
+    {
+        "name": "MaiCoin",
+        "domain": "maicoin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mail.com",
+        "domain": "mail.com",
+        "extension": "svg"
+    },
+    {
+        "name": "mail.de",
+        "domain": "mail.de",
+        "extension": "svg"
+    },
+    {
+        "name": "mailbox.org",
+        "domain": "mailbox.org",
+        "extension": "svg"
+    },
+    {
+        "name": "MailChimp",
+        "domain": "mailchimp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MailerLite",
+        "domain": "mailerlite.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mailfence",
+        "domain": "mailfence.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mailgun",
+        "domain": "mailgun.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mailjet",
+        "domain": "mailjet.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mailo",
+        "domain": "mailo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Make",
+        "domain": "make.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Malwarebytes Nebula",
+        "domain": "cloud.malwarebytes.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Malwarebytes OneView",
+        "domain": "oneview.malwarebytes.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MangaDex",
+        "domain": "mangadex.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Mapbox",
+        "domain": "mapbox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Maropost Commerce Cloud",
+        "domain": "netohq.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Masaryk University",
+        "domain": "muni.cz",
+        "extension": "svg"
+    },
+    {
+        "name": "Mastodon",
+        "domain": "joinmastodon.org",
+        "extension": "svg"
+    },
+    {
+        "name": "MathWorks",
+        "domain": "mathworks.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Matomo Cloud",
+        "domain": "matomo.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Mattermost",
+        "domain": "mattermost.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MB Connect Line",
+        "domain": "mbconnectline.com",
+        "extension": "svg"
+    },
+    {
+        "name": "McGill University",
+        "domain": "mcgill.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Mega",
+        "domain": "mega.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Meister",
+        "domain": "meister.co",
+        "extension": "svg"
+    },
+    {
+        "name": "Mercado Bitcoin",
+        "domain": "mercadobitcoin.com.br",
+        "extension": "svg"
+    },
+    {
+        "name": "Mercado Libre",
+        "domain": "mercadolibre.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mercury",
+        "domain": "mercury.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mercury Cash",
+        "domain": "mercury.cash",
+        "extension": "svg"
+    },
+    {
+        "name": "Meta",
+        "domain": "meta.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MetaMask",
+        "domain": "metamask.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Metorik",
+        "domain": "metorik.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MEXC",
+        "domain": "mexc.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Microsoft 365 Copilot",
+        "domain": "m365.cloud.microsoft",
+        "extension": "svg"
+    },
+    {
+        "name": "Microsoft Azure",
+        "domain": "azure.microsoft.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Microsoft To-Do",
+        "domain": "todo.microsoft.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Microworkers",
+        "domain": "microworkers.com",
+        "extension": "png"
+    },
+    {
+        "name": "Migadu",
+        "domain": "migadu.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Migros",
+        "domain": "migros.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "Mimecast",
+        "domain": "mimecast.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Minds",
+        "domain": "minds.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Minecraft",
+        "domain": "minecraft.net",
+        "extension": "png"
+    },
+    {
+        "name": "Mint",
+        "domain": "mint.intuit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mintos",
+        "domain": "mintos.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Miro",
+        "domain": "miro.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Miss Hosting",
+        "domain": "misshosting.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Missive App",
+        "domain": "missiveapp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mist",
+        "domain": "mist.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Modrinth",
+        "domain": "modrinth.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Monarch Money",
+        "domain": "monarchmoney.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Monash University",
+        "domain": "monash.edu",
+        "extension": "png"
+    },
+    {
+        "name": "Monday.com",
+        "domain": "monday.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Monex",
+        "domain": "monex.co.jp",
+        "extension": "svg"
+    },
+    {
+        "name": "Moneybird",
+        "domain": "moneybird.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MongoDB",
+        "domain": "mongodb.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Moniker",
+        "domain": "moniker.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Moqups",
+        "domain": "moqups.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Morgan Stanley",
+        "domain": "morganstanley.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mos.ru",
+        "domain": "mos.ru",
+        "extension": "svg"
+    },
+    {
+        "name": "Mountain America Credit Union",
+        "domain": "macu.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Mozilla",
+        "domain": "accounts.firefox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MuleSoft",
+        "domain": "mulesoft.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MURAL",
+        "domain": "mural.co",
+        "extension": "svg"
+    },
+    {
+        "name": "MxToolbox",
+        "domain": "mxtoolbox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MyAnimeList",
+        "domain": "myanimelist.net",
+        "extension": "svg"
+    },
+    {
+        "name": "MyChart",
+        "domain": "mychart.org",
+        "extension": "svg"
+    },
+    {
+        "name": "MyFRITZ!Net",
+        "domain": "myfritz.net",
+        "extension": "svg"
+    },
+    {
+        "name": "MyHeritage",
+        "domain": "myheritage.com",
+        "extension": "svg"
+    },
+    {
+        "name": "MYOB",
+        "domain": "myob.com",
+        "extension": "svg"
+    },
+    {
+        "name": "myPrimobox",
+        "domain": "myprimobox.net",
+        "extension": "svg"
+    },
+    {
+        "name": "myRMV",
+        "domain": "atlas-myrmv.massdot.state.ma.us",
+        "extension": "png"
+    },
+    {
+        "name": "MyTax Illinois",
+        "domain": "mytax.illinois.gov",
+        "extension": "png"
+    },
+    {
+        "name": "N-able",
+        "domain": "n-able.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NAGA",
+        "domain": "naga.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NairaEx",
+        "domain": "nairaex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Name.com",
+        "domain": "name.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Namebase",
+        "domain": "namebase.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Namecheap",
+        "domain": "namecheap.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NameHero",
+        "domain": "namehero.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Namesco",
+        "domain": "names.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "NameSilo.com",
+        "domain": "namesilo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NASA Federal Credit Union",
+        "domain": "nasafcu.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NDAX",
+        "domain": "ndax.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Neolo",
+        "domain": "neolo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Neopets",
+        "domain": "neopets.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Netcore Cloud Email API",
+        "domain": "netcorecloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "netcup",
+        "domain": "netcup.eu",
+        "extension": "svg"
+    },
+    {
+        "name": "NetEase Mail",
+        "domain": "mail.163.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NETELLER",
+        "domain": "neteller.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Netim",
+        "domain": "netim.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Netlify",
+        "domain": "netlify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NetSuite",
+        "domain": "netsuite.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Newegg",
+        "domain": "newegg.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Newgrounds",
+        "domain": "newgrounds.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Nexcess",
+        "domain": "nexcess.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Nexon",
+        "domain": "nexon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NextDNS",
+        "domain": "nextdns.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Nexus Mods",
+        "domain": "nexusmods.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ngrok",
+        "domain": "ngrok.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Niagahoster",
+        "domain": "niagahoster.co.id",
+        "extension": "svg"
+    },
+    {
+        "name": "NiceHash",
+        "domain": "nicehash.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Niconico",
+        "domain": "nicovideo.jp",
+        "extension": "svg"
+    },
+    {
+        "name": "Nifty",
+        "domain": "niftypm.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Nintendo Account",
+        "domain": "accounts.nintendo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Nitrado",
+        "domain": "server.nitrado.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Nitro Type",
+        "domain": "nitrotype.com",
+        "extension": "svg"
+    },
+    {
+        "name": "No Starch Press",
+        "domain": "nostarch.com",
+        "extension": "svg"
+    },
+    {
+        "name": "No-IP",
+        "domain": "noip.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Nominet",
+        "domain": "nominet.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "NordLayer",
+        "domain": "nordlayer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NordLocker",
+        "domain": "nordlocker.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NordPass",
+        "domain": "nordpass.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NordVPN",
+        "domain": "nordvpn.com",
+        "extension": "svg"
+    },
+    {
+        "name": "North Carolina State University",
+        "domain": "ncsu.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "Northwestern Mutual",
+        "domain": "northwesternmutual.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Norton",
+        "domain": "norton.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Notejoy",
+        "domain": "notejoy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Notesnook",
+        "domain": "notesnook.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Notion",
+        "domain": "notion.so",
+        "extension": "svg"
+    },
+    {
+        "name": "Nozbe Teams",
+        "domain": "nozbe.com",
+        "extension": "svg"
+    },
+    {
+        "name": "npm",
+        "domain": "npmjs.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NS1",
+        "domain": "ns1.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NuGet",
+        "domain": "nuget.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Nulab",
+        "domain": "nulab.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Nutmeg",
+        "domain": "nutmeg.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Nutstore",
+        "domain": "jianguoyun.com",
+        "extension": "svg"
+    },
+    {
+        "name": "NY.gov ID",
+        "domain": "my.ny.gov",
+        "extension": "svg"
+    },
+    {
+        "name": "o2switch",
+        "domain": "o2switch.fr",
+        "extension": "svg"
+    },
+    {
+        "name": "Obsidian",
+        "domain": "obsidian.md",
+        "extension": "svg"
+    },
+    {
+        "name": "Odoo",
+        "domain": "odoo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Okta",
+        "domain": "okta.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OKX",
+        "domain": "okx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OLG",
+        "domain": "olg.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "omg.lol",
+        "domain": "omg.lol",
+        "extension": "svg"
+    },
+    {
+        "name": "OMGServ",
+        "domain": "omgserv.com",
+        "extension": "svg"
+    },
+    {
+        "name": "One.com",
+        "domain": "one.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OneDrive",
+        "domain": "onedrive.live.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Onehub",
+        "domain": "onehub.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OneLogin",
+        "domain": "onelogin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OneSignal",
+        "domain": "onesignal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Onet",
+        "domain": "onet.pl",
+        "extension": "svg"
+    },
+    {
+        "name": "Onshape",
+        "domain": "onshape.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Open Collective",
+        "domain": "opencollective.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Open Science Framework (OSF)",
+        "domain": "osf.io",
+        "extension": "svg"
+    },
+    {
+        "name": "OpenAI (ChatGPT)",
+        "domain": "openai.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OpenApply",
+        "domain": "openapply.com",
+        "extension": "png"
+    },
+    {
+        "name": "OpenDNS",
+        "domain": "opendns.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Openprovider",
+        "domain": "openprovider.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OpenSea",
+        "domain": "opensea.io",
+        "extension": "svg"
+    },
+    {
+        "name": "OpenSRS",
+        "domain": "opensrs.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Opera",
+        "domain": "auth.opera.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Optimizely",
+        "domain": "optimizely.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Oracle Cloud Infrastructure",
+        "domain": "cloud.oracle.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ORCID",
+        "domain": "orcid.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Outbrain",
+        "domain": "outbrain.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Outlook.com",
+        "domain": "outlook.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OVH",
+        "domain": "ovh.com",
+        "extension": "svg"
+    },
+    {
+        "name": "OzBargain",
+        "domain": "ozbargain.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Packagist",
+        "domain": "packagist.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Paddle",
+        "domain": "paddle.com",
+        "extension": "svg"
+    },
+    {
+        "name": "pair Domains",
+        "domain": "pairdomains.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Panda Security",
+        "domain": "pandasecurity.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Panic Sync",
+        "domain": "panic.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Panorama9",
+        "domain": "panorama9.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Panther",
+        "domain": "runpanther.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Parallels",
+        "domain": "parallels.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Parimatch",
+        "domain": "parimatch.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Parsec",
+        "domain": "parsec.app",
+        "extension": "svg"
+    },
+    {
+        "name": "Particle",
+        "domain": "particle.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Passpack",
+        "domain": "passpack.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Passwarden",
+        "domain": "keepsolid.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Patient Access",
+        "domain": "patientaccess.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Patreon",
+        "domain": "patreon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Paxful",
+        "domain": "paxful.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Paxos",
+        "domain": "paxos.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Paycor",
+        "domain": "paycor.com",
+        "extension": "svg"
+    },
+    {
+        "name": "PayKassa",
+        "domain": "paykassa.pro",
+        "extension": "svg"
+    },
+    {
+        "name": "PayPal",
+        "domain": "paypal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Payworks",
+        "domain": "payworks.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "PC Case Gear",
+        "domain": "pccasegear.com",
+        "extension": "svg"
+    },
+    {
+        "name": "PCloud",
+        "domain": "pcloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pennsylvania Dept of Revenue myPATH",
+        "domain": "mypath.pa.gov",
+        "extension": "svg"
+    },
+    {
+        "name": "Perimeter 81",
+        "domain": "perimeter81.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Phemex",
+        "domain": "phemex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Philipps-Universit\u00e4t Marburg",
+        "domain": "uni-marburg.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Philips Hue",
+        "domain": "philips-hue.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Phrase",
+        "domain": "phrase.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pinata",
+        "domain": "pinata.cloud",
+        "extension": "svg"
+    },
+    {
+        "name": "Pirate Ship",
+        "domain": "pirateship.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pivotal Tracker",
+        "domain": "pivotaltracker.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Piwik PRO",
+        "domain": "piwik.pro",
+        "extension": "svg"
+    },
+    {
+        "name": "Pixieset",
+        "domain": "pixieset.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pixiv",
+        "domain": "pixiv.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Plaid",
+        "domain": "plaid.com",
+        "extension": "svg"
+    },
+    {
+        "name": "PlanetHoster",
+        "domain": "planethoster.com",
+        "extension": "svg"
+    },
+    {
+        "name": "PlanetScale",
+        "domain": "planetscale.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Planfix",
+        "domain": "planfix.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Planio",
+        "domain": "plan.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Planning Center",
+        "domain": "planningcenter.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Plausible Analytics",
+        "domain": "plausible.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Playstation Network",
+        "domain": "playstation.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pleo",
+        "domain": "pleo.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Plesk 360",
+        "domain": "platform360.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Plex",
+        "domain": "plex.tv",
+        "extension": "svg"
+    },
+    {
+        "name": "Pluralsight",
+        "domain": "pluralsight.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Plurk",
+        "domain": "plurk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Plutus",
+        "domain": "plutus.it",
+        "extension": "svg"
+    },
+    {
+        "name": "Pobox",
+        "domain": "pobox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pocket",
+        "domain": "getpocket.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pocketsmith",
+        "domain": "pocketsmith.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Podio",
+        "domain": "podio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "POEditor",
+        "domain": "poeditor.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Poli Systems",
+        "domain": "polisystems.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "Poloniex",
+        "domain": "poloniex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Porkbun",
+        "domain": "porkbun.com",
+        "extension": "svg"
+    },
+    {
+        "name": "POST Luxembourg",
+        "domain": "webmail.pt.lu",
+        "extension": "svg"
+    },
+    {
+        "name": "Posteo",
+        "domain": "posteo.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Postman",
+        "domain": "postman.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Postmarkapp",
+        "domain": "postmarkapp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Postype",
+        "domain": "postype.com",
+        "extension": "svg"
+    },
+    {
+        "name": "PowerReviews",
+        "domain": "powerreviews.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Practice Better",
+        "domain": "practicebetter.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Prey",
+        "domain": "preyproject.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Principal",
+        "domain": "principal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Privacy",
+        "domain": "privacy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Private Internet Access",
+        "domain": "privateinternetaccess.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ProBit",
+        "domain": "probit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ProfitWell",
+        "domain": "profitwell.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Prostocash",
+        "domain": "prostocash.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Protolabs",
+        "domain": "protolabs.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Proton",
+        "domain": "proton.me",
+        "extension": "svg"
+    },
+    {
+        "name": "PSNProfiles",
+        "domain": "psnprofiles.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Purse",
+        "domain": "purse.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Pusher",
+        "domain": "pusher.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Pushover",
+        "domain": "pushover.net",
+        "extension": "svg"
+    },
+    {
+        "name": "put.io",
+        "domain": "put.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Puter",
+        "domain": "puter.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Putler",
+        "domain": "putler.com",
+        "extension": "svg"
+    },
+    {
+        "name": "PyPI",
+        "domain": "pypi.org",
+        "extension": "svg"
+    },
+    {
+        "name": "PythonAnywhere",
+        "domain": "pythonanywhere.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Qantas",
+        "domain": "qantas.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Qlik",
+        "domain": "qlik.com",
+        "extension": "svg"
+    },
+    {
+        "name": "QNAP",
+        "domain": "qnap.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Questrade",
+        "domain": "questrade.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Quickbooks Online",
+        "domain": "quickbooks.intuit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "QuickFile",
+        "domain": "quickfile.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Quidax",
+        "domain": "quidax.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rackspace",
+        "domain": "rackspace.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Railway",
+        "domain": "railway.app",
+        "extension": "svg"
+    },
+    {
+        "name": "Raindrop",
+        "domain": "raindrop.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Raisin",
+        "domain": "raisin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RamNode",
+        "domain": "ramnode.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ramp",
+        "domain": "ramp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RapidAPI",
+        "domain": "rapidapi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rapidgator",
+        "domain": "rapidgator.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Raspberry Pi",
+        "domain": "raspberrypi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ravelin",
+        "domain": "ravelin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Raygun",
+        "domain": "raygun.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Razer",
+        "domain": "razer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ReadMe",
+        "domain": "readme.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RealMe",
+        "domain": "realme.govt.nz",
+        "extension": "svg"
+    },
+    {
+        "name": "RealVNC",
+        "domain": "realvnc.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rebel.com",
+        "domain": "rebel.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rebrandly",
+        "domain": "rebrandly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Recruitee",
+        "domain": "recruitee.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Red Hat",
+        "domain": "redhat.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Reddit",
+        "domain": "reddit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Redis Enterprise Cloud",
+        "domain": "redis.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RedShelf",
+        "domain": "redshelf.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Refersion",
+        "domain": "refersion.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Register365",
+        "domain": "register365.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Registro.br",
+        "domain": "registro.br",
+        "extension": "svg"
+    },
+    {
+        "name": "Rejoiner",
+        "domain": "rejoiner.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Remitano",
+        "domain": "remitano.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Remote Desktop Manager",
+        "domain": "remotedesktopmanager.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Render",
+        "domain": "render.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Repairshopr",
+        "domain": "repairshopr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Replicon",
+        "domain": "replicon.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Report URI",
+        "domain": "report-uri.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Republic",
+        "domain": "republic.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Resend",
+        "domain": "resend.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RestoreCord",
+        "domain": "restorecord.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Restream.io",
+        "domain": "restream.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Rev",
+        "domain": "rev.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RevenueCat",
+        "domain": "revenuecat.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rewind",
+        "domain": "rewind.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RightCapital",
+        "domain": "rightcapital.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ring",
+        "domain": "ring.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ripe NCC",
+        "domain": "ripe.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Ripio",
+        "domain": "ripio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rippling",
+        "domain": "rippling.com",
+        "extension": "svg"
+    },
+    {
+        "name": "River Financial",
+        "domain": "river.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RMIT University",
+        "domain": "rmit.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Roberts Space Industries",
+        "domain": "robertsspaceindustries.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Roblox",
+        "domain": "roblox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RoboForm",
+        "domain": "roboform.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rocket Beans TV",
+        "domain": "rocketbeans.tv",
+        "extension": "svg"
+    },
+    {
+        "name": "Rockstar Games",
+        "domain": "rockstargames.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Rollbar",
+        "domain": "rollbar.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RU-CENTER",
+        "domain": "nic.ru",
+        "extension": "svg"
+    },
+    {
+        "name": "RubyGems.org",
+        "domain": "rubygems.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Runbox",
+        "domain": "runbox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "RunCloud",
+        "domain": "runcloud.io",
+        "extension": "svg"
+    },
+    {
+        "name": "RuneScape",
+        "domain": "runescape.com",
+        "extension": "png"
+    },
+    {
+        "name": "RunSignUp",
+        "domain": "runsignup.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Russian Post (\u041f\u043e\u0447\u0442\u0430 \u0420\u043e\u0441\u0441\u0438\u0438)",
+        "domain": "pochta.ru",
+        "extension": "png"
+    },
+    {
+        "name": "Sailthru",
+        "domain": "sailthru.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Salesforce",
+        "domain": "salesforce.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Samsung",
+        "domain": "samsung.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Samsung SmartThings",
+        "domain": "smartthings.com",
+        "extension": "svg"
+    },
+    {
+        "name": "San Francisco Fire Credit Union",
+        "domain": "sffirecu.org",
+        "extension": "svg"
+    },
+    {
+        "name": "SaneBox",
+        "domain": "sanebox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SANS",
+        "domain": "sans.org",
+        "extension": "svg"
+    },
+    {
+        "name": "SAPO Mail",
+        "domain": "mail.sapo.pt",
+        "extension": "svg"
+    },
+    {
+        "name": "SatoshiTango",
+        "domain": "satoshitango.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Scalefusion",
+        "domain": "scalefusion.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ScaleGrid",
+        "domain": "scalegrid.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Scaleway",
+        "domain": "scaleway.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Scalr",
+        "domain": "scalr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Schibsted",
+        "domain": "schibsted.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Schneider Electric",
+        "domain": "se.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Scripting Helpers",
+        "domain": "scriptinghelpers.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Scryfall",
+        "domain": "scryfall.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SeatGeek",
+        "domain": "seatgeek.com",
+        "extension": "svg"
+    },
+    {
+        "name": "section.io",
+        "domain": "section.io",
+        "extension": "svg"
+    },
+    {
+        "name": "SecurityTrails",
+        "domain": "securitytrails.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Segment",
+        "domain": "segment.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SelfWealth",
+        "domain": "selfwealth.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Sellix",
+        "domain": "sellix.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Semaphore",
+        "domain": "semaphoreci.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sendcloud",
+        "domain": "sendcloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SendOwl",
+        "domain": "sendowl.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SendSafely",
+        "domain": "sendsafely.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sentry",
+        "domain": "sentry.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Server.pro",
+        "domain": "server.pro",
+        "extension": "svg"
+    },
+    {
+        "name": "ServerPilot",
+        "domain": "serverpilot.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Serverspace",
+        "domain": "serverspace.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Servus Credit Union",
+        "domain": "servus.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Seznam.cz",
+        "domain": "seznam.cz",
+        "extension": "svg"
+    },
+    {
+        "name": "Shadow",
+        "domain": "shadow.tech",
+        "extension": "svg"
+    },
+    {
+        "name": "Shareworks",
+        "domain": "shareworks.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Shift4Shop",
+        "domain": "shift4shop.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Shopify",
+        "domain": "shopify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Short.io",
+        "domain": "short.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Shortcut",
+        "domain": "shortcut.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Shrimpy",
+        "domain": "shrimpy.io",
+        "extension": "svg"
+    },
+    {
+        "name": "SideQuest",
+        "domain": "sidequestvr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sign.Plus",
+        "domain": "sign.plus",
+        "extension": "svg"
+    },
+    {
+        "name": "SignRequest",
+        "domain": "signrequest.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Simon Fraser University",
+        "domain": "sfu.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "SimpleLogin",
+        "domain": "simplelogin.io",
+        "extension": "svg"
+    },
+    {
+        "name": "SimplyBook",
+        "domain": "simplybook.me",
+        "extension": "svg"
+    },
+    {
+        "name": "sipgate",
+        "domain": "sipgate.de",
+        "extension": "png"
+    },
+    {
+        "name": "Sisense Cloud Data Teams",
+        "domain": "sisense.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SiteGround",
+        "domain": "siteground.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sketch",
+        "domain": "sketch.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SketchUp",
+        "domain": "sketchup.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Skinport",
+        "domain": "skinport.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Skype",
+        "domain": "skype.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Slack",
+        "domain": "slack.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Smarkets",
+        "domain": "smarkets.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Smartly.io",
+        "domain": "smartly.io",
+        "extension": "svg"
+    },
+    {
+        "name": "SmartSimple",
+        "domain": "smartsimple.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SmartSurvey",
+        "domain": "smartsurvey.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "SMSPool",
+        "domain": "smspool.net",
+        "extension": "svg"
+    },
+    {
+        "name": "SmugMug",
+        "domain": "smugmug.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Snapchat",
+        "domain": "snapchat.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SocketLabs",
+        "domain": "socketlabs.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SoFi",
+        "domain": "sofi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SolarWinds",
+        "domain": "solarwinds.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sonic",
+        "domain": "sonic.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sonix",
+        "domain": "sonix.ai",
+        "extension": "svg"
+    },
+    {
+        "name": "Sophos Central",
+        "domain": "central.sophos.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sophos Home",
+        "domain": "home.sophos.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SoundCloud",
+        "domain": "soundcloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SourceForge",
+        "domain": "sourceforge.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Southern California Gas Company",
+        "domain": "socalgas.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SouthXchange",
+        "domain": "southxchange.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SpaceHey",
+        "domain": "spacehey.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Spaceship",
+        "domain": "spaceship.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SparkPost",
+        "domain": "sparkpost.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SpectroCoin",
+        "domain": "spectrocoin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Splashtop",
+        "domain": "splashtop.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Split",
+        "domain": "split.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Spotify for Artists",
+        "domain": "artists.spotify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Spreedly",
+        "domain": "spreedly.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Spring",
+        "domain": "spri.ng",
+        "extension": "svg"
+    },
+    {
+        "name": "SproutSocial",
+        "domain": "sproutsocial.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Square",
+        "domain": "squareup.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Square Enix",
+        "domain": "square-enix-games.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Squarespace",
+        "domain": "squarespace.com",
+        "extension": "svg"
+    },
+    {
+        "name": "SSLTrust",
+        "domain": "ssltrust.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Stackfield",
+        "domain": "stackfield.com",
+        "extension": "svg"
+    },
+    {
+        "name": "StackPath",
+        "domain": "stackpath.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Stake",
+        "domain": "hellostake.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Standard Notes",
+        "domain": "standardnotes.com",
+        "extension": "svg"
+    },
+    {
+        "name": "StartMail",
+        "domain": "startmail.com",
+        "extension": "svg"
+    },
+    {
+        "name": "State Department Federal Credit Union",
+        "domain": "sdfcu.org",
+        "extension": "svg"
+    },
+    {
+        "name": "State Employees Federal Credit Union",
+        "domain": "sefcu.com",
+        "extension": "svg"
+    },
+    {
+        "name": "StatusCake",
+        "domain": "statuscake.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Statuspage",
+        "domain": "statuspage.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Stessa",
+        "domain": "stessa.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Stiftung Warentest",
+        "domain": "test.de",
+        "extension": "svg"
+    },
+    {
+        "name": "StormGain",
+        "domain": "stormgain.com",
+        "extension": "svg"
+    },
+    {
+        "name": "STRATO",
+        "domain": "strato.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Stripe",
+        "domain": "stripe.com",
+        "extension": "svg"
+    },
+    {
+        "name": "StubHub",
+        "domain": "stubhub.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Studio Ninja",
+        "domain": "studioninja.co",
+        "extension": "svg"
+    },
+    {
+        "name": "SubscribeStar.com",
+        "domain": "subscribestar.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Substack",
+        "domain": "substack.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sucuri",
+        "domain": "sucuri.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Sumo Logic",
+        "domain": "sumologic.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Supabase",
+        "domain": "supabase.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Surfshark",
+        "domain": "surfshark.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Survicate",
+        "domain": "survicate.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Swinburne University of Technology",
+        "domain": "swinburne.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "SWITCH edu-ID",
+        "domain": "eduid.ch",
+        "extension": "svg"
+    },
+    {
+        "name": "Swyftx",
+        "domain": "swyftx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Sync",
+        "domain": "sync.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Synergy Wholesale",
+        "domain": "synergywholesale.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Synology",
+        "domain": "synology.com",
+        "extension": "svg"
+    },
+    {
+        "name": "System76",
+        "domain": "system76.com",
+        "extension": "svg"
+    },
+    {
+        "name": "T-Mobile",
+        "domain": "t-mobile.com",
+        "extension": "svg"
+    },
+    {
+        "name": "T-Online",
+        "domain": "t-online.de",
+        "extension": "svg"
+    },
+    {
+        "name": "T. Rowe Price",
+        "domain": "troweprice.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tableau",
+        "domain": "tableau.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Taboola",
+        "domain": "taboola.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Talkdesk",
+        "domain": "talkdesk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Taxact",
+        "domain": "taxact.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TaxBit",
+        "domain": "taxbit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TaxDome",
+        "domain": "taxdome.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TeamViewer",
+        "domain": "teamviewer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Teamwork",
+        "domain": "teamwork.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tebex",
+        "domain": "tebex.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Technic",
+        "domain": "technicpack.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Technische Universit\u00e4t Berlin",
+        "domain": "tu.berlin",
+        "extension": "svg"
+    },
+    {
+        "name": "Technische Universit\u00e4t Darmstadt",
+        "domain": "tu-darmstadt.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Teleport",
+        "domain": "goteleport.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tello",
+        "domain": "tello.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Telnyx",
+        "domain": "telnyx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Telzio",
+        "domain": "telzio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Termius",
+        "domain": "termius.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tesla",
+        "domain": "tesla.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TeslaFi",
+        "domain": "teslafi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Textlocal",
+        "domain": "textlocal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "The Iconic",
+        "domain": "theiconic.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "The Ohio State University",
+        "domain": "osu.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "The University of Queensland",
+        "domain": "uq.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "The University of Sydney",
+        "domain": "sydney.edu.au",
+        "extension": "svg"
+    },
+    {
+        "name": "TherapyNotes",
+        "domain": "therapynotes.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ThreatConnect",
+        "domain": "threatconnect.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ThreatX",
+        "domain": "threatx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ThriveCart",
+        "domain": "thrivecart.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tibia",
+        "domain": "tibia.com",
+        "extension": "png"
+    },
+    {
+        "name": "TicketSource",
+        "domain": "ticketsource.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "TikTok",
+        "domain": "tiktok.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tilaa",
+        "domain": "tilaa.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Time4VPS",
+        "domain": "time4vps.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Timetastic",
+        "domain": "timetastic.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Ting",
+        "domain": "ting.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TinyURL",
+        "domain": "tinyurl.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tito",
+        "domain": "ti.to",
+        "extension": "svg"
+    },
+    {
+        "name": "Todoist",
+        "domain": "todoist.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tokopedia",
+        "domain": "tokopedia.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Toodledo",
+        "domain": "toodledo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Toontown Rewritten",
+        "domain": "toontownrewritten.com",
+        "extension": "png"
+    },
+    {
+        "name": "TorGuard",
+        "domain": "torguard.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Toronto Metropolitan University",
+        "domain": "torontomu.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Toshl",
+        "domain": "toshl.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tower Federal Credit Union",
+        "domain": "towerfcu.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Trading 212",
+        "domain": "trading212.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TradingView",
+        "domain": "tradingview.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Transifex",
+        "domain": "transifex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TransIP",
+        "domain": "transip.nl",
+        "extension": "svg"
+    },
+    {
+        "name": "Travala",
+        "domain": "travala.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Travelers",
+        "domain": "travelers.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Trello",
+        "domain": "trello.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Trend Micro",
+        "domain": "trendmicro.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tresorit",
+        "domain": "tresorit.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Trimble",
+        "domain": "trimble.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Trovi",
+        "domain": "trovi.sk",
+        "extension": "svg"
+    },
+    {
+        "name": "Trovo",
+        "domain": "trovo.live",
+        "extension": "svg"
+    },
+    {
+        "name": "TryHackMe",
+        "domain": "tryhackme.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tumblr",
+        "domain": "tumblr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "TunnelBear",
+        "domain": "tunnelbear.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tuta",
+        "domain": "tuta.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Tweakers",
+        "domain": "tweakers.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Twilio",
+        "domain": "twilio.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Twingate",
+        "domain": "twingate.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Twitch",
+        "domain": "twitch.tv",
+        "extension": "svg"
+    },
+    {
+        "name": "Uber",
+        "domain": "uber.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Uber Eats",
+        "domain": "ubereats.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ubiquiti UniFi",
+        "domain": "ui.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Ubisoft/Uplay",
+        "domain": "ubisoft.com",
+        "extension": "svg"
+    },
+    {
+        "name": "UCLA Health",
+        "domain": "uclahealth.org",
+        "extension": "svg"
+    },
+    {
+        "name": "ud.com",
+        "domain": "uniteddomains.com",
+        "extension": "svg"
+    },
+    {
+        "name": "UK2",
+        "domain": "uk2.net",
+        "extension": "svg"
+    },
+    {
+        "name": "UKFast",
+        "domain": "ukfast.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Unbounce",
+        "domain": "unbounce.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Unfuddle STACK",
+        "domain": "unfuddle.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Union Bank & Trust",
+        "domain": "ubt.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Uniregistry",
+        "domain": "uniregistry.com",
+        "extension": "svg"
+    },
+    {
+        "name": "united-domains.de",
+        "domain": "united-domains.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Unity",
+        "domain": "unity.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Universitat de Barcelona",
+        "domain": "ub.edu",
+        "extension": "png"
+    },
+    {
+        "name": "University of Calgary",
+        "domain": "ucalgary.ca",
+        "extension": "png"
+    },
+    {
+        "name": "University of Cambridge",
+        "domain": "cam.ac.uk",
+        "extension": "png"
+    },
+    {
+        "name": "University of Delaware",
+        "domain": "udel.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "University of Groningen",
+        "domain": "rug.nl",
+        "extension": "svg"
+    },
+    {
+        "name": "University of Melbourne",
+        "domain": "unimelb.edu.au",
+        "extension": "png"
+    },
+    {
+        "name": "University of Notre Dame",
+        "domain": "nd.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "University of Otago",
+        "domain": "otago.ac.nz",
+        "extension": "svg"
+    },
+    {
+        "name": "University of Oxford",
+        "domain": "ox.ac.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "University of Pennsylvania",
+        "domain": "upenn.edu",
+        "extension": "svg"
+    },
+    {
+        "name": "Unleashed Inventory",
+        "domain": "unleashedsoftware.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Unstoppable Domains",
+        "domain": "unstoppabledomains.com",
+        "extension": "svg"
+    },
+    {
+        "name": "UNSW Sydney",
+        "domain": "unsw.edu.au",
+        "extension": "png"
+    },
+    {
+        "name": "UpCloud",
+        "domain": "upcloud.com",
+        "extension": "svg"
+    },
+    {
+        "name": "UpdraftPlus",
+        "domain": "updraftplus.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Uphold",
+        "domain": "uphold.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Uptime Robot",
+        "domain": "uptimerobot.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Upwork",
+        "domain": "upwork.com",
+        "extension": "svg"
+    },
+    {
+        "name": "US Citizenship and Immigration Services",
+        "domain": "uscis.gov",
+        "extension": "png"
+    },
+    {
+        "name": "US Mobile",
+        "domain": "usmobile.com",
+        "extension": "svg"
+    },
+    {
+        "name": "US Patent and Trademark Office",
+        "domain": "uspto.gov",
+        "extension": "svg"
+    },
+    {
+        "name": "US Veteran Affairs",
+        "domain": "va.gov",
+        "extension": "svg"
+    },
+    {
+        "name": "Usabilla",
+        "domain": "usabilla.com",
+        "extension": "svg"
+    },
+    {
+        "name": "UserWay",
+        "domain": "userway.org",
+        "extension": "svg"
+    },
+    {
+        "name": "UW Credit Union",
+        "domain": "uwcu.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Valr",
+        "domain": "valr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Vancity",
+        "domain": "vancity.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VaultCord",
+        "domain": "vaultcord.com",
+        "extension": "png"
+    },
+    {
+        "name": "Veeam",
+        "domain": "veeam.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Veem",
+        "domain": "veem.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Vend",
+        "domain": "vend.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VentraIP",
+        "domain": "ventraip.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Veracode",
+        "domain": "veracode.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Verpex",
+        "domain": "verpex.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Versio",
+        "domain": "versio.nl",
+        "extension": "svg"
+    },
+    {
+        "name": "ViaBTC",
+        "domain": "viabtc.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VicRoads",
+        "domain": "vicroads.vic.gov.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Vimeo",
+        "domain": "vimeo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VirusTotal",
+        "domain": "virustotal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Visual Studio Codespaces",
+        "domain": "visualstudio.microsoft.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Vivaldi",
+        "domain": "vivaldi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Vivup Benefits",
+        "domain": "vivup.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "VK",
+        "domain": "vk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VoIP.ms",
+        "domain": "voip.ms",
+        "extension": "svg"
+    },
+    {
+        "name": "Voyager",
+        "domain": "investvoyager.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VPS Server",
+        "domain": "vpsserver.com",
+        "extension": "svg"
+    },
+    {
+        "name": "VRChat",
+        "domain": "hello.vrchat.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Vultr",
+        "domain": "vultr.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Vysok\u00e1 \u0161kola ekonomick\u00e1 v Praze",
+        "domain": "vse.cz",
+        "extension": "svg"
+    },
+    {
+        "name": "Wargaming",
+        "domain": "wargaming.net",
+        "extension": "svg"
+    },
+    {
+        "name": "Warner Bros. Games",
+        "domain": "warnerbrosgames.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wasabi",
+        "domain": "wasabi.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wave",
+        "domain": "waveapps.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WazirX",
+        "domain": "wazirx.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wealthfront",
+        "domain": "wealthfront.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wealthify",
+        "domain": "wealthify.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wealthsimple",
+        "domain": "wealthsimple.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Web Hosting Canada",
+        "domain": "whc.ca",
+        "extension": "svg"
+    },
+    {
+        "name": "Web.de",
+        "domain": "web.de",
+        "extension": "svg"
+    },
+    {
+        "name": "Webcentral",
+        "domain": "webcentral.com.au",
+        "extension": "svg"
+    },
+    {
+        "name": "Webflow",
+        "domain": "webflow.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Webroot",
+        "domain": "webroot.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Weclapp",
+        "domain": "weclapp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WEDOS",
+        "domain": "wedos.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wefunder",
+        "domain": "wefunder.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wellfound",
+        "domain": "wellfound.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WePay",
+        "domain": "go.wepay.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WeTransfer",
+        "domain": "wetransfer.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WhaleFin",
+        "domain": "whalefin.com",
+        "extension": "svg"
+    },
+    {
+        "name": "When I Work",
+        "domain": "wheniwork.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Whimsical",
+        "domain": "whimsical.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Whois",
+        "domain": "whois.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wiggle",
+        "domain": "wiggle.co.uk",
+        "extension": "svg"
+    },
+    {
+        "name": "Wikipedia",
+        "domain": "wikipedia.org",
+        "extension": "svg"
+    },
+    {
+        "name": "Windscribe",
+        "domain": "windscribe.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wirex",
+        "domain": "wirexapp.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wise",
+        "domain": "wise.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Withings",
+        "domain": "withings.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wix",
+        "domain": "wix.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wolf.bet",
+        "domain": "wolf.bet",
+        "extension": "svg"
+    },
+    {
+        "name": "WoltLab",
+        "domain": "woltlab.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Woodforest National Bank",
+        "domain": "woodforest.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wordfence Central",
+        "domain": "wordfence.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WordPress.com",
+        "domain": "wordpress.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Workato",
+        "domain": "workato.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Workflowy",
+        "domain": "workflowy.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Workplace",
+        "domain": "workplace.com",
+        "extension": "svg"
+    },
+    {
+        "name": "World4You",
+        "domain": "world4you.com",
+        "extension": "svg"
+    },
+    {
+        "name": "WP Engine",
+        "domain": "wpengine.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wrike",
+        "domain": "wrike.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Wykop",
+        "domain": "wykop.pl",
+        "extension": "svg"
+    },
+    {
+        "name": "Wyze",
+        "domain": "wyze.com",
+        "extension": "svg"
+    },
+    {
+        "name": "X (Twitter)",
+        "domain": "x.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Xbox Live",
+        "domain": "xbox.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Xero",
+        "domain": "xero.com",
+        "extension": "svg"
+    },
+    {
+        "name": "XING",
+        "domain": "xing.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Xink",
+        "domain": "xink.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Xplenty",
+        "domain": "xplenty.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Yahoo Mail",
+        "domain": "mail.yahoo.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Yclas",
+        "domain": "yclas.com",
+        "extension": "svg"
+    },
+    {
+        "name": "YNAB (You Need A Budget)",
+        "domain": "ynab.com",
+        "extension": "svg"
+    },
+    {
+        "name": "YouHodler",
+        "domain": "youhodler.com",
+        "extension": "svg"
+    },
+    {
+        "name": "YouTube",
+        "domain": "youtube.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zapier",
+        "domain": "zapier.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zapsplat",
+        "domain": "zapsplat.com",
+        "extension": "png"
+    },
+    {
+        "name": "Zendesk",
+        "domain": "zendesk.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zeplin",
+        "domain": "zeplin.io",
+        "extension": "svg"
+    },
+    {
+        "name": "Zerodha Kite",
+        "domain": "zerodha.com",
+        "extension": "svg"
+    },
+    {
+        "name": "ZeroTier",
+        "domain": "zerotier.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zimbra",
+        "domain": "zimbra.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zoho",
+        "domain": "zoho.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zonda",
+        "domain": "zondaglobal.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zoolz",
+        "domain": "intelli.zoolz.com",
+        "extension": "svg"
+    },
+    {
+        "name": "Zoom",
+        "domain": "zoom.us",
+        "extension": "svg"
+    },
+    {
+        "name": "\u0413\u043e\u0441\u0443\u0441\u043b\u0443\u0433\u0438 (Gosuslugi)",
+        "domain": "gosuslugi.ru",
+        "extension": "svg"
+    },
+    {
+        "name": "\u041f\u0430\u0447\u043a\u0430",
+        "domain": "pachca.com",
+        "extension": "svg"
+    }
+]

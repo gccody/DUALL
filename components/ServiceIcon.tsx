@@ -2,6 +2,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
 import { builtInIcons, getIconComponent } from '@/utils/IconLibrary';
 import { getBuiltInIconData, getFaviconData } from '@/utils/IconManager';
+import { getCustomIcon } from '@/utils/customIconMatcher';
 import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
@@ -17,6 +18,7 @@ interface ServiceIconProps {
 
 export default function ServiceIcon({ service, size = 40, style, onPress, editable = false }: ServiceIconProps) {
     const { theme } = useTheme();
+    const [customIcon, setCustomIcon] = useState<any>(null);
     const [faviconPath, setFaviconPath] = useState<string | null>(null);
     const [faviconExists, setFaviconExists] = useState(false);
     const [builtInIconData, setBuiltInIconData] = useState<{ iconId: string, categoryId: string } | null>(null);
@@ -26,7 +28,17 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
     const initials = service.otp.issuer.substring(0, 2).toUpperCase();
 
     const loadIcons = async () => {
-        // Check if a built-in icon is set for this service
+        // First priority: Check for custom PNG icons
+        const customIconSource = getCustomIcon(service);
+        if (customIconSource) {
+            setCustomIcon(customIconSource);
+            setBuiltInIconData(null);
+            setFaviconPath(null);
+            setFaviconExists(false);
+            return;
+        }
+
+        // Second priority: Check if a built-in icon is set for this service
         const iconData = await getBuiltInIconData(service.uid);
 
         if (iconData) {
@@ -34,17 +46,19 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
                 iconId: iconData.iconId,
                 categoryId: iconData.categoryId
             });
+            setCustomIcon(null);
             setFaviconPath(null);
             setFaviconExists(false);
             return;
         }
 
-        // Check if a favicon exists for this service
+        // Third priority: Check if a favicon exists for this service
         const faviconData = await getFaviconData(service.uid);
 
         if (faviconData) {
             setFaviconPath(faviconData.localPath);
             setBuiltInIconData(null);
+            setCustomIcon(null);
 
             // Verify the file exists
             try {
@@ -58,6 +72,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
             setFaviconPath(null);
             setFaviconExists(false);
             setBuiltInIconData(null);
+            setCustomIcon(null);
         }
     };
 
@@ -76,7 +91,18 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
     };
 
     const renderContent = () => {
-        // If we have a built-in icon, display it
+        // First priority: If we have a custom PNG icon, display it
+        if (customIcon) {
+            return (
+                <Image
+                    source={customIcon}
+                    style={{ width: size * 0.6, height: size * 0.6 }}
+                    resizeMode="contain"
+                />
+            );
+        }
+
+        // Second priority: If we have a built-in icon, display it
         if (builtInIconData) {
             const category = builtInIconData.categoryId;
             const iconList = builtInIcons[category];
@@ -87,7 +113,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
             }
         }
 
-        // If we have a favicon, display it
+        // Third priority: If we have a favicon, display it
         if (faviconPath && faviconExists) {
             return (
                 <Image

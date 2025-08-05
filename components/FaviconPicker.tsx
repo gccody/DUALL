@@ -6,6 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import BuiltInIconPicker from './BuiltInIconPicker';
+import CustomIconPicker from './CustomIconPicker';
 
 // Local function to get domain from issuer
 const getDomainFromIssuer = (issuer: string): string => {
@@ -55,7 +56,7 @@ const getFaviconSuggestions = (issuer: string): string[] => {
     ];
 };
 
-type IconTab = 'custom' | 'builtin';
+type IconTab = 'custom' | 'builtin' | 'png';
 
 interface FaviconPickerProps {
     service: Service;
@@ -74,6 +75,7 @@ export default function FaviconPicker({ service, isVisible, onClose, onFaviconSe
     const [hasBuiltInIcon, setHasBuiltInIcon] = useState(false);
     const [builtInIconData, setBuiltInIconData] = useState<{ iconId: string, categoryId: string } | null>(null);
     const [showBuiltInIconPicker, setShowBuiltInIconPicker] = useState(false);
+    const [showCustomIconPicker, setShowCustomIconPicker] = useState(false);
 
     // Load suggestions and current favicon when modal opens
     useEffect(() => {
@@ -104,12 +106,13 @@ export default function FaviconPicker({ service, isVisible, onClose, onFaviconSe
                     setCurrentFavicon(null);
                     setHasBuiltInIcon(false);
                     setBuiltInIconData(null);
+                    setActiveTab('png');
                 }
             };
 
             loadCurrentIcon();
         }
-    }, [isVisible, service, showBuiltInIconPicker]);
+    }, [isVisible, service, showBuiltInIconPicker, showCustomIconPicker]);
 
     const handleDownloadFavicon = async (websiteUrl: string) => {
         setLoading(true);
@@ -178,6 +181,22 @@ export default function FaviconPicker({ service, isVisible, onClose, onFaviconSe
         }
     };
 
+    const handleCustomIconSelected = async (domain: string, icon: any) => {
+        setShowCustomIconPicker(false);
+        setLoading(true);
+
+        try {
+            // Note: Custom PNG icons don't need to be stored in IconManager
+            // They are automatically detected by the ServiceIcon component
+            // We just need to trigger a refresh
+            onFaviconSelected();
+        } catch (error) {
+            console.error('Error handling custom icon selection:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Modal
             visible={isVisible}
@@ -234,9 +253,39 @@ export default function FaviconPicker({ service, isVisible, onClose, onFaviconSe
                                 Built-in Icons
                             </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                styles.tab,
+                                activeTab === 'png' && {
+                                    borderBottomColor: theme.accent,
+                                    borderBottomWidth: 2
+                                }
+                            ]}
+                            onPress={() => setActiveTab('png')}
+                        >
+                            <Text
+                                style={[
+                                    styles.tabText,
+                                    { color: activeTab === 'png' ? theme.accent : theme.subText }
+                                ]}
+                            >
+                                Custom Icons
+                            </Text>
+                        </TouchableOpacity>
                     </View>
 
-                    {activeTab === 'custom' ? (
+                    {activeTab === 'png' ? (
+                        <>
+                            <TouchableOpacity
+                                style={[styles.chooseIconButton, { backgroundColor: theme.accent }]}
+                                onPress={() => setShowCustomIconPicker(true)}
+                            >
+                                <Text style={styles.chooseIconButtonText}>
+                                    Choose Custom Icon
+                                </Text>
+                            </TouchableOpacity>
+                        </>
+                    ) : activeTab === 'custom' ? (
                         <>
                             {/* Current favicon */}
                             {currentFavicon && (
@@ -372,6 +421,13 @@ export default function FaviconPicker({ service, isVisible, onClose, onFaviconSe
                 isVisible={showBuiltInIconPicker}
                 onClose={() => setShowBuiltInIconPicker(false)}
                 onIconSelected={handleBuiltInIconSelected}
+            />
+
+            <CustomIconPicker
+                service={service}
+                isVisible={showCustomIconPicker}
+                onClose={() => setShowCustomIconPicker(false)}
+                onIconSelected={handleCustomIconSelected}
             />
         </Modal>
     );

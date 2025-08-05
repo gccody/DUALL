@@ -1,10 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
 import * as FileSystem from 'expo-file-system';
+import { getCustomIcon } from './customIconMatcher';
 
 // Keys for local storage
 const FAVICON_STORAGE_KEY = 'faviconRegistry';
 const BUILT_IN_ICON_KEY = 'builtInIconRegistry';
+const CUSTOM_PNG_ICON_KEY = 'customPngIconRegistry';
 const FAVICON_DIR = `${FileSystem.cacheDirectory}favicons/`;
 
 // Interface for favicon data
@@ -24,6 +26,21 @@ export interface BuiltInIconData {
   timestamp: number;
 }
 
+// Interface for custom PNG icon data
+export interface CustomPngIconData {
+  serviceUid: string;
+  domain: string;
+  iconPath: string;
+  available: boolean;
+}
+
+// Interface for custom PNG icon selection (user override)
+export interface CustomPngIconSelection {
+  serviceUid: string;
+  selectedDomain: string; // The domain/filename selected by user
+  timestamp: number;
+}
+
 // Interface for favicon registry
 interface FaviconRegistry {
   [serviceUid: string]: FaviconData;
@@ -32,6 +49,11 @@ interface FaviconRegistry {
 // Interface for built-in icon registry
 interface BuiltInIconRegistry {
   [serviceUid: string]: BuiltInIconData;
+}
+
+// Interface for custom PNG icon registry (user selections)
+interface CustomPngIconRegistry {
+  [serviceUid: string]: CustomPngIconSelection;
 }
 
 // Ensure the favicon directory exists
@@ -85,6 +107,27 @@ export const saveBuiltInIconRegistry = async (registry: BuiltInIconRegistry): Pr
     await AsyncStorage.setItem(BUILT_IN_ICON_KEY, JSON.stringify(registry));
   } catch (error) {
     console.error('Failed to save built-in icon registry:', error);
+    throw error;
+  }
+};
+
+// Get the custom PNG icon registry from storage
+export const getCustomPngIconRegistry = async (): Promise<CustomPngIconRegistry> => {
+  try {
+    const registry = await AsyncStorage.getItem(CUSTOM_PNG_ICON_KEY);
+    return registry ? JSON.parse(registry) : {};
+  } catch (error) {
+    console.error('Failed to get custom PNG icon registry:', error);
+    return {};
+  }
+};
+
+// Save the custom PNG icon registry to storage
+export const saveCustomPngIconRegistry = async (registry: CustomPngIconRegistry): Promise<void> => {
+  try {
+    await AsyncStorage.setItem(CUSTOM_PNG_ICON_KEY, JSON.stringify(registry));
+  } catch (error) {
+    console.error('Failed to save custom PNG icon registry:', error);
     throw error;
   }
 };
@@ -303,6 +346,162 @@ export const downloadFaviconFromWebsite = async (
   }
 };
 
+// Set a custom PNG icon selection for a service (user override)
+export const setCustomPngIconSelection = async (
+  serviceUid: string,
+  selectedDomain: string
+): Promise<CustomPngIconSelection> => {
+  try {
+    // Create custom PNG icon selection data
+    const selectionData: CustomPngIconSelection = {
+      serviceUid,
+      selectedDomain,
+      timestamp: Date.now()
+    };
+    
+    // Update registry
+    const registry = await getCustomPngIconRegistry();
+    registry[serviceUid] = selectionData;
+    await saveCustomPngIconRegistry(registry);
+    
+    // Remove any existing favicon or built-in icon for this service
+    await deleteFavicon(serviceUid);
+    await deleteBuiltInIcon(serviceUid);
+    
+    return selectionData;
+  } catch (error) {
+    console.error('Error setting custom PNG icon selection:', error);
+    throw error;
+  }
+};
+
+// Get custom PNG icon selection for a service (user override)
+export const getCustomPngIconSelection = async (serviceUid: string): Promise<CustomPngIconSelection | null> => {
+  try {
+    const registry = await getCustomPngIconRegistry();
+    return registry[serviceUid] || null;
+  } catch (error) {
+    console.error('Failed to get custom PNG icon selection:', error);
+    return null;
+  }
+};
+
+// Delete a custom PNG icon selection
+export const deleteCustomPngIconSelection = async (serviceUid: string): Promise<boolean> => {
+  try {
+    const registry = await getCustomPngIconRegistry();
+    
+    if (!registry[serviceUid]) return false;
+    
+    // Update registry
+    delete registry[serviceUid];
+    await saveCustomPngIconRegistry(registry);
+    
+    return true;
+  } catch (error) {
+    console.error('Failed to delete custom PNG icon selection:', error);
+    return false;
+  }
+};
+
+// Check if a service has a custom PNG icon available (automatic or manual)
+export const hasCustomPngIcon = async (serviceUid: string, issuer: string): Promise<boolean> => {
+  try {
+    // First check for manual selection
+    const manualSelection = await getCustomPngIconSelection(serviceUid);
+    if (manualSelection) {
+      return true;
+    }
+    
+    // Then check for automatic matching
+    const customIcon = getCustomIcon({ uid: serviceUid, otp: { issuer } } as any);
+    return !!customIcon;
+  } catch (error) {
+    console.error('Error checking for custom PNG icon:', error);
+    return false;
+  }
+};
+
+// Get custom PNG icon data for a service (manual selection takes priority)
+export const getCustomPngIconData = async (serviceUid: string, issuer: string): Promise<CustomPngIconData | null> => {
+  try {
+    // First check for manual selection
+    const manualSelection = await getCustomPngIconSelection(serviceUid);
+    if (manualSelection) {
+      // Import the manually selected icon
+      const { customIcons } = await import('./customIcons');
+      const iconKey = `${manualSelection.selectedDomain}.png`;
+      const customIcon = customIcons[iconKey];
+      
+      if (customIcon) {
+        return {
+          serviceUid,
+          domain: manualSelection.selectedDomain,
+          iconPath: customIcon.toString(),
+          available: true
+        };
+      }
+    }
+    
+    // Fallback to automatic matching
+    const customIcon = getCustomIcon({ uid: serviceUid, otp: { issuer } } as any);
+    
+    if (customIcon) {
+      return {
+        serviceUid,
+        domain: issuer, // This will be processed by the custom icon matcher
+        iconPath: customIcon.toString(), // React Native asset reference
+        available: true
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error getting custom PNG icon data:', error);
+    return null;
+  }
+};
+
+// Clear other icon types when a custom PNG icon is available
+export const clearOtherIconsForCustomPng = async (serviceUid: string): Promise<void> => {
+  try {
+    // Remove any existing favicon
+    await deleteFavicon(serviceUid);
+    
+    // Remove any existing built-in icon
+    await deleteBuiltInIcon(serviceUid);
+  } catch (error) {
+    console.error('Error clearing other icons for custom PNG:', error);
+  }
+};
+
+// Get the primary icon type for a service (in priority order)
+export const getPrimaryIconType = async (serviceUid: string, issuer: string): Promise<'custom-png' | 'favicon' | 'builtin' | 'none'> => {
+  try {
+    // Check for custom PNG icon first (highest priority)
+    if (await hasCustomPngIcon(serviceUid, issuer)) {
+      return 'custom-png';
+    }
+    
+    // Check for favicon
+    const faviconData = await getFaviconData(serviceUid);
+    if (faviconData) {
+      return 'favicon';
+    }
+    
+    // Check for built-in icon
+    const builtInIconData = await getBuiltInIconData(serviceUid);
+    if (builtInIconData) {
+      return 'builtin';
+    }
+    
+    return 'none';
+  } catch (error) {
+    console.error('Error getting primary icon type:', error);
+    return 'none';
+  }
+};
+
 // Get favicon suggestions for an issuer
 export const getFaviconSuggestions = (issuer: string): string[] => {
   const domain = getDomainFromIssuer(issuer);
@@ -312,4 +511,4 @@ export const getFaviconSuggestions = (issuer: string): string[] => {
     `www.${domain}`,
     domain.replace('.com', '')
   ];
-}; 
+};

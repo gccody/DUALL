@@ -149,7 +149,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
                     style
                 ]}
                 onPress={onPress}
-                onLongPress={handleLongPress}
+                // onLongPress={handleLongPress}
                 delayLongPress={500}
             >
                 {renderContent()}

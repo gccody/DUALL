@@ -36,10 +36,7 @@ export function useCodeManager(
       name: parsedURL.account,
       secret: parsedURL.secret,
       uid: Crypto.randomUUID(),
-      updatedAt: Date.now(),
-      icon: {
-        label: parsedURL.issuer.substring(0, 2)
-      }
+      updatedAt: Date.now()
     };
 
     // Check if code already exists

@@ -7,6 +7,7 @@ import { getCustomIcon } from './customIconMatcher';
 const FAVICON_STORAGE_KEY = 'faviconRegistry';
 const BUILT_IN_ICON_KEY = 'builtInIconRegistry';
 const CUSTOM_PNG_ICON_KEY = 'customPngIconRegistry';
+const REMOVED_ICON_KEY = 'removedIconRegistry';
 const FAVICON_DIR = `${FileSystem.cacheDirectory}favicons/`;
 
 // Interface for favicon data
@@ -54,6 +55,11 @@ interface BuiltInIconRegistry {
 // Interface for custom PNG icon registry (user selections)
 interface CustomPngIconRegistry {
   [serviceUid: string]: CustomPngIconSelection;
+}
+
+// Interface for removed icon registry
+interface RemovedIconRegistry {
+    [serviceUid: string]: boolean;
 }
 
 // Ensure the favicon directory exists
@@ -131,6 +137,27 @@ export const saveCustomPngIconRegistry = async (registry: CustomPngIconRegistry)
     throw error;
   }
 };
+
+// Get the removed icon registry from storage
+export const getRemovedIconRegistry = async (): Promise<RemovedIconRegistry> => {
+    try {
+        const registry = await AsyncStorage.getItem(REMOVED_ICON_KEY);
+        return registry ? JSON.parse(registry) : {};
+    } catch (error) {
+        console.error('Failed to get removed icon registry:', error);
+        return {};
+    }
+}
+
+// Save the removed icon registry to storage
+export const saveRemovedIconRegistry = async (registry: RemovedIconRegistry): Promise<void> => {
+    try {
+        await AsyncStorage.setItem(REMOVED_ICON_KEY, JSON.stringify(registry));
+    } catch (error) {
+        console.error('Failed to save removed icon registry:', error);
+        throw error;
+    }
+}
 
 // Set a built-in icon for a service
 export const setBuiltInIcon = async (
@@ -367,6 +394,7 @@ export const setCustomPngIconSelection = async (
     // Remove any existing favicon or built-in icon for this service
     await deleteFavicon(serviceUid);
     await deleteBuiltInIcon(serviceUid);
+    await removeRemovedIcon(serviceUid);
     
     return selectionData;
   } catch (error) {
@@ -444,6 +472,8 @@ export const getCustomPngIconData = async (serviceUid: string, issuer: string): 
     }
     
     // Fallback to automatic matching
+    const isRemoved = await getRemovedIcon(serviceUid);
+    if(isRemoved) return null;
     const customIcon = getCustomIcon({ uid: serviceUid, otp: { issuer } } as any);
     
     if (customIcon) {
@@ -461,6 +491,41 @@ export const getCustomPngIconData = async (serviceUid: string, issuer: string): 
     return null;
   }
 };
+
+// Add a service to the removed icon registry
+export const addRemovedIcon = async (serviceUid: string): Promise<void> => {
+    try {
+        const registry = await getRemovedIconRegistry();
+        registry[serviceUid] = true;
+        await saveRemovedIconRegistry(registry);
+    } catch (error) {
+        console.error('Error adding removed icon:', error);
+    }
+}
+
+// Get a service from the removed icon registry
+export const getRemovedIcon = async (serviceUid: string): Promise<boolean> => {
+    try {
+        const registry = await getRemovedIconRegistry();
+        return registry[serviceUid] || false;
+    } catch (error) {
+        console.error('Error getting removed icon:', error);
+        return false;
+    }
+}
+
+// Remove a service from the removed icon registry
+export const removeRemovedIcon = async (serviceUid: string): Promise<void> => {
+    try {
+        const registry = await getRemovedIconRegistry();
+        if (registry[serviceUid]) {
+            delete registry[serviceUid];
+            await saveRemovedIconRegistry(registry);
+        }
+    } catch (error) {
+        console.error('Error removing removed icon:', error);
+    }
+}
 
 // Clear other icon types when a custom PNG icon is available
 export const clearOtherIconsForCustomPng = async (serviceUid: string): Promise<void> => {

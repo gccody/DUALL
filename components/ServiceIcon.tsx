@@ -1,12 +1,13 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
 import { builtInIcons, getIconComponent } from '@/utils/IconLibrary';
-import { getBuiltInIconData, getFaviconData } from '@/utils/IconManager';
+import { getBuiltInIconData, getCustomPngIconSelection, getFaviconData, getRemovedIcon } from '@/utils/IconManager';
 import { getCustomIcon } from '@/utils/customIconMatcher';
+import { customIcons } from '@/utils/customIcons';
 import * as FileSystem from 'expo-file-system';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
-import FaviconPicker from './FaviconPicker';
+import CustomIconPicker from './CustomIconPicker';
 
 interface ServiceIconProps {
     service: Service;
@@ -28,7 +29,31 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
     const initials = service.otp.issuer.substring(0, 2).toUpperCase();
 
     const loadIcons = async () => {
-        // First priority: Check for custom PNG icons
+        // If the user explicitly removed the icon, force initials and skip all icon sources
+        const removed = await getRemovedIcon(service.uid);
+        if (removed) {
+            setCustomIcon(null);
+            setBuiltInIconData(null);
+            setFaviconPath(null);
+            setFaviconExists(false);
+            return;
+        }
+
+        // Highest priority: Check for a manually selected custom PNG icon
+        const customSelection = await getCustomPngIconSelection(service.uid);
+        if (customSelection) {
+            const iconKey = `${customSelection.selectedDomain}.png`;
+            const iconSource = customIcons[iconKey];
+            if (iconSource) {
+                setCustomIcon(iconSource);
+                setBuiltInIconData(null);
+                setFaviconPath(null);
+                setFaviconExists(false);
+                return;
+            }
+        }
+
+        // Second priority: Check for an automatically matched custom PNG icon
         const customIconSource = getCustomIcon(service);
         if (customIconSource) {
             setCustomIcon(customIconSource);
@@ -38,7 +63,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
             return;
         }
 
-        // Second priority: Check if a built-in icon is set for this service
+        // Third priority: Check if a built-in icon is set for this service
         const iconData = await getBuiltInIconData(service.uid);
 
         if (iconData) {
@@ -52,7 +77,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
             return;
         }
 
-        // Third priority: Check if a favicon exists for this service
+        // Fourth priority: Check if a favicon exists for this service
         const faviconData = await getFaviconData(service.uid);
 
         if (faviconData) {
@@ -149,18 +174,18 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
                     style
                 ]}
                 onPress={onPress}
-                // onLongPress={handleLongPress}
+                onLongPress={handleLongPress}
                 delayLongPress={500}
             >
                 {renderContent()}
             </TouchableOpacity>
 
             {editable && (
-                <FaviconPicker
+                <CustomIconPicker
                     service={service}
                     isVisible={showFaviconPicker}
                     onClose={() => setShowFaviconPicker(false)}
-                    onFaviconSelected={handleFaviconSelected}
+                    onIconSelected={handleFaviconSelected}
                 />
             )}
         </>

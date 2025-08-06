@@ -37,7 +37,7 @@ export interface Service {
 	updatedAt: number;
 	name: string;
 	uid: string;
-	icon: Icon;
+	icon?: Icon;
 	otp: OTP;
 	secret: string;
 }

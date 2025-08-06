@@ -1,5 +1,6 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
+import { addRemovedIcon, deleteCustomPngIconSelection, removeRemovedIcon, setCustomPngIconSelection } from '@/utils/IconManager';
 import { searchCustomIcons } from '@/utils/customIconMatcher';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
@@ -56,10 +57,28 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
     }
   };
 
-  const handleIconSelect = (item: CustomIconItem) => {
+  const handleIconSelect = async (item: CustomIconItem) => {
+    // Selecting a new icon should clear any "removed" flag
+    await removeRemovedIcon(service.uid);
+    await setCustomPngIconSelection(service.uid, item.domain);
     onIconSelected(item.domain, item.icon);
     onClose();
   };
+
+  const handleRemoveCustomIcon = async () => {
+    setLoading(true);
+    try {
+      // Delete any manual selection and mark this service as "removed"
+      await deleteCustomPngIconSelection(service.uid);
+      await addRemovedIcon(service.uid);
+      onIconSelected("none", null);
+    } catch (error) {
+      console.error('Error removing custom icon selection:', error);
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  }
 
   const renderIconItem = ({ item }: { item: CustomIconItem }) => (
     <TouchableOpacity
@@ -160,9 +179,13 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
 
           {/* Footer info */}
           <View style={styles.footer}>
-            <Text style={[styles.footerText, { color: theme.subText }]}>
-              Icons are automatically matched based on your service's issuer
-            </Text>
+            <TouchableOpacity
+              style={[styles.removeButton, { backgroundColor: theme.danger }]}
+              onPress={handleRemoveCustomIcon}
+              disabled={loading}
+            >
+              <Text style={styles.removeButtonText}>Remove Icon</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -301,10 +324,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: 'rgba(0,0,0,0.1)',
     marginTop: 16,
+    alignItems: 'center',
   },
-  footerText: {
-    fontSize: 12,
-    textAlign: 'center',
-    lineHeight: 16,
+  removeButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  removeButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });

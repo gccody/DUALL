@@ -66,13 +66,19 @@ async function main(): Promise<void> {
 
       const buffer = Buffer.from(await imgResponse.arrayBuffer());
 
+      // Ensure all outputs are 100x100 PNGs
       if (extension === 'svg') {
-        // Convert SVG to PNG using sharp
-        const pngPath = path.join(assetsPath, `${domain}.png`);
-        await sharp(buffer).png().toFile(pngPath);
-      } else if (extension) {
-        // Save other formats as-is
-        await fs.writeFile(filePath, buffer);
+        // Convert SVG to 100x100 PNG with transparent background, preserving aspect via contain
+        await sharp(buffer)
+          .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+          .png()
+          .toFile(filePath);
+      } else {
+        // For raster images, convert and resize to 100x100 PNG
+        await sharp(buffer)
+          .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+          .png()
+          .toFile(filePath);
       }
 
       totps.push({ name: siteName, domain });

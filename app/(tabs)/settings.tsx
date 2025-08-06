@@ -116,7 +116,7 @@ export default function SettingsScreen() {
 
                 <SettingCategory name='Danger!!!'>
                     <TouchableOpacity onPress={deleteCodes}>
-                        <SettingItem iconName='exclamation-triangle' text='Delete Codes' />
+                        <SettingItem iconName='exclamation-triangle' text='Delete Codes' color={theme.danger} />
                     </TouchableOpacity>
                 </SettingCategory>
             </ScrollView>

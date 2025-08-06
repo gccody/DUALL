@@ -39,7 +39,7 @@ async function main(): Promise<void> {
     const siteName = site[0];
     const domain = site[1].domain;
     const img = site[1].img;
-    const extension = img ? img.split('.').pop() : 'svg';
+    const extension = (img ? img.split('.').pop() : 'svg')?.toLowerCase();
 
     // Check if file already exists
     const filePath = path.join(assetsPath, `${domain}.png`);

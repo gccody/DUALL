@@ -1,6 +1,6 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
-import { addRemovedIcon, deleteCustomPngIconSelection, removeRemovedIcon, setCustomPngIconSelection } from '@/utils/IconManager';
+import { addRemovedIcon, deleteCustomIconSelection, removeRemovedIcon, setCustomIconSelection } from '@/utils/IconManager';
 import { searchCustomIcons } from '@/utils/customIconMatcher';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
@@ -60,7 +60,7 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
   const handleIconSelect = async (item: CustomIconItem) => {
     // Selecting a new icon should clear any "removed" flag
     await removeRemovedIcon(service.uid);
-    await setCustomPngIconSelection(service.uid, item.domain);
+    await setCustomIconSelection(service.uid, item.domain);
     onIconSelected(item.domain, item.icon);
     onClose();
   };
@@ -69,7 +69,7 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
     setLoading(true);
     try {
       // Delete any manual selection and mark this service as "removed"
-      await deleteCustomPngIconSelection(service.uid);
+      await deleteCustomIconSelection(service.uid);
       await addRemovedIcon(service.uid);
       onIconSelected("none", null);
     } catch (error) {

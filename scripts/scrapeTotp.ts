@@ -39,10 +39,9 @@ async function main(): Promise<void> {
     const siteName = site[0];
     const domain = site[1].domain;
     const img = site[1].img;
-    const extension = (img ? img.split('.').pop() : 'svg')?.toLowerCase();
 
     // Check if file already exists
-    const filePath = path.join(assetsPath, `${domain}.png`);
+    const filePath = path.join(assetsPath, `${domain}.avif`);
     try {
       await fs.access(filePath);
       totps.push({ name: siteName, domain });
@@ -65,21 +64,11 @@ async function main(): Promise<void> {
       }
 
       const buffer = Buffer.from(await imgResponse.arrayBuffer());
-
-      // Ensure all outputs are 100x100 PNGs
-      if (extension === 'svg') {
-        // Convert SVG to 100x100 PNG with transparent background, preserving aspect via contain
-        await sharp(buffer)
-          .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-          .png()
-          .toFile(filePath);
-      } else {
-        // For raster images, convert and resize to 100x100 PNG
-        await sharp(buffer)
-          .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-          .png()
-          .toFile(filePath);
-      }
+      // For raster images, convert and resize to 100x100 avig
+      await sharp(buffer)
+        .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+        .avif()
+        .toFile(filePath);
 
       totps.push({ name: siteName, domain });
     } catch (error) {
@@ -109,7 +98,7 @@ export const customIcons: { [key: string]: any } = {
 `;
 
   for (const iconData of totps) {
-    const filename = `${iconData.domain}.png`;
+    const filename = `${iconData.domain}.avif`;
     customIconsContent += `  '${filename}': require('../assets/custom-icons/${filename}'),\n`;
   }
 

@@ -127,7 +127,7 @@ function findMatchingDomain(issuer: string): string | null {
 }
 
 /**
- * Get custom PNG icon for a service based on its issuer
+ * Get custom icon for a service based on its issuer
  */
 export function getCustomIcon(service: Service): any | null {
   try {
@@ -136,7 +136,7 @@ export function getCustomIcon(service: Service): any | null {
       return null;
     }
     
-    const iconKey = `${domain}.png`;
+    const iconKey = `${domain}.avif`;
     return customIcons[iconKey] || null;
   } catch (error) {
     console.error('Error getting custom icon:', error);
@@ -145,7 +145,7 @@ export function getCustomIcon(service: Service): any | null {
 }
 
 /**
- * Check if a custom PNG icon exists for a service
+ * Check if a custom icon exists for a service
  */
 export function hasCustomIcon(service: Service): boolean {
   return getCustomIcon(service) !== null;
@@ -155,7 +155,7 @@ export function hasCustomIcon(service: Service): boolean {
  * Get all available custom icon domains
  */
 export function getAvailableCustomIconDomains(): string[] {
-  return Object.keys(customIcons).map(key => key.replace('.png', ''));
+  return Object.keys(customIcons).map(key => key.replace('.avif', ''));
 }
 
 /**
@@ -168,7 +168,7 @@ export function searchCustomIcons(query: string): Array<{ domain: string; name: 
   for (const service of totpData as TotpServiceData[]) {
     const normalizedName = normalizeString(service.name);
     const normalizedDomain = normalizeString(service.domain);
-    const iconKey = `${service.domain}.png`;
+    const iconKey = `${service.domain}.avif`;
     
     if (customIcons[iconKey] && 
         (normalizedName.includes(normalizedQuery) || 

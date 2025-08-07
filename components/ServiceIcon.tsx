@@ -1,7 +1,7 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
 import { builtInIcons, getIconComponent } from '@/utils/IconLibrary';
-import { getBuiltInIconData, getCustomPngIconSelection, getFaviconData, getRemovedIcon } from '@/utils/IconManager';
+import { getBuiltInIconData, getCustomIconSelection, getFaviconData, getRemovedIcon } from '@/utils/IconManager';
 import { getCustomIcon } from '@/utils/customIconMatcher';
 import { customIcons } from '@/utils/customIcons';
 import * as FileSystem from 'expo-file-system';
@@ -39,10 +39,10 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
             return;
         }
 
-        // Highest priority: Check for a manually selected custom PNG icon
-        const customSelection = await getCustomPngIconSelection(service.uid);
+        // Highest priority: Check for a manually selected custom icon
+        const customSelection = await getCustomIconSelection(service.uid);
         if (customSelection) {
-            const iconKey = `${customSelection.selectedDomain}.png`;
+            const iconKey = `${customSelection.selectedDomain}.avif`;
             const iconSource = customIcons[iconKey];
             if (iconSource) {
                 setCustomIcon(iconSource);
@@ -53,7 +53,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
             }
         }
 
-        // Second priority: Check for an automatically matched custom PNG icon
+        // Second priority: Check for an automatically matched custom icon
         const customIconSource = getCustomIcon(service);
         if (customIconSource) {
             setCustomIcon(customIconSource);
@@ -116,7 +116,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
     };
 
     const renderContent = () => {
-        // First priority: If we have a custom PNG icon, display it
+        // First priority: If we have a custom icon, display it
         if (customIcon) {
             return (
                 <Image

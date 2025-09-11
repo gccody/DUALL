@@ -1944,6 +1944,10 @@
         "domain": "heap.io"
     },
     {
+        "name": "Heathrow Airport",
+        "domain": "heathrow.com"
+    },
+    {
         "name": "Help Scout",
         "domain": "helpscout.com"
     },
@@ -2494,6 +2498,10 @@
     {
         "name": "Looker",
         "domain": "looker.com"
+    },
+    {
+        "name": "Luma",
+        "domain": "lu.ma"
     },
     {
         "name": "Lunch Money",

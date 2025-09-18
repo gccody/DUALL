@@ -364,6 +364,10 @@
         "domain": "batch.com"
     },
     {
+        "name": "Beget",
+        "domain": "beget.com"
+    },
+    {
         "name": "Best Buy",
         "domain": "bestbuy.com"
     },
@@ -2816,6 +2820,10 @@
         "domain": "n-able.com"
     },
     {
+        "name": "n8n",
+        "domain": "n8n.io"
+    },
+    {
         "name": "NAGA",
         "domain": "naga.com"
     },
@@ -3854,6 +3862,10 @@
     {
         "name": "SendSafely",
         "domain": "sendsafely.com"
+    },
+    {
+        "name": "Senko Digital",
+        "domain": "senko.digital"
     },
     {
         "name": "Sentry",

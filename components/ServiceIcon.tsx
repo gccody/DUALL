@@ -13,11 +13,10 @@ interface ServiceIconProps {
     service: Service;
     size?: number;
     style?: StyleProp<ViewStyle>;
-    onPress?: () => void;
     editable?: boolean;
 }
 
-export default function ServiceIcon({ service, size = 40, style, onPress, editable = false }: ServiceIconProps) {
+export default function ServiceIcon({ service, size = 40, style, editable = false }: ServiceIconProps) {
     const { theme } = useTheme();
     const [customIcon, setCustomIcon] = useState<any>(null);
     const [faviconPath, setFaviconPath] = useState<string | null>(null);
@@ -105,7 +104,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
         loadIcons();
     }, [service.uid]);
 
-    const handleLongPress = () => {
+    const handlePress = () => {
         if (editable) {
             setShowFaviconPicker(true);
         }
@@ -173,8 +172,7 @@ export default function ServiceIcon({ service, size = 40, style, onPress, editab
                     },
                     style
                 ]}
-                onPress={onPress}
-                onLongPress={handleLongPress}
+                onPress={handlePress}
                 delayLongPress={500}
             >
                 {renderContent()}

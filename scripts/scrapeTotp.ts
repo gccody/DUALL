@@ -1,4 +1,5 @@
 import cliProgress from 'cli-progress';
+import { createHash } from 'crypto';
 import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
@@ -17,6 +18,25 @@ interface ApiSite {
 }
 
 const assetsPath = 'assets/custom-icons';
+
+// Function to calculate SHA256 hash of a file
+async function getFileHash(filePath: string): Promise<string> {
+  try {
+    const fileBuffer = await fs.readFile(filePath);
+    const hashSum = createHash('sha256');
+    hashSum.update(fileBuffer);
+    return hashSum.digest('hex');
+  } catch (error) {
+    throw new Error(`Failed to calculate hash for ${filePath}: ${error}`);
+  }
+}
+
+// Function to calculate hash of a buffer
+function getBufferHash(buffer: Buffer): string {
+  const hashSum = createHash('sha256');
+  hashSum.update(buffer);
+  return hashSum.digest('hex');
+}
 
 async function main(): Promise<void> {
   // Create assets directory if it doesn't exist
@@ -39,41 +59,75 @@ async function main(): Promise<void> {
     const siteName = site[0];
     const domain = site[1].domain;
     const img = site[1].img;
-
-    // Check if file already exists
     const filePath = path.join(assetsPath, `${domain}.avif`);
-    try {
-      await fs.access(filePath);
-      totps.push({ name: siteName, domain });
-      bar.increment();
-      continue;
-    } catch {
-      // File doesn't exist, continue to download
-    }
-
+    
     // Construct download URL
     const imgPath = img || `${domain}.svg`;
     const firstChar = img ? img[0] : domain[0];
     const url = `https://raw.githubusercontent.com/2factorauth/twofactorauth/master/img/${firstChar}/${imgPath}`;
-
+    
+    let shouldDownload = true;
+    
+    // Check if file already exists
     try {
-      const imgResponse = await fetch(url);
-      if (!imgResponse.ok) {
-        console.log(`Failed to get ${domain}: ${url}`);
+      await fs.access(filePath);
+      // File exists, check if we need to update it
+      const existingFileHash = await getFileHash(filePath);
+      
+      try {
+        const imgResponse = await fetch(url);
+        if (!imgResponse.ok) {
+          console.log(`Failed to get ${domain}: ${url}`);
+          totps.push({ name: siteName, domain });
+          bar.increment();
+          continue;
+        }
+
+        const buffer = Buffer.from(await imgResponse.arrayBuffer());
+        // Convert to AVIF format to compare with existing file
+        const avifBuffer = await sharp(buffer)
+          .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+          .avif()
+          .toBuffer();
+        
+        const newFileHash = getBufferHash(avifBuffer);
+        
+        // If hashes match, the image hasn't changed
+        if (existingFileHash === newFileHash) {
+          shouldDownload = false;
+        } else {
+          console.log(`Updating ${domain} - image has changed`);
+        }
+      } catch (error) {
+        // If we can't fetch or compare, just use the existing file
+        shouldDownload = false;
+      }
+    } catch {
+      // File doesn't exist, we need to download it
+    }
+
+    if (shouldDownload) {
+      try {
+        const imgResponse = await fetch(url);
+        if (!imgResponse.ok) {
+          console.log(`Failed to get ${domain}: ${url}`);
+          bar.increment();
+          continue;
+        }
+
+        const buffer = Buffer.from(await imgResponse.arrayBuffer());
+        // For raster images, convert and resize to 100x100 avif
+        await sharp(buffer)
+          .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+          .avif()
+          .toFile(filePath);
+      } catch (error) {
+        bar.increment();
         continue;
       }
-
-      const buffer = Buffer.from(await imgResponse.arrayBuffer());
-      // For raster images, convert and resize to 100x100 avig
-      await sharp(buffer)
-        .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-        .avif()
-        .toFile(filePath);
-
-      totps.push({ name: siteName, domain });
-    } catch (error) {
-      continue;
     }
+    
+    totps.push({ name: siteName, domain });
     bar.increment();
   }
 

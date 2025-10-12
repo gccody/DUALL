@@ -9,6 +9,7 @@ const defaultSettings: Settings = {
     hideTokens: false,
     showNextToken: false,
     notifyWhenTokenCopied: true,
+    useBiometrics: true,
 };
 
 // Context type

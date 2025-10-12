@@ -1,3 +1,4 @@
+import PinAuthView from '@/components/PinAuthView';
 import SettingCategory from '@/components/SettingCategory';
 import SettingItem from '@/components/SettingItem';
 import SubText from '@/components/SubText';
@@ -5,8 +6,9 @@ import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
 import Constants from 'expo-constants';
+import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import pkg from '../../package.json';
@@ -15,6 +17,7 @@ export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
     const { settings, updateSetting, isLoading } = useSettings();
     const { updateServices } = useOtpData();
+    const [showPinSetup, setShowPinSetup] = useState(false);
 
     if (isLoading) {
         return (
@@ -47,8 +50,51 @@ export default function SettingsScreen() {
         )
     }
 
+    const resetPin = async () => {
+        Alert.alert(
+            "Reset PIN",
+            "Are you sure you want to reset your PIN? You will need to set up a new PIN.",
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    isPreferred: true
+                },
+                {
+                    text: 'Reset',
+                    style: 'destructive',
+                    onPress: async () => {
+                        try {
+                            await SecureStore.deleteItemAsync('user_pin');
+                            Alert.alert("PIN Reset", "Your PIN has been reset successfully. Please set up a new PIN.");
+                            setShowPinSetup(true);
+                        } catch (error) {
+                            console.error('Failed to reset PIN:', error);
+                            Alert.alert("Error", "Failed to reset PIN. Please try again.");
+                        }
+                    }
+                }
+            ],
+        )
+    }
+
     const openGithub = async () => {
         await WebBrowser.openBrowserAsync(pkg.homepage);
+    }
+
+    // If PIN setup is shown, render PIN setup view
+    if (showPinSetup) {
+        return (
+            <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
+                <PinAuthView
+                    onPinSuccess={() => setShowPinSetup(false)}
+                    onPinFailure={(error) => {
+                        console.error('PIN setup failed:', error);
+                        setShowPinSetup(false);
+                    }}
+                />
+            </SafeAreaView>
+        );
     }
 
     return (
@@ -93,6 +139,14 @@ export default function SettingsScreen() {
                 </SettingCategory>
 
                 <SettingCategory name='Application'>
+                    <SettingItem iconName='user' text='Use Biometrics'>
+                        <Switch
+                            value={settings.useBiometrics}
+                            onValueChange={(value) => updateSetting('useBiometrics', value)}
+                            trackColor={{ false: '#767577', true: '#6C63FF' }}
+                            thumbColor={'#f4f3f4'}
+                        />
+                    </SettingItem>
                     <SettingItem iconName='search' text='Search On Startup'>
                         <Switch
                             value={settings.searchOnStartup}
@@ -101,6 +155,9 @@ export default function SettingsScreen() {
                             thumbColor={'#f4f3f4'}
                         />
                     </SettingItem>
+                    <TouchableOpacity onPress={resetPin}>
+                        <SettingItem iconName='refresh' text='Reset PIN' color={theme.danger} />
+                    </TouchableOpacity>
                 </SettingCategory>
 
                 <SettingCategory name='About'>

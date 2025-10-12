@@ -5,10 +5,11 @@ import SubText from '@/components/SubText';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
+import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import pkg from '../../package.json';
@@ -18,6 +19,8 @@ export default function SettingsScreen() {
     const { settings, updateSetting, isLoading } = useSettings();
     const { updateServices } = useOtpData();
     const [showPinSetup, setShowPinSetup] = useState(false);
+    const [pinSetupKey, setPinSetupKey] = useState(0);
+    const navigation = useNavigation();
 
     if (isLoading) {
         return (
@@ -67,6 +70,7 @@ export default function SettingsScreen() {
                         try {
                             await SecureStore.deleteItemAsync('user_pin');
                             Alert.alert("PIN Reset", "Your PIN has been reset successfully. Please set up a new PIN.");
+                            setPinSetupKey(prev => prev + 1); // Force re-render with new key
                             setShowPinSetup(true);
                         } catch (error) {
                             console.error('Failed to reset PIN:', error);
@@ -82,11 +86,32 @@ export default function SettingsScreen() {
         await WebBrowser.openBrowserAsync(pkg.homepage);
     }
 
+    // Hide tab bar when PIN setup is shown
+    useEffect(() => {
+        if (showPinSetup) {
+            // Hide tab bar by setting the parent route options
+            navigation.setOptions({
+                tabBarStyle: { display: 'none' }
+            });
+
+            // Return cleanup function
+            return () => {
+                navigation.setOptions({
+                    tabBarStyle: {
+                        display: 'flex',
+                        backgroundColor: theme.tabBarBackground
+                    }
+                });
+            };
+        }
+    }, [showPinSetup, navigation, theme.tabBarBackground]);
+
     // If PIN setup is shown, render PIN setup view
     if (showPinSetup) {
         return (
             <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
                 <PinAuthView
+                    key={pinSetupKey}
                     onPinSuccess={() => setShowPinSetup(false)}
                     onPinFailure={(error) => {
                         console.error('PIN setup failed:', error);

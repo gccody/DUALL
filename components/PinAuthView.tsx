@@ -41,8 +41,12 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   }, []);
 
   const checkExistingPin = async () => {
-    if (!(await SecureStore.getItemAsync('user_pin')))
+    const storedPin = await SecureStore.getItemAsync('user_pin');
+    if (!storedPin) {
       setIsSettingNewPin(true);
+    } else {
+      setIsSettingNewPin(false);
+    }
   };
 
   const handlePinInput = async (value: string) => {
@@ -56,7 +60,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       // Auto-submit when PIN is complete
       if (newConfirmPin.length === pinLength) {
         setTimeout(() => {
-          handlePinSubmit();
+          handlePinSubmit(newConfirmPin);
         }, 100); // Small delay for visual feedback
       }
     } else {
@@ -66,7 +70,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       // Auto-submit when PIN is complete
       if (newPin.length === pinLength) {
         setTimeout(() => {
-          handlePinSubmit();
+          handlePinSubmit(newPin);
         }, 100); // Small delay for visual feedback
       }
     }
@@ -78,25 +82,30 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     }
   };
 
-  const handlePinSubmit = async () => {
+  const handlePinSubmit = async (submittedPin?: string) => {
     if (isSettingNewPin) {
-      handleNewPinSetup();
+      handleNewPinSetup(submittedPin);
     } else {
-      await handlePinAuthentication();
+      await handlePinAuthentication(submittedPin);
     }
   };
 
-  const handleNewPinSetup = async () => {
+  const handleNewPinSetup = async (submittedPin?: string) => {
     if (!isConfirming) {
+      // Use the submitted PIN or fall back to state
+      const pinToStore = submittedPin || pin;
       // Store the original PIN and move to confirmation step
-      setOriginalPin(pin);
+      setOriginalPin(pinToStore);
       setPin(''); // Clear the pin display for confirmation
       setIsConfirming(true);
     } else {
-      if (confirmPin !== originalPin) {
+      // Use the submitted PIN or fall back to state
+      const pinToConfirm = submittedPin || confirmPin;
+      if (pinToConfirm !== originalPin) {
         setErrorMessage('PINs do not match');
         setShowError(true);
         setConfirmPin('');
+        setIsConfirming(false);
         return;
       }
 
@@ -106,11 +115,21 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     }
   };
 
-  const handlePinAuthentication = async () => {
+  const handlePinAuthentication = async (submittedPin?: string) => {
+    // Use the submitted PIN or fall back to state
+    const pinToCheck = submittedPin || pin;
+
     // Verify against stored PIN
     const storedPin = await SecureStore.getItemAsync('user_pin');
 
-    if (pin === storedPin) {
+    if (!storedPin) {
+      // No PIN stored, this shouldn't happen in normal flow
+      setErrorMessage('No PIN found. Please reset your PIN.');
+      setShowError(true);
+      return;
+    }
+
+    if (pinToCheck === storedPin) {
       onPinSuccess();
     } else {
       const newAttempts = attempts + 1;
@@ -129,9 +148,9 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   };
 
   const savePinToSecureStorage = async (pinToSave: string) => {
-    // In a real implementation, you would use expo-secure-store
+    // Save the PIN to secure storage
     await SecureStore.setItemAsync('user_pin', pinToSave);
-    console.log('PIN saved to secure storage');
+    console.log('PIN saved to secure storage:', pinToSave);
   };
 
   const handleBackspace = () => {

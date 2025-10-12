@@ -1,10 +1,11 @@
 import LoadingView from "@/components/LoadingView";
 import PinAuthView from "@/components/PinAuthView";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
-import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemeProvider, useTheme } from "@/context/ThemeContext";
 import * as LocalAuthentication from 'expo-local-authentication';
 import { Stack } from "expo-router";
 import * as SecureStore from 'expo-secure-store';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -13,6 +14,7 @@ function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
   const [pinExists, setPinExists] = useState<null | boolean>(null);
   const [showPinAuth, setShowPinAuth] = useState(false);
   const { settings, isLoading } = useSettings();
+  const { isDark } = useTheme();
 
   useEffect(() => {
     const checkPinAndAuthenticate = async () => {
@@ -69,23 +71,41 @@ function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
   };
 
   if (isLoading || pinExists === null) {
-    return <LoadingView />;
+    return (
+      <>
+        <StatusBar style={isDark ? 'light' : 'dark'} />
+        <LoadingView />
+      </>
+    );
   }
 
   if (showPinAuth) {
     return (
-      <PinAuthView
-        onPinSuccess={handlePinSuccess}
-        onPinFailure={handlePinFailure}
-      />
+      <>
+        <StatusBar style={isDark ? 'light' : 'dark'} />
+        <PinAuthView
+          onPinSuccess={handlePinSuccess}
+          onPinFailure={handlePinFailure}
+        />
+      </>
     );
   }
 
   if (authenticated === true) {
-    return <>{children}</>;
+    return (
+      <>
+        <StatusBar style={isDark ? 'light' : 'dark'} />
+        {children}
+      </>
+    );
   }
 
-  return <LoadingView />;
+  return (
+    <>
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <LoadingView />
+    </>
+  );
 }
 
 export default function RootLayout() {

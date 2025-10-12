@@ -14,11 +14,12 @@ interface CodeProps {
     opts?: TOTPOptions;
     globalTimestamp: number;
     style?: StyleProp<ViewStyle>;
+    onLongPress?: () => void;
 }
 
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
-export default function Code({ service, opts, globalTimestamp, style }: CodeProps) {
+export default function Code({ service, opts, globalTimestamp, style, onLongPress }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
     const [otpData, setOtpData] = useState<TOTPResult>({ otp: '------', expires: Date.now() });
@@ -159,6 +160,7 @@ export default function Code({ service, opts, globalTimestamp, style }: CodeProp
         <TouchableHighlight
             style={[styles.buttonContainer, { backgroundColor: theme.cardBackground }, style]}
             onPress={handleCopyToClipboard}
+            onLongPress={onLongPress}
             underlayColor={theme.border}
         >
             <View>

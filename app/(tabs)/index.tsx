@@ -7,6 +7,7 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import CodeItem from "@/components/CodeItem";
+import EditCodeModal from "@/components/EditCodeModal";
 import ErrorView from "@/components/ErrorView";
 import LoadingView from "@/components/LoadingView";
 import { SearchBar } from "@/components/SearchBar";
@@ -29,6 +30,10 @@ export default function HomeScreen() {
   // Search functionality
   const [searchBarVisible, setSearchBarVisible] = useState<boolean>(settings.searchOnStartup);
   const { services, search, setSearch, handleSearch } = useSearch(data?.services || []);
+
+  // Modal state
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   // Real-time clock update
   const timestamp = useTimestamp();
@@ -73,6 +78,30 @@ export default function HomeScreen() {
     resetRecentCodeIndex();
   };
 
+  // Handle long press to open edit modal
+  const handleLongPress = (service: Service) => {
+    setSelectedService(service);
+    setModalVisible(true);
+  };
+
+  // Handle save from modal
+  const handleSaveService = (updatedService: Service) => {
+    if (!data) return;
+
+    const updatedServices = data.services.map(s =>
+      s.uid === updatedService.uid ? updatedService : s
+    );
+    updateServices(updatedServices);
+  };
+
+  // Handle delete from modal
+  const handleDeleteService = (serviceUid: string) => {
+    if (!data) return;
+
+    const updatedServices = data.services.filter(s => s.uid !== serviceUid);
+    updateServices(updatedServices);
+  };
+
   // Show error state
   if (error) {
     return <ErrorView message={error} />;
@@ -103,6 +132,7 @@ export default function HomeScreen() {
             globalTimestamp={timestamp}
             isHighlighted={recentCodeIndex === index}
             isFirstItem={index === 0}
+            onLongPress={() => handleLongPress(item)}
           />
         )}
         estimatedItemSize={150}
@@ -110,6 +140,13 @@ export default function HomeScreen() {
         extraData={[timestamp, recentCodeIndex]}
       />
       <SearchButton onPress={toggleSearch} />
+      <EditCodeModal
+        visible={modalVisible}
+        service={selectedService}
+        onClose={() => setModalVisible(false)}
+        onSave={handleSaveService}
+        onDelete={handleDeleteService}
+      />
     </SafeAreaView>
   );
 }

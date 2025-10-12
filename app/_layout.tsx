@@ -16,6 +16,7 @@ function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkPinAndAuthenticate = async () => {
+      // await SecureStore.deleteItemAsync('user_pin');     // Un-comment in order to reset the pin during dev
       // Check if PIN exists
       const storedPin = await SecureStore.getItemAsync('user_pin');
       setPinExists(!!storedPin);

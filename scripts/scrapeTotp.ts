@@ -67,6 +67,14 @@ async function main(): Promise<void> {
     const url = `https://raw.githubusercontent.com/2factorauth/twofactorauth/master/img/${firstChar}/${imgPath}`;
     
     let shouldDownload = true;
+
+    const imgResponse = await fetch(url);
+    if (!imgResponse.ok) {
+      console.log(`Failed to get ${domain}: ${url}`);
+      totps.push({ name: siteName, domain });
+      bar.increment();
+      continue;
+    }
     
     // Check if file already exists
     try {
@@ -75,14 +83,6 @@ async function main(): Promise<void> {
       const existingFileHash = await getFileHash(filePath);
       
       try {
-        const imgResponse = await fetch(url);
-        if (!imgResponse.ok) {
-          console.log(`Failed to get ${domain}: ${url}`);
-          totps.push({ name: siteName, domain });
-          bar.increment();
-          continue;
-        }
-
         const buffer = Buffer.from(await imgResponse.arrayBuffer());
         // Convert to AVIF format to compare with existing file
         const avifBuffer = await sharp(buffer)
@@ -108,13 +108,6 @@ async function main(): Promise<void> {
 
     if (shouldDownload) {
       try {
-        const imgResponse = await fetch(url);
-        if (!imgResponse.ok) {
-          console.log(`Failed to get ${domain}: ${url}`);
-          bar.increment();
-          continue;
-        }
-
         const buffer = Buffer.from(await imgResponse.arrayBuffer());
         // For raster images, convert and resize to 100x100 avif
         await sharp(buffer)

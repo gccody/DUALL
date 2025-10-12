@@ -69,7 +69,9 @@
     "react-test-renderer": "18.3.1",
     "sharp": "^0.34.3",
     "tsx": "^4.20.3",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "~8.0.1"
   },
   "private": true
 }

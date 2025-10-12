@@ -168,9 +168,16 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
                     <View style={styles.otpInfo}>
                         <View style={styles.issuerContainer}>
                             <ServiceIcon service={service} size={32} style={styles.serviceIcon} editable={true} />
-                            <Text style={[styles.issuerText, { color: theme.text }]}>
-                                {service.otp.issuer}
-                            </Text>
+                            <View style={styles.issuerTextContainer}>
+                                <Text style={[styles.issuerText, { color: theme.text }]}>
+                                    {service.otp.issuer}
+                                    {service.name && (
+                                        <Text style={[styles.labelText, { color: theme.subText }]}>
+                                            {' '}({service.name})
+                                        </Text>
+                                    )}
+                                </Text>
+                            </View>
                         </View>
                         <View style={styles.codeContainer}>
                             <Text style={[styles.codeText, { color: theme.text }]}>
@@ -250,9 +257,16 @@ const styles = StyleSheet.create({
     serviceIcon: {
         marginRight: 8,
     },
+    issuerTextContainer: {
+        flex: 1,
+    },
     issuerText: {
         fontSize: 16,
         fontWeight: '600',
+    },
+    labelText: {
+        fontSize: 14,
+        fontWeight: '400',
     },
     codeContainer: {
         flexDirection: 'row',

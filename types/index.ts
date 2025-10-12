@@ -67,6 +67,7 @@ export interface Settings {
 	hideTokens: boolean;
 	showNextToken: boolean;
 	notifyWhenTokenCopied: boolean;
+	useBiometrics: boolean;
 }
 
 /**

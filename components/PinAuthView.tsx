@@ -150,7 +150,6 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   const savePinToSecureStorage = async (pinToSave: string) => {
     // Save the PIN to secure storage
     await SecureStore.setItemAsync('user_pin', pinToSave);
-    console.log('PIN saved to secure storage:', pinToSave);
   };
 
   const handleBackspace = () => {

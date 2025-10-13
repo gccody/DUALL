@@ -27,6 +27,7 @@ export class FileHandler {
             hideTokens: false,
             showNextToken: false,
             notifyWhenTokenCopied: false,
+            useBiometrics: false
           },
         };
         await FileHandler.saveData(defaultData);

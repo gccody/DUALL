@@ -8,24 +8,8 @@
         "domain": "123formbuilder.com"
     },
     {
-        "name": "123 Reg",
-        "domain": "123-reg.co.uk"
-    },
-    {
-        "name": "15Five",
-        "domain": "15five.com"
-    },
-    {
         "name": "1Password",
         "domain": "1password.com"
-    },
-    {
-        "name": "20i",
-        "domain": "20i.com"
-    },
-    {
-        "name": "23andMe",
-        "domain": "23andme.com"
     },
     {
         "name": "2Checkout",
@@ -40,14 +24,6 @@
         "domain": "500px.com"
     },
     {
-        "name": "A2 Hosting",
-        "domain": "a2hosting.com"
-    },
-    {
-        "name": "Abode",
-        "domain": "goabode.com"
-    },
-    {
         "name": "Above.com",
         "domain": "above.com"
     },
@@ -56,40 +32,12 @@
         "domain": "accelo.com"
     },
     {
-        "name": "Accountable",
-        "domain": "accountable.eu"
-    },
-    {
-        "name": "Acquia",
-        "domain": "acquia.com"
-    },
-    {
-        "name": "ActionID",
-        "domain": "ngpvan.com"
-    },
-    {
         "name": "Actionstep",
         "domain": "actionstep.com"
     },
     {
-        "name": "ACTIVE 24",
-        "domain": "active24.com"
-    },
-    {
         "name": "ActiveCampaign",
         "domain": "activecampaign.com"
-    },
-    {
-        "name": "ActiveState",
-        "domain": "activestate.com"
-    },
-    {
-        "name": "Activision",
-        "domain": "activision.com"
-    },
-    {
-        "name": "Adafruit",
-        "domain": "adafruit.com"
     },
     {
         "name": "Addiko Bank",
@@ -112,24 +60,8 @@
         "domain": "serif.com"
     },
     {
-        "name": "Afternic",
-        "domain": "afternic.com"
-    },
-    {
-        "name": "Airbrake",
-        "domain": "airbrake.io"
-    },
-    {
         "name": "Airship",
         "domain": "airship.com"
-    },
-    {
-        "name": "Airtable",
-        "domain": "airtable.com"
-    },
-    {
-        "name": "Aiven",
-        "domain": "aiven.io"
     },
     {
         "name": "AJ Bell Youinvest",
@@ -148,10 +80,6 @@
         "domain": "algolia.com"
     },
     {
-        "name": "AlibabaCloud",
-        "domain": "alibabacloud.com"
-    },
-    {
         "name": "ALL-INKL.COM",
         "domain": "all-inkl.com"
     },
@@ -160,44 +88,8 @@
         "domain": "allegro.pl"
     },
     {
-        "name": "AllMyLinks",
-        "domain": "allmylinks.com"
-    },
-    {
         "name": "AltCoinTrader",
         "domain": "altcointrader.co.za"
-    },
-    {
-        "name": "Alterdice",
-        "domain": "alterdice.com"
-    },
-    {
-        "name": "AltoIRA",
-        "domain": "altoira.com"
-    },
-    {
-        "name": "Amazing Marvin",
-        "domain": "amazingmarvin.com"
-    },
-    {
-        "name": "Amazon",
-        "domain": "amazon.com"
-    },
-    {
-        "name": "Amazon Pay",
-        "domain": "pay.amazon.com"
-    },
-    {
-        "name": "Amazon Web Services",
-        "domain": "aws.amazon.com"
-    },
-    {
-        "name": "America First Credit Union",
-        "domain": "americafirst.com"
-    },
-    {
-        "name": "American Century Investments",
-        "domain": "americancentury.com"
     },
     {
         "name": "ANY.RUN",
@@ -208,16 +100,8 @@
         "domain": "anycoindirect.eu"
     },
     {
-        "name": "AnyDesk",
-        "domain": "anydesk.com"
-    },
-    {
         "name": "Aol Mail",
         "domain": "mail.aol.com"
-    },
-    {
-        "name": "APNIC",
-        "domain": "apnic.net"
     },
     {
         "name": "AppFolio",
@@ -228,36 +112,8 @@
         "domain": "appodeal.com"
     },
     {
-        "name": "AppSignal",
-        "domain": "appsignal.com"
-    },
-    {
         "name": "AppVeyor",
         "domain": "appveyor.com"
-    },
-    {
-        "name": "Appwrite",
-        "domain": "appwrite.io"
-    },
-    {
-        "name": "Arduino",
-        "domain": "arduino.cc"
-    },
-    {
-        "name": "ARIN",
-        "domain": "arin.net"
-    },
-    {
-        "name": "Artifact Hub",
-        "domain": "artifacthub.io"
-    },
-    {
-        "name": "Aruba Instant On",
-        "domain": "arubainstanton.com"
-    },
-    {
-        "name": "Asana",
-        "domain": "asana.com"
     },
     {
         "name": "Ashes of Creation",
@@ -268,16 +124,8 @@
         "domain": "assembla.com"
     },
     {
-        "name": "Atera",
-        "domain": "atera.com"
-    },
-    {
         "name": "Aternos",
         "domain": "aternos.org"
-    },
-    {
-        "name": "Atlassian Cloud",
-        "domain": "id.atlassian.com"
     },
     {
         "name": "Audiense",
@@ -292,32 +140,12 @@
         "domain": "autodesk.com"
     },
     {
-        "name": "Automater",
-        "domain": "automater.pl"
-    },
-    {
         "name": "AutoTask",
         "domain": "autotask.net"
     },
     {
-        "name": "Availity Essentials",
-        "domain": "availity.com"
-    },
-    {
         "name": "Avanza",
         "domain": "avanza.se"
-    },
-    {
-        "name": "Avast",
-        "domain": "avast.com"
-    },
-    {
-        "name": "AVG",
-        "domain": "avg.com"
-    },
-    {
-        "name": "AwardWallet",
-        "domain": "awardwallet.com"
     },
     {
         "name": "Awin",
@@ -328,40 +156,12 @@
         "domain": "back4app.com"
     },
     {
-        "name": "Backblaze",
-        "domain": "backblaze.com"
-    },
-    {
         "name": "Baidu AI cloud",
         "domain": "cloud.baidu.com"
     },
     {
-        "name": "Balena",
-        "domain": "balena.io"
-    },
-    {
         "name": "BambooHR",
         "domain": "bamboohr.com"
-    },
-    {
-        "name": "Baremetrics",
-        "domain": "baremetrics.com"
-    },
-    {
-        "name": "Barmenia",
-        "domain": "barmenia.de"
-    },
-    {
-        "name": "Basecamp",
-        "domain": "basecamp.com"
-    },
-    {
-        "name": "Basic Attention Token",
-        "domain": "publishers.basicattentiontoken.org"
-    },
-    {
-        "name": "Batch",
-        "domain": "batch.com"
     },
     {
         "name": "Beget",
@@ -388,14 +188,6 @@
         "domain": "betvictor.com"
     },
     {
-        "name": "BGL Corporate Solutions",
-        "domain": "bglcorp.com"
-    },
-    {
-        "name": "Bibox",
-        "domain": "bibox.com"
-    },
-    {
         "name": "Bill",
         "domain": "bill.com"
     },
@@ -416,60 +208,20 @@
         "domain": "bitbucket.org"
     },
     {
-        "name": "Bitbuy",
-        "domain": "bitbuy.ca"
-    },
-    {
-        "name": "Bitcoin.de",
-        "domain": "bitcoin.de"
-    },
-    {
         "name": "Bitdefender",
         "domain": "bitdefender.com"
-    },
-    {
-        "name": "Bitfinex",
-        "domain": "bitfinex.com"
     },
     {
         "name": "Bitflyer",
         "domain": "bitflyer.com"
     },
     {
-        "name": "BitForex",
-        "domain": "bitforex.com"
-    },
-    {
-        "name": "Bitget",
-        "domain": "bitget.com"
-    },
-    {
         "name": "BitGo",
         "domain": "bitgo.com"
     },
     {
-        "name": "Bithumb",
-        "domain": "bithumb.com"
-    },
-    {
-        "name": "BitMEX",
-        "domain": "bitmex.com"
-    },
-    {
-        "name": "Bitpanda",
-        "domain": "bitpanda.com"
-    },
-    {
-        "name": "Bitpay",
-        "domain": "bitpay.com"
-    },
-    {
         "name": "Bitrise",
         "domain": "bitrise.io"
-    },
-    {
-        "name": "Bitrix24",
-        "domain": "bitrix24.com"
     },
     {
         "name": "BitSkins",
@@ -492,10 +244,6 @@
         "domain": "bitvavo.com"
     },
     {
-        "name": "Bitwarden",
-        "domain": "bitwarden.com"
-    },
-    {
         "name": "BKEX",
         "domain": "bkex.com"
     },
@@ -504,36 +252,16 @@
         "domain": "playblackdesert.com"
     },
     {
-        "name": "Blackbaud",
-        "domain": "blackbaud.com"
-    },
-    {
         "name": "Blacknight",
         "domain": "blacknight.com"
-    },
-    {
-        "name": "Blade & Soul",
-        "domain": "bladeandsoul.com"
     },
     {
         "name": "Blockchain.com",
         "domain": "blockchain.com"
     },
     {
-        "name": "BlockFi",
-        "domain": "blockfi.com"
-    },
-    {
-        "name": "Blossom",
-        "domain": "blossom88.com"
-    },
-    {
         "name": "Bluehost",
         "domain": "bluehost.com"
-    },
-    {
-        "name": "BlueSnap",
-        "domain": "bluesnap.com"
     },
     {
         "name": "BnkToTheFuture",
@@ -544,24 +272,12 @@
         "domain": "bohemia.net"
     },
     {
-        "name": "Bokio [SE]",
-        "domain": "bokio.se"
-    },
-    {
         "name": "Bonusly",
         "domain": "bonus.ly"
     },
     {
-        "name": "Booking.com",
-        "domain": "booking.com"
-    },
-    {
         "name": "Bourse Direct",
         "domain": "boursedirect.fr"
-    },
-    {
-        "name": "Box",
-        "domain": "box.com"
     },
     {
         "name": "Braintree",
@@ -580,10 +296,6 @@
         "domain": "brex.com"
     },
     {
-        "name": "Brigham Young University",
-        "domain": "byu.edu"
-    },
-    {
         "name": "British Airways",
         "domain": "britishairways.com"
     },
@@ -600,28 +312,12 @@
         "domain": "btcmarkets.net"
     },
     {
-        "name": "BTCPOP",
-        "domain": "btcpop.co"
-    },
-    {
-        "name": "BtcTurk",
-        "domain": "btcturk.com"
-    },
-    {
         "name": "Bubble",
         "domain": "bubble.io"
     },
     {
         "name": "Buda",
         "domain": "buda.com"
-    },
-    {
-        "name": "Buddy",
-        "domain": "buddy.works"
-    },
-    {
-        "name": "Buffer",
-        "domain": "buffer.com"
     },
     {
         "name": "bugcrowd",
@@ -632,28 +328,12 @@
         "domain": "bugsnag.com"
     },
     {
-        "name": "Bugzilla@Mozilla",
-        "domain": "bugzilla.mozilla.org"
-    },
-    {
         "name": "Buhl",
         "domain": "buhl.de"
     },
     {
         "name": "Buildium",
         "domain": "buildium.com"
-    },
-    {
-        "name": "Buildkite",
-        "domain": "buildkite.com"
-    },
-    {
-        "name": "BuiltWith",
-        "domain": "builtwith.com"
-    },
-    {
-        "name": "BullionStar",
-        "domain": "bullionstar.com"
     },
     {
         "name": "BullionVault",
@@ -664,24 +344,8 @@
         "domain": "bunny.net"
     },
     {
-        "name": "Buy Me a Coffee",
-        "domain": "buymeacoffee.com"
-    },
-    {
         "name": "Bybit",
         "domain": "bybit.com"
-    },
-    {
-        "name": "Cal Poly Pomona",
-        "domain": "cpp.edu"
-    },
-    {
-        "name": "Cal.com",
-        "domain": "cal.com"
-    },
-    {
-        "name": "Calendly",
-        "domain": "calendly.com"
     },
     {
         "name": "Campaign Monitor",
@@ -696,72 +360,20 @@
         "domain": "canva.com"
     },
     {
-        "name": "Canvas",
-        "domain": "instructure.com"
-    },
-    {
         "name": "Capcom ID",
         "domain": "capcom.com"
-    },
-    {
-        "name": "Capsule",
-        "domain": "capsulecrm.com"
-    },
-    {
-        "name": "Cardmarket",
-        "domain": "cardmarket.com"
-    },
-    {
-        "name": "Carrd",
-        "domain": "carrd.co"
     },
     {
         "name": "Carta",
         "domain": "carta.com"
     },
     {
-        "name": "Cash App",
-        "domain": "cash.app"
-    },
-    {
-        "name": "Caspio",
-        "domain": "caspio.com"
-    },
-    {
-        "name": "Cat",
-        "domain": "cat.com"
-    },
-    {
-        "name": "CDN77",
-        "domain": "cdn77.com"
-    },
-    {
         "name": "CDNsun",
         "domain": "cdnsun.com"
     },
     {
-        "name": "CEX.IO",
-        "domain": "cex.io"
-    },
-    {
-        "name": "Changelly",
-        "domain": "changelly.com"
-    },
-    {
-        "name": "Chargebee",
-        "domain": "chargebee.com"
-    },
-    {
-        "name": "CharlieHR",
-        "domain": "charliehr.com"
-    },
-    {
         "name": "Chartbeat",
         "domain": "chartbeat.com"
-    },
-    {
-        "name": "Chatwork",
-        "domain": "chatwork.com"
     },
     {
         "name": "Checkfront",
@@ -772,26 +384,6 @@
         "domain": "choko.link"
     },
     {
-        "name": "Circle",
-        "domain": "circle.com"
-    },
-    {
-        "name": "Cisco",
-        "domain": "cisco.com"
-    },
-    {
-        "name": "Cisco Meraki",
-        "domain": "meraki.cisco.com"
-    },
-    {
-        "name": "Cisco Network Academy",
-        "domain": "netacad.com"
-    },
-    {
-        "name": "Citadel Credit Union",
-        "domain": "citadelbanking.com"
-    },
-    {
         "name": "ClassLink",
         "domain": "classlink.com"
     },
@@ -800,36 +392,8 @@
         "domain": "clearscore.com"
     },
     {
-        "name": "CleverTap",
-        "domain": "clevertap.com"
-    },
-    {
-        "name": "ClickUp",
-        "domain": "clickup.com"
-    },
-    {
-        "name": "Cliniko",
-        "domain": "cliniko.com"
-    },
-    {
         "name": "Clio",
         "domain": "clio.com"
-    },
-    {
-        "name": "Close",
-        "domain": "close.com"
-    },
-    {
-        "name": "Cloud 66",
-        "domain": "cloud66.com"
-    },
-    {
-        "name": "CloudAMQP",
-        "domain": "cloudamqp.com"
-    },
-    {
-        "name": "CloudBees",
-        "domain": "cloudbees.com"
     },
     {
         "name": "Cloudbet",
@@ -840,28 +404,8 @@
         "domain": "cloudconvert.com"
     },
     {
-        "name": "Cloudflare",
-        "domain": "cloudflare.com"
-    },
-    {
-        "name": "cloudHQ",
-        "domain": "cloudhq.net"
-    },
-    {
         "name": "Cloudinary",
         "domain": "cloudinary.com"
-    },
-    {
-        "name": "ClouDNS",
-        "domain": "cloudns.net"
-    },
-    {
-        "name": "Cloudways",
-        "domain": "cloudways.com"
-    },
-    {
-        "name": "Clover",
-        "domain": "clover.com"
     },
     {
         "name": "Cloze",
@@ -872,36 +416,16 @@
         "domain": "checkmategaming.com"
     },
     {
-        "name": "Cobalt",
-        "domain": "cobalt.io"
-    },
-    {
         "name": "Coda",
         "domain": "coda.io"
-    },
-    {
-        "name": "Codebase",
-        "domain": "codebasehq.com"
     },
     {
         "name": "Codeberg",
         "domain": "codeberg.org"
     },
     {
-        "name": "Cognito Forms",
-        "domain": "cognitoforms.com"
-    },
-    {
-        "name": "Coinbase",
-        "domain": "coinbase.com"
-    },
-    {
         "name": "Coinberry",
         "domain": "coinberry.com"
-    },
-    {
-        "name": "Coincheck",
-        "domain": "coincheck.com"
     },
     {
         "name": "CoinDCX",
@@ -932,22 +456,6 @@
         "domain": "coinjar.com"
     },
     {
-        "name": "CoinLoan",
-        "domain": "coinloan.io"
-    },
-    {
-        "name": "CoinMarketCap",
-        "domain": "coinmarketcap.com"
-    },
-    {
-        "name": "CoinOne",
-        "domain": "coinone.co.kr"
-    },
-    {
-        "name": "CoinPayments",
-        "domain": "coinpayments.net"
-    },
-    {
         "name": "CoinPayU",
         "domain": "coinpayu.com"
     },
@@ -956,56 +464,12 @@
         "domain": "coinremitter.com"
     },
     {
-        "name": "Coins.ph",
-        "domain": "coins.ph"
-    },
-    {
-        "name": "CoinSmart",
-        "domain": "coinsmart.com"
-    },
-    {
-        "name": "CoinSpot",
-        "domain": "coinspot.com.au"
-    },
-    {
-        "name": "CoinTiger",
-        "domain": "cointiger.com"
-    },
-    {
-        "name": "CoinTracker",
-        "domain": "cointracker.io"
-    },
-    {
-        "name": "CoinTracking",
-        "domain": "cointracking.info"
-    },
-    {
-        "name": "Cointraffic",
-        "domain": "cointraffic.io"
-    },
-    {
         "name": "Coinut",
         "domain": "coinut.com"
     },
     {
-        "name": "Coinzilla",
-        "domain": "coinzilla.com"
-    },
-    {
-        "name": "Combell",
-        "domain": "combell.com"
-    },
-    {
-        "name": "CommunityAmerica",
-        "domain": "communityamerica.com"
-    },
-    {
         "name": "Comodo",
         "domain": "comodo.com"
-    },
-    {
-        "name": "Compose",
-        "domain": "compose.com"
     },
     {
         "name": "Con Edison",
@@ -1028,32 +492,12 @@
         "domain": "constellix.com"
     },
     {
-        "name": "Contabo",
-        "domain": "contabo.com"
-    },
-    {
-        "name": "Contentful",
-        "domain": "contentful.com"
-    },
-    {
-        "name": "Contra Costa Community College District",
-        "domain": "4cd.edu"
-    },
-    {
-        "name": "ConvertKit",
-        "domain": "convertkit.com"
-    },
-    {
         "name": "CookieYes",
         "domain": "cookieyes.com"
     },
     {
         "name": "Cordial",
         "domain": "cordial.com"
-    },
-    {
-        "name": "Corporate Finance Institute",
-        "domain": "corporatefinanceinstitute.com"
     },
     {
         "name": "Coursera",
@@ -1064,28 +508,12 @@
         "domain": "cpoms.co.uk"
     },
     {
-        "name": "CQUniversity",
-        "domain": "cqu.edu.au"
-    },
-    {
         "name": "CrashPlan",
         "domain": "crashplan.com"
     },
     {
         "name": "Credly",
         "domain": "credly.com"
-    },
-    {
-        "name": "cron-job.org",
-        "domain": "cron-job.org"
-    },
-    {
-        "name": "Cronometer",
-        "domain": "cronometer.com"
-    },
-    {
-        "name": "Crowd Supply",
-        "domain": "crowdsupply.com"
     },
     {
         "name": "Crowdcube",
@@ -1100,44 +528,8 @@
         "domain": "crypto.com"
     },
     {
-        "name": "Cryptonator",
-        "domain": "cryptonator.com"
-    },
-    {
-        "name": "Current RMS",
-        "domain": "current-rms.com"
-    },
-    {
-        "name": "Customer.io",
-        "domain": "customer.io"
-    },
-    {
-        "name": "cyon",
-        "domain": "cyon.ch"
-    },
-    {
-        "name": "Dan.com",
-        "domain": "dan.com"
-    },
-    {
         "name": "Dashlane",
         "domain": "dashlane.com"
-    },
-    {
-        "name": "Databox",
-        "domain": "databox.com"
-    },
-    {
-        "name": "Datadog",
-        "domain": "datadoghq.com"
-    },
-    {
-        "name": "DataRobot",
-        "domain": "datarobot.com"
-    },
-    {
-        "name": "DATEV",
-        "domain": "datev.de"
     },
     {
         "name": "Datto",
@@ -1148,14 +540,6 @@
         "domain": "digitalcombatsimulator.com"
     },
     {
-        "name": "Deakin University",
-        "domain": "deakin.edu.au"
-    },
-    {
-        "name": "Deel",
-        "domain": "deel.com"
-    },
-    {
         "name": "DeepL",
         "domain": "deepl.com"
     },
@@ -1164,28 +548,8 @@
         "domain": "degiro.nl"
     },
     {
-        "name": "Delinea",
-        "domain": "delinea.com"
-    },
-    {
-        "name": "Demio",
-        "domain": "demio.com"
-    },
-    {
         "name": "DeployHQ",
         "domain": "deployhq.com"
-    },
-    {
-        "name": "Deputy",
-        "domain": "deputy.com"
-    },
-    {
-        "name": "Detectify",
-        "domain": "detectify.com"
-    },
-    {
-        "name": "Deutsche Bahn (DB)",
-        "domain": "bahn.com"
     },
     {
         "name": "Deutsche Post",
@@ -1204,10 +568,6 @@
         "domain": "dext.com"
     },
     {
-        "name": "DigiCert",
-        "domain": "digicert.com"
-    },
-    {
         "name": "Digital Surge",
         "domain": "digitalsurge.com.au"
     },
@@ -1220,76 +580,20 @@
         "domain": "digitec.ch"
     },
     {
-        "name": "Dinero",
-        "domain": "dinero.dk"
-    },
-    {
-        "name": "DirectAdmin",
-        "domain": "directadmin.com"
-    },
-    {
         "name": "Directnic",
         "domain": "directnic.com"
-    },
-    {
-        "name": "Discogs",
-        "domain": "discogs.com"
-    },
-    {
-        "name": "Discord",
-        "domain": "discord.com"
     },
     {
         "name": "Disqus",
         "domain": "disqus.com"
     },
     {
-        "name": "DMARC Analyzer",
-        "domain": "dmarcanalyzer.com"
-    },
-    {
-        "name": "dmarcian",
-        "domain": "dmarcian.com"
-    },
-    {
         "name": "DMM",
         "domain": "dmm.com"
     },
     {
-        "name": "DMOJ",
-        "domain": "dmoj.ca"
-    },
-    {
-        "name": "DNSFilter",
-        "domain": "dnsfilter.com"
-    },
-    {
-        "name": "DNSimple",
-        "domain": "dnsimple.com"
-    },
-    {
         "name": "Docker",
         "domain": "docker.com"
-    },
-    {
-        "name": "Docusign",
-        "domain": "docusign.com"
-    },
-    {
-        "name": "Domeneshop",
-        "domain": "domeneshop.no"
-    },
-    {
-        "name": "Domino Data Lab",
-        "domain": "dominodatalab.com"
-    },
-    {
-        "name": "Doppler",
-        "domain": "doppler.com"
-    },
-    {
-        "name": "Dotloop",
-        "domain": "dotloop.com"
     },
     {
         "name": "Dreamhost",
@@ -1300,36 +604,8 @@
         "domain": "drift.com"
     },
     {
-        "name": "Dropbox",
-        "domain": "dropbox.com"
-    },
-    {
         "name": "Dropbox Sign",
         "domain": "hellosign.com"
-    },
-    {
-        "name": "Druide",
-        "domain": "druide.com"
-    },
-    {
-        "name": "Drupal.org",
-        "domain": "drupal.org"
-    },
-    {
-        "name": "Dwolla",
-        "domain": "dwolla.com"
-    },
-    {
-        "name": "Dyn",
-        "domain": "dyn.com"
-    },
-    {
-        "name": "Dynadot",
-        "domain": "dynadot.com"
-    },
-    {
-        "name": "Dynu",
-        "domain": "dynu.com"
     },
     {
         "name": "E.ON",
@@ -1352,32 +628,12 @@
         "domain": "easydns.com"
     },
     {
-        "name": "EasySendy",
-        "domain": "easysendy.com"
-    },
-    {
         "name": "eBay",
         "domain": "ebay.com"
     },
     {
-        "name": "eclincher",
-        "domain": "eclincher.com"
-    },
-    {
-        "name": "ecobee",
-        "domain": "ecobee.com"
-    },
-    {
         "name": "Egnyte",
         "domain": "egnyte.com"
-    },
-    {
-        "name": "Elastic Cloud",
-        "domain": "elastic.co"
-    },
-    {
-        "name": "Electronic Arts (Origin)",
-        "domain": "ea.com"
     },
     {
         "name": "Element",
@@ -1400,10 +656,6 @@
         "domain": "emplifi.io"
     },
     {
-        "name": "Eneba",
-        "domain": "eneba.com"
-    },
-    {
         "name": "Engine Yard",
         "domain": "engineyard.com"
     },
@@ -1412,60 +664,16 @@
         "domain": "enom.com"
     },
     {
-        "name": "Ente",
-        "domain": "ente.io"
-    },
-    {
-        "name": "Envato",
-        "domain": "envato.com"
-    },
-    {
-        "name": "Envoyer",
-        "domain": "envoyer.io"
-    },
-    {
-        "name": "Epayslips",
-        "domain": "epayslips.co.uk"
-    },
-    {
-        "name": "Epic Games",
-        "domain": "epicgames.com"
-    },
-    {
         "name": "Epik",
         "domain": "epik.com"
-    },
-    {
-        "name": "Equinix Metal",
-        "domain": "metal.equinix.com"
-    },
-    {
-        "name": "ESET HOME",
-        "domain": "eset.com"
-    },
-    {
-        "name": "ESL Play",
-        "domain": "play.eslgaming.com"
     },
     {
         "name": "Esri",
         "domain": "esri.com"
     },
     {
-        "name": "Etana Custody",
-        "domain": "etana.com"
-    },
-    {
-        "name": "Etsy",
-        "domain": "etsy.com"
-    },
-    {
         "name": "eUKhost",
         "domain": "eukhost.com"
-    },
-    {
-        "name": "EuroDNS",
-        "domain": "eurodns.com"
     },
     {
         "name": "EVE Online",
@@ -1480,64 +688,20 @@
         "domain": "evernote.com"
     },
     {
-        "name": "Exact Online",
-        "domain": "exact.com"
-    },
-    {
         "name": "Exmo",
         "domain": "exmo.com"
-    },
-    {
-        "name": "Expensify",
-        "domain": "expensify.com"
-    },
-    {
-        "name": "Expo",
-        "domain": "expo.dev"
-    },
-    {
-        "name": "F-Secure",
-        "domain": "f-secure.com"
-    },
-    {
-        "name": "F2Pool",
-        "domain": "f2pool.com"
-    },
-    {
-        "name": "Facebook",
-        "domain": "facebook.com"
-    },
-    {
-        "name": "FaceIT",
-        "domain": "faceit.com"
     },
     {
         "name": "Fakturoid",
         "domain": "fakturoid.cz"
     },
     {
-        "name": "Fanatical",
-        "domain": "fanatical.com"
-    },
-    {
         "name": "Fandom",
         "domain": "fandom.com"
     },
     {
-        "name": "FanDuel",
-        "domain": "fanduel.com"
-    },
-    {
-        "name": "FastComet",
-        "domain": "fastcomet.com"
-    },
-    {
         "name": "Fasthosts",
         "domain": "fasthosts.co.uk"
-    },
-    {
-        "name": "Fastly",
-        "domain": "fastly.com"
     },
     {
         "name": "Fastmail",
@@ -1552,16 +716,8 @@
         "domain": "usefathom.com"
     },
     {
-        "name": "Faucet Crypto",
-        "domain": "faucetcrypto.com"
-    },
-    {
         "name": "FaucetPay",
         "domain": "faucetpay.io"
-    },
-    {
-        "name": "Fauna",
-        "domain": "fauna.com"
     },
     {
         "name": "Favro",
@@ -1572,36 +728,12 @@
         "domain": "fax.plus"
     },
     {
-        "name": "Federal Student Aid",
-        "domain": "studentaid.gov"
-    },
-    {
-        "name": "Feedly",
-        "domain": "feedly.com"
-    },
-    {
-        "name": "Fidelity Investments",
-        "domain": "fidelity.com"
-    },
-    {
-        "name": "Figma",
-        "domain": "figma.com"
-    },
-    {
-        "name": "Filen",
-        "domain": "filen.io"
-    },
-    {
         "name": "Files.com",
         "domain": "files.com"
     },
     {
         "name": "Finary",
         "domain": "finary.com"
-    },
-    {
-        "name": "Findmyshift",
-        "domain": "findmyshift.com"
     },
     {
         "name": "Finnair",
@@ -1612,48 +744,12 @@
         "domain": "firmex.com"
     },
     {
-        "name": "First Tech Federal Credit Union",
-        "domain": "firsttechfed.com"
-    },
-    {
-        "name": "Flexera",
-        "domain": "flexera.com"
-    },
-    {
-        "name": "Flexera Software Vulnerability Research",
-        "domain": "app.flexera.com"
-    },
-    {
-        "name": "Flipsnack",
-        "domain": "flipsnack.com"
-    },
-    {
         "name": "Floatplane",
         "domain": "floatplane.com"
     },
     {
-        "name": "Flourish",
-        "domain": "flourish.studio"
-    },
-    {
-        "name": "Fly.io",
-        "domain": "fly.io"
-    },
-    {
-        "name": "Flywheel",
-        "domain": "getflywheel.com"
-    },
-    {
-        "name": "FogBugz",
-        "domain": "fogbugz.com"
-    },
-    {
         "name": "FollowMyHealth",
         "domain": "followmyhealth.com"
-    },
-    {
-        "name": "Formsite",
-        "domain": "formsite.com"
     },
     {
         "name": "Formspree",
@@ -1676,10 +772,6 @@
         "domain": "frame.io"
     },
     {
-        "name": "FreeAgent",
-        "domain": "freeagent.com"
-    },
-    {
         "name": "freee",
         "domain": "freee.co.jp"
     },
@@ -1696,16 +788,8 @@
         "domain": "freewallet.org"
     },
     {
-        "name": "Freshworks",
-        "domain": "freshworks.com"
-    },
-    {
         "name": "Front",
         "domain": "front.com"
-    },
-    {
-        "name": "Frontify",
-        "domain": "frontify.com"
     },
     {
         "name": "FuseBase",
@@ -1716,14 +800,6 @@
         "domain": "gaijin.net"
     },
     {
-        "name": "Galaxus",
-        "domain": "galaxus.ch"
-    },
-    {
-        "name": "GameBanana",
-        "domain": "gamebanana.com"
-    },
-    {
         "name": "GameMaker",
         "domain": "gamemaker.io"
     },
@@ -1732,36 +808,16 @@
         "domain": "gandi.net"
     },
     {
-        "name": "Gate.io",
-        "domain": "gate.io"
-    },
-    {
         "name": "Gatehub",
         "domain": "gatehub.net"
-    },
-    {
-        "name": "GeForce (Nvidia)",
-        "domain": "geforce.com"
     },
     {
         "name": "General Motors",
         "domain": "gm.com"
     },
     {
-        "name": "George Washington University",
-        "domain": "gwu.edu"
-    },
-    {
         "name": "GetResponse",
         "domain": "getresponse.com"
-    },
-    {
-        "name": "Getscreen.me",
-        "domain": "getscreen.me"
-    },
-    {
-        "name": "GitHub",
-        "domain": "github.com"
     },
     {
         "name": "GitLab",
@@ -1780,36 +836,8 @@
         "domain": "mail.google.com"
     },
     {
-        "name": "GMX.com",
-        "domain": "gmx.com"
-    },
-    {
-        "name": "GMX.net",
-        "domain": "gmx.net"
-    },
-    {
         "name": "GoCardless",
         "domain": "gocardless.com"
-    },
-    {
-        "name": "GoDaddy",
-        "domain": "godaddy.com"
-    },
-    {
-        "name": "GOG.com",
-        "domain": "gog.com"
-    },
-    {
-        "name": "Google Chat",
-        "domain": "chat.google.com"
-    },
-    {
-        "name": "Google Cloud Platform",
-        "domain": "cloud.google.com"
-    },
-    {
-        "name": "Google Drive",
-        "domain": "drive.google.com"
     },
     {
         "name": "Google Fi",
@@ -1820,20 +848,8 @@
         "domain": "fiber.google.com"
     },
     {
-        "name": "Google Fit",
-        "domain": "fit.google.com"
-    },
-    {
-        "name": "Google Meet",
-        "domain": "meet.google.com"
-    },
-    {
         "name": "Google Nest",
         "domain": "nest.com"
-    },
-    {
-        "name": "Google Pay",
-        "domain": "pay.google.com"
     },
     {
         "name": "Google Play",
@@ -1844,20 +860,12 @@
         "domain": "gosquared.com"
     },
     {
-        "name": "GoTo",
-        "domain": "goto.com"
-    },
-    {
         "name": "GOV.UK",
         "domain": "gov.uk"
     },
     {
         "name": "Gradintelligence",
         "domain": "gradintel.com"
-    },
-    {
-        "name": "Grammarly",
-        "domain": "grammarly.com"
     },
     {
         "name": "GREE",
@@ -1868,52 +876,12 @@
         "domain": "greengeeks.com"
     },
     {
-        "name": "Greenhost",
-        "domain": "greenhost.net"
-    },
-    {
-        "name": "Groups.io",
-        "domain": "groups.io"
-    },
-    {
         "name": "GrowingIO",
         "domain": "growingio.com"
     },
     {
-        "name": "Guideline",
-        "domain": "guideline.com"
-    },
-    {
-        "name": "Guild Wars 2",
-        "domain": "guildwars2.com"
-    },
-    {
         "name": "Guilded",
         "domain": "guilded.gg"
-    },
-    {
-        "name": "Gumlet",
-        "domain": "gumlet.com"
-    },
-    {
-        "name": "Gusto",
-        "domain": "gusto.com"
-    },
-    {
-        "name": "H&R Block",
-        "domain": "hrblock.com"
-    },
-    {
-        "name": "Hack The Box",
-        "domain": "hackthebox.com"
-    },
-    {
-        "name": "HackerOne",
-        "domain": "hackerone.com"
-    },
-    {
-        "name": "HappyFox",
-        "domain": "happyfox.com"
     },
     {
         "name": "Harvard University",
@@ -1924,36 +892,12 @@
         "domain": "cloud.hashicorp.com"
     },
     {
-        "name": "HashiCorp Terraform Enterprise",
-        "domain": "app.terraform.io"
-    },
-    {
-        "name": "HashiCorp Vagrant Cloud",
-        "domain": "app.vagrantup.com"
-    },
-    {
         "name": "Hatch",
         "domain": "hatchinvest.nz"
     },
     {
-        "name": "Hatena",
-        "domain": "hatena.ne.jp"
-    },
-    {
-        "name": "Headway",
-        "domain": "headway.co"
-    },
-    {
-        "name": "Heap",
-        "domain": "heap.io"
-    },
-    {
         "name": "Heathrow Airport",
         "domain": "heathrow.com"
-    },
-    {
-        "name": "Help Scout",
-        "domain": "helpscout.com"
     },
     {
         "name": "Heroku",
@@ -1964,10 +908,6 @@
         "domain": "hetzner.com"
     },
     {
-        "name": "Hevo Data",
-        "domain": "hevodata.com"
-    },
-    {
         "name": "Hewlett Packard Enterprise",
         "domain": "hpe.com"
     },
@@ -1976,56 +916,16 @@
         "domain": "hexonet.net"
     },
     {
-        "name": "HEY",
-        "domain": "hey.com"
-    },
-    {
-        "name": "hide.me VPN",
-        "domain": "hide.me"
-    },
-    {
         "name": "HiDrive (STRATO)",
         "domain": "hidrive.com"
-    },
-    {
-        "name": "Hint Health",
-        "domain": "hint.com"
-    },
-    {
-        "name": "HitBTC",
-        "domain": "hitbtc.com"
-    },
-    {
-        "name": "HMRC",
-        "domain": "hmrc.gov.uk"
-    },
-    {
-        "name": "Hogeschool van Amsterdam",
-        "domain": "hva.nl"
     },
     {
         "name": "Home Assistant",
         "domain": "home-assistant.io"
     },
     {
-        "name": "Honeybadger",
-        "domain": "honeybadger.io"
-    },
-    {
-        "name": "HootSuite",
-        "domain": "hootsuite.com"
-    },
-    {
         "name": "Hostek",
         "domain": "hostek.com"
-    },
-    {
-        "name": "Hostens",
-        "domain": "hostens.com"
-    },
-    {
-        "name": "Hosting Ukraine",
-        "domain": "ukraine.com.ua"
     },
     {
         "name": "Hostinger",
@@ -2040,18 +940,6 @@
         "domain": "hostmonster.com"
     },
     {
-        "name": "Hostpoint",
-        "domain": "hostpoint.ch"
-    },
-    {
-        "name": "HostUS",
-        "domain": "hostus.us"
-    },
-    {
-        "name": "Hostwinds",
-        "domain": "hostwinds.com"
-    },
-    {
         "name": "Hotjar",
         "domain": "hotjar.com"
     },
@@ -2064,64 +952,24 @@
         "domain": "hp.com"
     },
     {
-        "name": "Huawei Cloud",
-        "domain": "huaweicloud.com"
-    },
-    {
-        "name": "HubSpot",
-        "domain": "hubspot.com"
-    },
-    {
-        "name": "HuggingFace",
-        "domain": "huggingface.co"
-    },
-    {
-        "name": "Humble Bundle",
-        "domain": "humblebundle.com"
-    },
-    {
         "name": "Huobi",
         "domain": "huobi.com"
-    },
-    {
-        "name": "Hurricane Electric",
-        "domain": "he.net"
     },
     {
         "name": "Hushmail",
         "domain": "hushmail.com"
     },
     {
-        "name": "Hypixel",
-        "domain": "hypixel.net"
-    },
-    {
         "name": "IBM Cloud",
         "domain": "cloud.ibm.com"
-    },
-    {
-        "name": "ICDSoft",
-        "domain": "icdsoft.com"
-    },
-    {
-        "name": "Icedrive",
-        "domain": "icedrive.net"
     },
     {
         "name": "ID.me",
         "domain": "id.me"
     },
     {
-        "name": "IDrive",
-        "domain": "idrive.com"
-    },
-    {
         "name": "IFTTT",
         "domain": "ifttt.com"
-    },
-    {
-        "name": "ImmobilienScout24",
-        "domain": "immobilienscout24.de"
     },
     {
         "name": "Imperva",
@@ -2132,32 +980,12 @@
         "domain": "improvmx.com"
     },
     {
-        "name": "Inbox.lv",
-        "domain": "inbox.lv"
-    },
-    {
         "name": "Independent Reserve",
         "domain": "independentreserve.com"
     },
     {
-        "name": "Independer",
-        "domain": "independer.nl"
-    },
-    {
-        "name": "Infomaniak",
-        "domain": "infomaniak.com"
-    },
-    {
         "name": "InMotion Hosting",
         "domain": "inmotionhosting.com"
-    },
-    {
-        "name": "Instagram",
-        "domain": "instagram.com"
-    },
-    {
-        "name": "Instant-Gaming",
-        "domain": "instant-gaming.com"
     },
     {
         "name": "Intercom",
@@ -2180,22 +1008,6 @@
         "domain": "intuit.com"
     },
     {
-        "name": "Intuit TurboTax",
-        "domain": "turbotax.intuit.com"
-    },
-    {
-        "name": "Invictus Capital",
-        "domain": "invictuscapital.com"
-    },
-    {
-        "name": "INWX",
-        "domain": "inwx.com"
-    },
-    {
-        "name": "IO Zoom",
-        "domain": "iozoom.com"
-    },
-    {
         "name": "IONOS",
         "domain": "ionos.com"
     },
@@ -2212,20 +1024,12 @@
         "domain": "islonline.com"
     },
     {
-        "name": "IT Glue",
-        "domain": "itglue.com"
-    },
-    {
         "name": "itch.io",
         "domain": "itch.io"
     },
     {
         "name": "Iterable",
         "domain": "iterable.com"
-    },
-    {
-        "name": "itslearning",
-        "domain": "itslearning.com"
     },
     {
         "name": "IVPN",
@@ -2236,24 +1040,8 @@
         "domain": "jamfnow.com"
     },
     {
-        "name": "JetBrains",
-        "domain": "jetbrains.com"
-    },
-    {
-        "name": "Jitbit Helpdesk",
-        "domain": "jitbit.com"
-    },
-    {
         "name": "Joker.com",
         "domain": "joker.com"
-    },
-    {
-        "name": "Jotform",
-        "domain": "jotform.com"
-    },
-    {
-        "name": "Jottacloud",
-        "domain": "jottacloud.com"
     },
     {
         "name": "Jovia Financial",
@@ -2264,16 +1052,8 @@
         "domain": "joyent.com"
     },
     {
-        "name": "JumpCloud",
-        "domain": "jumpcloud.com"
-    },
-    {
         "name": "justhost",
         "domain": "justhost.com"
-    },
-    {
-        "name": "Justworks",
-        "domain": "justworks.com"
     },
     {
         "name": "Kagi",
@@ -2284,30 +1064,6 @@
         "domain": "kajabi.com"
     },
     {
-        "name": "Kanka",
-        "domain": "kanka.io"
-    },
-    {
-        "name": "Karlsruher Institut für Technologie",
-        "domain": "kit.edu"
-    },
-    {
-        "name": "Kaspersky",
-        "domain": "kaspersky.com"
-    },
-    {
-        "name": "Kayako",
-        "domain": "kayako.com"
-    },
-    {
-        "name": "Keeper",
-        "domain": "keepersecurity.com"
-    },
-    {
-        "name": "KeyCDN",
-        "domain": "keycdn.com"
-    },
-    {
         "name": "Kick",
         "domain": "kick.com"
     },
@@ -2316,32 +1072,12 @@
         "domain": "kickex.com"
     },
     {
-        "name": "Kickstarter",
-        "domain": "kickstarter.com"
-    },
-    {
         "name": "Kinsta",
         "domain": "kinsta.com"
     },
     {
-        "name": "Kintone",
-        "domain": "kintone.com"
-    },
-    {
         "name": "Klaviyo",
         "domain": "klaviyo.com"
-    },
-    {
-        "name": "Knack",
-        "domain": "knack.com"
-    },
-    {
-        "name": "KnowBe4",
-        "domain": "knowbe4.com"
-    },
-    {
-        "name": "KnownHost",
-        "domain": "knownhost.com"
     },
     {
         "name": "Ko-fi",
@@ -2356,16 +1092,8 @@
         "domain": "koofr.eu"
     },
     {
-        "name": "Korbit",
-        "domain": "korbit.co.kr"
-    },
-    {
         "name": "Kraken",
         "domain": "kraken.com"
-    },
-    {
-        "name": "Kriptomat",
-        "domain": "kriptomat.io"
     },
     {
         "name": "Krystal",
@@ -2374,10 +1102,6 @@
     {
         "name": "Kuna",
         "domain": "kuna.io"
-    },
-    {
-        "name": "La Trobe University",
-        "domain": "latrobe.edu.au"
     },
     {
         "name": "Labcorp Patient",
@@ -2392,68 +1116,20 @@
         "domain": "vapor.laravel.com"
     },
     {
-        "name": "Larian",
-        "domain": "larian.com"
-    },
-    {
         "name": "LastPass",
         "domain": "lastpass.com"
-    },
-    {
-        "name": "LATOKEN",
-        "domain": "latoken.com"
-    },
-    {
-        "name": "LaunchDarkly",
-        "domain": "launchdarkly.com"
-    },
-    {
-        "name": "Launchpad",
-        "domain": "launchpad.net"
-    },
-    {
-        "name": "LCN.com",
-        "domain": "lcn.com"
-    },
-    {
-        "name": "Leaseweb",
-        "domain": "leaseweb.com"
-    },
-    {
-        "name": "Lemmy",
-        "domain": "join-lemmy.org"
-    },
-    {
-        "name": "Lenovo",
-        "domain": "lenovo.com"
     },
     {
         "name": "Let's Do This",
         "domain": "letsdothis.com"
     },
     {
-        "name": "Letterboxd",
-        "domain": "letterboxd.com"
-    },
-    {
         "name": "lexoffice",
         "domain": "lexoffice.de"
     },
     {
-        "name": "lichess.org",
-        "domain": "lichess.org"
-    },
-    {
-        "name": "LIHKG",
-        "domain": "lihkg.com"
-    },
-    {
         "name": "Line 6",
         "domain": "line6.com"
-    },
-    {
-        "name": "LinkedIn",
-        "domain": "linkedin.com"
     },
     {
         "name": "Linode",
@@ -2464,24 +1140,12 @@
         "domain": "liquid.com"
     },
     {
-        "name": "Liquid Web",
-        "domain": "liquidweb.com"
-    },
-    {
-        "name": "LiteBit",
-        "domain": "litebit.eu"
-    },
-    {
         "name": "Lnk.Bio",
         "domain": "lnk.bio"
     },
     {
         "name": "Lobsters",
         "domain": "lobste.rs"
-    },
-    {
-        "name": "Localize",
-        "domain": "localizejs.com"
     },
     {
         "name": "Login.gov",
@@ -2492,48 +1156,12 @@
         "domain": "logitech.com"
     },
     {
-        "name": "Lokalise",
-        "domain": "lokalise.com"
-    },
-    {
-        "name": "Lone Star College",
-        "domain": "lonestar.edu"
-    },
-    {
-        "name": "Looker",
-        "domain": "looker.com"
-    },
-    {
         "name": "Luma",
         "domain": "lu.ma"
     },
     {
-        "name": "Lunch Money",
-        "domain": "lunchmoney.app"
-    },
-    {
-        "name": "Luno",
-        "domain": "luno.com"
-    },
-    {
-        "name": "M1",
-        "domain": "m1.com"
-    },
-    {
         "name": "MacStadium",
         "domain": "macstadium.com"
-    },
-    {
-        "name": "Magnet.me",
-        "domain": "magnet.me"
-    },
-    {
-        "name": "MaiCoin",
-        "domain": "maicoin.com"
-    },
-    {
-        "name": "Mail.com",
-        "domain": "mail.com"
     },
     {
         "name": "mail.de",
@@ -2544,44 +1172,12 @@
         "domain": "mailbox.org"
     },
     {
-        "name": "MailChimp",
-        "domain": "mailchimp.com"
-    },
-    {
-        "name": "MailerLite",
-        "domain": "mailerlite.com"
-    },
-    {
         "name": "Mailfence",
         "domain": "mailfence.com"
     },
     {
-        "name": "Mailgun",
-        "domain": "mailgun.com"
-    },
-    {
-        "name": "Mailjet",
-        "domain": "mailjet.com"
-    },
-    {
-        "name": "Mailo",
-        "domain": "mailo.com"
-    },
-    {
         "name": "Make",
         "domain": "make.com"
-    },
-    {
-        "name": "Malwarebytes Nebula",
-        "domain": "cloud.malwarebytes.com"
-    },
-    {
-        "name": "Malwarebytes OneView",
-        "domain": "oneview.malwarebytes.com"
-    },
-    {
-        "name": "MangaDex",
-        "domain": "mangadex.org"
     },
     {
         "name": "Mapbox",
@@ -2600,10 +1196,6 @@
         "domain": "joinmastodon.org"
     },
     {
-        "name": "MathWorks",
-        "domain": "mathworks.com"
-    },
-    {
         "name": "Matomo Cloud",
         "domain": "matomo.org"
     },
@@ -2612,56 +1204,16 @@
         "domain": "mattermost.com"
     },
     {
-        "name": "MB Connect Line",
-        "domain": "mbconnectline.com"
-    },
-    {
-        "name": "McGill University",
-        "domain": "mcgill.ca"
-    },
-    {
-        "name": "Mega",
-        "domain": "mega.io"
-    },
-    {
-        "name": "Meister",
-        "domain": "meister.co"
-    },
-    {
         "name": "Mercado Bitcoin",
         "domain": "mercadobitcoin.com.br"
-    },
-    {
-        "name": "Mercado Libre",
-        "domain": "mercadolibre.com"
-    },
-    {
-        "name": "Mercury",
-        "domain": "mercury.com"
     },
     {
         "name": "Mercury Cash",
         "domain": "mercury.cash"
     },
     {
-        "name": "Meta",
-        "domain": "meta.com"
-    },
-    {
-        "name": "MetaMask",
-        "domain": "metamask.io"
-    },
-    {
-        "name": "Metorik",
-        "domain": "metorik.com"
-    },
-    {
         "name": "MEXC",
         "domain": "mexc.com"
-    },
-    {
-        "name": "Microsoft 365 Copilot",
-        "domain": "m365.cloud.microsoft"
     },
     {
         "name": "Microsoft Azure",
@@ -2680,36 +1232,16 @@
         "domain": "migadu.com"
     },
     {
-        "name": "Migros",
-        "domain": "migros.ch"
-    },
-    {
-        "name": "Mimecast",
-        "domain": "mimecast.com"
-    },
-    {
         "name": "Minds",
         "domain": "minds.com"
-    },
-    {
-        "name": "Minecraft",
-        "domain": "minecraft.net"
     },
     {
         "name": "Mint",
         "domain": "mint.intuit.com"
     },
     {
-        "name": "Mintos",
-        "domain": "mintos.com"
-    },
-    {
         "name": "Miro",
         "domain": "miro.com"
-    },
-    {
-        "name": "Miss Hosting",
-        "domain": "misshosting.com"
     },
     {
         "name": "Missive App",
@@ -2720,20 +1252,8 @@
         "domain": "mist.com"
     },
     {
-        "name": "Modrinth",
-        "domain": "modrinth.com"
-    },
-    {
         "name": "Monarch Money",
         "domain": "monarchmoney.com"
-    },
-    {
-        "name": "Monash University",
-        "domain": "monash.edu"
-    },
-    {
-        "name": "Monday.com",
-        "domain": "monday.com"
     },
     {
         "name": "Monex",
@@ -2742,10 +1262,6 @@
     {
         "name": "Moneybird",
         "domain": "moneybird.com"
-    },
-    {
-        "name": "MongoDB",
-        "domain": "mongodb.com"
     },
     {
         "name": "Moniker",
@@ -2764,40 +1280,16 @@
         "domain": "mos.ru"
     },
     {
-        "name": "Mountain America Credit Union",
-        "domain": "macu.com"
-    },
-    {
         "name": "Mozilla",
         "domain": "accounts.firefox.com"
-    },
-    {
-        "name": "MuleSoft",
-        "domain": "mulesoft.com"
     },
     {
         "name": "MURAL",
         "domain": "mural.co"
     },
     {
-        "name": "MxToolbox",
-        "domain": "mxtoolbox.com"
-    },
-    {
         "name": "MyAnimeList",
         "domain": "myanimelist.net"
-    },
-    {
-        "name": "MyChart",
-        "domain": "mychart.org"
-    },
-    {
-        "name": "MyFRITZ!Net",
-        "domain": "myfritz.net"
-    },
-    {
-        "name": "MyHeritage",
-        "domain": "myheritage.com"
     },
     {
         "name": "MYOB",
@@ -2808,28 +1300,12 @@
         "domain": "myprimobox.net"
     },
     {
-        "name": "myRMV",
-        "domain": "atlas-myrmv.massdot.state.ma.us"
-    },
-    {
-        "name": "MyTax Illinois",
-        "domain": "mytax.illinois.gov"
-    },
-    {
-        "name": "N-able",
-        "domain": "n-able.com"
-    },
-    {
         "name": "n8n",
         "domain": "n8n.io"
     },
     {
         "name": "NAGA",
         "domain": "naga.com"
-    },
-    {
-        "name": "NairaEx",
-        "domain": "nairaex.com"
     },
     {
         "name": "Name.com",
@@ -2840,10 +1316,6 @@
         "domain": "namebase.io"
     },
     {
-        "name": "Namecheap",
-        "domain": "namecheap.com"
-    },
-    {
         "name": "NameHero",
         "domain": "namehero.com"
     },
@@ -2852,24 +1324,8 @@
         "domain": "names.co.uk"
     },
     {
-        "name": "NameSilo.com",
-        "domain": "namesilo.com"
-    },
-    {
-        "name": "NASA Federal Credit Union",
-        "domain": "nasafcu.com"
-    },
-    {
         "name": "NDAX",
         "domain": "ndax.io"
-    },
-    {
-        "name": "Neolo",
-        "domain": "neolo.com"
-    },
-    {
-        "name": "Neopets",
-        "domain": "neopets.com"
     },
     {
         "name": "Netcore Cloud Email API",
@@ -2880,24 +1336,12 @@
         "domain": "netcup.eu"
     },
     {
-        "name": "NetEase Mail",
-        "domain": "mail.163.com"
-    },
-    {
         "name": "NETELLER",
         "domain": "neteller.com"
     },
     {
-        "name": "Netim",
-        "domain": "netim.com"
-    },
-    {
         "name": "Netlify",
         "domain": "netlify.com"
-    },
-    {
-        "name": "NetSuite",
-        "domain": "netsuite.com"
     },
     {
         "name": "Newegg",
@@ -2908,32 +1352,12 @@
         "domain": "newgrounds.com"
     },
     {
-        "name": "Nexcess",
-        "domain": "nexcess.net"
-    },
-    {
         "name": "Nexon",
         "domain": "nexon.com"
     },
     {
-        "name": "NextDNS",
-        "domain": "nextdns.io"
-    },
-    {
-        "name": "Nexus Mods",
-        "domain": "nexusmods.com"
-    },
-    {
         "name": "ngrok",
         "domain": "ngrok.com"
-    },
-    {
-        "name": "Niagahoster",
-        "domain": "niagahoster.co.id"
-    },
-    {
-        "name": "NiceHash",
-        "domain": "nicehash.com"
     },
     {
         "name": "Niconico",
@@ -2952,44 +1376,16 @@
         "domain": "server.nitrado.net"
     },
     {
-        "name": "Nitro Type",
-        "domain": "nitrotype.com"
-    },
-    {
         "name": "No Starch Press",
         "domain": "nostarch.com"
-    },
-    {
-        "name": "No-IP",
-        "domain": "noip.com"
-    },
-    {
-        "name": "Nominet",
-        "domain": "nominet.uk"
-    },
-    {
-        "name": "NordLayer",
-        "domain": "nordlayer.com"
     },
     {
         "name": "NordLocker",
         "domain": "nordlocker.com"
     },
     {
-        "name": "NordPass",
-        "domain": "nordpass.com"
-    },
-    {
-        "name": "NordVPN",
-        "domain": "nordvpn.com"
-    },
-    {
         "name": "North Carolina State University",
         "domain": "ncsu.edu"
-    },
-    {
-        "name": "Northwestern Mutual",
-        "domain": "northwesternmutual.com"
     },
     {
         "name": "Norton",
@@ -3000,18 +1396,6 @@
         "domain": "notejoy.com"
     },
     {
-        "name": "Notesnook",
-        "domain": "notesnook.com"
-    },
-    {
-        "name": "Notion",
-        "domain": "notion.so"
-    },
-    {
-        "name": "Nozbe Teams",
-        "domain": "nozbe.com"
-    },
-    {
         "name": "npm",
         "domain": "npmjs.com"
     },
@@ -3020,36 +1404,8 @@
         "domain": "ns1.com"
     },
     {
-        "name": "NuGet",
-        "domain": "nuget.org"
-    },
-    {
-        "name": "Nulab",
-        "domain": "nulab.com"
-    },
-    {
-        "name": "Nutmeg",
-        "domain": "nutmeg.com"
-    },
-    {
-        "name": "Nutstore",
-        "domain": "jianguoyun.com"
-    },
-    {
-        "name": "NY.gov ID",
-        "domain": "my.ny.gov"
-    },
-    {
         "name": "o2switch",
         "domain": "o2switch.fr"
-    },
-    {
-        "name": "Obsidian",
-        "domain": "obsidian.md"
-    },
-    {
-        "name": "Odoo",
-        "domain": "odoo.com"
     },
     {
         "name": "Okta",
@@ -3062,14 +1418,6 @@
     {
         "name": "OLG",
         "domain": "olg.ca"
-    },
-    {
-        "name": "omg.lol",
-        "domain": "omg.lol"
-    },
-    {
-        "name": "OMGServ",
-        "domain": "omgserv.com"
     },
     {
         "name": "One.com",
@@ -3088,16 +1436,8 @@
         "domain": "onelogin.com"
     },
     {
-        "name": "OneSignal",
-        "domain": "onesignal.com"
-    },
-    {
         "name": "Onet",
         "domain": "onet.pl"
-    },
-    {
-        "name": "Onshape",
-        "domain": "onshape.com"
     },
     {
         "name": "Open Collective",
@@ -3108,56 +1448,20 @@
         "domain": "osf.io"
     },
     {
-        "name": "OpenAI (ChatGPT)",
-        "domain": "openai.com"
-    },
-    {
-        "name": "OpenApply",
-        "domain": "openapply.com"
-    },
-    {
         "name": "OpenDNS",
         "domain": "opendns.com"
-    },
-    {
-        "name": "Openprovider",
-        "domain": "openprovider.com"
     },
     {
         "name": "OpenSea",
         "domain": "opensea.io"
     },
     {
-        "name": "OpenSRS",
-        "domain": "opensrs.com"
-    },
-    {
-        "name": "Opera",
-        "domain": "auth.opera.com"
-    },
-    {
         "name": "Optimizely",
         "domain": "optimizely.com"
     },
     {
-        "name": "Oracle Cloud Infrastructure",
-        "domain": "cloud.oracle.com"
-    },
-    {
         "name": "ORCID",
         "domain": "orcid.org"
-    },
-    {
-        "name": "Outbrain",
-        "domain": "outbrain.com"
-    },
-    {
-        "name": "Outlook.com",
-        "domain": "outlook.com"
-    },
-    {
-        "name": "OVH",
-        "domain": "ovh.com"
     },
     {
         "name": "OzBargain",
@@ -3172,28 +1476,8 @@
         "domain": "paddle.com"
     },
     {
-        "name": "pair Domains",
-        "domain": "pairdomains.com"
-    },
-    {
-        "name": "Panda Security",
-        "domain": "pandasecurity.com"
-    },
-    {
-        "name": "Panic Sync",
-        "domain": "panic.com"
-    },
-    {
         "name": "Panorama9",
         "domain": "panorama9.com"
-    },
-    {
-        "name": "Panther",
-        "domain": "runpanther.io"
-    },
-    {
-        "name": "Parallels",
-        "domain": "parallels.com"
     },
     {
         "name": "Parimatch",
@@ -3204,28 +1488,8 @@
         "domain": "parsec.app"
     },
     {
-        "name": "Particle",
-        "domain": "particle.io"
-    },
-    {
-        "name": "Passpack",
-        "domain": "passpack.com"
-    },
-    {
-        "name": "Passwarden",
-        "domain": "keepsolid.com"
-    },
-    {
-        "name": "Patient Access",
-        "domain": "patientaccess.com"
-    },
-    {
         "name": "Patreon",
         "domain": "patreon.com"
-    },
-    {
-        "name": "Paxful",
-        "domain": "paxful.com"
     },
     {
         "name": "Paxos",
@@ -3244,28 +1508,12 @@
         "domain": "paypal.com"
     },
     {
-        "name": "Payworks",
-        "domain": "payworks.ca"
-    },
-    {
         "name": "PC Case Gear",
         "domain": "pccasegear.com"
     },
     {
         "name": "PCloud",
         "domain": "pcloud.com"
-    },
-    {
-        "name": "Pennsylvania Dept of Revenue myPATH",
-        "domain": "mypath.pa.gov"
-    },
-    {
-        "name": "Perimeter 81",
-        "domain": "perimeter81.com"
-    },
-    {
-        "name": "Phemex",
-        "domain": "phemex.com"
     },
     {
         "name": "Philipps-Universität Marburg",
@@ -3280,124 +1528,28 @@
         "domain": "phrase.com"
     },
     {
-        "name": "Pinata",
-        "domain": "pinata.cloud"
-    },
-    {
-        "name": "Pirate Ship",
-        "domain": "pirateship.com"
-    },
-    {
-        "name": "Pivotal Tracker",
-        "domain": "pivotaltracker.com"
-    },
-    {
         "name": "Piwik PRO",
         "domain": "piwik.pro"
-    },
-    {
-        "name": "Pixieset",
-        "domain": "pixieset.com"
     },
     {
         "name": "Pixiv",
         "domain": "pixiv.net"
     },
     {
-        "name": "Plaid",
-        "domain": "plaid.com"
-    },
-    {
-        "name": "PlanetHoster",
-        "domain": "planethoster.com"
-    },
-    {
         "name": "PlanetScale",
         "domain": "planetscale.com"
-    },
-    {
-        "name": "Planfix",
-        "domain": "planfix.com"
-    },
-    {
-        "name": "Planio",
-        "domain": "plan.io"
-    },
-    {
-        "name": "Planning Center",
-        "domain": "planningcenter.com"
-    },
-    {
-        "name": "Plausible Analytics",
-        "domain": "plausible.io"
-    },
-    {
-        "name": "Playstation Network",
-        "domain": "playstation.com"
-    },
-    {
-        "name": "Pleo",
-        "domain": "pleo.io"
-    },
-    {
-        "name": "Plesk 360",
-        "domain": "platform360.io"
-    },
-    {
-        "name": "Plex",
-        "domain": "plex.tv"
-    },
-    {
-        "name": "Pluralsight",
-        "domain": "pluralsight.com"
-    },
-    {
-        "name": "Plurk",
-        "domain": "plurk.com"
-    },
-    {
-        "name": "Plutus",
-        "domain": "plutus.it"
-    },
-    {
-        "name": "Pobox",
-        "domain": "pobox.com"
     },
     {
         "name": "Pocket",
         "domain": "getpocket.com"
     },
     {
-        "name": "Pocketsmith",
-        "domain": "pocketsmith.com"
-    },
-    {
-        "name": "Podio",
-        "domain": "podio.com"
-    },
-    {
-        "name": "POEditor",
-        "domain": "poeditor.com"
-    },
-    {
         "name": "Poli Systems",
         "domain": "polisystems.ch"
     },
     {
-        "name": "Poloniex",
-        "domain": "poloniex.com"
-    },
-    {
         "name": "Porkbun",
         "domain": "porkbun.com"
-    },
-    {
-        "name": "POST Luxembourg",
-        "domain": "webmail.pt.lu"
-    },
-    {
-        "name": "Posteo",
-        "domain": "posteo.de"
     },
     {
         "name": "Postman",
@@ -3412,40 +1564,16 @@
         "domain": "postype.com"
     },
     {
-        "name": "PowerReviews",
-        "domain": "powerreviews.com"
-    },
-    {
         "name": "Practice Better",
         "domain": "practicebetter.io"
-    },
-    {
-        "name": "Prey",
-        "domain": "preyproject.com"
     },
     {
         "name": "Principal",
         "domain": "principal.com"
     },
     {
-        "name": "Privacy",
-        "domain": "privacy.com"
-    },
-    {
-        "name": "Private Internet Access",
-        "domain": "privateinternetaccess.com"
-    },
-    {
-        "name": "ProBit",
-        "domain": "probit.com"
-    },
-    {
         "name": "ProfitWell",
         "domain": "profitwell.com"
-    },
-    {
-        "name": "Prostocash",
-        "domain": "prostocash.com"
     },
     {
         "name": "Protolabs",
@@ -3454,14 +1582,6 @@
     {
         "name": "Proton",
         "domain": "proton.me"
-    },
-    {
-        "name": "PSNProfiles",
-        "domain": "psnprofiles.com"
-    },
-    {
-        "name": "Purse",
-        "domain": "purse.io"
     },
     {
         "name": "Pusher",
@@ -3476,48 +1596,16 @@
         "domain": "put.io"
     },
     {
-        "name": "Puter",
-        "domain": "puter.com"
-    },
-    {
         "name": "Putler",
         "domain": "putler.com"
-    },
-    {
-        "name": "PyPI",
-        "domain": "pypi.org"
     },
     {
         "name": "PythonAnywhere",
         "domain": "pythonanywhere.com"
     },
     {
-        "name": "Qantas",
-        "domain": "qantas.com"
-    },
-    {
-        "name": "Qlik",
-        "domain": "qlik.com"
-    },
-    {
-        "name": "QNAP",
-        "domain": "qnap.com"
-    },
-    {
-        "name": "Questrade",
-        "domain": "questrade.com"
-    },
-    {
         "name": "Quickbooks Online",
         "domain": "quickbooks.intuit.com"
-    },
-    {
-        "name": "QuickFile",
-        "domain": "quickfile.co.uk"
-    },
-    {
-        "name": "Quidax",
-        "domain": "quidax.com"
     },
     {
         "name": "Rackspace",
@@ -3530,10 +1618,6 @@
     {
         "name": "Raindrop",
         "domain": "raindrop.io"
-    },
-    {
-        "name": "Raisin",
-        "domain": "raisin.com"
     },
     {
         "name": "RamNode",
@@ -3552,76 +1636,20 @@
         "domain": "rapidgator.net"
     },
     {
-        "name": "Raspberry Pi",
-        "domain": "raspberrypi.com"
-    },
-    {
-        "name": "Ravelin",
-        "domain": "ravelin.com"
-    },
-    {
-        "name": "Raygun",
-        "domain": "raygun.com"
-    },
-    {
-        "name": "Razer",
-        "domain": "razer.com"
-    },
-    {
         "name": "ReadMe",
         "domain": "readme.com"
-    },
-    {
-        "name": "RealMe",
-        "domain": "realme.govt.nz"
     },
     {
         "name": "RealVNC",
         "domain": "realvnc.com"
     },
     {
-        "name": "Rebel.com",
-        "domain": "rebel.com"
-    },
-    {
-        "name": "Rebrandly",
-        "domain": "rebrandly.com"
-    },
-    {
-        "name": "Recruitee",
-        "domain": "recruitee.com"
-    },
-    {
-        "name": "Red Hat",
-        "domain": "redhat.com"
-    },
-    {
-        "name": "Reddit",
-        "domain": "reddit.com"
-    },
-    {
-        "name": "Redis Enterprise Cloud",
-        "domain": "redis.com"
-    },
-    {
         "name": "RedShelf",
         "domain": "redshelf.com"
     },
     {
-        "name": "Refersion",
-        "domain": "refersion.com"
-    },
-    {
         "name": "Register365",
         "domain": "register365.com"
-    },
-    {
-        "name": "Registro.br",
-        "domain": "registro.br"
-    },
-    {
-        "name": "Rejoiner",
-        "domain": "rejoiner.com"
     },
     {
         "name": "Remitano",
@@ -3640,52 +1668,16 @@
         "domain": "repairshopr.com"
     },
     {
-        "name": "Replicon",
-        "domain": "replicon.com"
-    },
-    {
-        "name": "Report URI",
-        "domain": "report-uri.com"
-    },
-    {
         "name": "Republic",
         "domain": "republic.com"
-    },
-    {
-        "name": "Resend",
-        "domain": "resend.com"
-    },
-    {
-        "name": "RestoreCord",
-        "domain": "restorecord.com"
     },
     {
         "name": "Restream.io",
         "domain": "restream.io"
     },
     {
-        "name": "Rev",
-        "domain": "rev.com"
-    },
-    {
-        "name": "RevenueCat",
-        "domain": "revenuecat.com"
-    },
-    {
-        "name": "Rewind",
-        "domain": "rewind.com"
-    },
-    {
-        "name": "RightCapital",
-        "domain": "rightcapital.com"
-    },
-    {
         "name": "Ring",
         "domain": "ring.com"
-    },
-    {
-        "name": "Ripe NCC",
-        "domain": "ripe.net"
     },
     {
         "name": "Ripio",
@@ -3694,10 +1686,6 @@
     {
         "name": "Rippling",
         "domain": "rippling.com"
-    },
-    {
-        "name": "River Financial",
-        "domain": "river.com"
     },
     {
         "name": "Rivian",
@@ -3712,32 +1700,8 @@
         "domain": "robertsspaceindustries.com"
     },
     {
-        "name": "Roblox",
-        "domain": "roblox.com"
-    },
-    {
-        "name": "RoboForm",
-        "domain": "roboform.com"
-    },
-    {
-        "name": "Rocket Beans TV",
-        "domain": "rocketbeans.tv"
-    },
-    {
         "name": "Rockstar Games",
         "domain": "rockstargames.com"
-    },
-    {
-        "name": "Rollbar",
-        "domain": "rollbar.com"
-    },
-    {
-        "name": "RU-CENTER",
-        "domain": "nic.ru"
-    },
-    {
-        "name": "RubyGems.org",
-        "domain": "rubygems.org"
     },
     {
         "name": "Runbox",
@@ -3748,52 +1712,16 @@
         "domain": "runcloud.io"
     },
     {
-        "name": "RuneScape",
-        "domain": "runescape.com"
-    },
-    {
         "name": "RunSignUp",
         "domain": "runsignup.com"
-    },
-    {
-        "name": "Russian Post (Почта России)",
-        "domain": "pochta.ru"
-    },
-    {
-        "name": "Sailthru",
-        "domain": "sailthru.com"
-    },
-    {
-        "name": "Salesforce",
-        "domain": "salesforce.com"
-    },
-    {
-        "name": "Samsung",
-        "domain": "samsung.com"
-    },
-    {
-        "name": "Samsung SmartThings",
-        "domain": "smartthings.com"
-    },
-    {
-        "name": "San Francisco Fire Credit Union",
-        "domain": "sffirecu.org"
     },
     {
         "name": "SaneBox",
         "domain": "sanebox.com"
     },
     {
-        "name": "SANS",
-        "domain": "sans.org"
-    },
-    {
         "name": "SAPO Mail",
         "domain": "mail.sapo.pt"
-    },
-    {
-        "name": "SatoshiTango",
-        "domain": "satoshitango.com"
     },
     {
         "name": "Scalefusion",
@@ -3808,40 +1736,8 @@
         "domain": "scaleway.com"
     },
     {
-        "name": "Scalr",
-        "domain": "scalr.com"
-    },
-    {
-        "name": "Schibsted",
-        "domain": "schibsted.com"
-    },
-    {
-        "name": "Schneider Electric",
-        "domain": "se.com"
-    },
-    {
         "name": "Scripting Helpers",
         "domain": "scriptinghelpers.org"
-    },
-    {
-        "name": "Scryfall",
-        "domain": "scryfall.com"
-    },
-    {
-        "name": "SeatGeek",
-        "domain": "seatgeek.com"
-    },
-    {
-        "name": "section.io",
-        "domain": "section.io"
-    },
-    {
-        "name": "SecurityTrails",
-        "domain": "securitytrails.com"
-    },
-    {
-        "name": "Segment",
-        "domain": "segment.com"
     },
     {
         "name": "SelfWealth",
@@ -3856,10 +1752,6 @@
         "domain": "semaphoreci.com"
     },
     {
-        "name": "Sendcloud",
-        "domain": "sendcloud.com"
-    },
-    {
         "name": "SendOwl",
         "domain": "sendowl.com"
     },
@@ -3872,10 +1764,6 @@
         "domain": "senko.digital"
     },
     {
-        "name": "Sentry",
-        "domain": "sentry.io"
-    },
-    {
         "name": "Server.pro",
         "domain": "server.pro"
     },
@@ -3884,24 +1772,8 @@
         "domain": "serverpilot.io"
     },
     {
-        "name": "Serverspace",
-        "domain": "serverspace.io"
-    },
-    {
-        "name": "Servus Credit Union",
-        "domain": "servus.ca"
-    },
-    {
         "name": "Seznam.cz",
         "domain": "seznam.cz"
-    },
-    {
-        "name": "Shadow",
-        "domain": "shadow.tech"
-    },
-    {
-        "name": "Shareworks",
-        "domain": "shareworks.com"
     },
     {
         "name": "Shift4Shop",
@@ -3916,40 +1788,12 @@
         "domain": "short.io"
     },
     {
-        "name": "Shortcut",
-        "domain": "shortcut.com"
-    },
-    {
-        "name": "Shrimpy",
-        "domain": "shrimpy.io"
-    },
-    {
         "name": "Shy",
         "domain": "shy.gg"
     },
     {
-        "name": "SideQuest",
-        "domain": "sidequestvr.com"
-    },
-    {
-        "name": "Sign.Plus",
-        "domain": "sign.plus"
-    },
-    {
         "name": "SignRequest",
         "domain": "signrequest.com"
-    },
-    {
-        "name": "Simon Fraser University",
-        "domain": "sfu.ca"
-    },
-    {
-        "name": "SimpleLogin",
-        "domain": "simplelogin.io"
-    },
-    {
-        "name": "SimplyBook",
-        "domain": "simplybook.me"
     },
     {
         "name": "sipgate",
@@ -3960,24 +1804,8 @@
         "domain": "sisense.com"
     },
     {
-        "name": "SiteGround",
-        "domain": "siteground.com"
-    },
-    {
         "name": "Sketch",
         "domain": "sketch.com"
-    },
-    {
-        "name": "SketchUp",
-        "domain": "sketchup.com"
-    },
-    {
-        "name": "Skinport",
-        "domain": "skinport.com"
-    },
-    {
-        "name": "Skype",
-        "domain": "skype.com"
     },
     {
         "name": "Slack",
@@ -4000,100 +1828,32 @@
         "domain": "smartsurvey.co.uk"
     },
     {
-        "name": "SMSPool",
-        "domain": "smspool.net"
-    },
-    {
         "name": "SmugMug",
         "domain": "smugmug.com"
-    },
-    {
-        "name": "Snapchat",
-        "domain": "snapchat.com"
     },
     {
         "name": "SocketLabs",
         "domain": "socketlabs.com"
     },
     {
-        "name": "SoFi",
-        "domain": "sofi.com"
-    },
-    {
         "name": "SolarWinds",
         "domain": "solarwinds.com"
-    },
-    {
-        "name": "Sonic",
-        "domain": "sonic.com"
     },
     {
         "name": "Sonix",
         "domain": "sonix.ai"
     },
     {
-        "name": "Sophos Central",
-        "domain": "central.sophos.com"
-    },
-    {
-        "name": "Sophos Home",
-        "domain": "home.sophos.com"
-    },
-    {
-        "name": "SoundCloud",
-        "domain": "soundcloud.com"
-    },
-    {
-        "name": "SourceForge",
-        "domain": "sourceforge.net"
-    },
-    {
         "name": "Southern California Gas Company",
         "domain": "socalgas.com"
-    },
-    {
-        "name": "SouthXchange",
-        "domain": "southxchange.com"
     },
     {
         "name": "SpaceHey",
         "domain": "spacehey.com"
     },
     {
-        "name": "Spaceship",
-        "domain": "spaceship.com"
-    },
-    {
-        "name": "SparkPost",
-        "domain": "sparkpost.com"
-    },
-    {
-        "name": "SpectroCoin",
-        "domain": "spectrocoin.com"
-    },
-    {
         "name": "Splashtop",
         "domain": "splashtop.com"
-    },
-    {
-        "name": "Split",
-        "domain": "split.io"
-    },
-    {
-        "name": "Spotify for Artists",
-        "domain": "artists.spotify.com"
-    },
-    {
-        "name": "Spreedly",
-        "domain": "spreedly.com"
-    },
-    {
-        "name": "Spring",
-        "domain": "spri.ng"
-    },
-    {
-        "name": "SproutSocial",
-        "domain": "sproutsocial.com"
     },
     {
         "name": "Square",
@@ -4108,14 +1868,6 @@
         "domain": "squarespace.com"
     },
     {
-        "name": "SSLTrust",
-        "domain": "ssltrust.com.au"
-    },
-    {
-        "name": "Stackfield",
-        "domain": "stackfield.com"
-    },
-    {
         "name": "StackPath",
         "domain": "stackpath.com"
     },
@@ -4124,24 +1876,8 @@
         "domain": "hellostake.com"
     },
     {
-        "name": "Standard Notes",
-        "domain": "standardnotes.com"
-    },
-    {
         "name": "StartMail",
         "domain": "startmail.com"
-    },
-    {
-        "name": "State Department Federal Credit Union",
-        "domain": "sdfcu.org"
-    },
-    {
-        "name": "State Employees Federal Credit Union",
-        "domain": "sefcu.com"
-    },
-    {
-        "name": "StatusCake",
-        "domain": "statuscake.com"
     },
     {
         "name": "Statuspage",
@@ -4164,10 +1900,6 @@
         "domain": "strato.de"
     },
     {
-        "name": "Stripe",
-        "domain": "stripe.com"
-    },
-    {
         "name": "StubHub",
         "domain": "stubhub.com"
     },
@@ -4176,64 +1908,16 @@
         "domain": "studioninja.co"
     },
     {
-        "name": "SubscribeStar.com",
-        "domain": "subscribestar.com"
-    },
-    {
         "name": "Substack",
         "domain": "substack.com"
-    },
-    {
-        "name": "Sucuri",
-        "domain": "sucuri.net"
-    },
-    {
-        "name": "Sumo Logic",
-        "domain": "sumologic.com"
     },
     {
         "name": "Supabase",
         "domain": "supabase.com"
     },
     {
-        "name": "Surfshark",
-        "domain": "surfshark.com"
-    },
-    {
-        "name": "Survicate",
-        "domain": "survicate.com"
-    },
-    {
-        "name": "Swinburne University of Technology",
-        "domain": "swinburne.edu.au"
-    },
-    {
-        "name": "SWITCH edu-ID",
-        "domain": "eduid.ch"
-    },
-    {
-        "name": "Swyftx",
-        "domain": "swyftx.com"
-    },
-    {
         "name": "Sync",
         "domain": "sync.com"
-    },
-    {
-        "name": "Synergy Wholesale",
-        "domain": "synergywholesale.com"
-    },
-    {
-        "name": "Synology",
-        "domain": "synology.com"
-    },
-    {
-        "name": "System76",
-        "domain": "system76.com"
-    },
-    {
-        "name": "T-Mobile",
-        "domain": "t-mobile.com"
     },
     {
         "name": "T-Online",
@@ -4260,18 +1944,6 @@
         "domain": "taxact.com"
     },
     {
-        "name": "TaxBit",
-        "domain": "taxbit.com"
-    },
-    {
-        "name": "TaxDome",
-        "domain": "taxdome.com"
-    },
-    {
-        "name": "TeamViewer",
-        "domain": "teamviewer.com"
-    },
-    {
         "name": "Teamwork",
         "domain": "teamwork.com"
     },
@@ -4292,20 +1964,12 @@
         "domain": "tu-darmstadt.de"
     },
     {
-        "name": "Teleport",
-        "domain": "goteleport.com"
-    },
-    {
         "name": "Tello",
         "domain": "tello.com"
     },
     {
         "name": "Telnyx",
         "domain": "telnyx.com"
-    },
-    {
-        "name": "Telzio",
-        "domain": "telzio.com"
     },
     {
         "name": "Termius",
@@ -4320,56 +1984,12 @@
         "domain": "teslafi.com"
     },
     {
-        "name": "Textlocal",
-        "domain": "textlocal.com"
-    },
-    {
         "name": "The Iconic",
         "domain": "theiconic.com.au"
     },
     {
-        "name": "The Ohio State University",
-        "domain": "osu.edu"
-    },
-    {
-        "name": "The University of Queensland",
-        "domain": "uq.edu.au"
-    },
-    {
         "name": "The University of Sydney",
         "domain": "sydney.edu.au"
-    },
-    {
-        "name": "TherapyNotes",
-        "domain": "therapynotes.com"
-    },
-    {
-        "name": "ThreatConnect",
-        "domain": "threatconnect.com"
-    },
-    {
-        "name": "ThreatX",
-        "domain": "threatx.com"
-    },
-    {
-        "name": "ThriveCart",
-        "domain": "thrivecart.com"
-    },
-    {
-        "name": "Tibia",
-        "domain": "tibia.com"
-    },
-    {
-        "name": "TicketSource",
-        "domain": "ticketsource.co.uk"
-    },
-    {
-        "name": "TikTok",
-        "domain": "tiktok.com"
-    },
-    {
-        "name": "Tilaa",
-        "domain": "tilaa.com"
     },
     {
         "name": "Time4VPS",
@@ -4384,10 +2004,6 @@
         "domain": "ting.com"
     },
     {
-        "name": "TinyURL",
-        "domain": "tinyurl.com"
-    },
-    {
         "name": "Tito",
         "domain": "ti.to"
     },
@@ -4396,28 +2012,8 @@
         "domain": "todoist.com"
     },
     {
-        "name": "Tokopedia",
-        "domain": "tokopedia.com"
-    },
-    {
         "name": "Toodledo",
         "domain": "toodledo.com"
-    },
-    {
-        "name": "Toontown Rewritten",
-        "domain": "toontownrewritten.com"
-    },
-    {
-        "name": "TorGuard",
-        "domain": "torguard.net"
-    },
-    {
-        "name": "Toronto Metropolitan University",
-        "domain": "torontomu.ca"
-    },
-    {
-        "name": "Toshl",
-        "domain": "toshl.com"
     },
     {
         "name": "Tower Federal Credit Union",
@@ -4432,18 +2028,6 @@
         "domain": "tradingview.com"
     },
     {
-        "name": "Transifex",
-        "domain": "transifex.com"
-    },
-    {
-        "name": "TransIP",
-        "domain": "transip.nl"
-    },
-    {
-        "name": "Travala",
-        "domain": "travala.com"
-    },
-    {
         "name": "Travelers",
         "domain": "travelers.com"
     },
@@ -4452,52 +2036,8 @@
         "domain": "trello.com"
     },
     {
-        "name": "Trend Micro",
-        "domain": "trendmicro.com"
-    },
-    {
-        "name": "Tresorit",
-        "domain": "tresorit.com"
-    },
-    {
-        "name": "Trimble",
-        "domain": "trimble.com"
-    },
-    {
-        "name": "Trovi",
-        "domain": "trovi.sk"
-    },
-    {
-        "name": "Trovo",
-        "domain": "trovo.live"
-    },
-    {
-        "name": "TryHackMe",
-        "domain": "tryhackme.com"
-    },
-    {
-        "name": "Tumblr",
-        "domain": "tumblr.com"
-    },
-    {
-        "name": "TunnelBear",
-        "domain": "tunnelbear.com"
-    },
-    {
         "name": "Tuta",
         "domain": "tuta.com"
-    },
-    {
-        "name": "Tweakers",
-        "domain": "tweakers.net"
-    },
-    {
-        "name": "Twilio",
-        "domain": "twilio.com"
-    },
-    {
-        "name": "Twingate",
-        "domain": "twingate.com"
     },
     {
         "name": "Twitch",
@@ -4508,24 +2048,8 @@
         "domain": "uber.com"
     },
     {
-        "name": "Uber Eats",
-        "domain": "ubereats.com"
-    },
-    {
-        "name": "Ubiquiti UniFi",
-        "domain": "ui.com"
-    },
-    {
-        "name": "Ubisoft/Uplay",
-        "domain": "ubisoft.com"
-    },
-    {
         "name": "UCLA Health",
         "domain": "uclahealth.org"
-    },
-    {
-        "name": "ud.com",
-        "domain": "uniteddomains.com"
     },
     {
         "name": "UK2",
@@ -4536,104 +2060,32 @@
         "domain": "ukfast.co.uk"
     },
     {
-        "name": "Unbounce",
-        "domain": "unbounce.com"
-    },
-    {
         "name": "Unfuddle STACK",
         "domain": "unfuddle.com"
-    },
-    {
-        "name": "Union Bank & Trust",
-        "domain": "ubt.com"
-    },
-    {
-        "name": "Uniregistry",
-        "domain": "uniregistry.com"
-    },
-    {
-        "name": "united-domains.de",
-        "domain": "united-domains.de"
     },
     {
         "name": "Unity",
         "domain": "unity.com"
     },
     {
-        "name": "Universitat de Barcelona",
-        "domain": "ub.edu"
-    },
-    {
-        "name": "University of Calgary",
-        "domain": "ucalgary.ca"
-    },
-    {
-        "name": "University of Cambridge",
-        "domain": "cam.ac.uk"
-    },
-    {
         "name": "University of Delaware",
         "domain": "udel.edu"
-    },
-    {
-        "name": "University of Groningen",
-        "domain": "rug.nl"
-    },
-    {
-        "name": "University of Melbourne",
-        "domain": "unimelb.edu.au"
     },
     {
         "name": "University of Notre Dame",
         "domain": "nd.edu"
     },
     {
-        "name": "University of Otago",
-        "domain": "otago.ac.nz"
-    },
-    {
-        "name": "University of Oxford",
-        "domain": "ox.ac.uk"
-    },
-    {
         "name": "University of Pennsylvania",
         "domain": "upenn.edu"
-    },
-    {
-        "name": "Unleashed Inventory",
-        "domain": "unleashedsoftware.com"
-    },
-    {
-        "name": "Unstoppable Domains",
-        "domain": "unstoppabledomains.com"
-    },
-    {
-        "name": "UNSW Sydney",
-        "domain": "unsw.edu.au"
     },
     {
         "name": "UpCloud",
         "domain": "upcloud.com"
     },
     {
-        "name": "UpdraftPlus",
-        "domain": "updraftplus.com"
-    },
-    {
-        "name": "Uphold",
-        "domain": "uphold.com"
-    },
-    {
         "name": "Uptime Robot",
         "domain": "uptimerobot.com"
-    },
-    {
-        "name": "Upwork",
-        "domain": "upwork.com"
-    },
-    {
-        "name": "US Citizenship and Immigration Services",
-        "domain": "uscis.gov"
     },
     {
         "name": "US Mobile",
@@ -4648,20 +2100,8 @@
         "domain": "va.gov"
     },
     {
-        "name": "Usabilla",
-        "domain": "usabilla.com"
-    },
-    {
-        "name": "UserWay",
-        "domain": "userway.org"
-    },
-    {
         "name": "UW Credit Union",
         "domain": "uwcu.org"
-    },
-    {
-        "name": "Valr",
-        "domain": "valr.com"
     },
     {
         "name": "Vancity",
@@ -4672,36 +2112,16 @@
         "domain": "vaultcord.com"
     },
     {
-        "name": "Veeam",
-        "domain": "veeam.com"
-    },
-    {
         "name": "Veem",
         "domain": "veem.com"
-    },
-    {
-        "name": "Vend",
-        "domain": "vend.com"
     },
     {
         "name": "VentraIP",
         "domain": "ventraip.com.au"
     },
     {
-        "name": "Veracode",
-        "domain": "veracode.com"
-    },
-    {
-        "name": "Verpex",
-        "domain": "verpex.com"
-    },
-    {
         "name": "Versio",
         "domain": "versio.nl"
-    },
-    {
-        "name": "ViaBTC",
-        "domain": "viabtc.com"
     },
     {
         "name": "VicRoads",
@@ -4712,92 +2132,24 @@
         "domain": "vimeo.com"
     },
     {
-        "name": "VirusTotal",
-        "domain": "virustotal.com"
-    },
-    {
         "name": "Visual Studio Codespaces",
         "domain": "visualstudio.microsoft.com"
-    },
-    {
-        "name": "Vivaldi",
-        "domain": "vivaldi.com"
-    },
-    {
-        "name": "Vivup Benefits",
-        "domain": "vivup.co.uk"
     },
     {
         "name": "VK",
         "domain": "vk.com"
     },
     {
-        "name": "VoIP.ms",
-        "domain": "voip.ms"
-    },
-    {
-        "name": "Voyager",
-        "domain": "investvoyager.com"
-    },
-    {
-        "name": "VPS Server",
-        "domain": "vpsserver.com"
-    },
-    {
         "name": "VRChat",
         "domain": "hello.vrchat.com"
-    },
-    {
-        "name": "Vultr",
-        "domain": "vultr.com"
-    },
-    {
-        "name": "Vysoká škola ekonomická v Praze",
-        "domain": "vse.cz"
-    },
-    {
-        "name": "Wargaming",
-        "domain": "wargaming.net"
-    },
-    {
-        "name": "Warner Bros. Games",
-        "domain": "warnerbrosgames.com"
-    },
-    {
-        "name": "Wasabi",
-        "domain": "wasabi.com"
-    },
-    {
-        "name": "Wave",
-        "domain": "waveapps.com"
     },
     {
         "name": "WazirX",
         "domain": "wazirx.com"
     },
     {
-        "name": "Wealthfront",
-        "domain": "wealthfront.com"
-    },
-    {
-        "name": "Wealthify",
-        "domain": "wealthify.com"
-    },
-    {
         "name": "Wealthsimple",
         "domain": "wealthsimple.com"
-    },
-    {
-        "name": "Web Hosting Canada",
-        "domain": "whc.ca"
-    },
-    {
-        "name": "Web.de",
-        "domain": "web.de"
-    },
-    {
-        "name": "Webcentral",
-        "domain": "webcentral.com.au"
     },
     {
         "name": "Webflow",
@@ -4806,10 +2158,6 @@
     {
         "name": "Webroot",
         "domain": "webroot.com"
-    },
-    {
-        "name": "Weclapp",
-        "domain": "weclapp.com"
     },
     {
         "name": "WEDOS",
@@ -4824,32 +2172,8 @@
         "domain": "wellfound.com"
     },
     {
-        "name": "WePay",
-        "domain": "go.wepay.com"
-    },
-    {
-        "name": "WeTransfer",
-        "domain": "wetransfer.com"
-    },
-    {
-        "name": "WhaleFin",
-        "domain": "whalefin.com"
-    },
-    {
-        "name": "When I Work",
-        "domain": "wheniwork.com"
-    },
-    {
         "name": "Whimsical",
         "domain": "whimsical.com"
-    },
-    {
-        "name": "Whois",
-        "domain": "whois.com"
-    },
-    {
-        "name": "Wiggle",
-        "domain": "wiggle.co.uk"
     },
     {
         "name": "Wikipedia",
@@ -4860,40 +2184,12 @@
         "domain": "windscribe.com"
     },
     {
-        "name": "Wirex",
-        "domain": "wirexapp.com"
-    },
-    {
         "name": "Wise",
         "domain": "wise.com"
     },
     {
-        "name": "Withings",
-        "domain": "withings.com"
-    },
-    {
-        "name": "Wix",
-        "domain": "wix.com"
-    },
-    {
-        "name": "Wolf.bet",
-        "domain": "wolf.bet"
-    },
-    {
         "name": "WoltLab",
         "domain": "woltlab.com"
-    },
-    {
-        "name": "Woodforest National Bank",
-        "domain": "woodforest.com"
-    },
-    {
-        "name": "Wordfence Central",
-        "domain": "wordfence.com"
-    },
-    {
-        "name": "WordPress.com",
-        "domain": "wordpress.com"
     },
     {
         "name": "Workato",
@@ -4904,16 +2200,8 @@
         "domain": "workflowy.com"
     },
     {
-        "name": "Workplace",
-        "domain": "workplace.com"
-    },
-    {
         "name": "World4You",
         "domain": "world4you.com"
-    },
-    {
-        "name": "WP Engine",
-        "domain": "wpengine.com"
     },
     {
         "name": "Wrike",
@@ -4924,48 +2212,16 @@
         "domain": "wykop.pl"
     },
     {
-        "name": "Wyze",
-        "domain": "wyze.com"
-    },
-    {
-        "name": "X (Twitter)",
-        "domain": "x.com"
-    },
-    {
-        "name": "Xbox Live",
-        "domain": "xbox.com"
-    },
-    {
-        "name": "Xero",
-        "domain": "xero.com"
-    },
-    {
-        "name": "XING",
-        "domain": "xing.com"
-    },
-    {
         "name": "Xink",
         "domain": "xink.io"
-    },
-    {
-        "name": "Xplenty",
-        "domain": "xplenty.com"
     },
     {
         "name": "Yahoo Mail",
         "domain": "mail.yahoo.com"
     },
     {
-        "name": "Yclas",
-        "domain": "yclas.com"
-    },
-    {
         "name": "YNAB (You Need A Budget)",
         "domain": "ynab.com"
-    },
-    {
-        "name": "YouHodler",
-        "domain": "youhodler.com"
     },
     {
         "name": "YouTube",
@@ -4980,10 +2236,6 @@
         "domain": "zapsplat.com"
     },
     {
-        "name": "Zendesk",
-        "domain": "zendesk.com"
-    },
-    {
         "name": "Zeplin",
         "domain": "zeplin.io"
     },
@@ -4994,30 +2246,6 @@
     {
         "name": "ZeroTier",
         "domain": "zerotier.com"
-    },
-    {
-        "name": "Zimbra",
-        "domain": "zimbra.com"
-    },
-    {
-        "name": "Zoho",
-        "domain": "zoho.com"
-    },
-    {
-        "name": "Zonda",
-        "domain": "zondaglobal.com"
-    },
-    {
-        "name": "Zoolz",
-        "domain": "intelli.zoolz.com"
-    },
-    {
-        "name": "Zoom",
-        "domain": "zoom.us"
-    },
-    {
-        "name": "Госуслуги (Gosuslugi)",
-        "domain": "gosuslugi.ru"
     },
     {
         "name": "Пачка",

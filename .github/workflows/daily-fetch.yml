@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Git Pull
+        run: git pull # Just in case actions/checkout did not grab the latest version of the repo
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2

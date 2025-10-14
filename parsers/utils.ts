@@ -1,4 +1,5 @@
 import type { OTP, OtpAuthData, Service, TOTPAlgorithm } from "@/types";
+import { getCustomIcon } from '@/utils/customIconMatcher';
 import * as Crypto from 'expo-crypto';
 
 /**
@@ -95,12 +96,21 @@ export function convertToService(otpData: OtpAuthData, position: number = 0): Se
     digits: otpData.digits,
   };
 
-  return {
+  // Create a temporary service to check for icon availability
+  const tempService: Service = {
     position,
     updatedAt: now,
     name: otpData.label,
     uid: Crypto.randomUUID(),
     otp,
     secret: otpData.secret,
+  };
+
+  // Check if we have a matching custom icon
+  const hasIcon = getCustomIcon(tempService) !== null;
+
+  return {
+    ...tempService,
+    iconRemoved: !hasIcon // Only set iconRemoved if we're confident there's no icon
   };
 }

@@ -25,6 +25,26 @@ export default function SettingsScreen() {
     const [pinSetupKey, setPinSetupKey] = useState(0);
     const navigation = useNavigation();
 
+    // Hide tab bar when PIN setup is shown
+    useEffect(() => {
+        if (showPinSetup) {
+            // Hide tab bar by setting the parent route options
+            navigation.setOptions({
+                tabBarStyle: { display: 'none' }
+            });
+
+            // Return cleanup function
+            return () => {
+                navigation.setOptions({
+                    tabBarStyle: {
+                        display: 'flex',
+                        backgroundColor: theme.tabBarBackground
+                    }
+                });
+            };
+        }
+    }, [showPinSetup, navigation, theme.tabBarBackground]);
+
     if (isLoading) {
         return (
             <SafeAreaView style={[styles.loadingContainer, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
@@ -202,26 +222,6 @@ export default function SettingsScreen() {
             Alert.alert("Import Error", "Failed to read or parse the selected file. Please make sure it's a valid export file.");
         }
     }
-
-    // Hide tab bar when PIN setup is shown
-    useEffect(() => {
-        if (showPinSetup) {
-            // Hide tab bar by setting the parent route options
-            navigation.setOptions({
-                tabBarStyle: { display: 'none' }
-            });
-
-            // Return cleanup function
-            return () => {
-                navigation.setOptions({
-                    tabBarStyle: {
-                        display: 'flex',
-                        backgroundColor: theme.tabBarBackground
-                    }
-                });
-            };
-        }
-    }, [showPinSetup, navigation, theme.tabBarBackground]);
 
     // If PIN setup is shown, render PIN setup view
     if (showPinSetup) {

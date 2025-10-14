@@ -9,6 +9,7 @@ interface CodeItemProps {
   isHighlighted: boolean;
   isFirstItem: boolean;
   onLongPress?: () => void;
+  onIconChange?: (serviceUid: string, updatedService: Service) => Promise<void>;
 }
 
 export default function CodeItem({
@@ -16,7 +17,8 @@ export default function CodeItem({
   globalTimestamp,
   isHighlighted,
   isFirstItem,
-  onLongPress
+  onLongPress,
+  onIconChange
 }: CodeItemProps) {
   const { theme } = useTheme();
 
@@ -30,6 +32,7 @@ export default function CodeItem({
       service={service}
       globalTimestamp={globalTimestamp}
       onLongPress={onLongPress}
+      onIconChange={onIconChange}
       style={[
         highlightStyle,
         isFirstItem && styles.firstItem

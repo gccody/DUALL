@@ -1,7 +1,8 @@
 import { TOTP } from "@/TOTP";
 import { Service } from '@/types';
+import { getCustomIcon } from '@/utils/customIconMatcher';
 import * as Crypto from 'expo-crypto';
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 
 export function useCodeManager(
@@ -10,7 +11,7 @@ export function useCodeManager(
 ) {
   const [recentCodeIndex, setRecentCodeIndex] = useState<number | null>(null);
 
-  const addCode = (url: string) => {
+  const addCode = useCallback((url: string) => {
     const parsedURL = TOTP.parseUrl(url);
     
     if (!parsedURL) {
@@ -23,7 +24,8 @@ export function useCodeManager(
       return;
     }
 
-    const service: Service = {
+    // Check if we have a matching custom icon for this service
+    const tempService: Service = {
       otp: {
         algorithm: parsedURL.algorithm,
         digits: parsedURL.digits,
@@ -37,6 +39,14 @@ export function useCodeManager(
       secret: parsedURL.secret,
       uid: Crypto.randomUUID(),
       updatedAt: Date.now()
+    };
+
+    // Check if we have a matching custom icon
+    const hasIcon = getCustomIcon(tempService) !== null;
+    
+    const service: Service = {
+      ...tempService,
+      iconRemoved: !hasIcon // Only set iconRemoved if we're confident there's no icon
     };
 
     // Check if code already exists
@@ -55,9 +65,9 @@ export function useCodeManager(
       // Highlight existing service
       setRecentCodeIndex(existingIndex);
     }
-  };
+  }, [services, updateServices]);
 
-  const resetRecentCodeIndex = () => setRecentCodeIndex(null);
+  const resetRecentCodeIndex = useCallback(() => setRecentCodeIndex(null), []);
 
   return {
     recentCodeIndex,

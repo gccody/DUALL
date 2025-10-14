@@ -11,13 +11,18 @@ interface TwoFASService {
     period?: number;
     counter?: number;
     algorithm?: string;
+    issuer?: string;
+    account?: string;
   };
   order?: {
     position?: number;
   };
   icon?: {
     selected?: string;
-    label?: string;
+    label?: {
+      text?: string;
+      backgroundColor?: string;
+    } | string;
   };
   updatedAt?: number;
 }
@@ -76,13 +81,18 @@ export class TwoFASParser implements OtpProvider {
       const tokenType = service.otp?.tokenType?.toLowerCase() || "totp";
       const algorithm = normalizeAlgorithm(service.otp?.algorithm || "SHA1");
       const digits = service.otp?.digits || 6;
+      
+      // Get issuer from otp.issuer, fallback to service name
+      const issuer = service.otp?.issuer || service.name;
+      // Get label from otp.account if available, otherwise use service name
+      const label = service.otp?.account || service.name;
 
       if (tokenType === "totp") {
         results.push({
           type: "totp",
-          label: service.name,
+          label: label,
           secret: service.secret,
-          issuer: service.icon?.label,
+          issuer: issuer,
           algorithm,
           digits,
           period: service.otp?.period || 30,
@@ -90,9 +100,9 @@ export class TwoFASParser implements OtpProvider {
       } else if (tokenType === "hotp") {
         results.push({
           type: "hotp",
-          label: service.name,
+          label: label,
           secret: service.secret,
-          issuer: service.icon?.label,
+          issuer: issuer,
           algorithm,
           digits,
           counter: service.otp?.counter || 0,

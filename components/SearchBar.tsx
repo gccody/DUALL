@@ -29,7 +29,7 @@ export function SearchBar({ isVisible, text, onSearch }: SearchBarProps) {
             }, 300);
             initialMountRef.current = false;
         }
-    }, []);
+    }, [isVisible]);
 
     // Update animation when isVisible changes
     useEffect(() => {

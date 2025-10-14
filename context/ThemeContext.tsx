@@ -85,10 +85,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         await updateSetting('darkMode', newIsDark);
     };
 
-    if (isLoading) {
-        return null; // Or a loading indicator if you prefer
-    }
-
     return (
         <ThemeContext.Provider value={{ theme, colorScheme, toggleTheme, isDark }}>
             {children}

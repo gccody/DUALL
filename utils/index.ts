@@ -8,6 +8,3 @@ export function generateTOTPUrl(tokenType: TokenType, label: string, secret: str
   return `otpauth://${tokenType}/${label}?secret=${secret}&issuer=${issuer}&algorithm=${algorithm}&digits=${digits}&period=${period}`
 }
 
-// Re-export everything from IconLibrary for easier imports
-export * from './IconLibrary';
-

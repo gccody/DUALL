@@ -3,34 +3,28 @@ import Fuse from 'fuse.js';
 import { useEffect, useMemo, useState } from "react";
 
 export function useSearch(initialData: Service[]) {
-  const [data, setData] = useState<Service[]>(initialData);
   const [filteredServices, setFilteredServices] = useState<Service[]>(initialData);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Update data when context data changes
-  useEffect(() => {
-    setData(initialData);
-  }, [initialData]);
-
-  // Memoize Fuse instance
+  // Memoize Fuse instance - use initialData directly
   const fuse = useMemo(
-    () => new Fuse(data, { 
-      isCaseSensitive: false, 
-      keys: ["name", "otp.issuer"], 
-      distance: 0.4 
+    () => new Fuse(initialData, {
+      isCaseSensitive: false,
+      keys: ["name", "otp.issuer"],
+      distance: 0.4
     }),
-    [data]
+    [initialData]
   );
 
-  // Update search results when query or data changes
+  // Update search results when query or initialData changes
   useEffect(() => {
     if (searchQuery === '') {
-      setFilteredServices(data);
+      setFilteredServices(initialData);
     } else {
       const searchedData = fuse.search(searchQuery);
       setFilteredServices(searchedData.map((val) => val.item));
     }
-  }, [searchQuery, data, fuse]);
+  }, [searchQuery, initialData, fuse]);
 
   const handleSearch = (text: string) => setSearchQuery(text);
 

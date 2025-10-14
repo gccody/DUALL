@@ -65,9 +65,8 @@ export class ProviderRegistry {
             provider: provider.name,
             data: result,
           };
-        } catch (error) {
+        } catch (_) {
           // Continue to next provider if parsing fails
-          console.warn(`${provider.name} detection passed but parsing failed:`, error);
         }
       }
     }

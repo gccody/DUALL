@@ -1,4 +1,5 @@
-import type { TOTPAlgorithm } from "@/types";
+import type { OTP, OtpAuthData, Service, TOTPAlgorithm } from "@/types";
+import * as Crypto from 'expo-crypto';
 
 /**
  * Normalizes algorithm names to match our type system
@@ -78,4 +79,28 @@ export function parseLabel(label: string): { issuer?: string; account: string } 
     };
   }
   return { account: label.trim() };
+}
+
+/**
+ * Converts OtpAuthData to Service format for the app
+ */
+export function convertToService(otpData: OtpAuthData, position: number = 0): Service {
+  const now = Date.now();
+  const otp: OTP = {
+    link: `otpauth://${otpData.type}/${encodeURIComponent(otpData.label)}?secret=${otpData.secret}&algorithm=${otpData.algorithm}&digits=${otpData.digits}`,
+    algorithm: otpData.algorithm,
+    period: otpData.type === "totp" ? otpData.period : undefined,
+    tokenType: otpData.type.toUpperCase() as "TOTP" | "HOTP",
+    issuer: otpData.issuer || "",
+    digits: otpData.digits,
+  };
+
+  return {
+    position,
+    updatedAt: now,
+    name: otpData.label,
+    uid: Crypto.randomUUID(),
+    otp,
+    secret: otpData.secret,
+  };
 }

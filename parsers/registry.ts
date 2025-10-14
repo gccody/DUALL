@@ -2,7 +2,9 @@ import type { OtpAuthData } from "../types";
 import type { OtpProvider, ParseResult } from "./types";
 
 import { BitwardenParser } from "@/parsers/providers/bitwardenParse";
+import { EnteParser } from "@/parsers/providers/enteParse";
 import { GoogleAuthParser } from "@/parsers/providers/googleParse";
+import { LastPassParser } from "@/parsers/providers/lastPassParse";
 import { TwoFASParser } from "@/parsers/providers/twoFAsParse";
 
 export class ProviderRegistry {
@@ -13,6 +15,8 @@ export class ProviderRegistry {
     this.register(new GoogleAuthParser());
     this.register(new TwoFASParser());
     this.register(new BitwardenParser());
+    this.register(new EnteParser());
+    this.register(new LastPassParser());
   }
 
   /**

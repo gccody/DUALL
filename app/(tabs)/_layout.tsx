@@ -18,21 +18,21 @@ export default function TabLayout() {
                     name="index"
                     options={{
                         title: 'YOUR ACCOUNTS',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+                        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="home" color={color} />,
                     }}
                 />
                 <Tabs.Screen
                     name="add"
                     options={{
                         title: 'Add',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="plus" color={color} />
+                        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="plus" color={color} />
                     }}
                 />
                 <Tabs.Screen
                     name="settings"
                     options={{
                         title: 'Settings',
-                        tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                        tabBarIcon: ({ color }: { color: string }) => <FontAwesome size={28} name="cog" color={color} />,
                     }}
                 />
             </Tabs>

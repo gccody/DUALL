@@ -99,8 +99,7 @@ export class LastPassParser implements OtpProvider {
         if (otpData) {
           results.push(otpData);
         }
-      } catch (error) {
-        console.warn("Failed to parse LastPass account:", account, error);
+      } catch (_) {
       }
     }
 

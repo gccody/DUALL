@@ -14,16 +14,16 @@ interface EnteCodeDisplay {
   iconID?: string;
 }
 
-interface EnteEncryptedExport {
-  version?: number;
-  kdfParams?: {
-    memLimit: number;
-    opsLimit: number;
-    salt: string;
-  };
-  encryptedData: string;
-  encryptionNonce: string;
-}
+// interface EnteEncryptedExport {
+//   version?: number;
+//   kdfParams?: {
+//     memLimit: number;
+//     opsLimit: number;
+//     salt: string;
+//   };
+//   encryptedData: string;
+//   encryptionNonce: string;
+// }
 
 export class EnteParser implements OtpProvider {
   readonly name = "ente";
@@ -126,9 +126,8 @@ export class EnteParser implements OtpProvider {
 
             // Remove codeDisplay from URI for standard parsing
             cleanUri = trimmedLine.replace(/&codeDisplay=[^&]+/, "");
-          } catch (e) {
+          } catch (_) {
             // If parsing metadata fails, continue without it
-            console.warn("Failed to parse Ente codeDisplay metadata:", e);
           }
         }
 
@@ -171,8 +170,7 @@ export class EnteParser implements OtpProvider {
             counter: parsed.counter || 0,
           });
         }
-      } catch (error) {
-        console.warn("Failed to parse Ente URI:", trimmedLine, error);
+      } catch (_) {
         continue;
       }
     }

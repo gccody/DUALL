@@ -1,9 +1,9 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
-import { getCustomIconSelection, getRemovedIcon } from '@/utils/IconManager';
+import { getCustomIconSelection } from '@/utils/IconManager';
 import { getCustomIcon } from '@/utils/customIconMatcher';
 import { customIcons } from '@/utils/customIcons';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import CustomIconPicker from './CustomIconPicker';
 
@@ -12,20 +12,22 @@ interface ServiceIconProps {
     size?: number;
     style?: StyleProp<ViewStyle>;
     editable?: boolean;
+    onIconSelected?: (domain: string, icon: any, updatedService?: Service) => Promise<void>;
 }
 
-export default function ServiceIcon({ service, size = 40, style, editable = false }: ServiceIconProps) {
+export default function ServiceIcon({ service, size = 40, style, editable = false, onIconSelected }: ServiceIconProps) {
     const { theme } = useTheme();
     const [customIcon, setCustomIcon] = useState<any>(null);
     const [showFaviconPicker, setShowFaviconPicker] = useState(false);
 
     // Get first 2 letters of the issuer as fallback
-    const initials = service.otp.issuer.substring(0, 2).toUpperCase();
+    const issuerValue = service.otp?.issuer || service.name || 'OTP';
+    const issuer = typeof issuerValue === 'string' ? issuerValue : String(issuerValue);
+    const initials = issuer.substring(0, 2).toUpperCase();
 
-    const loadIcons = async () => {
+    const loadIcons = useCallback(async () => {
         // If the user explicitly removed the icon, force initials and skip all icon sources
-        const removed = await getRemovedIcon(service.uid);
-        if (removed) {
+        if (service.iconRemoved) {
             setCustomIcon(null);
             return;
         }
@@ -47,11 +49,13 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
             setCustomIcon(customIconSource);
             return;
         }
-    };
+    }, [service]);
+
+    const iconUpdatedAt = (service as any).iconUpdatedAt;
 
     useEffect(() => {
         loadIcons();
-    }, [service.uid]);
+    }, [service.uid, service.iconRemoved, iconUpdatedAt, loadIcons]);
 
     const handlePress = () => {
         if (editable) {
@@ -59,8 +63,11 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
         }
     };
 
-    const handleFaviconSelected = () => {
+    const handleFaviconSelected = async (domain: string, icon: any, updatedService?: Service) => {
         loadIcons();
+        if (onIconSelected) {
+            await onIconSelected(domain, icon, updatedService);
+        }
     };
 
     const renderContent = () => {

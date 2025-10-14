@@ -31,12 +31,14 @@ export default function EditCodeModal({
   const { theme } = useTheme();
   const [issuer, setIssuer] = useState(service?.otp.issuer || '');
   const [label, setLabel] = useState(service?.name || '');
+  const [currentService, setCurrentService] = useState(service);
 
   // Update local state when service changes
   React.useEffect(() => {
     if (service) {
       setIssuer(service.otp.issuer);
       setLabel(service.name);
+      setCurrentService(service);
     }
   }, [service]);
 
@@ -54,6 +56,12 @@ export default function EditCodeModal({
 
     onSave(updatedService);
     onClose();
+  };
+
+  const handleIconSelected = async (domain: string, icon: any, updatedService?: Service) => {
+    if (updatedService) {
+      setCurrentService(updatedService);
+    }
   };
 
   const handleDelete = () => {
@@ -79,7 +87,7 @@ export default function EditCodeModal({
     );
   };
 
-  if (!service) return null;
+  if (!service || !currentService) return null;
 
   return (
     <Modal
@@ -107,7 +115,12 @@ export default function EditCodeModal({
 
           <View style={styles.content}>
             <View style={styles.iconContainer}>
-              <ServiceIcon service={service} size={64} editable={true} />
+              <ServiceIcon
+                service={currentService || service}
+                size={64}
+                editable={true}
+                onIconSelected={handleIconSelected}
+              />
             </View>
 
             <View style={styles.inputGroup}>

@@ -14,7 +14,8 @@ const domainCache = new Map<string, string | null>();
 /**
  * Normalize a string for comparison by converting to lowercase and removing special characters
  */
-function normalizeString(str: string): string {
+function normalizeString(str: string | undefined): string {
+  if (!str) return '';
   return str.toLowerCase()
     .replace(/[^a-z0-9]/g, '')
     .trim();
@@ -23,7 +24,9 @@ function normalizeString(str: string): string {
 /**
  * Extract domain from issuer using various heuristics
  */
-function extractDomainFromIssuer(issuer: string): string | null {
+function extractDomainFromIssuer(issuer: string | undefined): string | null {
+  if (!issuer) return null;
+  
   const normalized = issuer.toLowerCase().trim();
   
   // Direct domain patterns
@@ -47,7 +50,9 @@ function extractDomainFromIssuer(issuer: string): string | null {
 /**
  * Find matching domain from totp.json based on issuer
  */
-function findMatchingDomain(issuer: string): string | null {
+function findMatchingDomain(issuer: string | undefined): string | null {
+  if (!issuer) return null;
+  
   // Check cache first
   const cacheKey = normalizeString(issuer);
   if (domainCache.has(cacheKey)) {
@@ -161,9 +166,9 @@ export function getAvailableCustomIconDomains(): string[] {
 /**
  * Search for custom icons by domain or name
  */
-export function searchCustomIcons(query: string): Array<{ domain: string; name: string; icon: any }> {
+export function searchCustomIcons(query: string): { domain: string; name: string; icon: any }[] {
   const normalizedQuery = normalizeString(query);
-  const results: Array<{ domain: string; name: string; icon: any }> = [];
+  const results: { domain: string; name: string; icon: any }[] = [];
   
   for (const service of totpData as TotpServiceData[]) {
     const normalizedName = normalizeString(service.name);

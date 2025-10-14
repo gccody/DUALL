@@ -2,7 +2,7 @@ import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FlashList } from '@shopify/flash-list';
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -27,9 +27,12 @@ export default function HomeScreen() {
   // Get OTP data from context
   const { data, loading, error, updateServices, fetchData } = useOtpData();
 
+  // Memoize services array to prevent unnecessary re-renders
+  const servicesData = useMemo(() => data?.services || [], [data?.services]);
+
   // Search functionality
   const [searchBarVisible, setSearchBarVisible] = useState<boolean>(settings.searchOnStartup);
-  const { services, search, setSearch, handleSearch } = useSearch(data?.services || []);
+  const { services, search, setSearch, handleSearch } = useSearch(servicesData);
 
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,9 +41,9 @@ export default function HomeScreen() {
   // Real-time clock update
   const timestamp = useTimestamp();
 
-  // Handle adding new codes via URL
+  // Handle adding new codes via URL - use full servicesData, not filtered results
   const { otpurl } = useLocalSearchParams<{ otpurl: string }>();
-  const { recentCodeIndex, addCode, resetRecentCodeIndex } = useCodeManager(services, updateServices);
+  const { recentCodeIndex, addCode, resetRecentCodeIndex } = useCodeManager(servicesData, updateServices);
 
   // Reference for auto-scrolling
   const flashListRef = useRef<FlashList<Service>>(null);
@@ -55,7 +58,7 @@ export default function HomeScreen() {
     if (otpurl) {
       addCode(otpurl);
     }
-  }, [otpurl]);
+  }, [otpurl, addCode]);
 
   // Scroll to recently added code
   useEffect(() => {
@@ -92,6 +95,17 @@ export default function HomeScreen() {
       s.uid === updatedService.uid ? updatedService : s
     );
     updateServices(updatedServices);
+  };
+
+  // Handle icon change from ServiceIcon
+  const handleIconChange = async (serviceUid: string, updatedService: Service) => {
+    if (!data) return;
+
+    const updatedServices = data.services.map(s =>
+      s.uid === serviceUid ? updatedService : s
+    );
+    // Wait for save to complete to prevent race conditions with icon storage
+    await updateServices(updatedServices, true);
   };
 
   // Handle delete from modal
@@ -133,6 +147,7 @@ export default function HomeScreen() {
             isHighlighted={recentCodeIndex === index}
             isFirstItem={index === 0}
             onLongPress={() => handleLongPress(item)}
+            onIconChange={handleIconChange}
           />
         )}
         estimatedItemSize={150}

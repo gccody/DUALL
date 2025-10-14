@@ -98,7 +98,7 @@ async function main(): Promise<void> {
         } else {
           console.log(`Updating ${domain} - image has changed`);
         }
-      } catch (error) {
+      } catch (_) {
         // If we can't fetch or compare, just use the existing file
         shouldDownload = false;
       }
@@ -114,7 +114,7 @@ async function main(): Promise<void> {
           .resize(100, 100, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
           .avif()
           .toFile(filePath);
-      } catch (error) {
+      } catch (_) {
         bar.increment();
         continue;
       }

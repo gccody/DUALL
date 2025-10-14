@@ -17,9 +17,6 @@ interface ServiceIconProps {
 export default function ServiceIcon({ service, size = 40, style, editable = false }: ServiceIconProps) {
     const { theme } = useTheme();
     const [customIcon, setCustomIcon] = useState<any>(null);
-    const [faviconPath, setFaviconPath] = useState<string | null>(null);
-    const [faviconExists, setFaviconExists] = useState(false);
-    const [builtInIconData, setBuiltInIconData] = useState<{ iconId: string, categoryId: string } | null>(null);
     const [showFaviconPicker, setShowFaviconPicker] = useState(false);
 
     // Get first 2 letters of the issuer as fallback
@@ -30,9 +27,6 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
         const removed = await getRemovedIcon(service.uid);
         if (removed) {
             setCustomIcon(null);
-            setBuiltInIconData(null);
-            setFaviconPath(null);
-            setFaviconExists(false);
             return;
         }
 
@@ -43,9 +37,6 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
             const iconSource = customIcons[iconKey];
             if (iconSource) {
                 setCustomIcon(iconSource);
-                setBuiltInIconData(null);
-                setFaviconPath(null);
-                setFaviconExists(false);
                 return;
             }
         }
@@ -54,9 +45,6 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
         const customIconSource = getCustomIcon(service);
         if (customIconSource) {
             setCustomIcon(customIconSource);
-            setBuiltInIconData(null);
-            setFaviconPath(null);
-            setFaviconExists(false);
             return;
         }
     };

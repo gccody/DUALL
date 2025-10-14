@@ -66,7 +66,9 @@
         {
           "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to secure your codes."
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

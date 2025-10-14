@@ -1,6 +1,6 @@
-import type { OtpAuthData } from "../../types";
-import type { OtpProvider } from "../types";
-import { normalizeAlgorithm } from "../utils";
+import type { OtpProvider } from "@/parsers/types";
+import { normalizeAlgorithm } from "@/parsers/utils";
+import type { OtpAuthData } from "@/types";
 
 interface LastPassAccount {
   userName: string;

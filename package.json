@@ -5,6 +5,7 @@
   "homepage": "https://github.com/gccody/DUALL",
   "scripts": {
     "start": "bunx expo start",
+    "start:remote": "bunx expo start --tunnel",
     "android": "bunx expo run:android",
     "build:dev:android": "bunx eas build --platform android --profile development",
     "build:dev:ios": "bunx eas build --platform ios --profile development",

@@ -9,6 +9,7 @@
     "android": "bunx expo run:android",
     "build:dev:android": "bunx eas build --platform android --profile development",
     "build:dev:ios": "bunx eas build --platform ios --profile development",
+    "build:dev": "bunx eas build --profile development",
     "ios": "bunx expo run:ios",
     "web": "bunx expo start --web",
     "test": "jest --watchAll",

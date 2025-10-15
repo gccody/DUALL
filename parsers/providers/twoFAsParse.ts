@@ -5,7 +5,7 @@ import type { OtpAuthData } from "@/types";
 export class TwoFASParser implements OtpProvider {
   readonly name = "2fas";
   readonly displayName = "2FAS";
-  readonly supportedExtensions = [".txt", ".2fas"];
+  readonly supportedExtensions = [".txt"];
 
   canParse(data: unknown): boolean {
     if (typeof data !== "string") {

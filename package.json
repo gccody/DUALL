@@ -1,7 +1,7 @@
 {
   "name": "totp",
   "main": "expo-router/entry",
-  "version": "1.0.1",
+  "version": "1.0.0-alpha1",
   "homepage": "https://github.com/gccody/DUALL",
   "scripts": {
     "start": "bunx expo start",

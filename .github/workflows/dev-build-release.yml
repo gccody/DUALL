@@ -60,12 +60,16 @@ jobs:
       
       - name: Build Android (Development)
         id: build-android
+        env:
+          EAS_SKIP_AUTO_FINGERPRINT: 1
         run: |
           bunx eas build --platform android --profile development --non-interactive --no-wait
           echo "Build submitted for Android"
       
       - name: Build iOS (Development)
         id: build-ios
+        env:
+          EAS_SKIP_AUTO_FINGERPRINT: 1
         run: |
           bunx eas build --platform ios --profile development --non-interactive --no-wait
           echo "Build submitted for iOS"

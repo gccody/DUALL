@@ -126,7 +126,7 @@ function findMatchingDomain(issuer: string | undefined): string | null {
   }
   
   // Only return matches with a reasonable confidence score
-  const result = bestScore >= 50 ? bestMatch : null;
+  const result = bestScore >= 30 ? bestMatch : null;
   domainCache.set(cacheKey, result);
   return result;
 }

@@ -1,111 +1,60 @@
 import type { OtpProvider } from "@/parsers/types";
-import { normalizeAlgorithm } from "@/parsers/utils";
+import { parseOtpAuthUri } from "@/parsers/utils";
 import type { OtpAuthData } from "@/types";
-
-interface TwoFASService {
-  name: string;
-  secret: string;
-  otp?: {
-    tokenType?: string;
-    digits?: number;
-    period?: number;
-    counter?: number;
-    algorithm?: string;
-    issuer?: string;
-    account?: string;
-  };
-  order?: {
-    position?: number;
-  };
-  icon?: {
-    selected?: string;
-    label?: {
-      text?: string;
-      backgroundColor?: string;
-    } | string;
-  };
-  updatedAt?: number;
-}
-
-interface TwoFASExport {
-  services: TwoFASService[];
-  groups?: any[];
-  updatedAt?: number;
-  schemaVersion?: number;
-  appVersionCode?: number;
-}
 
 export class TwoFASParser implements OtpProvider {
   readonly name = "2fas";
   readonly displayName = "2FAS";
-  readonly supportedExtensions = [".json", ".2fas"];
+  readonly supportedExtensions = [".txt", ".2fas"];
 
   canParse(data: unknown): boolean {
-    if (typeof data === "string") {
-      try {
-        data = JSON.parse(data);
-      } catch {
-        return false;
-      }
+    if (typeof data !== "string") {
+      return false;
     }
 
-    if (typeof data === "object" && data !== null) {
-      const json = data as any;
-      return (
-        Array.isArray(json.services) &&
-        (json.schemaVersion !== undefined || json.appVersionCode !== undefined)
-      );
-    }
-
-    return false;
+    // Split by lines and check if at least one line contains an otpauth:// URI
+    const lines = data.trim().split('\n');
+    return lines.some(line => line.trim().startsWith('otpauth://'));
   }
 
   parse(data: string | unknown): OtpAuthData[] {
-    let json: TwoFASExport;
-
-    if (typeof data === "string") {
-      json = JSON.parse(data);
-    } else {
-      json = data as TwoFASExport;
-    }
-
-    if (!Array.isArray(json.services)) {
-      throw new Error("Invalid 2FAS format: missing services array");
+    if (typeof data !== "string") {
+      throw new Error("Invalid 2FAS format: expected string data");
     }
 
     const results: OtpAuthData[] = [];
+    const lines = data.trim().split('\n');
 
-    for (const service of json.services) {
-      if (!service.secret) continue;
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (!trimmedLine || !trimmedLine.startsWith('otpauth://')) {
+        continue;
+      }
 
-      const tokenType = service.otp?.tokenType?.toLowerCase() || "totp";
-      const algorithm = normalizeAlgorithm(service.otp?.algorithm || "SHA1");
-      const digits = service.otp?.digits || 6;
-      
-      // Get issuer from otp.issuer, fallback to service name
-      const issuer = service.otp?.issuer || service.name;
-      // Get label from otp.account if available, otherwise use service name
-      const label = service.otp?.account || service.name;
+      const parsedUri = parseOtpAuthUri(trimmedLine);
+      if (!parsedUri) {
+        continue; // Skip invalid URIs
+      }
 
-      if (tokenType === "totp") {
+      if (parsedUri.type === "totp") {
         results.push({
           type: "totp",
-          label: label,
-          secret: service.secret,
-          issuer: issuer,
-          algorithm,
-          digits,
-          period: service.otp?.period || 30,
+          label: parsedUri.label,
+          secret: parsedUri.secret,
+          issuer: parsedUri.issuer,
+          algorithm: parsedUri.algorithm,
+          digits: parsedUri.digits,
+          period: parsedUri.period || 30,
         });
-      } else if (tokenType === "hotp") {
+      } else if (parsedUri.type === "hotp") {
         results.push({
           type: "hotp",
-          label: label,
-          secret: service.secret,
-          issuer: issuer,
-          algorithm,
-          digits,
-          counter: service.otp?.counter || 0,
+          label: parsedUri.label,
+          secret: parsedUri.secret,
+          issuer: parsedUri.issuer,
+          algorithm: parsedUri.algorithm,
+          digits: parsedUri.digits,
+          counter: parsedUri.counter || 0,
         });
       }
     }

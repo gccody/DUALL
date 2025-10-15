@@ -43,7 +43,7 @@ jobs:
         id: version
         run: |
           bun run scripts/bump-version.ts
-          VERSION=$(bun run -p "require('./package.json').version")
+          VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
       
       - name: Commit version bump
@@ -131,7 +131,7 @@ jobs:
       - name: Get Expo project ID
         id: expo-project
         run: |
-          PROJECT_ID=$(bun run -p "require('./app.json').expo.extra.eas.projectId")
+          PROJECT_ID=$(node -p "require('./app.json').expo.extra.eas.projectId")
           echo "project_id=$PROJECT_ID" >> $GITHUB_OUTPUT
       
       - name: Create Release

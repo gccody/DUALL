@@ -86,7 +86,3 @@ writeFileSync(appJsonPath, JSON.stringify(appJson, null, 2) + '\n');
 
 console.log('Version bumped successfully!');
 console.log(`New version: ${newVersion}`);
-
-// Output the new version for GitHub Actions
-console.log(`::set-output name=version::${newVersion}`);
-console.log(`::set-output name=version_changed::true`);

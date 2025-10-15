@@ -10,17 +10,20 @@ import { convertToService } from '@/parsers/utils';
 import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as DocumentPicker from 'expo-document-picker';
+import { File, Paths } from 'expo-file-system';
 import * as SecureStore from 'expo-secure-store';
+import * as Sharing from 'expo-sharing';
 import * as WebBrowser from 'expo-web-browser';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import pkg from '../../package.json';
+import { generateTOTPUrl } from '@/utils';
 
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
     const { settings, updateSetting, isLoading } = useSettings();
-    const { data, updateServices } = useOtpData();
+    const { data, loading, updateServices } = useOtpData();
     const [showPinSetup, setShowPinSetup] = useState(false);
     const [pinSetupKey, setPinSetupKey] = useState(0);
     const navigation = useNavigation();
@@ -132,6 +135,40 @@ export default function SettingsScreen() {
                 }
             ]
         );
+    }
+
+    const exportCodes = async () => {
+        if (loading)
+            return Alert.alert("Still loading codes. Please wait");
+        const services = data?.services;
+        if (!services || services.length === 0)
+            return Alert.alert("Couldn't find any codes to export")
+
+        try {
+            const uris: string[] = []
+            for (const service of services) {
+                uris.push(generateTOTPUrl(service))
+            }
+
+            // Create a temporary file
+            const date = new Date();
+            const file = new File(Paths.cache, `duall-${date.toISOString()}.txt`)
+            file.write(uris.join("\n"));
+
+            // Share the file
+            if (await Sharing.isAvailableAsync()) {
+                await Sharing.shareAsync(file.uri, {
+                    mimeType: 'text/plain',
+                    dialogTitle: 'Export TOTP Codes',
+                });
+                Alert.alert("Success", `Successfully exported ${uris.length} codes`);
+            } else {
+                Alert.alert("Error", "Sharing is not available on this device");
+            }
+        } catch (error) {
+            console.error('Export error:', error);
+            Alert.alert("Export Error", "Failed to export codes. Please try again.");
+        }
     }
 
     const importFromProvider = async (providerName: string | null) => {
@@ -299,6 +336,9 @@ export default function SettingsScreen() {
                     </SettingItem>
                     <TouchableOpacity onPress={importCodes}>
                         <SettingItem iconName='download' text='Import Codes' />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={exportCodes}>
+                        <SettingItem iconName='upload' text='Export Codes' />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={resetPin}>
                         <SettingItem iconName='refresh' text='Reset PIN' color={theme.danger} />

@@ -32,7 +32,7 @@ export default function HomeScreen() {
 
   // Search functionality
   const [searchBarVisible, setSearchBarVisible] = useState<boolean>(settings.searchOnStartup);
-  const { services, search, setSearch, handleSearch } = useSearch(servicesData);
+  const { services, search, handleSearch } = useSearch(servicesData);
 
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);

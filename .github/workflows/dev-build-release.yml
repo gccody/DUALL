@@ -178,10 +178,7 @@ jobs:
             - [Download Android APK](${{ steps.wait-builds.outputs.android_url }})
 
             **iOS:**
-            - Use this URL on your iOS device to install:
-            ```
-            itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/${{ steps.expo-project.outputs.project_id }}/builds/${{ steps.build-ios.outputs.ios_build_id }}/manifest.plist
-            ```
+            - [Direct IOS Install](itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/${{ steps.expo-project.outputs.project_id }}/builds/${{ steps.build-ios.outputs.ios_build_id }}/manifest.plist)
             - Or download the IPA below (requires signing)
             - [Download iOS IPA](${{ steps.wait-builds.outputs.ios_url }})
 

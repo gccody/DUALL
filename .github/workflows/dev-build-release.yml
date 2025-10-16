@@ -74,17 +74,37 @@ jobs:
       - name: Wait for builds to complete
         run: |
           echo "Waiting for EAS builds to complete..."
-          # Get build IDs from the EAS output
-          ANDROID_BUILD_ID=$(bunx eas build:list --platform android --limit 1 --json | jq -r '.[0].id')
-          IOS_BUILD_ID=$(bunx eas build:list --platform ios --limit 1 --json | jq -r '.[0].id')
+
+          # Get build IDs from the EAS output with better error handling
+          echo "Fetching Android build ID..."
+          ANDROID_BUILD_OUTPUT=$(bunx eas build:list --platform android --limit=1 --json)
+          echo "Android build output: $ANDROID_BUILD_OUTPUT"
+          ANDROID_BUILD_ID=$(echo "$ANDROID_BUILD_OUTPUT" | jq -r '.[0].id')
+
+          echo "Fetching iOS build ID..."
+          IOS_BUILD_OUTPUT=$(bunx eas build:list --platform ios --limit=1 --json)
+          echo "iOS build output: $IOS_BUILD_OUTPUT"
+          IOS_BUILD_ID=$(echo "$IOS_BUILD_OUTPUT" | jq -r '.[0].id')
 
           echo "Android Build ID: $ANDROID_BUILD_ID"
           echo "iOS Build ID: $IOS_BUILD_ID"
 
+          # Validate build IDs
+          if [ -z "$ANDROID_BUILD_ID" ] || [ "$ANDROID_BUILD_ID" = "null" ]; then
+            echo "Error: Could not retrieve Android build ID"
+            exit 1
+          fi
+
+          if [ -z "$IOS_BUILD_ID" ] || [ "$IOS_BUILD_ID" = "null" ]; then
+            echo "Error: Could not retrieve iOS build ID"
+            exit 1
+          fi
+
           # Wait for Android build
           echo "Waiting for Android build..."
           while true; do
-            ANDROID_STATUS=$(bunx eas build:view $ANDROID_BUILD_ID --json | jq -r '.status')
+            ANDROID_STATUS_OUTPUT=$(bunx eas build:view $ANDROID_BUILD_ID --json)
+            ANDROID_STATUS=$(echo "$ANDROID_STATUS_OUTPUT" | jq -r '.status')
             echo "Android status: $ANDROID_STATUS"
             if [ "$ANDROID_STATUS" = "FINISHED" ]; then
               break
@@ -98,7 +118,8 @@ jobs:
           # Wait for iOS build
           echo "Waiting for iOS build..."
           while true; do
-            IOS_STATUS=$(bunx eas build:view $IOS_BUILD_ID --json | jq -r '.status')
+            IOS_STATUS_OUTPUT=$(bunx eas build:view $IOS_BUILD_ID --json)
+            IOS_STATUS=$(echo "$IOS_STATUS_OUTPUT" | jq -r '.status')
             echo "iOS status: $IOS_STATUS"
             if [ "$IOS_STATUS" = "FINISHED" ]; then
               break
@@ -110,8 +131,11 @@ jobs:
           done
 
           # Get artifact URLs
-          ANDROID_URL=$(bunx eas build:view $ANDROID_BUILD_ID --json | jq -r '.artifacts.buildUrl')
-          IOS_URL=$(bunx eas build:view $IOS_BUILD_ID --json | jq -r '.artifacts.buildUrl')
+          ANDROID_BUILD_OUTPUT=$(bunx eas build:view $ANDROID_BUILD_ID --json)
+          ANDROID_URL=$(echo "$ANDROID_BUILD_OUTPUT" | jq -r '.artifacts.buildUrl')
+
+          IOS_BUILD_OUTPUT=$(bunx eas build:view $IOS_BUILD_ID --json)
+          IOS_URL=$(echo "$IOS_BUILD_OUTPUT" | jq -r '.artifacts.buildUrl')
 
           echo "android_url=$ANDROID_URL" >> $GITHUB_OUTPUT
           echo "ios_url=$IOS_URL" >> $GITHUB_OUTPUT

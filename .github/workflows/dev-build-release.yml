@@ -62,43 +62,46 @@ jobs:
       - name: Build Android (Development)
         id: build-android
         run: |
-          bunx eas build --platform android --profile development --non-interactive --no-wait
-          echo "Build submitted for Android"
+          BUILD_OUTPUT=$(bunx eas build --platform android --profile development --non-interactive --no-wait 2>&1)
+          echo "$BUILD_OUTPUT"
+
+          # Extract build ID from the URL in output
+          ANDROID_BUILD_ID=$(echo "$BUILD_OUTPUT" | grep -oP 'builds/\K[a-f0-9-]+' | head -1)
+
+          if [ -z "$ANDROID_BUILD_ID" ]; then
+            echo "Error: Could not extract Android build ID from output"
+            exit 1
+          fi
+
+          echo "android_build_id=$ANDROID_BUILD_ID" >> $GITHUB_OUTPUT
+          echo "Android Build ID: $ANDROID_BUILD_ID"
 
       - name: Build iOS (Development)
         id: build-ios
         run: |
-          bunx eas build --platform ios --profile development --non-interactive --no-wait
-          echo "Build submitted for iOS"
+          BUILD_OUTPUT=$(bunx eas build --platform ios --profile development --non-interactive --no-wait 2>&1)
+          echo "$BUILD_OUTPUT"
+
+          # Extract build ID from the URL in output
+          IOS_BUILD_ID=$(echo "$BUILD_OUTPUT" | grep -oP 'builds/\K[a-f0-9-]+' | head -1)
+
+          if [ -z "$IOS_BUILD_ID" ]; then
+            echo "Error: Could not extract iOS build ID from output"
+            exit 1
+          fi
+
+          echo "ios_build_id=$IOS_BUILD_ID" >> $GITHUB_OUTPUT
+          echo "iOS Build ID: $IOS_BUILD_ID"
 
       - name: Wait for builds to complete
         run: |
           echo "Waiting for EAS builds to complete..."
 
-          # Get build IDs from the EAS output with better error handling
-          echo "Fetching Android build ID..."
-          ANDROID_BUILD_OUTPUT=$(bunx eas build:list --platform android --limit=1 --json)
-          echo "Android build output: $ANDROID_BUILD_OUTPUT"
-          ANDROID_BUILD_ID=$(echo "$ANDROID_BUILD_OUTPUT" | jq -r '.[0].id')
-
-          echo "Fetching iOS build ID..."
-          IOS_BUILD_OUTPUT=$(bunx eas build:list --platform ios --limit=1 --json)
-          echo "iOS build output: $IOS_BUILD_OUTPUT"
-          IOS_BUILD_ID=$(echo "$IOS_BUILD_OUTPUT" | jq -r '.[0].id')
+          ANDROID_BUILD_ID="${{ steps.build-android.outputs.android_build_id }}"
+          IOS_BUILD_ID="${{ steps.build-ios.outputs.ios_build_id }}"
 
           echo "Android Build ID: $ANDROID_BUILD_ID"
           echo "iOS Build ID: $IOS_BUILD_ID"
-
-          # Validate build IDs
-          if [ -z "$ANDROID_BUILD_ID" ] || [ "$ANDROID_BUILD_ID" = "null" ]; then
-            echo "Error: Could not retrieve Android build ID"
-            exit 1
-          fi
-
-          if [ -z "$IOS_BUILD_ID" ] || [ "$IOS_BUILD_ID" = "null" ]; then
-            echo "Error: Could not retrieve iOS build ID"
-            exit 1
-          fi
 
           # Wait for Android build
           echo "Waiting for Android build..."
@@ -139,8 +142,6 @@ jobs:
 
           echo "android_url=$ANDROID_URL" >> $GITHUB_OUTPUT
           echo "ios_url=$IOS_URL" >> $GITHUB_OUTPUT
-          echo "android_build_id=$ANDROID_BUILD_ID" >> $GITHUB_OUTPUT
-          echo "ios_build_id=$IOS_BUILD_ID" >> $GITHUB_OUTPUT
         id: wait-builds
 
       - name: Download Android artifact
@@ -179,14 +180,14 @@ jobs:
             **iOS:**
             - Use this URL on your iOS device to install:
             ```
-            itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/${{ steps.expo-project.outputs.project_id }}/builds/${{ steps.wait-builds.outputs.ios_build_id }}/manifest.plist
+            itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/${{ steps.expo-project.outputs.project_id }}/builds/${{ steps.build-ios.outputs.ios_build_id }}/manifest.plist
             ```
             - Or download the IPA below (requires signing)
             - [Download iOS IPA](${{ steps.wait-builds.outputs.ios_url }})
 
             ### 📦 Build Information
-            - Android Build ID: `${{ steps.wait-builds.outputs.android_build_id }}`
-            - iOS Build ID: `${{ steps.wait-builds.outputs.ios_build_id }}`
+            - Android Build ID: `${{ steps.build-android.outputs.android_build_id }}`
+            - iOS Build ID: `${{ steps.build-ios.outputs.ios_build_id }}`
             - Build Date: ${{ github.event.head_commit.timestamp }}
             - Commit: ${{ github.sha }}
 

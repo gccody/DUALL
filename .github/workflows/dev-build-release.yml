@@ -7,6 +7,7 @@ on:
 
 env:
   NODE_VERSION: "20"
+  EAS_SKIP_AUTO_FINGERPRINT: 1
 
 jobs:
   build-and-release:
@@ -55,25 +56,17 @@ jobs:
           else
             git add package.json app.json
             git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]"
-            git push origin development
-            git checkout main
-            git merge development
-            git push origin main
-            git checkout development
+            git push
           fi
 
       - name: Build Android (Development)
         id: build-android
-        env:
-          EAS_SKIP_AUTO_FINGERPRINT: 1
         run: |
           bunx eas build --platform android --profile development --non-interactive --no-wait
           echo "Build submitted for Android"
 
       - name: Build iOS (Development)
         id: build-ios
-        env:
-          EAS_SKIP_AUTO_FINGERPRINT: 1
         run: |
           bunx eas build --platform ios --profile development --non-interactive --no-wait
           echo "Build submitted for iOS"
@@ -144,12 +137,12 @@ jobs:
 
       - name: Create Release
         id: create-release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.version.outputs.version }}
-          release_name: Development Release v${{ steps.version.outputs.version }}
+          name: Development Release v${{ steps.version.outputs.version }}
           body: |
             ## Development Build v${{ steps.version.outputs.version }}
 
@@ -177,26 +170,10 @@ jobs:
             *This is a development build. Not for production use.*
           draft: false
           prerelease: true
-
-      - name: Upload Android APK to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: ./duall-android.apk
-          asset_name: duall-v${{ steps.version.outputs.version }}-android.apk
-          asset_content_type: application/vnd.android.package-archive
-
-      - name: Upload iOS IPA to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: ./duall-ios.ipa
-          asset_name: duall-v${{ steps.version.outputs.version }}-ios.ipa
-          asset_content_type: application/octet-stream
+          target_commitish: development
+          files: |
+            ./duall-android.apk
+            ./duall-ios.ipa
 
       - name: Build Summary
         run: |
@@ -206,5 +183,5 @@ jobs:
           echo "**Release:** [View Release](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Downloads" >> $GITHUB_STEP_SUMMARY
-          echo "- [Android APK](${{ steps.wait-builds.outputs.android_url }})" >> $GITHUB_STEP_SUMMARY
-          echo "- [iOS IPA](${{ steps.wait-builds.outputs.ios_url }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [Android APK](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/duall-android.apk)" >> $GITHUB_STEP_SUMMARY
+          echo "- [iOS IPA](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/duall-ios.ipa)" >> $GITHUB_STEP_SUMMARY

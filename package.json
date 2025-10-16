@@ -14,7 +14,8 @@
     "web": "bunx expo start --web",
     "test": "jest --watchAll",
     "lint": "bunx expo lint",
-    "fetch:data": "bun run scripts/scrapeTotp.ts"
+    "fetch:data": "bun run scripts/scrapeTotp.ts",
+    "push:dev": "git checkout development && git merge main && git push origin development"
   },
   "jest": {
     "preset": "jest-expo"

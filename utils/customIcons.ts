@@ -994,6 +994,7 @@ export const customIcons: { [key: string]: any } = {
   'simplybook.me.avif': require('../assets/custom-icons/simplybook.me.avif'),
   'sipgate.de.avif': require('../assets/custom-icons/sipgate.de.avif'),
   'sisense.com.avif': require('../assets/custom-icons/sisense.com.avif'),
+  'audiofanzine.com.avif': require('../assets/custom-icons/audiofanzine.com.avif'),
   'siteground.com.avif': require('../assets/custom-icons/siteground.com.avif'),
   'sketch.com.avif': require('../assets/custom-icons/sketch.com.avif'),
   'sketchup.com.avif': require('../assets/custom-icons/sketchup.com.avif'),

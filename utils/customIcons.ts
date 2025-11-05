@@ -309,6 +309,7 @@ export const customIcons: { [key: string]: any } = {
   'digitalsurge.com.au.avif': require('../assets/custom-icons/digitalsurge.com.au.avif'),
   'digitalocean.com.avif': require('../assets/custom-icons/digitalocean.com.avif'),
   'digitec.ch.avif': require('../assets/custom-icons/digitec.ch.avif'),
+  'dinahosting.com.avif': require('../assets/custom-icons/dinahosting.com.avif'),
   'dinero.dk.avif': require('../assets/custom-icons/dinero.dk.avif'),
   'directadmin.com.avif': require('../assets/custom-icons/directadmin.com.avif'),
   'directnic.com.avif': require('../assets/custom-icons/directnic.com.avif'),

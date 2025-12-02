@@ -2672,6 +2672,10 @@
         "domain": "azure.microsoft.com"
     },
     {
+        "name": "Microsoft Teams",
+        "domain": "teams.live.com"
+    },
+    {
         "name": "Microsoft To-Do",
         "domain": "todo.microsoft.com"
     },
@@ -3984,10 +3988,6 @@
         "domain": "skinport.com"
     },
     {
-        "name": "Skype",
-        "domain": "skype.com"
-    },
-    {
         "name": "Slack",
         "domain": "slack.com"
     },
@@ -4194,6 +4194,10 @@
     {
         "name": "Sucuri",
         "domain": "sucuri.net"
+    },
+    {
+        "name": "Summ",
+        "domain": "summ.com"
     },
     {
         "name": "Sumo Logic",

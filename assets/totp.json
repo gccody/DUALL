@@ -1324,10 +1324,6 @@
         "domain": "dwolla.com"
     },
     {
-        "name": "Dyn",
-        "domain": "dyn.com"
-    },
-    {
         "name": "Dynadot",
         "domain": "dynadot.com"
     },
@@ -1954,6 +1950,10 @@
     {
         "name": "Heathrow Airport",
         "domain": "heathrow.com"
+    },
+    {
+        "name": "Heimdal",
+        "domain": "heimdalsecurity.com"
     },
     {
         "name": "Help Scout",
@@ -2670,6 +2670,10 @@
     {
         "name": "Microsoft Azure",
         "domain": "azure.microsoft.com"
+    },
+    {
+        "name": "Microsoft Teams",
+        "domain": "teams.live.com"
     },
     {
         "name": "Microsoft To-Do",
@@ -3564,6 +3568,10 @@
         "domain": "ravelin.com"
     },
     {
+        "name": "Raycast",
+        "domain": "raycast.com"
+    },
+    {
         "name": "Raygun",
         "domain": "raygun.com"
     },
@@ -3984,10 +3992,6 @@
         "domain": "skinport.com"
     },
     {
-        "name": "Skype",
-        "domain": "skype.com"
-    },
-    {
         "name": "Slack",
         "domain": "slack.com"
     },
@@ -4196,6 +4200,10 @@
         "domain": "sucuri.net"
     },
     {
+        "name": "Summ",
+        "domain": "summ.com"
+    },
+    {
         "name": "Sumo Logic",
         "domain": "sumologic.com"
     },
@@ -4354,6 +4362,10 @@
     {
         "name": "ThreatConnect",
         "domain": "threatconnect.com"
+    },
+    {
+        "name": "ThreatLocker",
+        "domain": "threatlocker.com"
     },
     {
         "name": "ThreatX",

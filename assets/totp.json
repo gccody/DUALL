@@ -284,6 +284,10 @@
         "domain": "audiense.com"
     },
     {
+        "name": "Audiofanzine",
+        "domain": "audiofanzine.com"
+    },
+    {
         "name": "Auth0",
         "domain": "auth0.com"
     },
@@ -3970,10 +3974,6 @@
     {
         "name": "Sisense Cloud Data Teams",
         "domain": "sisense.com"
-    },
-    {
-        "name": "Site Name",
-        "domain": "audiofanzine.com"
     },
     {
         "name": "SiteGround",

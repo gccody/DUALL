@@ -104,6 +104,10 @@
         "domain": "adyen.com"
     },
     {
+        "name": "aero.zip",
+        "domain": "aero.zip"
+    },
+    {
         "name": "Aéza",
         "domain": "aeza.net"
     },
@@ -2512,6 +2516,10 @@
         "domain": "looker.com"
     },
     {
+        "name": "Lufthansa",
+        "domain": "lufthansa.com"
+    },
+    {
         "name": "Luma",
         "domain": "lu.ma"
     },
@@ -4718,6 +4726,10 @@
     {
         "name": "Versio",
         "domain": "versio.nl"
+    },
+    {
+        "name": "VGen",
+        "domain": "vgen.co"
     },
     {
         "name": "ViaBTC",

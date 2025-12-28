@@ -796,6 +796,7 @@ export const customIcons: { [key: string]: any } = {
   'optimizely.com.avif': require('../assets/custom-icons/optimizely.com.avif'),
   'cloud.oracle.com.avif': require('../assets/custom-icons/cloud.oracle.com.avif'),
   'orcid.org.avif': require('../assets/custom-icons/orcid.org.avif'),
+  'osu.ppy.sh.avif': require('../assets/custom-icons/osu.ppy.sh.avif'),
   'outbrain.com.avif': require('../assets/custom-icons/outbrain.com.avif'),
   'outlook.com.avif': require('../assets/custom-icons/outlook.com.avif'),
   'ovh.com.avif': require('../assets/custom-icons/ovh.com.avif'),

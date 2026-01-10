@@ -55,7 +55,6 @@ export const customIcons: { [key: string]: any } = {
   'aws.amazon.com.avif': require('../assets/custom-icons/aws.amazon.com.avif'),
   'americafirst.com.avif': require('../assets/custom-icons/americafirst.com.avif'),
   'americancentury.com.avif': require('../assets/custom-icons/americancentury.com.avif'),
-  'ameriprise.com.avif': require('../assets/custom-icons/ameriprise.com.avif'),
   'any.run.avif': require('../assets/custom-icons/any.run.avif'),
   'anycoindirect.eu.avif': require('../assets/custom-icons/anycoindirect.eu.avif'),
   'anydesk.com.avif': require('../assets/custom-icons/anydesk.com.avif'),

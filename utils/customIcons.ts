@@ -1169,7 +1169,6 @@ export const customIcons: { [key: string]: any } = {
   'upcloud.com.avif': require('../assets/custom-icons/upcloud.com.avif'),
   'updraftplus.com.avif': require('../assets/custom-icons/updraftplus.com.avif'),
   'uphold.com.avif': require('../assets/custom-icons/uphold.com.avif'),
-  'ups.com.avif': require('../assets/custom-icons/ups.com.avif'),
   'uptimerobot.com.avif': require('../assets/custom-icons/uptimerobot.com.avif'),
   'upwork.com.avif': require('../assets/custom-icons/upwork.com.avif'),
   'uscis.gov.avif': require('../assets/custom-icons/uscis.gov.avif'),

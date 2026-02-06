@@ -825,6 +825,7 @@ export const customIcons: { [key: string]: any } = {
   'payworks.ca.avif': require('../assets/custom-icons/payworks.ca.avif'),
   'pccasegear.com.avif': require('../assets/custom-icons/pccasegear.com.avif'),
   'pcloud.com.avif': require('../assets/custom-icons/pcloud.com.avif'),
+  'penfed.org.avif': require('../assets/custom-icons/penfed.org.avif'),
   'mypath.pa.gov.avif': require('../assets/custom-icons/mypath.pa.gov.avif'),
   'perimeter81.com.avif': require('../assets/custom-icons/perimeter81.com.avif'),
   'phemex.com.avif': require('../assets/custom-icons/phemex.com.avif'),

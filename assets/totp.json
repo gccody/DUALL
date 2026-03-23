@@ -2820,10 +2820,6 @@
         "domain": "myfritz.net"
     },
     {
-        "name": "myGov",
-        "domain": "my.gov.au"
-    },
-    {
         "name": "MyHeritage",
         "domain": "myheritage.com"
     },
@@ -3926,14 +3922,6 @@
     {
         "name": "Serverspace",
         "domain": "serverspace.io"
-    },
-    {
-        "name": "Service NSW",
-        "domain": "service.nsw.gov.au"
-    },
-    {
-        "name": "Service Victoria",
-        "domain": "service.vic.gov.au"
     },
     {
         "name": "Servus Credit Union",

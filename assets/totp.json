@@ -2472,6 +2472,10 @@
         "domain": "linkedin.com"
     },
     {
+        "name": "Linktree",
+        "domain": "linktr.ee"
+    },
+    {
         "name": "Linode",
         "domain": "linode.com"
     },
@@ -3226,6 +3230,10 @@
     {
         "name": "Parallels",
         "domain": "parallels.com"
+    },
+    {
+        "name": "Paribu",
+        "domain": "paribu.com"
     },
     {
         "name": "Parimatch",

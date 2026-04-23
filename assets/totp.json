@@ -2112,6 +2112,10 @@
         "domain": "hypixel.net"
     },
     {
+        "name": "Hytale",
+        "domain": "hytale.com"
+    },
+    {
         "name": "IBM Cloud",
         "domain": "cloud.ibm.com"
     },
@@ -3948,6 +3952,10 @@
         "domain": "servus.ca"
     },
     {
+        "name": "Settle",
+        "domain": "settle.com"
+    },
+    {
         "name": "Seznam.cz",
         "domain": "seznam.cz"
     },
@@ -4498,6 +4506,10 @@
     {
         "name": "TransIP",
         "domain": "transip.nl"
+    },
+    {
+        "name": "Transport Victoria",
+        "domain": "transport.vic.gov.au"
     },
     {
         "name": "Travala",

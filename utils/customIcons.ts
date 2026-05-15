@@ -1127,6 +1127,7 @@ export const customIcons: { [key: string]: any } = {
   'torontomu.ca.avif': require('../assets/custom-icons/torontomu.ca.avif'),
   'toshl.com.avif': require('../assets/custom-icons/toshl.com.avif'),
   'towerfcu.org.avif': require('../assets/custom-icons/towerfcu.org.avif'),
+  'toya.net.pl.avif': require('../assets/custom-icons/toya.net.pl.avif'),
   'trading212.com.avif': require('../assets/custom-icons/trading212.com.avif'),
   'tradingview.com.avif': require('../assets/custom-icons/tradingview.com.avif'),
   'transifex.com.avif': require('../assets/custom-icons/transifex.com.avif'),

@@ -1,9 +1,8 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
-import { getCustomIconSelection } from '@/utils/IconManager';
 import { getCustomIcon } from '@/utils/customIconMatcher';
 import { customIcons } from '@/utils/customIcons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import CustomIconPicker from './CustomIconPicker';
 
@@ -15,47 +14,27 @@ interface ServiceIconProps {
     onIconSelected?: (domain: string, icon: any, updatedService?: Service) => Promise<void>;
 }
 
-export default function ServiceIcon({ service, size = 40, style, editable = false, onIconSelected }: ServiceIconProps) {
+function ServiceIcon({ service, size = 40, style, editable = false, onIconSelected }: ServiceIconProps) {
     const { theme } = useTheme();
-    const [customIcon, setCustomIcon] = useState<any>(null);
     const [showFaviconPicker, setShowFaviconPicker] = useState(false);
 
-    // Get first 2 letters of the issuer as fallback
     const issuerValue = service.otp?.issuer || service.name || 'OTP';
     const issuer = typeof issuerValue === 'string' ? issuerValue : String(issuerValue);
     const initials = issuer.substring(0, 2).toUpperCase();
 
-    const loadIcons = useCallback(async () => {
-        // If the user explicitly removed the icon, force initials and skip all icon sources
-        if (service.iconRemoved) {
-            setCustomIcon(null);
-            return;
+    const customIcon = useMemo(() => {
+        // User explicitly removed the icon
+        if (service.icon?.label === 'none') return null;
+
+        // Explicit selection stored on the service (user-picked or auto-set at add time)
+        if (service.icon?.label) {
+            return customIcons[`${service.icon.label}.avif`] ?? null;
         }
 
-        // Highest priority: Check for a manually selected custom icon
-        const customSelection = await getCustomIconSelection(service.uid);
-        if (customSelection) {
-            const iconKey = `${customSelection.selectedDomain}.avif`;
-            const iconSource = customIcons[iconKey];
-            if (iconSource) {
-                setCustomIcon(iconSource);
-                return;
-            }
-        }
-
-        // Second priority: Check for an automatically matched custom icon
-        const customIconSource = getCustomIcon(service);
-        if (customIconSource) {
-            setCustomIcon(customIconSource);
-            return;
-        }
-    }, [service]);
-
-    const iconUpdatedAt = (service as any).iconUpdatedAt;
-
-    useEffect(() => {
-        loadIcons();
-    }, [service.uid, service.iconRemoved, iconUpdatedAt, loadIcons]);
+        // No icon set yet — try auto-match (backward compat for older services)
+        return getCustomIcon(service);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [service.uid, service.icon?.label]);
 
     const handlePress = () => {
         if (editable) {
@@ -64,14 +43,12 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
     };
 
     const handleFaviconSelected = async (domain: string, icon: any, updatedService?: Service) => {
-        loadIcons();
         if (onIconSelected) {
             await onIconSelected(domain, icon, updatedService);
         }
     };
 
     const renderContent = () => {
-        // First priority: If we have a custom icon, display it
         if (customIcon) {
             return (
                 <Image
@@ -82,7 +59,6 @@ export default function ServiceIcon({ service, size = 40, style, editable = fals
             );
         }
 
-        // Fallback to initials
         return (
             <Text style={[
                 styles.initialsText,
@@ -132,4 +108,13 @@ const styles = StyleSheet.create({
     initialsText: {
         fontWeight: 'bold',
     },
-}); 
+});
+
+// Custom comparator: ignore onIconSelected (only fired on tap, never during scroll).
+// Re-render only when the visible state actually changes.
+export default React.memo(ServiceIcon, (prev, next) =>
+    prev.service.uid === next.service.uid &&
+    prev.service.icon?.label === next.service.icon?.label &&
+    prev.size === next.size &&
+    prev.editable === next.editable
+);

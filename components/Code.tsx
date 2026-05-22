@@ -82,6 +82,12 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
         }
     }, [globalTimestamp, otpData.expires, generateAndSetOTP]);
 
+    const handleIconSelected = useCallback(async (domain: string, icon: any, updatedService?: Service) => {
+        if (onIconChange && updatedService) {
+            await onIconChange(service.uid, updatedService);
+        }
+    }, [onIconChange, service.uid]);
+
     const timeLeft = Math.max(0, Math.floor((otpData.expires - globalTimestamp) / 1000));
     const remainingPercentage = timeLeft / (service.otp.period ?? 30 - 1);
     const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
@@ -172,11 +178,7 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
                                 size={32}
                                 style={styles.serviceIcon}
                                 editable={true}
-                                onIconSelected={async (domain, icon, updatedService) => {
-                                    if (onIconChange && updatedService) {
-                                        await onIconChange(service.uid, updatedService);
-                                    }
-                                }}
+                                onIconSelected={handleIconSelected}
                             />
                             <View style={styles.issuerTextContainer}>
                                 <Text style={[styles.issuerText, { color: theme.text }]}>

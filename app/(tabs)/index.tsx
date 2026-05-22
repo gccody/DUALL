@@ -19,6 +19,7 @@ import { useSearch } from "@/hooks/useSearch";
 import { useTimestamp } from "@/hooks/useTimestamp";
 
 import { Service } from '@/types';
+import { warmIconCache } from '@/utils/customIconMatcher';
 
 export default function HomeScreen() {
   const { theme } = useTheme();
@@ -29,6 +30,13 @@ export default function HomeScreen() {
 
   // Memoize services array to prevent unnecessary re-renders
   const servicesData = useMemo(() => data?.services || [], [data?.services]);
+
+  // Pre-warm icon domain cache when services load so first-scroll lookups are O(1)
+  useEffect(() => {
+    if (servicesData.length > 0) {
+      warmIconCache(servicesData);
+    }
+  }, [servicesData]);
 
   // Search functionality
   const [searchBarVisible, setSearchBarVisible] = useState<boolean>(settings.searchOnStartup);
@@ -94,7 +102,7 @@ export default function HomeScreen() {
     const updatedServices = data.services.map(s =>
       s.uid === updatedService.uid ? updatedService : s
     );
-    updateServices(updatedServices);
+    updateServices(updatedServices, true);
   };
 
   // Handle icon change from ServiceIcon
@@ -151,6 +159,7 @@ export default function HomeScreen() {
           />
         )}
         keyExtractor={(item) => item.uid}
+        drawDistance={500}
         extraData={[timestamp, recentCodeIndex]}
       />
       <SearchButton onPress={toggleSearch} />

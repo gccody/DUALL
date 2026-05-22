@@ -32,8 +32,6 @@ interface ServiceMetadata {
     issuer: string;
     digits: number;
   };
-  iconRemoved?: boolean;
-  iconUpdatedAt?: number;
   order?: number;
 }
 
@@ -174,8 +172,6 @@ export class FileHandler {
           issuer: s.otp.issuer,
           digits: s.otp.digits,
         },
-        iconRemoved: (s as any).iconRemoved,
-        iconUpdatedAt: (s as any).iconUpdatedAt,
         order: data.services.indexOf(s)
       }));
       
@@ -241,8 +237,6 @@ export class FileHandler {
           issuer: service.otp.issuer,
           digits: service.otp.digits,
         },
-        iconRemoved: (service as any).iconRemoved,
-        iconUpdatedAt: (service as any).iconUpdatedAt,
         order: metadataIndex >= 0 ? metadataIndex : config.serviceMetadata.length
       };
       
@@ -282,8 +276,6 @@ export class FileHandler {
           issuer: s.otp.issuer,
           digits: s.otp.digits,
         },
-        iconRemoved: (s as any).iconRemoved,
-        iconUpdatedAt: (s as any).iconUpdatedAt,
         order: index
       }));
       

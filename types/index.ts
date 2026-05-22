@@ -40,7 +40,6 @@ export interface Service {
   icon?: Icon;
   otp: OTP;
   secret: string;
-  iconRemoved?: boolean; // Flag to indicate if icon was removed by user
 }
 
 export interface Icon {

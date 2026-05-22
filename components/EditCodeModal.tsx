@@ -43,13 +43,13 @@ export default function EditCodeModal({
   }, [service]);
 
   const handleSave = () => {
-    if (!service) return;
+    if (!currentService) return;
 
     const updatedService: Service = {
-      ...service,
+      ...currentService,
       name: label,
       otp: {
-        ...service.otp,
+        ...currentService.otp,
         issuer: issuer
       }
     };

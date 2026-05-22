@@ -132,6 +132,25 @@ function findMatchingDomain(issuer: string | undefined): string | null {
 }
 
 /**
+ * Get the matched icon domain for a service based on its issuer, or null if none found
+ */
+export function getCustomIconDomain(service: Service): string | null {
+  return findMatchingDomain(service.otp.issuer);
+}
+
+/**
+ * Pre-populate the domain cache for a list of services so first-scroll icon
+ * resolution is O(1) rather than iterating totp.json per item.
+ */
+export function warmIconCache(services: Service[]): void {
+  for (const service of services) {
+    if (!service.icon?.label || service.icon.label === 'none') {
+      findMatchingDomain(service.otp.issuer);
+    }
+  }
+}
+
+/**
  * Get custom icon for a service based on its issuer
  */
 export function getCustomIcon(service: Service): any | null {

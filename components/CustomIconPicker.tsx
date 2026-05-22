@@ -1,6 +1,5 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
-import { deleteCustomIconSelection, setCustomIconSelection } from '@/utils/IconManager';
 import { searchCustomIcons } from '@/utils/customIconMatcher';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -63,20 +62,11 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
   const handleIconSelect = async (item: CustomIconItem) => {
     setLoading(true);
     try {
-      // Selecting a new icon should clear any "removed" flag and update timestamp
-      const updatedService = {
+      const updatedService: Service = {
         ...service,
-        iconRemoved: false,
-        iconUpdatedAt: Date.now()
+        icon: { label: item.domain }
       };
-
-      // IMPORTANT: Save icon selection FIRST, then notify parent to save service data
-      // Parent will await the save before updating UI to prevent race conditions
-      await setCustomIconSelection(service.uid, item.domain);
-
-      // This will trigger service data save, which must complete before UI updates
       await onIconSelected(item.domain, item.icon, updatedService);
-
       onClose();
     } catch (error) {
       console.error('Error selecting icon:', error);
@@ -88,16 +78,13 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
   const handleRemoveCustomIcon = async () => {
     setLoading(true);
     try {
-      // Delete any manual selection and mark this service as "removed"
-      await deleteCustomIconSelection(service.uid);
-      const updatedService = {
+      const updatedService: Service = {
         ...service,
-        iconRemoved: true,
-        iconUpdatedAt: Date.now()
+        icon: { label: 'none' }
       };
-      onIconSelected("none", null, updatedService);
+      await onIconSelected('none', null, updatedService);
     } catch (error) {
-      console.error('Error removing custom icon selection:', error);
+      console.error('Error removing icon:', error);
     } finally {
       setLoading(false);
       onClose();

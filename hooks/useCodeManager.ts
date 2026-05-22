@@ -1,6 +1,6 @@
 import { TOTP } from "@/TOTP";
 import { Service } from '@/types';
-import { getCustomIcon } from '@/utils/customIconMatcher';
+import { getCustomIconDomain } from '@/utils/customIconMatcher';
 import * as Crypto from 'expo-crypto';
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
@@ -24,7 +24,6 @@ export function useCodeManager(
       return;
     }
 
-    // Check if we have a matching custom icon for this service
     const tempService: Service = {
       otp: {
         algorithm: parsedURL.algorithm,
@@ -41,12 +40,10 @@ export function useCodeManager(
       updatedAt: Date.now()
     };
 
-    // Check if we have a matching custom icon
-    const hasIcon = getCustomIcon(tempService) !== null;
-    
+    const matchedDomain = getCustomIconDomain(tempService);
     const service: Service = {
       ...tempService,
-      iconRemoved: !hasIcon // Only set iconRemoved if we're confident there's no icon
+      ...(matchedDomain ? { icon: { label: matchedDomain } } : {})
     };
 
     // Check if code already exists

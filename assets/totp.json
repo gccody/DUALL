@@ -3016,6 +3016,10 @@
         "domain": "nordpass.com"
     },
     {
+        "name": "NordStellar",
+        "domain": "nordstellar.com"
+    },
+    {
         "name": "NordVPN",
         "domain": "nordvpn.com"
     },
@@ -4986,10 +4990,6 @@
     {
         "name": "Workflowy",
         "domain": "workflowy.com"
-    },
-    {
-        "name": "Workplace",
-        "domain": "workplace.com"
     },
     {
         "name": "World4You",

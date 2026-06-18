@@ -413,7 +413,6 @@ export const customIcons: { [key: string]: any } = {
   'firsttechfed.com.avif': require('../assets/custom-icons/firsttechfed.com.avif'),
   'flexera.com.avif': require('../assets/custom-icons/flexera.com.avif'),
   'app.flexera.com.avif': require('../assets/custom-icons/app.flexera.com.avif'),
-  'flightaware.com.avif': require('../assets/custom-icons/flightaware.com.avif'),
   'flipsnack.com.avif': require('../assets/custom-icons/flipsnack.com.avif'),
   'floatplane.com.avif': require('../assets/custom-icons/floatplane.com.avif'),
   'flourish.studio.avif': require('../assets/custom-icons/flourish.studio.avif'),

@@ -61,6 +61,7 @@ export const customIcons: { [key: string]: any } = {
   'anydesk.com.avif': require('../assets/custom-icons/anydesk.com.avif'),
   'mail.aol.com.avif': require('../assets/custom-icons/mail.aol.com.avif'),
   'apnic.net.avif': require('../assets/custom-icons/apnic.net.avif'),
+  'appfigures.com.avif': require('../assets/custom-icons/appfigures.com.avif'),
   'appfolio.com.avif': require('../assets/custom-icons/appfolio.com.avif'),
   'appodeal.com.avif': require('../assets/custom-icons/appodeal.com.avif'),
   'appsignal.com.avif': require('../assets/custom-icons/appsignal.com.avif'),

@@ -681,7 +681,7 @@ export const customIcons: { [key: string]: any } = {
   'm365.cloud.microsoft.avif': require('../assets/custom-icons/m365.cloud.microsoft.avif'),
   'azure.microsoft.com.avif': require('../assets/custom-icons/azure.microsoft.com.avif'),
   'teams.live.com.avif': require('../assets/custom-icons/teams.live.com.avif'),
-  'todo.microsoft.com.avif': require('../assets/custom-icons/todo.microsoft.com.avif'),
+  'to-do.office.com.avif': require('../assets/custom-icons/to-do.office.com.avif'),
   'microworkers.com.avif': require('../assets/custom-icons/microworkers.com.avif'),
   'migadu.com.avif': require('../assets/custom-icons/migadu.com.avif'),
   'migros.ch.avif': require('../assets/custom-icons/migros.ch.avif'),

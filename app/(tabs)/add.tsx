@@ -1,5 +1,5 @@
 import { useTheme } from '@/context/ThemeContext';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
+import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -10,17 +10,30 @@ interface QRPoints {
     x: number,
     y: number
 }
-
 export default function Add() {
     const [cameraActive, setCameraActive] = useState(true);
-    const [qrPoints, setQrPoints] = useState<Array<QRPoints>>([]);
+    const [qrPoints, setQrPoints] = useState<QRPoints[]>([]);
     const {
         hasPermission: cameraHasPermission,
         requestPermission: requestCameraPermission,
     } = useCameraPermission();
-    const route = useRoute();
     const router = useRouter();
     const { theme } = useTheme();
+
+    const device = useCameraDevice('back');
+    const codeScanner = useCodeScanner({
+        codeTypes: ['qr'],
+        onCodeScanned: (codes) => {
+            setCameraActive(false);
+            const corners = codes[0].corners;
+            if (corners)
+                setQrPoints(corners)
+            const url = codes[0].value;
+            if (!url)
+                return setCameraActive(true);
+            router.push({ pathname: '/', params: { otpurl: url } });
+        }
+    })
 
     const handleTabSelected = () => {
         setCameraActive(true);
@@ -39,14 +52,14 @@ export default function Add() {
                 handleTabDeselected();
             };
 
-        }, [route.name])
+        }, [])
     );
 
     useEffect(() => {
         if (!cameraHasPermission) {
             requestCameraPermission();
         }
-    }, []);
+    }, [cameraHasPermission, requestCameraPermission]);
 
     if (!cameraHasPermission) {
         return (
@@ -64,21 +77,6 @@ export default function Add() {
             </View>
         )
     }
-
-    const device = useCameraDevice('back');
-    const codeScanner = useCodeScanner({
-        codeTypes: ['qr'],
-        onCodeScanned: (codes) => {
-            setCameraActive(false);
-            const corners = codes[0].corners;
-            if (corners)
-                setQrPoints(corners)
-            const url = codes[0].value;
-            if (!url)
-                return setCameraActive(true);
-            router.push({ pathname: '/', params: { otpurl: url } });
-        }
-    })
 
     if (!device) return (
         <View style={{
@@ -119,11 +117,3 @@ export default function Add() {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});

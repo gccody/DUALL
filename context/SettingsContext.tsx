@@ -1,6 +1,6 @@
 import { Settings } from '@/types';
 import { FileHandler } from '@/utils/fileHandler';
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, use, useEffect, useState } from 'react';
 
 // Default settings
 const defaultSettings: Settings = {
@@ -64,13 +64,13 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <SettingsContext.Provider value={{ settings, isLoading, updateSetting }}>
+        <SettingsContext value={{ settings, isLoading, updateSetting }}>
             {children}
-        </SettingsContext.Provider>
+        </SettingsContext>
     );
 }
 
 // Hook to use settings
 export function useSettings() {
-    return useContext(SettingsContext);
-} 
+    return use(SettingsContext);
+}

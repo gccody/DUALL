@@ -7,7 +7,6 @@
     "icon": "./assets/icons/ios-light.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -66,10 +65,14 @@
         {
           "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to secure your codes."
         }
-      ]
+      ],
+      "expo-font",
+      "expo-status-bar",
+      "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "reactCompiler": true
     },
     "extra": {
       "router": {

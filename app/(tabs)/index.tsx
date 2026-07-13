@@ -1,6 +1,6 @@
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
-import { FlashList } from '@shopify/flash-list';
+import { FlashList, FlashListRef } from '@shopify/flash-list';
 import { useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -38,7 +38,7 @@ export default function HomeScreen() {
   const { recentCodeIndex, addCode, resetRecentCodeIndex } = useCodeManager(services, updateServices);
 
   // Reference for auto-scrolling
-  const flashListRef = useRef<FlashList<Service>>(null);
+  const flashListRef = useRef<FlashListRef<Service>>(null);
 
   // Update searchBarVisible when searchOnStartup setting changes
   useEffect(() => {
@@ -105,7 +105,6 @@ export default function HomeScreen() {
             isFirstItem={index === 0}
           />
         )}
-        estimatedItemSize={150}
         keyExtractor={(item) => item.uid}
         extraData={[timestamp, recentCodeIndex]}
       />

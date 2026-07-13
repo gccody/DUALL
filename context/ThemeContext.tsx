@@ -1,5 +1,5 @@
 import { useSettings } from '@/context/SettingsContext';
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { ReactNode, createContext, use, useEffect, useState } from 'react';
 import { ColorSchemeName } from 'react-native';
 
 // Define theme colors
@@ -90,13 +90,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <ThemeContext.Provider value={{ theme, colorScheme, toggleTheme, isDark }}>
+        <ThemeContext value={{ theme, colorScheme, toggleTheme, isDark }}>
             {children}
-        </ThemeContext.Provider>
+        </ThemeContext>
     );
 }
 
 // Hook to use theme
 export function useTheme() {
-    return useContext(ThemeContext);
-} 
+    return use(ThemeContext);
+}

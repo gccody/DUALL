@@ -1,7 +1,7 @@
 // OtpDataContext.tsx
 import { useOtpData } from '@/hooks/useOtpData';
 import { Group, Service, Settings, TOTPFile } from '@/types';
-import React, { createContext, ReactNode } from 'react';
+import { createContext, ReactNode } from 'react';
 
 interface OtpDataContextProps {
   data: TOTPFile | null;
@@ -17,8 +17,8 @@ export const OtpDataContext = createContext<OtpDataContextProps | undefined>(und
 export const OtpDataProvider = ({ children }: { children: ReactNode }) => {
   const otpData = useOtpData();
   return (
-    <OtpDataContext.Provider value={otpData}>
+    <OtpDataContext value={otpData}>
       {children}
-    </OtpDataContext.Provider>
+    </OtpDataContext>
   );
 };

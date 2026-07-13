@@ -104,6 +104,10 @@
         "domain": "adyen.com"
     },
     {
+        "name": "aero.zip",
+        "domain": "aero.zip"
+    },
+    {
         "name": "Aéza",
         "domain": "aeza.net"
     },
@@ -200,6 +204,10 @@
         "domain": "americancentury.com"
     },
     {
+        "name": "Ameriprise Financial",
+        "domain": "ameriprise.com"
+    },
+    {
         "name": "ANY.RUN",
         "domain": "any.run"
     },
@@ -218,6 +226,10 @@
     {
         "name": "APNIC",
         "domain": "apnic.net"
+    },
+    {
+        "name": "Appfigures",
+        "domain": "appfigures.com"
     },
     {
         "name": "AppFolio",
@@ -282,6 +294,10 @@
     {
         "name": "Audiense",
         "domain": "audiense.com"
+    },
+    {
+        "name": "Audiofanzine",
+        "domain": "audiofanzine.com"
     },
     {
         "name": "Auth0",
@@ -362,6 +378,10 @@
     {
         "name": "Batch",
         "domain": "batch.com"
+    },
+    {
+        "name": "Beget",
+        "domain": "beget.com"
     },
     {
         "name": "Best Buy",
@@ -1216,6 +1236,10 @@
         "domain": "digitec.ch"
     },
     {
+        "name": "dinahosting",
+        "domain": "dinahosting.com"
+    },
+    {
         "name": "Dinero",
         "domain": "dinero.dk"
     },
@@ -1314,10 +1338,6 @@
     {
         "name": "Dwolla",
         "domain": "dwolla.com"
-    },
-    {
-        "name": "Dyn",
-        "domain": "dyn.com"
     },
     {
         "name": "Dynadot",
@@ -1618,6 +1638,10 @@
     {
         "name": "Flexera Software Vulnerability Research",
         "domain": "app.flexera.com"
+    },
+    {
+        "name": "FlightAware",
+        "domain": "flightaware.com"
     },
     {
         "name": "Flipsnack",
@@ -1948,6 +1972,10 @@
         "domain": "heathrow.com"
     },
     {
+        "name": "Heimdal",
+        "domain": "heimdalsecurity.com"
+    },
+    {
         "name": "Help Scout",
         "domain": "helpscout.com"
     },
@@ -2090,6 +2118,10 @@
     {
         "name": "Hypixel",
         "domain": "hypixel.net"
+    },
+    {
+        "name": "Hytale",
+        "domain": "hytale.com"
     },
     {
         "name": "IBM Cloud",
@@ -2452,6 +2484,10 @@
         "domain": "linkedin.com"
     },
     {
+        "name": "Linktree",
+        "domain": "linktr.ee"
+    },
+    {
         "name": "Linode",
         "domain": "linode.com"
     },
@@ -2498,6 +2534,10 @@
     {
         "name": "Looker",
         "domain": "looker.com"
+    },
+    {
+        "name": "Lufthansa",
+        "domain": "lufthansa.com"
     },
     {
         "name": "Luma",
@@ -2664,8 +2704,12 @@
         "domain": "azure.microsoft.com"
     },
     {
+        "name": "Microsoft Teams",
+        "domain": "teams.live.com"
+    },
+    {
         "name": "Microsoft To-Do",
-        "domain": "todo.microsoft.com"
+        "domain": "to-do.office.com"
     },
     {
         "name": "Microworkers",
@@ -2792,6 +2836,10 @@
         "domain": "myfritz.net"
     },
     {
+        "name": "myGov",
+        "domain": "my.gov.au"
+    },
+    {
         "name": "MyHeritage",
         "domain": "myheritage.com"
     },
@@ -2814,6 +2862,10 @@
     {
         "name": "N-able",
         "domain": "n-able.com"
+    },
+    {
+        "name": "n8n",
+        "domain": "n8n.io"
     },
     {
         "name": "NAGA",
@@ -2970,6 +3022,10 @@
     {
         "name": "NordPass",
         "domain": "nordpass.com"
+    },
+    {
+        "name": "NordStellar",
+        "domain": "nordstellar.com"
     },
     {
         "name": "NordVPN",
@@ -3140,6 +3196,10 @@
         "domain": "orcid.org"
     },
     {
+        "name": "osu!",
+        "domain": "osu.ppy.sh"
+    },
+    {
         "name": "Outbrain",
         "domain": "outbrain.com"
     },
@@ -3186,6 +3246,10 @@
     {
         "name": "Parallels",
         "domain": "parallels.com"
+    },
+    {
+        "name": "Paribu",
+        "domain": "paribu.com"
     },
     {
         "name": "Parimatch",
@@ -3246,6 +3310,10 @@
     {
         "name": "PCloud",
         "domain": "pcloud.com"
+    },
+    {
+        "name": "PenFed",
+        "domain": "penfed.org"
     },
     {
         "name": "Pennsylvania Dept of Revenue myPATH",
@@ -3552,6 +3620,10 @@
         "domain": "ravelin.com"
     },
     {
+        "name": "Raycast",
+        "domain": "raycast.com"
+    },
+    {
         "name": "Raygun",
         "domain": "raygun.com"
     },
@@ -3690,6 +3762,10 @@
     {
         "name": "River Financial",
         "domain": "river.com"
+    },
+    {
+        "name": "Rivian",
+        "domain": "rivian.com"
     },
     {
         "name": "RMIT University",
@@ -3856,6 +3932,10 @@
         "domain": "sendsafely.com"
     },
     {
+        "name": "Senko Digital",
+        "domain": "senko.digital"
+    },
+    {
         "name": "Sentry",
         "domain": "sentry.io"
     },
@@ -3872,8 +3952,20 @@
         "domain": "serverspace.io"
     },
     {
+        "name": "Service NSW",
+        "domain": "service.nsw.gov.au"
+    },
+    {
+        "name": "Service Victoria",
+        "domain": "service.vic.gov.au"
+    },
+    {
         "name": "Servus Credit Union",
         "domain": "servus.ca"
+    },
+    {
+        "name": "Settle",
+        "domain": "settle.com"
     },
     {
         "name": "Seznam.cz",
@@ -3906,6 +3998,10 @@
     {
         "name": "Shrimpy",
         "domain": "shrimpy.io"
+    },
+    {
+        "name": "Shy",
+        "domain": "shy.gg"
     },
     {
         "name": "SideQuest",
@@ -3954,10 +4050,6 @@
     {
         "name": "Skinport",
         "domain": "skinport.com"
-    },
-    {
-        "name": "Skype",
-        "domain": "skype.com"
     },
     {
         "name": "Slack",
@@ -4168,6 +4260,10 @@
         "domain": "sucuri.net"
     },
     {
+        "name": "Summ",
+        "domain": "summ.com"
+    },
+    {
         "name": "Sumo Logic",
         "domain": "sumologic.com"
     },
@@ -4328,6 +4424,10 @@
         "domain": "threatconnect.com"
     },
     {
+        "name": "ThreatLocker",
+        "domain": "threatlocker.com"
+    },
+    {
         "name": "ThreatX",
         "domain": "threatx.com"
     },
@@ -4404,6 +4504,10 @@
         "domain": "towerfcu.org"
     },
     {
+        "name": "Toya",
+        "domain": "toya.net.pl"
+    },
+    {
         "name": "Trading 212",
         "domain": "trading212.com"
     },
@@ -4418,6 +4522,10 @@
     {
         "name": "TransIP",
         "domain": "transip.nl"
+    },
+    {
+        "name": "Transport Victoria",
+        "domain": "transport.vic.gov.au"
     },
     {
         "name": "Travala",
@@ -4604,6 +4712,10 @@
         "domain": "uphold.com"
     },
     {
+        "name": "UPS",
+        "domain": "ups.com"
+    },
+    {
         "name": "Uptime Robot",
         "domain": "uptimerobot.com"
     },
@@ -4678,6 +4790,10 @@
     {
         "name": "Versio",
         "domain": "versio.nl"
+    },
+    {
+        "name": "VGen",
+        "domain": "vgen.co"
     },
     {
         "name": "ViaBTC",
@@ -4882,10 +4998,6 @@
     {
         "name": "Workflowy",
         "domain": "workflowy.com"
-    },
-    {
-        "name": "Workplace",
-        "domain": "workplace.com"
     },
     {
         "name": "World4You",

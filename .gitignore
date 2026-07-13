@@ -37,5 +37,8 @@ yarn-error.*
 
 app-example
 *.2fas
+2fas.json
 
 .env
+
+android/

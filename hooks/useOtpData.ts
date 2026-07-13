@@ -12,7 +12,7 @@ export const useOtpData = () => {
       try {
         const otpData = await FileHandler.loadData();
         setData(otpData);
-      } catch (err: any) {
+      } catch (_) {
         setError('Failed to load data');
       } finally {
         setLoading(false);
@@ -22,43 +22,67 @@ export const useOtpData = () => {
   // Load data on component mount
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
-  // Update services
-  const updateServices = useCallback(async (services: Service[]) => {
-    if (!data) return;
+  // Update services (optimistic by default, but can wait for save)
+  const updateServices = useCallback(async (services: Service[], waitForSave: boolean = false) => {
     try {
-      const updatedData = { ...data, services };
-      await FileHandler.updateServices(services);
-      setData(updatedData);
-    } catch (err) {
+      // Update UI immediately (optimistic update)
+      setData(prevData => {
+        if (!prevData) return prevData;
+        return { ...prevData, services };
+      });
+      
+      if (waitForSave) {
+        // Wait for save to complete (for critical operations like icon changes)
+        await FileHandler.updateServices(services);
+      } else {
+        // Save in background (for non-critical updates)
+        FileHandler.updateServices(services).catch(err => {
+          console.error('Failed to save services:', err);
+          setError('Failed to save services');
+        });
+      }
+    } catch (_) {
       setError('Failed to update services');
     }
-  }, [data]);
+  }, []); // Remove data dependency to prevent infinite loops
 
   // Update groups
   const updateGroups = useCallback(async (groups: Group[]) => {
-    if (!data) return;
     try {
-      const updatedData = { ...data, groups };
-      await FileHandler.updateGroups(groups);
-      setData(updatedData);
-    } catch (err) {
+      // Update UI immediately (optimistic update)
+      setData(prevData => {
+        if (!prevData) return prevData;
+        return { ...prevData, groups };
+      });
+      // Save in background
+      FileHandler.updateGroups(groups).catch(err => {
+        console.error('Failed to save groups:', err);
+        setError('Failed to save groups');
+      });
+    } catch (_) {
       setError('Failed to update groups');
     }
-  }, [data]);
+  }, []); // Remove data dependency
 
   // Update settings
   const updateSettings = useCallback(async (settings: Settings) => {
-    if (!data) return;
     try {
-      const updatedData = { ...data, settings };
-      await FileHandler.updateSettings(settings);
-      setData(updatedData);
-    } catch (err) {
+      // Update UI immediately (optimistic update)
+      setData(prevData => {
+        if (!prevData) return prevData;
+        return { ...prevData, settings };
+      });
+      // Save in background
+      FileHandler.updateSettings(settings).catch(err => {
+        console.error('Failed to save settings:', err);
+        setError('Failed to save settings');
+      });
+    } catch (_) {
       setError('Failed to update settings');
     }
-  }, [data]);
+  }, []); // Remove data dependency
 
   return { data, loading, error, updateServices, updateGroups, updateSettings, fetchData: loadData };
 };

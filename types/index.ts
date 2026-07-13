@@ -33,17 +33,17 @@ export interface PartialTOTPFile {
 }
 
 export interface Service {
-	position: number;
-	updatedAt: number;
-	name: string;
-	uid: string;
-	icon?: Icon;
-	otp: OTP;
-	secret: string;
+  position: number;
+  updatedAt: number;
+  name: string;
+  uid: string;
+  icon?: Icon;
+  otp: OTP;
+  secret: string;
 }
 
 export interface Icon {
-	label: string;
+  label: string;
 }
 
 export interface OTP {
@@ -67,6 +67,7 @@ export interface Settings {
 	hideTokens: boolean;
 	showNextToken: boolean;
 	notifyWhenTokenCopied: boolean;
+	useBiometrics: boolean;
 }
 
 /**

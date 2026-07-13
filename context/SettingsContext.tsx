@@ -9,6 +9,7 @@ const defaultSettings: Settings = {
     hideTokens: false,
     showNextToken: false,
     notifyWhenTokenCopied: true,
+    useBiometrics: true,
 };
 
 // Context type
@@ -33,11 +34,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     // Load settings on mount
     useEffect(() => {
         const loadSettings = async () => {
+            console.log('SettingsContext: Starting to load settings...');
             try {
                 const data = await FileHandler.loadData();
                 setSettings(data.settings);
             } catch (error) {
-                console.error('Failed to load settings:', error);
+                console.error('SettingsContext: Failed to load settings:', error);
             } finally {
                 setIsLoading(false);
             }

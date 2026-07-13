@@ -1,0 +1,1 @@
+ios install dev app url: itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/PROJECT_ID/builds/BUILDS_ID/manifest.plist

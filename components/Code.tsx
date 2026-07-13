@@ -14,11 +14,13 @@ interface CodeProps {
     opts?: TOTPOptions;
     globalTimestamp: number;
     style?: StyleProp<ViewStyle>;
+    onLongPress?: () => void;
+    onIconChange?: (serviceUid: string, updatedService: Service) => Promise<void>;
 }
 
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
-export default function Code({ service, opts, globalTimestamp, style }: CodeProps) {
+export default function Code({ service, opts, globalTimestamp, style, onLongPress, onIconChange }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
     const [otpData, setOtpData] = useState<TOTPResult>({ otp: '------', expires: Date.now() });
@@ -80,8 +82,13 @@ export default function Code({ service, opts, globalTimestamp, style }: CodeProp
         }
     }, [globalTimestamp, otpData.expires, generateAndSetOTP]);
 
+    const handleIconSelected = useCallback(async (domain: string, icon: any, updatedService?: Service) => {
+        if (onIconChange && updatedService) {
+            await onIconChange(service.uid, updatedService);
+        }
+    }, [onIconChange, service.uid]);
+
     const timeLeft = Math.max(0, Math.floor((otpData.expires - globalTimestamp) / 1000));
-    const textColor = isError ? 'red' : theme.text;
     const remainingPercentage = timeLeft / (service.otp.period ?? 30 - 1);
     const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
     const showNextToken = settings.showNextToken && remainingPercentage < PERCENTAGE_LEFT_REVEAL && !isError && !hideToken;
@@ -159,16 +166,30 @@ export default function Code({ service, opts, globalTimestamp, style }: CodeProp
         <TouchableHighlight
             style={[styles.buttonContainer, { backgroundColor: theme.cardBackground }, style]}
             onPress={handleCopyToClipboard}
+            onLongPress={onLongPress}
             underlayColor={theme.border}
         >
             <View>
                 <View style={styles.container}>
                     <View style={styles.otpInfo}>
                         <View style={styles.issuerContainer}>
-                            <ServiceIcon service={service} size={32} style={styles.serviceIcon} editable={true} />
-                            <Text style={[styles.issuerText, { color: theme.text }]}>
-                                {service.otp.issuer}
-                            </Text>
+                            <ServiceIcon
+                                service={service}
+                                size={32}
+                                style={styles.serviceIcon}
+                                editable={true}
+                                onIconSelected={handleIconSelected}
+                            />
+                            <View style={styles.issuerTextContainer}>
+                                <Text style={[styles.issuerText, { color: theme.text }]}>
+                                    {typeof service.otp?.issuer === 'string' ? service.otp.issuer : (service.name || 'Unknown')}
+                                    {service.name && typeof service.otp?.issuer === 'string' && (
+                                        <Text style={[styles.labelText, { color: theme.subText }]}>
+                                            {' '}({service.name})
+                                        </Text>
+                                    )}
+                                </Text>
+                            </View>
                         </View>
                         <View style={styles.codeContainer}>
                             <Text style={[styles.codeText, { color: theme.text }]}>
@@ -248,9 +269,16 @@ const styles = StyleSheet.create({
     serviceIcon: {
         marginRight: 8,
     },
+    issuerTextContainer: {
+        flex: 1,
+    },
     issuerText: {
         fontSize: 16,
         fontWeight: '600',
+    },
+    labelText: {
+        fontSize: 14,
+        fontWeight: '400',
     },
     codeContainer: {
         flexDirection: 'row',

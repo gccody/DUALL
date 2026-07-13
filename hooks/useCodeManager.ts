@@ -1,7 +1,8 @@
 import { TOTP } from "@/TOTP";
 import { Service } from '@/types';
+import { getCustomIconDomain } from '@/utils/customIconMatcher';
 import * as Crypto from 'expo-crypto';
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 
 export function useCodeManager(
@@ -10,7 +11,7 @@ export function useCodeManager(
 ) {
   const [recentCodeIndex, setRecentCodeIndex] = useState<number | null>(null);
 
-  const addCode = (url: string) => {
+  const addCode = useCallback((url: string) => {
     const parsedURL = TOTP.parseUrl(url);
     
     if (!parsedURL) {
@@ -23,7 +24,7 @@ export function useCodeManager(
       return;
     }
 
-    const service: Service = {
+    const tempService: Service = {
       otp: {
         algorithm: parsedURL.algorithm,
         digits: parsedURL.digits,
@@ -37,6 +38,12 @@ export function useCodeManager(
       secret: parsedURL.secret,
       uid: Crypto.randomUUID(),
       updatedAt: Date.now()
+    };
+
+    const matchedDomain = getCustomIconDomain(tempService);
+    const service: Service = {
+      ...tempService,
+      ...(matchedDomain ? { icon: { label: matchedDomain } } : {})
     };
 
     // Check if code already exists
@@ -55,9 +62,9 @@ export function useCodeManager(
       // Highlight existing service
       setRecentCodeIndex(existingIndex);
     }
-  };
+  }, [services, updateServices]);
 
-  const resetRecentCodeIndex = () => setRecentCodeIndex(null);
+  const resetRecentCodeIndex = useCallback(() => setRecentCodeIndex(null), []);
 
   return {
     recentCodeIndex,

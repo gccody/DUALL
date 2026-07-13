@@ -1,9 +1,8 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
-import { addRemovedIcon, deleteCustomIconSelection, removeRemovedIcon, setCustomIconSelection } from '@/utils/IconManager';
 import { searchCustomIcons } from '@/utils/customIconMatcher';
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -20,7 +19,7 @@ interface CustomIconPickerProps {
   service: Service;
   isVisible: boolean;
   onClose: () => void;
-  onIconSelected: (domain: string, icon: any) => void;
+  onIconSelected: (domain: string, icon: any, updatedService?: Service) => Promise<void>;
 }
 
 interface CustomIconItem {
@@ -35,18 +34,21 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
   const [filteredIcons, setFilteredIcons] = useState<CustomIconItem[]>([]);
   const [loading, setLoading] = useState(false);
 
+  // Memoize the service issuer to prevent unnecessary re-renders
+  const serviceIssuer = useMemo(() => service.otp.issuer, [service.otp.issuer]);
+
   // Load and filter icons based on search query
   useEffect(() => {
-    if (isVisible) {
-      loadIcons();
+    if (!isVisible) {
+      // Reset search query when modal closes
+      setSearchQuery('');
+      return;
     }
-  }, [isVisible, searchQuery]);
 
-  const loadIcons = async () => {
     setLoading(true);
     try {
       // If there's a search query, use it; otherwise, use the service issuer as initial search
-      const query = searchQuery || service.otp.issuer;
+      const query = searchQuery || serviceIssuer || "OTP";
       const results = searchCustomIcons(query);
       setFilteredIcons(results);
     } catch (error) {
@@ -55,25 +57,34 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
     } finally {
       setLoading(false);
     }
-  };
+  }, [isVisible, searchQuery, serviceIssuer]);
 
   const handleIconSelect = async (item: CustomIconItem) => {
-    // Selecting a new icon should clear any "removed" flag
-    await removeRemovedIcon(service.uid);
-    await setCustomIconSelection(service.uid, item.domain);
-    onIconSelected(item.domain, item.icon);
-    onClose();
+    setLoading(true);
+    try {
+      const updatedService: Service = {
+        ...service,
+        icon: { label: item.domain }
+      };
+      await onIconSelected(item.domain, item.icon, updatedService);
+      onClose();
+    } catch (error) {
+      console.error('Error selecting icon:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleRemoveCustomIcon = async () => {
     setLoading(true);
     try {
-      // Delete any manual selection and mark this service as "removed"
-      await deleteCustomIconSelection(service.uid);
-      await addRemovedIcon(service.uid);
-      onIconSelected("none", null);
+      const updatedService: Service = {
+        ...service,
+        icon: { label: 'none' }
+      };
+      await onIconSelected('none', null, updatedService);
     } catch (error) {
-      console.error('Error removing custom icon selection:', error);
+      console.error('Error removing icon:', error);
     } finally {
       setLoading(false);
       onClose();

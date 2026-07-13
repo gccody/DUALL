@@ -1,0 +1,209 @@
+name: Development Build and Release
+
+on:
+  push:
+    branches:
+      - development
+
+env:
+  NODE_VERSION: "20"
+  EAS_SKIP_AUTO_FINGERPRINT: 1
+
+jobs:
+  build-and-release:
+    name: Build and Release Development Version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Check and bump version if needed
+        id: version
+        run: |
+          bun run scripts/bump-version.ts
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit version bump
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          if git diff --quiet; then
+            echo "No version changes to commit"
+          else
+            git add package.json app.json
+            git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]"
+            git push
+          fi
+
+      - name: Build Android (Development)
+        id: build-android
+        run: |
+          BUILD_OUTPUT=$(bunx eas build --platform android --profile development --non-interactive --no-wait 2>&1)
+          echo "$BUILD_OUTPUT"
+
+          # Extract build ID from the URL in output
+          ANDROID_BUILD_ID=$(echo "$BUILD_OUTPUT" | grep -oP 'builds/\K[a-f0-9-]+' | head -1)
+
+          if [ -z "$ANDROID_BUILD_ID" ]; then
+            echo "Error: Could not extract Android build ID from output"
+            exit 1
+          fi
+
+          echo "android_build_id=$ANDROID_BUILD_ID" >> $GITHUB_OUTPUT
+          echo "Android Build ID: $ANDROID_BUILD_ID"
+
+      - name: Build iOS (Development)
+        id: build-ios
+        run: |
+          BUILD_OUTPUT=$(bunx eas build --platform ios --profile development --non-interactive --no-wait 2>&1)
+          echo "$BUILD_OUTPUT"
+
+          # Extract build ID from the URL in output
+          IOS_BUILD_ID=$(echo "$BUILD_OUTPUT" | grep -oP 'builds/\K[a-f0-9-]+' | head -1)
+
+          if [ -z "$IOS_BUILD_ID" ]; then
+            echo "Error: Could not extract iOS build ID from output"
+            exit 1
+          fi
+
+          echo "ios_build_id=$IOS_BUILD_ID" >> $GITHUB_OUTPUT
+          echo "iOS Build ID: $IOS_BUILD_ID"
+
+      - name: Wait for builds to complete
+        run: |
+          echo "Waiting for EAS builds to complete..."
+
+          ANDROID_BUILD_ID="${{ steps.build-android.outputs.android_build_id }}"
+          IOS_BUILD_ID="${{ steps.build-ios.outputs.ios_build_id }}"
+
+          echo "Android Build ID: $ANDROID_BUILD_ID"
+          echo "iOS Build ID: $IOS_BUILD_ID"
+
+          # Wait for Android build
+          echo "Waiting for Android build..."
+          while true; do
+            ANDROID_STATUS_OUTPUT=$(bunx eas build:view $ANDROID_BUILD_ID --json)
+            ANDROID_STATUS=$(echo "$ANDROID_STATUS_OUTPUT" | jq -r '.status')
+            echo "Android status: $ANDROID_STATUS"
+            if [ "$ANDROID_STATUS" = "FINISHED" ]; then
+              break
+            elif [ "$ANDROID_STATUS" = "ERRORED" ] || [ "$ANDROID_STATUS" = "CANCELED" ]; then
+              echo "Android build failed with status: $ANDROID_STATUS"
+              exit 1
+            fi
+            sleep 60
+          done
+
+          # Wait for iOS build
+          echo "Waiting for iOS build..."
+          while true; do
+            IOS_STATUS_OUTPUT=$(bunx eas build:view $IOS_BUILD_ID --json)
+            IOS_STATUS=$(echo "$IOS_STATUS_OUTPUT" | jq -r '.status')
+            echo "iOS status: $IOS_STATUS"
+            if [ "$IOS_STATUS" = "FINISHED" ]; then
+              break
+            elif [ "$IOS_STATUS" = "ERRORED" ] || [ "$IOS_STATUS" = "CANCELED" ]; then
+              echo "iOS build failed with status: $IOS_STATUS"
+              exit 1
+            fi
+            sleep 60
+          done
+
+          # Get artifact URLs
+          ANDROID_BUILD_OUTPUT=$(bunx eas build:view $ANDROID_BUILD_ID --json)
+          ANDROID_URL=$(echo "$ANDROID_BUILD_OUTPUT" | jq -r '.artifacts.buildUrl')
+
+          IOS_BUILD_OUTPUT=$(bunx eas build:view $IOS_BUILD_ID --json)
+          IOS_URL=$(echo "$IOS_BUILD_OUTPUT" | jq -r '.artifacts.buildUrl')
+
+          echo "android_url=$ANDROID_URL" >> $GITHUB_OUTPUT
+          echo "ios_url=$IOS_URL" >> $GITHUB_OUTPUT
+        id: wait-builds
+
+      - name: Download Android artifact
+        run: |
+          curl -L -o duall-android.apk "${{ steps.wait-builds.outputs.android_url }}"
+          echo "Downloaded Android APK"
+
+      - name: Download iOS artifact
+        run: |
+          curl -L -o duall-ios.ipa "${{ steps.wait-builds.outputs.ios_url }}"
+          echo "Downloaded iOS IPA"
+
+      - name: Get Expo project ID
+        id: expo-project
+        run: |
+          PROJECT_ID=$(node -p "require('./app.json').expo.extra.eas.projectId")
+          echo "project_id=$PROJECT_ID" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create-release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Development Release v${{ steps.version.outputs.version }}
+          body: |
+            ## Development Build v${{ steps.version.outputs.version }}
+
+            ### 📱 Installation
+
+            **Android:**
+            - Download the APK below and install on your device
+            - [Download Android APK](${{ steps.wait-builds.outputs.android_url }})
+
+            **iOS:**
+            - [Direct IOS Install](itms-services://?action=download-manifest;url=https://api.expo.dev/v2/projects/${{ steps.expo-project.outputs.project_id }}/builds/${{ steps.build-ios.outputs.ios_build_id }}/manifest.plist)
+            - Or download the IPA below (requires signing)
+            - [Download iOS IPA](${{ steps.wait-builds.outputs.ios_url }})
+
+            ### 📦 Build Information
+            - Android Build ID: `${{ steps.build-android.outputs.android_build_id }}`
+            - iOS Build ID: `${{ steps.build-ios.outputs.ios_build_id }}`
+            - Build Date: ${{ github.event.head_commit.timestamp }}
+            - Commit: ${{ github.sha }}
+
+            ---
+            *This is a development build. Not for production use.*
+          draft: false
+          prerelease: true
+          target_commitish: development
+          files: |
+            ./duall-android.apk
+            ./duall-ios.ipa
+
+      - name: Build Summary
+        run: |
+          echo "## 🎉 Build Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** v${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Release:** [View Release](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Downloads" >> $GITHUB_STEP_SUMMARY
+          echo "- [Android APK](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/duall-android.apk)" >> $GITHUB_STEP_SUMMARY
+          echo "- [iOS IPA](https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/duall-ios.ipa)" >> $GITHUB_STEP_SUMMARY

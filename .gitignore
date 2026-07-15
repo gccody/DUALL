@@ -42,3 +42,5 @@ app-example
 .env
 
 android/
+
+!package.json

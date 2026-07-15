@@ -25,6 +25,7 @@ yarn-error.*
 *.tsbuildinfo
 # Local data and generated app content
 app-example/
+eas-debut-output/
 *.2fas
 2fas.json
 # EAS must receive these root files even if a global ignore rule matches them.

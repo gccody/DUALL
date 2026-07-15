@@ -36,6 +36,7 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+eas-debut-output/
 *.2fas
 2fas.json
 

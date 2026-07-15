@@ -1,0 +1,35 @@
+# Dependencies and generated Expo output
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+# Generated native projects and build artifacts
+android/
+ios/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+# Local caches, logs, and environment files
+.metro-health-check*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.DS_Store
+*.pem
+.env
+.env*.local
+*.tsbuildinfo
+# Local data and generated app content
+app-example/
+*.2fas
+2fas.json
+# EAS must receive these root files even if a global ignore rule matches them.
+!.easignore
+!package.json
+!app.json
+!eas.json
+!bun.lock

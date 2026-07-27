@@ -639,7 +639,7 @@ export const customIcons: { [key: string]: any } = {
   'lonestar.edu.avif': require('../assets/custom-icons/lonestar.edu.avif'),
   'looker.com.avif': require('../assets/custom-icons/looker.com.avif'),
   'lufthansa.com.avif': require('../assets/custom-icons/lufthansa.com.avif'),
-  'lu.ma.avif': require('../assets/custom-icons/lu.ma.avif'),
+  'luma.com.avif': require('../assets/custom-icons/luma.com.avif'),
   'lunchmoney.app.avif': require('../assets/custom-icons/lunchmoney.app.avif'),
   'luno.com.avif': require('../assets/custom-icons/luno.com.avif'),
   'm1.com.avif': require('../assets/custom-icons/m1.com.avif'),

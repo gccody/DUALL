@@ -280,6 +280,10 @@
         "domain": "assembla.com"
     },
     {
+        "name": "Asus",
+        "domain": "asus.com"
+    },
+    {
         "name": "Atera",
         "domain": "atera.com"
     },
@@ -2020,8 +2024,8 @@
         "domain": "hitbtc.com"
     },
     {
-        "name": "HMRC",
-        "domain": "hmrc.gov.uk"
+        "name": "HMRC (Government Gateway)",
+        "domain": "access.service.gov.uk"
     },
     {
         "name": "Hogeschool van Amsterdam",
@@ -3276,6 +3280,10 @@
         "domain": "patientaccess.com"
     },
     {
+        "name": "Patients Know Best",
+        "domain": "patientsknowbest.com"
+    },
+    {
         "name": "Patreon",
         "domain": "patreon.com"
     },
@@ -3834,10 +3842,6 @@
     {
         "name": "Samsung",
         "domain": "samsung.com"
-    },
-    {
-        "name": "Samsung SmartThings",
-        "domain": "smartthings.com"
     },
     {
         "name": "San Francisco Fire Credit Union",
@@ -4508,6 +4512,10 @@
         "domain": "toya.net.pl"
     },
     {
+        "name": "TP-Link",
+        "domain": "tp-link.com"
+    },
+    {
         "name": "Trading 212",
         "domain": "trading212.com"
     },
@@ -5044,8 +5052,8 @@
         "domain": "xplenty.com"
     },
     {
-        "name": "Yahoo Mail",
-        "domain": "mail.yahoo.com"
+        "name": "Yahoo",
+        "domain": "yahoo.com"
     },
     {
         "name": "Yclas",

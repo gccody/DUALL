@@ -1238,6 +1238,7 @@ export const customIcons: { [key: string]: any } = {
   'wellfound.com.avif': require('../assets/custom-icons/wellfound.com.avif'),
   'go.wepay.com.avif': require('../assets/custom-icons/go.wepay.com.avif'),
   'wetransfer.com.avif': require('../assets/custom-icons/wetransfer.com.avif'),
+  'wetravel.com.avif': require('../assets/custom-icons/wetravel.com.avif'),
   'whalefin.com.avif': require('../assets/custom-icons/whalefin.com.avif'),
   'wheniwork.com.avif': require('../assets/custom-icons/wheniwork.com.avif'),
   'whimsical.com.avif': require('../assets/custom-icons/whimsical.com.avif'),

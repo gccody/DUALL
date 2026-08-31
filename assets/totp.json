@@ -2264,6 +2264,10 @@
         "domain": "ivpn.net"
     },
     {
+        "name": "J.P. Morgan Personal Investing",
+        "domain": "personalinvesting.jpmorgan.com"
+    },
+    {
         "name": "Jamf Now",
         "domain": "jamfnow.com"
     },
@@ -3064,10 +3068,6 @@
         "domain": "nozbe.com"
     },
     {
-        "name": "npm",
-        "domain": "npmjs.com"
-    },
-    {
         "name": "NS1",
         "domain": "ns1.com"
     },
@@ -3078,10 +3078,6 @@
     {
         "name": "Nulab",
         "domain": "nulab.com"
-    },
-    {
-        "name": "Nutmeg",
-        "domain": "nutmeg.com"
     },
     {
         "name": "Nutstore",
@@ -3245,7 +3241,7 @@
     },
     {
         "name": "Panther",
-        "domain": "runpanther.io"
+        "domain": "panther.com"
     },
     {
         "name": "Parallels",

@@ -263,6 +263,7 @@ export const customIcons: { [key: string]: any } = {
   'compose.com.avif': require('../assets/custom-icons/compose.com.avif'),
   'coned.com.avif': require('../assets/custom-icons/coned.com.avif'),
   'concur.com.avif': require('../assets/custom-icons/concur.com.avif'),
+  'drs.ct.gov.avif': require('../assets/custom-icons/drs.ct.gov.avif'),
   'connectwise.com.avif': require('../assets/custom-icons/connectwise.com.avif'),
   'consentmanager.net.avif': require('../assets/custom-icons/consentmanager.net.avif'),
   'constellix.com.avif': require('../assets/custom-icons/constellix.com.avif'),

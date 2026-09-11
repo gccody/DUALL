@@ -2708,12 +2708,12 @@
         "domain": "mexc.com"
     },
     {
-        "name": "Microsoft 365 Copilot",
-        "domain": "m365.cloud.microsoft"
-    },
-    {
         "name": "Microsoft Azure",
         "domain": "azure.microsoft.com"
+    },
+    {
+        "name": "Microsoft Copilot",
+        "domain": "m365.cloud.microsoft"
     },
     {
         "name": "Microsoft Teams",

@@ -1137,6 +1137,7 @@ export const customIcons: { [key: string]: any } = {
   'tradingview.com.avif': require('../assets/custom-icons/tradingview.com.avif'),
   'transifex.com.avif': require('../assets/custom-icons/transifex.com.avif'),
   'transip.nl.avif': require('../assets/custom-icons/transip.nl.avif'),
+  'tfl.gov.uk.avif': require('../assets/custom-icons/tfl.gov.uk.avif'),
   'transport.vic.gov.au.avif': require('../assets/custom-icons/transport.vic.gov.au.avif'),
   'travala.com.avif': require('../assets/custom-icons/travala.com.avif'),
   'travelers.com.avif': require('../assets/custom-icons/travelers.com.avif'),

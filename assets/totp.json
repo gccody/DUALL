@@ -1852,6 +1852,10 @@
         "domain": "fit.google.com"
     },
     {
+        "name": "Google Health",
+        "domain": "healthapp.google"
+    },
+    {
         "name": "Google Meet",
         "domain": "meet.google.com"
     },
@@ -3916,10 +3920,6 @@
         "domain": "selfwealth.com.au"
     },
     {
-        "name": "Sellix",
-        "domain": "sellix.io"
-    },
-    {
         "name": "Semaphore",
         "domain": "semaphoreci.com"
     },
@@ -4448,6 +4448,10 @@
         "domain": "ticketsource.co.uk"
     },
     {
+        "name": "TickTick",
+        "domain": "ticktick.com"
+    },
+    {
         "name": "TikTok",
         "domain": "tiktok.com"
     },
@@ -4746,6 +4750,10 @@
     {
         "name": "US Patent and Trademark Office",
         "domain": "uspto.gov"
+    },
+    {
+        "name": "US Postal Service",
+        "domain": "usps.com"
     },
     {
         "name": "US Veteran Affairs",

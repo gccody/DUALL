@@ -3944,6 +3944,10 @@
         "domain": "sentry.io"
     },
     {
+        "name": "SerpApi",
+        "domain": "serpapi.com"
+    },
+    {
         "name": "Server.pro",
         "domain": "server.pro"
     },

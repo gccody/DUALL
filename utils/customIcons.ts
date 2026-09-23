@@ -990,7 +990,6 @@ export const customIcons: { [key: string]: any } = {
   'sendsafely.com.avif': require('../assets/custom-icons/sendsafely.com.avif'),
   'senko.digital.avif': require('../assets/custom-icons/senko.digital.avif'),
   'sentry.io.avif': require('../assets/custom-icons/sentry.io.avif'),
-  'serpapi.com.avif': require('../assets/custom-icons/serpapi.com.avif'),
   'server.pro.avif': require('../assets/custom-icons/server.pro.avif'),
   'serverpilot.io.avif': require('../assets/custom-icons/serverpilot.io.avif'),
   'serverspace.io.avif': require('../assets/custom-icons/serverspace.io.avif'),

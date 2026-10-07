@@ -921,6 +921,7 @@ export const customIcons: { [key: string]: any } = {
   'rebel.com.avif': require('../assets/custom-icons/rebel.com.avif'),
   'rebrandly.com.avif': require('../assets/custom-icons/rebrandly.com.avif'),
   'recruitee.com.avif': require('../assets/custom-icons/recruitee.com.avif'),
+  'recurly.com.avif': require('../assets/custom-icons/recurly.com.avif'),
   'redhat.com.avif': require('../assets/custom-icons/redhat.com.avif'),
   'reddit.com.avif': require('../assets/custom-icons/reddit.com.avif'),
   'redis.com.avif': require('../assets/custom-icons/redis.com.avif'),

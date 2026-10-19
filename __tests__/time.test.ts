@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 import { getTimeRemaining } from "@/utils/time";
 
 describe("getTimeRemaining", () => {

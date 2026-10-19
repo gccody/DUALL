@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 import { Service } from "@/types";
 import { FileHandler } from "@/utils/fileHandler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -26,10 +25,8 @@ const makeService = (uid: string, position: number): Service => ({
   name: `Service ${uid}`,
   uid,
   otp: {
-    link: `otpauth://totp/${uid}?secret=JBSWY3DPEHPK3PXP`,
     algorithm: "SHA-1",
     period: 30,
-    tokenType: "TOTP",
     issuer: uid,
     digits: 6,
   },
@@ -64,6 +61,17 @@ describe("FileHandler service deletion", () => {
 
     expect(secretKeys()).toEqual([]);
     expect((await FileHandler.loadData()).services).toEqual([]);
+  });
+
+  it("keeps secrets out of the AsyncStorage config, even for legacy services with a stored link", async () => {
+    const legacyService = {
+      ...makeService("d", 3),
+      otp: { ...makeService("d", 3).otp, link: "otpauth://totp/d?secret=JBSWY3DPEHPK3PXP", tokenType: "TOTP" },
+    } as Service;
+    await FileHandler.updateServices([...services, legacyService]);
+
+    const config = (await AsyncStorage.getItem("otpConfig")) ?? "";
+    expect(config).not.toContain("JBSWY3DPEHPK3PXP");
   });
 
   it("deletes all secrets and the config on removeData", async () => {

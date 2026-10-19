@@ -1,8 +1,8 @@
-import { TOTP } from "@/TOTP";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
-import { normalizeAlgorithm } from "@/parsers/utils";
-import { Service, TOTPResult } from "@/types";
+import { generateTotp, TotpCode } from "@/core/otp/totp";
+import { getTotpParams } from "@/core/service";
+import { Service } from "@/types";
 import { formatOtp, maskOtp } from "@/utils/formatOtp";
 import { getTimeRemaining } from "@/utils/time";
 import { FontAwesome } from '@expo/vector-icons';
@@ -26,8 +26,8 @@ const PERCENTAGE_LEFT_REVEAL = 0.2;
 export default function Code({ service, globalTimestamp, style, onLongPress, onIconChange }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
-    const [otpData, setOtpData] = useState<TOTPResult>({ otp: '------', expires: Date.now() });
-    const [nextOtpData, setNextOtpData] = useState<TOTPResult>({ otp: '------', expires: Date.now() })
+    const [otpData, setOtpData] = useState<TotpCode>({ otp: '------', expires: Date.now() });
+    const [nextOtpData, setNextOtpData] = useState<TotpCode>({ otp: '------', expires: Date.now() })
     const [isError, setIsError] = useState(false);
     const [hideToken, setHideToken] = useState(settings.hideTokens);
 
@@ -43,31 +43,18 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
         setHideToken(settings.hideTokens);
     }, [settings.hideTokens]);
 
-    // Derive TOTP options from the account itself. Recomputed when the account
-    // is edited; the algorithm is normalized because legacy stored data may
-    // contain values like "SHA1" or "sha256".
-    const rawDigits = service.otp?.digits;
-    const rawPeriod = service.otp?.period;
-    const rawAlgorithm = service.otp?.algorithm;
-    const totpOptions = useMemo(() => {
-        const digits = Number(rawDigits);
-        const period = Number(rawPeriod);
-        return {
-            digits: Number.isInteger(digits) && digits >= 1 && digits <= 10 ? digits : 6,
-            period: Number.isFinite(period) && period > 0 ? period : 30,
-            algorithm: normalizeAlgorithm(rawAlgorithm),
-        };
-    }, [rawDigits, rawPeriod, rawAlgorithm]);
+    // Derive TOTP parameters from the account itself (getTotpParams normalizes
+    // legacy stored data). Memoized on the values so codes only regenerate
+    // after an edit.
+    const { algorithm, digits, period } = getTotpParams(service);
+    const totpOptions = useMemo(() => ({ algorithm, digits, period }), [algorithm, digits, period]);
 
     // Calculate the next token
     const calculateNextToken = useCallback((currentExpires: number) => {
         try {
             // Set the timestamp to just after the current token expires
             const nextTimestamp = currentExpires + 1;
-            const nextOtp = TOTP.generate(service.secret, {
-                ...totpOptions,
-                timestamp: nextTimestamp
-            });
+            const nextOtp = generateTotp(service.secret, totpOptions, nextTimestamp);
             setNextOtpData(nextOtp);
         } catch (e) {
             console.error("Failed to generate next token:", e);
@@ -76,7 +63,7 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
 
     const generateAndSetOTP = useCallback(() => {
         try {
-            const newOtp = TOTP.generate(service.secret, totpOptions);
+            const newOtp = generateTotp(service.secret, totpOptions);
             setOtpData(newOtp);
             setIsError(false);
 

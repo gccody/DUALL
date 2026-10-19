@@ -4,23 +4,20 @@ import SubText from '@/components/SubText';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useVault } from '@/context/VaultContext';
-import { importProviders, parseImport, type ImportProvider, type ImportResult } from '@/core/import';
-import { serviceToUri } from '@/core/service';
+import { useCodeTransfer } from '@/hooks/useCodeTransfer';
 import Constants from 'expo-constants';
-import * as DocumentPicker from 'expo-document-picker';
-import { File, Paths } from 'expo-file-system';
 import { clearPin } from '@/utils/pin';
-import * as Sharing from 'expo-sharing';
 import * as WebBrowser from 'expo-web-browser';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ActionSheetIOS, ActivityIndicator, Alert, Platform, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Platform, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import pkg from '../../../package.json';
 
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
     const { settings, updateSetting, isLoading } = useSettings();
-    const { services, status, importServices, clear } = useVault();
+    const { services, status, clear } = useVault();
+    const { importCodes, exportCodes } = useCodeTransfer();
     const router = useRouter();
 
     if (isLoading) {
@@ -130,151 +127,6 @@ export default function SettingsScreen() {
 
     const openGithub = async () => {
         await WebBrowser.openBrowserAsync(pkg.homepage);
-    }
-
-    const importCodes = async () => {
-        const providers = importProviders;
-
-        // Use the native action sheet on iOS
-        if (Platform.OS === 'ios') {
-            const options = [...providers.map(provider => provider.displayName), 'Cancel'];
-            ActionSheetIOS.showActionSheetWithOptions(
-                {
-                    title: "Import Codes",
-                    message: "Select the app you're importing from:",
-                    options,
-                    cancelButtonIndex: options.length - 1,
-                },
-                (index) => {
-                    if (index < providers.length) importFromProvider(providers[index]);
-                }
-            );
-            return;
-        }
-
-        // Create provider selection options
-        const providerOptions = providers.map(provider => ({
-            text: provider.displayName,
-            onPress: () => importFromProvider(provider)
-        }));
-
-        // Show provider selection dialog
-        Alert.alert(
-            "Import Codes",
-            "Select the app you're importing from:",
-            [
-                ...providerOptions,
-                {
-                    text: 'Cancel',
-                    style: 'cancel',
-                    isPreferred: true
-                }
-            ]
-        );
-    }
-
-    const exportCodes = async () => {
-        if (status === 'loading')
-            return Alert.alert("Still loading codes. Please wait");
-        if (services.length === 0)
-            return Alert.alert("Couldn't find any codes to export")
-
-        try {
-            const uris: string[] = []
-            for (const service of services) {
-                uris.push(serviceToUri(service))
-            }
-
-            // Create a temporary file
-            const date = new Date();
-            const file = new File(Paths.cache, `duall-${date.toISOString()}.txt`)
-            await file.write(uris.join("\n"));
-
-            // Share the file
-            if (await Sharing.isAvailableAsync()) {
-                await Sharing.shareAsync(file.uri, {
-                    mimeType: 'text/plain',
-                    dialogTitle: 'Export TOTP Codes',
-                });
-                Alert.alert("Success", `Successfully exported ${uris.length} codes`);
-            } else {
-                Alert.alert("Error", "Sharing is not available on this device");
-            }
-        } catch (error) {
-            console.error('Export error:', error);
-            Alert.alert("Export Error", "Failed to export codes. Please try again.");
-        }
-    }
-
-    const importFromProvider = async (provider: ImportProvider) => {
-        try {
-            const result = await DocumentPicker.getDocumentAsync({
-                type: ['application/json', 'text/plain', 'text/csv', 'com.2fas.auth'],
-                copyToCacheDirectory: true,
-            });
-
-            if (result.canceled || !result.assets || result.assets.length === 0) {
-                return;
-            }
-
-            const file = result.assets[0];
-
-            // Read the file content
-            const response = await fetch(file.uri);
-            const content = await response.text();
-
-            let parseResult: ImportResult;
-            try {
-                parseResult = parseImport(provider.id, content);
-            } catch (error) {
-                console.error(`Failed to parse with ${provider.id}:`, error);
-                const reason = error instanceof Error ? error.message : 'Unknown error';
-                Alert.alert("Parse Error", `Failed to parse the file with ${provider.displayName}. ${reason}`);
-                return;
-            }
-
-            const { services: entries, skippedHotp } = parseResult;
-            const hotpNote = skippedHotp > 0
-                ? `\n\n${skippedHotp} counter-based (HOTP) code${skippedHotp === 1 ? '' : 's'} will be skipped because ${skippedHotp === 1 ? "it isn't" : "they aren't"} supported.`
-                : '';
-
-            // Show confirmation dialog
-            Alert.alert(
-                `Import from ${provider.displayName}`,
-                `Found ${entries.length} codes to import. Do you want to add them to your existing codes?${hotpNote}`,
-                [
-                    {
-                        text: 'Cancel',
-                        style: 'cancel',
-                        isPreferred: true
-                    },
-                    {
-                        text: 'Import',
-                        onPress: async () => {
-                            try {
-                                // Appends to the latest codes, skipping ones already present
-                                const { added, duplicates } = await importServices(entries);
-                                const skipped = [
-                                    duplicates > 0 ? `${duplicates} already in DUALL` : '',
-                                    skippedHotp > 0 ? `${skippedHotp} unsupported HOTP` : '',
-                                ].filter(Boolean).join(', ');
-                                Alert.alert(
-                                    "Success",
-                                    `Successfully imported ${added} codes from ${provider.displayName}` +
-                                    (skipped ? ` (skipped: ${skipped})` : '')
-                                );
-                            } catch (error) {
-                                console.error('Failed to import codes:', error);
-                                Alert.alert("Error", "Failed to import codes. Please try again.");
-                            }
-                        }
-                    }
-                ]
-            );
-        } catch (error) {
-            console.error('Import error:', error);
-            Alert.alert("Import Error", "Failed to read or parse the selected file. Please make sure it's a valid export file.");
-        }
     }
 
     return (

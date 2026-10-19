@@ -7,7 +7,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
 
 import CodeItem from "@/components/CodeItem";
-import EditCodeModal from "@/components/EditCodeModal";
 import ErrorView from "@/components/ErrorView";
 import LoadingView from "@/components/LoadingView";
 
@@ -16,16 +15,12 @@ import { useTimestamp } from "@/hooks/useTimestamp";
 
 import { Service } from '@/types';
 import { warmIconCache } from '@/utils/customIconMatcher';
-
-const reportSaveError = (error: unknown) => {
-  console.error('Failed to save changes:', error);
-  Alert.alert("Error", "Failed to save your changes. Please try again.");
-};
+import { reportSaveError } from '@/utils/reportSaveError';
 
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { settings } = useSettings();
-  const { services: allServices, status, error, addFromUri, updateService, deleteService } = useVault();
+  const { services: allServices, status, error, addFromUri } = useVault();
 
   // Pre-warm icon domain cache when services load so first-scroll lookups are O(1)
   useEffect(() => {
@@ -36,11 +31,6 @@ export default function HomeScreen() {
 
   // Search functionality
   const { services, handleSearch } = useSearch(allServices);
-
-  // Edit modal: track the uid so the modal always shows the latest stored service
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedUid, setSelectedUid] = useState<string | null>(null);
-  const selectedService = allServices.find((s) => s.uid === selectedUid) ?? null;
 
   // Real-time clock update
   const timestamp = useTimestamp();
@@ -98,24 +88,8 @@ export default function HomeScreen() {
     setRecentCodeIndex(null);
   };
 
-  // Handle long press to open edit modal
-  const handleLongPress = (service: Service) => {
-    setSelectedUid(service.uid);
-    setModalVisible(true);
-  };
-
-  // Handle save from modal
-  const handleSaveService = (updatedService: Service) => {
-    updateService(updatedService.uid, {
-      name: updatedService.name,
-      otp: { issuer: updatedService.otp.issuer },
-    }).catch(reportSaveError);
-  };
-
-  // Handle delete from modal
-  const handleDeleteService = (serviceUid: string) => {
-    deleteService(serviceUid).catch(reportSaveError);
-  };
+  const openEditor = (uid: string) => router.push({ pathname: '/account/[uid]', params: { uid } });
+  const openIconPicker = (uid: string) => router.push({ pathname: '/account/[uid]/icon', params: { uid } });
 
   if (status === 'error') {
     return <ErrorView message={error ?? 'Failed to load your codes'} />;
@@ -155,19 +129,13 @@ export default function HomeScreen() {
             globalTimestamp={timestamp}
             isHighlighted={recentCodeIndex === index}
             isFirstItem={index === 0}
-            onLongPress={() => handleLongPress(item)}
+            onLongPress={() => openEditor(item.uid)}
+            onIconPress={() => openIconPicker(item.uid)}
           />
         )}
         keyExtractor={(item) => item.uid}
         drawDistance={500}
         extraData={[timestamp, recentCodeIndex]}
-      />
-      <EditCodeModal
-        visible={modalVisible}
-        service={selectedService}
-        onClose={() => setModalVisible(false)}
-        onSave={handleSaveService}
-        onDelete={handleDeleteService}
       />
     </>
   );

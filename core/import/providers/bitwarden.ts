@@ -1,4 +1,5 @@
 import { isOtpAuthUri, parseOtpAuthUri, type ParsedOtpAuth } from "../../otp/uri";
+import { parseCsv } from "../csv";
 import { isRecord, parseJson, totpEntry } from "../shared";
 import type { ImportProvider } from "../types";
 
@@ -39,23 +40,29 @@ function parseJsonExport(content: string): ParsedOtpAuth[] {
   return results;
 }
 
+/**
+ * Bitwarden CSV header (personal vault):
+ * folder,favorite,type,name,notes,fields,reprompt,login_uri,login_username,login_password,login_totp
+ * Organization exports start with `collections` instead of `folder`.
+ */
 function parseCsvExport(content: string): ParsedOtpAuth[] {
-  const lines = content.split("\n").filter((line) => line.trim());
-  if (lines.length < 2) return [];
+  const [header = [], ...rows] = parseCsv(content);
+  const columns = header.map((column) => column.trim().toLowerCase());
+  const column = (...names: string[]) => columns.findIndex((name) => names.includes(name));
 
-  const headers = lines[0].split(",").map((header) => header.trim().toLowerCase());
-  const nameIndex = headers.indexOf("name");
-  const totpIndex = headers.indexOf("totp");
+  const totpIndex = column("login_totp", "totp");
   if (totpIndex === -1) {
-    throw new Error("Invalid Bitwarden CSV export: no TOTP column found.");
+    throw new Error("Invalid Bitwarden CSV export: no login_totp column found.");
   }
+  const nameIndex = column("name");
+  const usernameIndex = column("login_username", "username");
+  const cell = (row: string[], index: number) => (index === -1 ? "" : row[index] ?? "");
 
   const results: ParsedOtpAuth[] = [];
-  for (const line of lines.slice(1)) {
-    const values = line.split(",");
-    const totp = values[totpIndex]?.trim();
+  for (const row of rows) {
+    const totp = cell(row, totpIndex).trim();
     if (!totp) continue;
-    const entry = parseTotpField(totp, nameIndex >= 0 ? values[nameIndex] ?? "" : "", "");
+    const entry = parseTotpField(totp, cell(row, nameIndex), cell(row, usernameIndex));
     if (entry) results.push(entry);
   }
   return results;

@@ -1,18 +1,18 @@
 import { TOTP } from "@/TOTP";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
-import { Service, TOTPOptions, TOTPResult } from "@/types";
+import { normalizeAlgorithm } from "@/parsers/utils";
+import { Service, TOTPResult } from "@/types";
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
 import ProgressBar from "./ProgressBar";
 import ServiceIcon from "./ServiceIcon";
 
 interface CodeProps {
     service: Service;
-    opts?: TOTPOptions;
     globalTimestamp: number;
     style?: StyleProp<ViewStyle>;
     onLongPress?: () => void;
@@ -21,7 +21,7 @@ interface CodeProps {
 
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
-export default function Code({ service, opts, globalTimestamp, style, onLongPress, onIconChange }: CodeProps) {
+export default function Code({ service, globalTimestamp, style, onLongPress, onIconChange }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
     const [otpData, setOtpData] = useState<TOTPResult>({ otp: '------', expires: Date.now() });
@@ -41,11 +41,21 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
         setHideToken(settings.hideTokens);
     }, [settings.hideTokens]);
 
-    const totpOptions = useRef({
-        digits: opts?.digits ?? 6,
-        period: opts?.period ?? 30,
-        algorithm: opts?.algorithm ?? 'SHA-1',
-    }).current;
+    // Derive TOTP options from the account itself. Recomputed when the account
+    // is edited; the algorithm is normalized because legacy stored data may
+    // contain values like "SHA1" or "sha256".
+    const rawDigits = service.otp?.digits;
+    const rawPeriod = service.otp?.period;
+    const rawAlgorithm = service.otp?.algorithm;
+    const totpOptions = useMemo(() => {
+        const digits = Number(rawDigits);
+        const period = Number(rawPeriod);
+        return {
+            digits: Number.isInteger(digits) && digits >= 1 && digits <= 10 ? digits : 6,
+            period: Number.isFinite(period) && period > 0 ? period : 30,
+            algorithm: normalizeAlgorithm(rawAlgorithm),
+        };
+    }, [rawDigits, rawPeriod, rawAlgorithm]);
 
     // Calculate the next token
     const calculateNextToken = useCallback((currentExpires: number) => {
@@ -66,6 +76,7 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
         try {
             const newOtp = TOTP.generate(service.secret, totpOptions);
             setOtpData(newOtp);
+            setIsError(false);
 
             // Calculate the next token whenever we generate a new one
             calculateNextToken(newOtp.expires);
@@ -75,6 +86,11 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
             setOtpData({ otp: 'Error!', expires: Date.now() + totpOptions.period * 1000 });
         }
     }, [service.secret, totpOptions, calculateNextToken]);
+
+    // Regenerate immediately when the secret or OTP options change (e.g. after an edit)
+    useEffect(() => {
+        generateAndSetOTP();
+    }, [generateAndSetOTP]);
 
     // Refresh OTP when it expires
     useEffect(() => {

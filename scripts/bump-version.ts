@@ -32,7 +32,7 @@ let lastCommittedVersion: string;
 try {
   const lastPackageJson = execSync('git show HEAD~1:package.json', { encoding: 'utf8' });
   lastCommittedVersion = JSON.parse(lastPackageJson).version;
-} catch (error) {
+} catch {
   // If we can't get the previous version, assume version hasn't changed
   console.log('Could not get previous version, assuming first commit');
   lastCommittedVersion = currentVersion;

@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 import { RELOCK_GRACE_PERIOD_MS, shouldRelock } from '@/hooks/useAppLock';
 
 jest.mock('expo-local-authentication', () => ({ authenticateAsync: jest.fn() }));

@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 /// <reference types="node" />
 // Prefixed with `mock` so the hoisted jest.mock factories may reference it.
 import { createHash as mockCreateHash } from 'crypto';

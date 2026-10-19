@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 import type { Service } from "@/types";
 import {
   getCustomIcon,

@@ -1,4 +1,3 @@
-/// <reference types="jest" />
 import { generateTotp, type TotpParams } from "@/core/otp/totp";
 import { computePeriodCodes, getPeriodCounter, TOTP_ERROR_CODE } from "@/hooks/useTotp";
 

@@ -2,6 +2,7 @@ import { TOTP } from "@/TOTP";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { Service, TOTPOptions, TOTPResult } from "@/types";
+import { getTimeRemaining } from "@/utils/time";
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
@@ -89,8 +90,7 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
         }
     }, [onIconChange, service.uid]);
 
-    const timeLeft = Math.max(0, Math.floor((otpData.expires - globalTimestamp) / 1000));
-    const remainingPercentage = timeLeft / (service.otp.period ?? 30 - 1);
+    const { seconds: timeLeft, fraction: remainingPercentage } = getTimeRemaining(otpData.expires, globalTimestamp, service.otp.period);
     const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
     const showNextToken = settings.showNextToken && remainingPercentage < PERCENTAGE_LEFT_REVEAL && !isError && !hideToken;
 

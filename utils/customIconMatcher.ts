@@ -138,7 +138,7 @@ export function getCustomIconDomain(service: Service): string | null {
  */
 export function warmIconCache(services: Service[]): void {
   for (const service of services) {
-    if (!service.icon?.label || service.icon.label === 'none') {
+    if (service.icon !== null && !service.icon?.label) {
       findMatchingDomain(service.otp.issuer);
     }
   }
@@ -163,4 +163,18 @@ export function searchCustomIcons(query: string): { domain: string; name: string
       normalizedName.includes(normalizedQuery) || normalizedDomain.includes(normalizedQuery))
     .map(({ domain, name }) => ({ domain, name, icon: ICONS[domain].source }))
     .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/** Label older versions stored to mean "the user removed the icon" (now `icon: null`). */
+const LEGACY_REMOVED_LABEL = 'none';
+
+/**
+ * The icon to show for a service: its chosen bundled icon, nothing if the user
+ * removed it, or the auto-matched icon when none was chosen.
+ */
+export function resolveIcon(service: Service): ImageSourcePropType | null {
+  const { icon } = service;
+  if (icon === null || icon?.label === LEGACY_REMOVED_LABEL) return null;
+  if (icon?.label) return getIconSource(icon.label);
+  return getCustomIcon(service);
 }

@@ -4,6 +4,7 @@ import {
   getCustomIcon,
   getCustomIconDomain,
   getIconSource,
+  resolveIcon,
   searchCustomIcons,
   warmIconCache,
 } from "@/utils/customIconMatcher";
@@ -68,6 +69,34 @@ describe("icon sources", () => {
   test("getCustomIcon resolves through the issuer match", () => {
     expect(getCustomIcon(serviceWithIssuer("GitHub"))).toBe(ICONS["github.com"].source);
     expect(getCustomIcon(serviceWithIssuer("zzqx-no-such-service-qq"))).toBeNull();
+  });
+});
+
+describe("resolveIcon", () => {
+  const github = ICONS["github.com"].source;
+  const gitlab = ICONS["gitlab.com"].source;
+  const withIcon = (icon: Service["icon"]): Service => ({ ...serviceWithIssuer("GitHub"), icon });
+
+  test("uses the chosen icon over the issuer match", () => {
+    expect(resolveIcon(withIcon({ label: "gitlab.com" }))).toBe(gitlab);
+  });
+
+  test("returns null for a chosen icon that is not bundled", () => {
+    expect(resolveIcon(withIcon({ label: "no-such-domain.invalid" }))).toBeNull();
+  });
+
+  test("returns null when the icon was removed", () => {
+    expect(resolveIcon(withIcon(null))).toBeNull();
+  });
+
+  test("treats the legacy 'none' label as removed", () => {
+    expect(resolveIcon(withIcon({ label: "none" }))).toBeNull();
+  });
+
+  test("auto-matches by issuer when no icon was chosen", () => {
+    expect(resolveIcon(withIcon(undefined))).toBe(github);
+    expect(resolveIcon(withIcon({ label: "" }))).toBe(github);
+    expect(resolveIcon({ ...serviceWithIssuer("zzqx-no-such-service-qq") })).toBeNull();
   });
 });
 

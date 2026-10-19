@@ -6,7 +6,7 @@ on:
       - development
 
 env:
-  NODE_VERSION: "20"
+  NODE_VERSION: "24"
   EAS_SKIP_AUTO_FINGERPRINT: 1
 
 jobs:
@@ -54,7 +54,7 @@ jobs:
           if git diff --quiet; then
             echo "No version changes to commit"
           else
-            git add package.json app.json
+            git add package.json
             git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]"
             git push
           fi

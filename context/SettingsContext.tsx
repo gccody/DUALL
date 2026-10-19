@@ -1,67 +1,69 @@
+import { ensureMigrated } from '@/storage/migrations';
+import { DEFAULT_SETTINGS, loadSettings, saveSettings } from '@/storage/settings';
 import { Settings } from '@/types';
-import { FileHandler } from '@/utils/fileHandler';
-import { ReactNode, createContext, use, useEffect, useState } from 'react';
+import { ReactNode, createContext, use, useEffect, useRef, useState } from 'react';
 
-// Default settings
-const defaultSettings: Settings = {
-    darkMode: true,
-    searchOnStartup: false,
-    hideTokens: false,
-    showNextToken: false,
-    notifyWhenTokenCopied: true,
-    useBiometrics: true,
-};
-
-// Context type
 type SettingsContextType = {
     settings: Settings;
     isLoading: boolean;
     updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => Promise<void>;
 };
 
-// Create context
 export const SettingsContext = createContext<SettingsContextType>({
-    settings: defaultSettings,
+    settings: DEFAULT_SETTINGS,
     isLoading: true,
     updateSetting: async () => { },
 });
 
-// Settings provider
 export function SettingsProvider({ children }: { children: ReactNode }) {
-    const [settings, setSettings] = useState<Settings>(defaultSettings);
+    const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
     const [isLoading, setIsLoading] = useState(true);
+    // The latest settings, so quick successive updates build on each other.
+    const settingsRef = useRef<Settings>(DEFAULT_SETTINGS);
+    // Saves run one after another so a slow write can't overwrite a newer one.
+    const saveQueue = useRef<Promise<void>>(Promise.resolve());
 
-    // Load settings on mount
     useEffect(() => {
-        const loadSettings = async () => {
-            console.log('SettingsContext: Starting to load settings...');
+        let cancelled = false;
+        (async () => {
             try {
-                const data = await FileHandler.loadData();
-                setSettings(data.settings);
+                await ensureMigrated();
+            } catch (error) {
+                // Settings still load; the vault reports the failure.
+                console.error('SettingsContext: migration failed:', error);
+            }
+            try {
+                const stored = await loadSettings();
+                if (!cancelled) {
+                    settingsRef.current = stored;
+                    setSettings(stored);
+                }
             } catch (error) {
                 console.error('SettingsContext: Failed to load settings:', error);
             } finally {
-                setIsLoading(false);
+                if (!cancelled) setIsLoading(false);
             }
+        })();
+        return () => {
+            cancelled = true;
         };
-
-        loadSettings();
     }, []);
 
-    // Update a single setting
-    const updateSetting = async <K extends keyof Settings>(key: K, value: Settings[K]) => {
-        try {
-            // Update local state immediately for responsive UI
-            const updatedSettings = { ...settings, [key]: value };
-            setSettings(updatedSettings);
+    const apply = (next: Settings) => {
+        settingsRef.current = next;
+        setSettings(next);
+    };
 
-            // Save to storage
-            await FileHandler.updateSettings(updatedSettings);
+    const updateSetting = async <K extends keyof Settings>(key: K, value: Settings[K]) => {
+        const next = { ...settingsRef.current, [key]: value };
+        apply(next);
+        const save = saveQueue.current.then(() => saveSettings(next));
+        saveQueue.current = save.catch(() => undefined);
+        try {
+            await save;
         } catch (error) {
             console.error(`Failed to update ${String(key)} setting:`, error);
-            // Revert to previous state if save fails
-            const data = await FileHandler.loadData();
-            setSettings(data.settings);
+            apply(await loadSettings().catch(() => settingsRef.current));
         }
     };
 
@@ -72,7 +74,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     );
 }
 
-// Hook to use settings
 export function useSettings() {
     return use(SettingsContext);
 }

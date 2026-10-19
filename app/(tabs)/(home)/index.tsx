@@ -1,133 +1,65 @@
+import AccountCard from "@/components/accounts/AccountCard";
+import CenteredMessage from "@/components/ui/CenteredMessage";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
-import { FlashList, FlashListRef } from '@shopify/flash-list';
-import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
-import CodeItem from "@/components/CodeItem";
-import EditCodeModal from "@/components/EditCodeModal";
-import ErrorView from "@/components/ErrorView";
-import LoadingView from "@/components/LoadingView";
-
-import { useCodeManager } from "@/hooks/useCodeManager";
-import { useOtpData } from "@/hooks/useOtpData";
+import { useVault } from "@/context/VaultContext";
+import { useScannedCode } from "@/hooks/useScannedCode";
 import { useSearch } from "@/hooks/useSearch";
 import { useTimestamp } from "@/hooks/useTimestamp";
-
 import { Service } from '@/types';
 import { warmIconCache } from '@/utils/customIconMatcher';
+import { FlashList, FlashListRef } from '@shopify/flash-list';
+import { Stack, useRouter } from "expo-router";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { settings } = useSettings();
-
-  // Get OTP data from context
-  const { data, loading, error, updateServices, fetchData } = useOtpData();
-
-  // Memoize services array to prevent unnecessary re-renders
-  const servicesData = useMemo(() => data?.services || [], [data?.services]);
+  const { services: allServices, status, error } = useVault();
+  const { results: services, setQuery } = useSearch(allServices);
+  const timestamp = useTimestamp();
+  const router = useRouter();
+  const flashListRef = useRef<FlashListRef<Service>>(null);
 
   // Pre-warm icon domain cache when services load so first-scroll lookups are O(1)
   useEffect(() => {
-    if (servicesData.length > 0) {
-      warmIconCache(servicesData);
+    if (allServices.length > 0) {
+      warmIconCache(allServices);
     }
-  }, [servicesData]);
+  }, [allServices]);
 
-  // Search functionality
-  const { services, handleSearch } = useSearch(servicesData);
+  // A just scanned account, highlighted until the list is touched
+  const [highlightedUid, setHighlightedUid] = useState<string | null>(null);
+  useScannedCode(setHighlightedUid);
 
-  // Modal state
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-
-  // Real-time clock update
-  const timestamp = useTimestamp();
-
-  // Handle adding new codes via URL - use full servicesData, not filtered results
-  const { otpurl } = useLocalSearchParams<{ otpurl: string }>();
-  const { recentCodeIndex, addCode, resetRecentCodeIndex } = useCodeManager(servicesData, updateServices);
-
-  // Reference for auto-scrolling
-  const flashListRef = useRef<FlashListRef<Service>>(null);
-
-  // Handle URL parameter for adding new code
+  // Scroll to the highlighted account within the list as shown (it may be filtered by a search)
+  const scrollToAccount = useEffectEvent((uid: string) => {
+    const index = services.findIndex((service) => service.uid === uid);
+    if (index !== -1) {
+      flashListRef.current?.scrollToIndex({ index, animated: true });
+    }
+  });
   useEffect(() => {
-    if (otpurl) {
-      addCode(otpurl);
-    }
-  }, [otpurl, addCode]);
+    if (highlightedUid !== null) scrollToAccount(highlightedUid);
+  }, [highlightedUid]);
 
-  // Scroll to recently added code
-  useEffect(() => {
-    if (recentCodeIndex !== null) {
-      flashListRef.current?.scrollToIndex({ index: recentCodeIndex, animated: true });
-    }
-  }, [recentCodeIndex]);
+  const openEditor = (uid: string) => router.push({ pathname: '/account/[uid]', params: { uid } });
+  const openIconPicker = (uid: string) => router.push({ pathname: '/account/[uid]/icon', params: { uid } });
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
-    }, [fetchData])
-  );
-
-  // Handle touch on the list to reset recent code index
-  const handleListTouch = () => {
-    resetRecentCodeIndex();
-  };
-
-  // Handle long press to open edit modal
-  const handleLongPress = (service: Service) => {
-    setSelectedService(service);
-    setModalVisible(true);
-  };
-
-  // Handle save from modal
-  const handleSaveService = (updatedService: Service) => {
-    if (!data) return;
-
-    const updatedServices = data.services.map(s =>
-      s.uid === updatedService.uid ? updatedService : s
-    );
-    updateServices(updatedServices, true);
-  };
-
-  // Handle icon change from ServiceIcon
-  const handleIconChange = async (serviceUid: string, updatedService: Service) => {
-    if (!data) return;
-
-    const updatedServices = data.services.map(s =>
-      s.uid === serviceUid ? updatedService : s
-    );
-    // Wait for save to complete to prevent race conditions with icon storage
-    await updateServices(updatedServices, true);
-  };
-
-  // Handle delete from modal
-  const handleDeleteService = (serviceUid: string) => {
-    if (!data) return;
-
-    const updatedServices = data.services.filter(s => s.uid !== serviceUid);
-    updateServices(updatedServices);
-  };
-
-  // Show error state
-  if (error) {
-    return <ErrorView message={error} />;
+  if (status === 'error') {
+    return <CenteredMessage title="Error" message={error ?? 'Failed to load your codes'} />;
   }
 
-  // Show loading state
-  if (loading || !data) {
-    return <LoadingView />;
+  if (status === 'loading') {
+    return <CenteredMessage spinner message="Loading..." />;
   }
 
-  // Display list of codes
   return (
     <>
       <Stack.SearchBar
         placeholder="Search accounts"
-        onChangeText={(event) => handleSearch(event.nativeEvent.text)}
-        onCancelButtonPress={() => handleSearch('')}
+        onChangeText={(event) => setQuery(event.nativeEvent.text)}
+        onCancelButtonPress={() => setQuery('')}
         autoFocus={settings.searchOnStartup}
         hideWhenScrolling={false}
         autoCapitalize="none"
@@ -140,31 +72,24 @@ export default function HomeScreen() {
       <FlashList
         ref={flashListRef}
         style={{ backgroundColor: theme.background }}
+        contentContainerStyle={{ paddingTop: 16 }}
         contentInsetAdjustmentBehavior="automatic"
-        onTouchStart={handleListTouch}
+        onTouchStart={() => setHighlightedUid(null)}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         data={services}
-        renderItem={({ item, index }) => (
-          <CodeItem
+        renderItem={({ item }) => (
+          <AccountCard
             service={item}
-            globalTimestamp={timestamp}
-            isHighlighted={recentCodeIndex === index}
-            isFirstItem={index === 0}
-            onLongPress={() => handleLongPress(item)}
-            onIconChange={handleIconChange}
+            now={timestamp}
+            highlighted={item.uid === highlightedUid}
+            onLongPress={() => openEditor(item.uid)}
+            onIconPress={() => openIconPicker(item.uid)}
           />
         )}
         keyExtractor={(item) => item.uid}
         drawDistance={500}
-        extraData={[timestamp, recentCodeIndex]}
-      />
-      <EditCodeModal
-        visible={modalVisible}
-        service={selectedService}
-        onClose={() => setModalVisible(false)}
-        onSave={handleSaveService}
-        onDelete={handleDeleteService}
+        extraData={[timestamp, highlightedUid]}
       />
     </>
   );

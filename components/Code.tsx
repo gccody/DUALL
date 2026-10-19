@@ -18,11 +18,12 @@ interface CodeProps {
     globalTimestamp: number;
     style?: StyleProp<ViewStyle>;
     onLongPress?: () => void;
+    onIconPress?: () => void;
 }
 
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
-export default function Code({ service, globalTimestamp, style, onLongPress }: CodeProps) {
+export default function Code({ service, globalTimestamp, style, onLongPress, onIconPress }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
     const [otpData, setOtpData] = useState<TotpCode>({ otp: '------', expires: Date.now() });
@@ -173,7 +174,7 @@ export default function Code({ service, globalTimestamp, style, onLongPress }: C
                                 service={service}
                                 size={32}
                                 style={styles.serviceIcon}
-                                editable={true}
+                                onPress={onIconPress}
                             />
                             <View style={styles.issuerTextContainer}>
                                 <Text style={[styles.issuerText, { color: theme.text }]}>

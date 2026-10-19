@@ -15,9 +15,9 @@ export interface VaultState {
 }
 
 export type AddFromUriResult =
-  /** `index` is the position of the new or the already existing service */
-  | { result: 'added'; index: number }
-  | { result: 'duplicate'; index: number }
+  /** `uid` and `index` identify the new or the already existing service */
+  | { result: 'added'; uid: string; index: number }
+  | { result: 'duplicate'; uid: string; index: number }
   /** not a usable otpauth:// URI */
   | { result: 'invalid' }
   /** HOTP */
@@ -121,7 +121,8 @@ export function createVaultStore(): VaultStore {
       if (parsed.type !== 'totp') return { result: 'unsupported' };
       return change<AddFromUriResult>((current) => {
         const { list, index, duplicate } = addService(current, parsed);
-        return duplicate ? [current, { result: 'duplicate', index }] : [list, { result: 'added', index }];
+        const { uid } = list[index];
+        return duplicate ? [current, { result: 'duplicate', uid, index }] : [list, { result: 'added', uid, index }];
       });
     },
 

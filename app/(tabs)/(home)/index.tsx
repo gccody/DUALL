@@ -1,73 +1,90 @@
-import { useOtpData } from "@/context/OtpDataContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
+import { useVault } from "@/context/VaultContext";
 import { FlashList, FlashListRef } from '@shopify/flash-list';
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Alert } from "react-native";
 
 import CodeItem from "@/components/CodeItem";
 import EditCodeModal from "@/components/EditCodeModal";
 import ErrorView from "@/components/ErrorView";
 import LoadingView from "@/components/LoadingView";
 
-import { useCodeManager } from "@/hooks/useCodeManager";
 import { useSearch } from "@/hooks/useSearch";
 import { useTimestamp } from "@/hooks/useTimestamp";
 
 import { Service } from '@/types';
 import { warmIconCache } from '@/utils/customIconMatcher';
 
+const reportSaveError = (error: unknown) => {
+  console.error('Failed to save changes:', error);
+  Alert.alert("Error", "Failed to save your changes. Please try again.");
+};
+
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { settings } = useSettings();
-
-  // Get OTP data from context
-  const { data, loading, error, updateServices } = useOtpData();
-
-  // Memoize services array to prevent unnecessary re-renders
-  const servicesData = useMemo(() => data?.services || [], [data?.services]);
+  const { services: allServices, status, error, addFromUri, updateService, deleteService } = useVault();
 
   // Pre-warm icon domain cache when services load so first-scroll lookups are O(1)
   useEffect(() => {
-    if (servicesData.length > 0) {
-      warmIconCache(servicesData);
+    if (allServices.length > 0) {
+      warmIconCache(allServices);
     }
-  }, [servicesData]);
+  }, [allServices]);
 
   // Search functionality
-  const { services, handleSearch } = useSearch(servicesData);
+  const { services, handleSearch } = useSearch(allServices);
 
-  // Modal state
+  // Edit modal: track the uid so the modal always shows the latest stored service
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedUid, setSelectedUid] = useState<string | null>(null);
+  const selectedService = allServices.find((s) => s.uid === selectedUid) ?? null;
 
   // Real-time clock update
   const timestamp = useTimestamp();
 
-  // Handle adding new codes via URL - use full servicesData, not filtered results
+  // Index of a just scanned code, highlighted until the list is touched
+  const [recentCodeIndex, setRecentCodeIndex] = useState<number | null>(null);
+
+  const addCode = useCallback(async (url: string) => {
+    try {
+      const outcome = await addFromUri(url);
+      if (outcome.result === 'invalid') {
+        Alert.alert("Error", "Unable to add code!");
+      } else if (outcome.result === 'unsupported') {
+        Alert.alert("Error", "HOTP is not supported yet");
+      } else {
+        // New code, or the existing one for a duplicate
+        setRecentCodeIndex(outcome.index);
+      }
+    } catch (err) {
+      reportSaveError(err);
+    }
+  }, [addFromUri]);
+
   const { otpurl, scanId } = useLocalSearchParams<{ otpurl?: string; scanId?: string }>();
   const router = useRouter();
   const handledScanRef = useRef<string | null>(null);
-  const { recentCodeIndex, addCode, resetRecentCodeIndex } = useCodeManager(servicesData, updateServices);
 
-  // Reference for auto-scrolling
-  const flashListRef = useRef<FlashListRef<Service>>(null);
-
-  // Handle URL parameter for adding new code. Consume it exactly once per scan:
-  // addCode changes whenever services change, so without this guard deleting or
-  // editing a code would re-run the effect and re-add the scanned code.
+  // Handle URL parameter for adding new code. Consume it exactly once per scan
+  // so a re-render never re-adds it. addFromUri waits for the stored codes to
+  // load, so the new code is never saved over them.
   useEffect(() => {
     if (!otpurl) {
       handledScanRef.current = null;
       return;
     }
     const scanKey = scanId ?? otpurl;
-    // Wait for stored codes to load so the new code isn't saved over them
-    if (!data || handledScanRef.current === scanKey) return;
+    if (handledScanRef.current === scanKey) return;
     handledScanRef.current = scanKey;
     router.setParams({ otpurl: undefined, scanId: undefined });
     addCode(otpurl);
-  }, [otpurl, scanId, data, addCode, router]);
+  }, [otpurl, scanId, addCode, router]);
+
+  // Reference for auto-scrolling
+  const flashListRef = useRef<FlashListRef<Service>>(null);
 
   // Scroll to recently added code
   useEffect(() => {
@@ -78,51 +95,39 @@ export default function HomeScreen() {
 
   // Handle touch on the list to reset recent code index
   const handleListTouch = () => {
-    resetRecentCodeIndex();
+    setRecentCodeIndex(null);
   };
 
   // Handle long press to open edit modal
   const handleLongPress = (service: Service) => {
-    setSelectedService(service);
+    setSelectedUid(service.uid);
     setModalVisible(true);
   };
 
   // Handle save from modal
   const handleSaveService = (updatedService: Service) => {
-    if (!data) return;
-
-    const updatedServices = data.services.map(s =>
-      s.uid === updatedService.uid ? updatedService : s
-    );
-    updateServices(updatedServices, true);
+    updateService(updatedService.uid, {
+      name: updatedService.name,
+      icon: updatedService.icon,
+      otp: { issuer: updatedService.otp.issuer },
+    }).catch(reportSaveError);
   };
 
   // Handle icon change from ServiceIcon
   const handleIconChange = async (serviceUid: string, updatedService: Service) => {
-    if (!data) return;
-
-    const updatedServices = data.services.map(s =>
-      s.uid === serviceUid ? updatedService : s
-    );
-    // Wait for save to complete to prevent race conditions with icon storage
-    await updateServices(updatedServices, true);
+    await updateService(serviceUid, { icon: updatedService.icon }).catch(reportSaveError);
   };
 
   // Handle delete from modal
   const handleDeleteService = (serviceUid: string) => {
-    if (!data) return;
-
-    const updatedServices = data.services.filter(s => s.uid !== serviceUid);
-    updateServices(updatedServices);
+    deleteService(serviceUid).catch(reportSaveError);
   };
 
-  // Show error state
-  if (error) {
-    return <ErrorView message={error} />;
+  if (status === 'error') {
+    return <ErrorView message={error ?? 'Failed to load your codes'} />;
   }
 
-  // Show loading state
-  if (loading || !data) {
+  if (status === 'loading') {
     return <LoadingView />;
   }
 

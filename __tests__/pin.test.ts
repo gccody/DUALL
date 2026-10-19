@@ -4,10 +4,22 @@
 import { createHash as mockCreateHash } from 'crypto';
 
 import {
+  attemptPin,
+  attemptsBeforeLockout,
+  BASE_LOCKOUT_MS,
   clearPin,
+  computeLockout,
+  getLockout,
   hasPin,
   LEGACY_PIN_KEY,
+  lockoutDurationMs,
+  MAX_ATTEMPTS_BEFORE_LOCKOUT,
+  MAX_LOCKOUT_MS,
+  PIN_FAILURES_KEY,
   PIN_HASH_KEY,
+  PIN_LOCKED_UNTIL_KEY,
+  recordFailure,
+  resetFailures,
   setPin,
   verifyPin,
 } from '@/utils/pin';
@@ -110,5 +122,117 @@ describe('legacy plaintext PIN migration', () => {
 
     await expect(verifyPin('2580')).resolves.toBe(true);
     await expect(verifyPin('0000')).resolves.toBe(false);
+  });
+});
+
+describe('computeLockout', () => {
+  const now = 1_700_000_000_000;
+
+  test('no lockout before the threshold', () => {
+    for (let failures = 0; failures < MAX_ATTEMPTS_BEFORE_LOCKOUT; failures++) {
+      expect(computeLockout(failures, now)).toBeNull();
+    }
+  });
+
+  test('locks for 30s at the threshold, doubling on each further failure', () => {
+    expect(MAX_ATTEMPTS_BEFORE_LOCKOUT).toBe(5);
+    expect(BASE_LOCKOUT_MS).toBe(30_000);
+    expect(computeLockout(5, now)).toBe(now + 30_000);
+    expect(computeLockout(6, now)).toBe(now + 60_000);
+    expect(computeLockout(7, now)).toBe(now + 120_000);
+    expect(computeLockout(8, now)).toBe(now + 240_000);
+    expect(computeLockout(9, now)).toBe(now + 480_000);
+  });
+
+  test('caps the lockout at 15 minutes', () => {
+    expect(MAX_LOCKOUT_MS).toBe(15 * 60_000);
+    expect(lockoutDurationMs(10)).toBe(MAX_LOCKOUT_MS);
+    expect(lockoutDurationMs(1000)).toBe(MAX_LOCKOUT_MS);
+    expect(computeLockout(1000, now)).toBe(now + MAX_LOCKOUT_MS);
+  });
+
+  test('attemptsBeforeLockout counts down to zero', () => {
+    expect(attemptsBeforeLockout(0)).toBe(5);
+    expect(attemptsBeforeLockout(4)).toBe(1);
+    expect(attemptsBeforeLockout(5)).toBe(0);
+    expect(attemptsBeforeLockout(9)).toBe(0);
+  });
+});
+
+describe('persisted lockout', () => {
+  const start = 1_700_000_000_000;
+
+  beforeEach(async () => {
+    await setPin('1234');
+  });
+
+  async function failTimes(count: number, now: number) {
+    for (let i = 0; i < count; i++) {
+      await attemptPin('0000', now);
+    }
+  }
+
+  test('wrong PINs below the threshold do not lock', async () => {
+    await failTimes(4, start);
+    await expect(getLockout(start)).resolves.toEqual({ failures: 4, lockedUntil: null });
+  });
+
+  test('the 5th wrong PIN locks for 30s and the state survives a restart', async () => {
+    await failTimes(5, start);
+
+    // Lockout is read back from storage, as it would be after killing the app.
+    expect(mockStore.get(PIN_FAILURES_KEY)).toBe('5');
+    expect(mockStore.get(PIN_LOCKED_UNTIL_KEY)).toBe(String(start + 30_000));
+    await expect(getLockout(start + 1_000)).resolves.toEqual({ failures: 5, lockedUntil: start + 30_000 });
+  });
+
+  test('the correct PIN is rejected while locked, without counting a failure', async () => {
+    await failTimes(5, start);
+
+    const result = await attemptPin('1234', start + 10_000);
+    expect(result).toEqual({ ok: false, lockout: { failures: 5, lockedUntil: start + 30_000 } });
+    expect(mockStore.get(PIN_FAILURES_KEY)).toBe('5');
+  });
+
+  test('each failure after the lockout expires doubles the next lockout', async () => {
+    await failTimes(5, start);
+    const afterFirst = start + 30_000;
+
+    const second = await attemptPin('0000', afterFirst);
+    expect(second).toEqual({ ok: false, lockout: { failures: 6, lockedUntil: afterFirst + 60_000 } });
+
+    const afterSecond = afterFirst + 60_000;
+    const third = await attemptPin('0000', afterSecond);
+    expect(third).toEqual({ ok: false, lockout: { failures: 7, lockedUntil: afterSecond + 120_000 } });
+  });
+
+  test('the correct PIN after the lockout expires unlocks and resets the counter', async () => {
+    await failTimes(5, start);
+
+    await expect(attemptPin('1234', start + 30_000)).resolves.toEqual({ ok: true });
+    expect(mockStore.has(PIN_FAILURES_KEY)).toBe(false);
+    expect(mockStore.has(PIN_LOCKED_UNTIL_KEY)).toBe(false);
+    await expect(getLockout(start + 30_000)).resolves.toEqual({ failures: 0, lockedUntil: null });
+  });
+
+  test('a deadline pushed far into the future by a clock change is clamped', async () => {
+    await failTimes(5, start);
+    // The clock is moved back by a day.
+    const earlier = start - 24 * 60 * 60 * 1000;
+
+    await expect(getLockout(earlier)).resolves.toEqual({ failures: 5, lockedUntil: earlier + 30_000 });
+    expect(mockStore.get(PIN_LOCKED_UNTIL_KEY)).toBe(String(earlier + 30_000));
+  });
+
+  test('recordFailure and resetFailures manage the counter directly', async () => {
+    await expect(recordFailure(start)).resolves.toEqual({ failures: 1, lockedUntil: null });
+    await resetFailures();
+    await expect(getLockout(start)).resolves.toEqual({ failures: 0, lockedUntil: null });
+  });
+
+  test('setting a new PIN clears the lockout', async () => {
+    await failTimes(5, start);
+    await setPin('5678');
+    await expect(getLockout(start)).resolves.toEqual({ failures: 0, lockedUntil: null });
   });
 });

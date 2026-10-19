@@ -1,7 +1,7 @@
 import { useTheme } from '@/context/ThemeContext';
 import * as PinStore from '@/utils/pin';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Dimensions,
@@ -14,8 +14,8 @@ import {
 
 interface PinAuthViewProps {
   onPinSuccess: () => void;
-  onPinFailure: (error: string) => void;
-  maxAttempts?: number;
+  /** Called when too many wrong PINs trigger a lockout. */
+  onPinFailure?: (error: string) => void;
   pinLength?: number;
   /** Always show the "set a PIN" flow, even if a PIN is already stored. */
   forceSetup?: boolean;
@@ -24,7 +24,6 @@ interface PinAuthViewProps {
 const PinAuthView: React.FC<PinAuthViewProps> = ({
   onPinSuccess,
   onPinFailure,
-  maxAttempts = 3,
   pinLength = 4,
   forceSetup = false,
 }) => {
@@ -33,25 +32,62 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   const [confirmPin, setConfirmPin] = useState('');
   const [originalPin, setOriginalPin] = useState('');
   const [isConfirming, setIsConfirming] = useState(false);
-  const [attempts, setAttempts] = useState(0);
   const [showError, setShowError] = useState(false);
   const [isSettingNewPin, setIsSettingNewPin] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [lockedUntil, setLockedUntil] = useState<number | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  // Set while a complete PIN is being checked, so extra taps can't submit it twice.
+  const isSubmitting = useRef(false);
 
-  // Check if there's an existing PIN in secure storage
-  useEffect(() => {
-    checkExistingPin();
-  }, []);
+  const isLocked = lockedUntil !== null;
 
-  const checkExistingPin = async () => {
-    if (forceSetup || !(await PinStore.hasPin())) {
-      setIsSettingNewPin(true);
-    } else {
-      setIsSettingNewPin(false);
-    }
+  const startLockout = (until: number) => {
+    setNow(Date.now());
+    setLockedUntil(until);
   };
 
+  // Check if there's an existing PIN in secure storage, and restore any lockout
+  useEffect(() => {
+    let cancelled = false;
+
+    const checkExistingPin = async () => {
+      const needsSetup = forceSetup || !(await PinStore.hasPin());
+      if (cancelled) return;
+      setIsSettingNewPin(needsSetup);
+      if (needsSetup) return;
+
+      const lockout = await PinStore.getLockout();
+      if (!cancelled && lockout.lockedUntil !== null) {
+        setNow(Date.now());
+        setLockedUntil(lockout.lockedUntil);
+      }
+    };
+
+    checkExistingPin();
+    return () => {
+      cancelled = true;
+    };
+  }, [forceSetup]);
+
+  // Tick the lockout countdown and re-enable the keypad when it ends
+  useEffect(() => {
+    if (lockedUntil === null) return;
+
+    const interval = setInterval(() => {
+      const current = Date.now();
+      if (current >= lockedUntil) {
+        setLockedUntil(null);
+      } else {
+        setNow(current);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockedUntil]);
+
   const handlePinInput = async (value: string) => {
+    if (isSubmitting.current || isLocked) return;
+
     // Only allow numbers
     const numericValue = value.replace(/[^0-9]/g, '');
 
@@ -61,6 +97,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
 
       // Auto-submit when PIN is complete
       if (newConfirmPin.length === pinLength) {
+        isSubmitting.current = true;
         setTimeout(() => {
           handlePinSubmit(newConfirmPin);
         }, 100); // Small delay for visual feedback
@@ -71,6 +108,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
 
       // Auto-submit when PIN is complete
       if (newPin.length === pinLength) {
+        isSubmitting.current = true;
         setTimeout(() => {
           handlePinSubmit(newPin);
         }, 100); // Small delay for visual feedback
@@ -85,10 +123,20 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   };
 
   const handlePinSubmit = async (submittedPin?: string) => {
-    if (isSettingNewPin) {
-      handleNewPinSetup(submittedPin);
-    } else {
-      await handlePinAuthentication(submittedPin);
+    try {
+      if (isSettingNewPin) {
+        await handleNewPinSetup(submittedPin);
+      } else {
+        await handlePinAuthentication(submittedPin);
+      }
+    } catch (error) {
+      console.error('PIN submission failed:', error);
+      setErrorMessage('Something went wrong. Please try again.');
+      setShowError(true);
+      setPin('');
+      setConfirmPin('');
+    } finally {
+      isSubmitting.current = false;
     }
   };
 
@@ -128,25 +176,29 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       return;
     }
 
-    if (await PinStore.verifyPin(pinToCheck)) {
+    const result = await PinStore.attemptPin(pinToCheck);
+    if (result.ok) {
       onPinSuccess();
-    } else {
-      const newAttempts = attempts + 1;
-      setAttempts(newAttempts);
+      return;
+    }
 
-      if (newAttempts >= maxAttempts) {
-        setErrorMessage(`Maximum attempts (${maxAttempts}) exceeded`);
-        setShowError(true);
-        onPinFailure('Maximum PIN attempts exceeded');
-      } else {
-        setErrorMessage(`Invalid PIN. ${maxAttempts - newAttempts} attempts remaining`);
-        setShowError(true);
-        setPin('');
-      }
+    setPin('');
+    const { failures, lockedUntil: lockoutEnd } = result.lockout;
+    if (lockoutEnd !== null) {
+      setShowError(false);
+      setErrorMessage('');
+      startLockout(lockoutEnd);
+      onPinFailure?.('Too many incorrect PIN attempts');
+    } else {
+      const remaining = PinStore.attemptsBeforeLockout(failures);
+      setErrorMessage(`Invalid PIN. ${remaining} ${remaining === 1 ? 'attempt' : 'attempts'} remaining`);
+      setShowError(true);
     }
   };
 
   const handleBackspace = () => {
+    if (isSubmitting.current || isLocked) return;
+
     if (isConfirming) {
       setConfirmPin(confirmPin.slice(0, -1));
     } else {
@@ -203,8 +255,9 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
                 return (
                   <TouchableOpacity
                     key={colIndex}
-                    style={[styles.numpadButton, { backgroundColor: theme.cardBackground }]}
+                    style={[styles.numpadButton, { backgroundColor: theme.cardBackground }, isLocked && styles.numpadButtonDisabled]}
                     onPress={handleBackspace}
+                    disabled={isLocked}
                     activeOpacity={0.7}
                   >
                     <FontAwesome name="chevron-left" size={24} color={theme.text} />
@@ -215,8 +268,9 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
               return (
                 <TouchableOpacity
                   key={colIndex}
-                  style={[styles.numpadButton, { backgroundColor: theme.cardBackground }]}
+                  style={[styles.numpadButton, { backgroundColor: theme.cardBackground }, isLocked && styles.numpadButtonDisabled]}
                   onPress={() => handlePinInput((isConfirming ? confirmPin : pin) + num)}
+                  disabled={isLocked}
                   activeOpacity={0.7}
                 >
                   <Text style={[styles.numpadText, { color: theme.text }]}>{num}</Text>
@@ -253,7 +307,15 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
 
         {renderPinDots()}
 
-        {showError && (
+        {isLocked && (
+          <View style={styles.errorContainer}>
+            <Text style={[styles.errorText, { color: theme.danger }]}>
+              Too many incorrect attempts. Try again in {formatCountdown(lockedUntil - now)}.
+            </Text>
+          </View>
+        )}
+
+        {showError && !isLocked && (
           <View style={styles.errorContainer}>
             <Text style={[styles.errorText, { color: theme.danger }]}>
               {errorMessage}
@@ -277,6 +339,14 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     </KeyboardAvoidingView>
   );
 };
+
+/** Formats a remaining duration as m:ss, rounding up so it never shows 0:00 while locked. */
+function formatCountdown(ms: number): string {
+  const totalSeconds = Math.max(1, Math.ceil(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
 
 const { height } = Dimensions.get('window');
 
@@ -341,6 +411,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  numpadButtonDisabled: {
+    opacity: 0.4,
   },
   emptyButton: {
     width: 70,

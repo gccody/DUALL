@@ -19,7 +19,7 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 
 ## 🧰 Tech Stack
 
-- Expo (SDK 48+)  
+- Expo (SDK 58)  
 - React Native & TypeScript  
 - expo-secure-store for encrypted storage  
 - react-native-crypto / js-otp for TOTP  
@@ -40,7 +40,7 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 
 ### Prerequisites
 
-- Node.js ≥ 16.x  
+- Node.js 22.13+ or 24.3+  
 - Yarn or npm  
 - Expo CLI  
 - iOS Simulator or Android Emulator (or a physical device)

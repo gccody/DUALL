@@ -1,7 +1,7 @@
 import { useTheme } from '@/context/ThemeContext';
 import { FontAwesome } from '@expo/vector-icons';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, TextInput, TextInputInstance, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface SearchBarProps {
@@ -16,7 +16,7 @@ export function SearchBar({ isVisible, text, onSearch }: SearchBarProps) {
     const [value, setValue] = useState(text);
     const translateAnim = useRef(new Animated.Value(isVisible ? 0 : -100)).current;
     const opacityAnim = useRef(new Animated.Value(isVisible ? 1 : 0)).current;
-    const inputRef = useRef<TextInput>(null);
+    const inputRef = useRef<TextInputInstance>(null);
     const prevVisibleRef = useRef<boolean>(isVisible);
     const initialMountRef = useRef<boolean>(true);
 

@@ -78,3 +78,56 @@ describe("Bitwarden JSON import", () => {
     );
   });
 });
+
+const CSV_HEADER = "folder,favorite,type,name,notes,fields,reprompt,login_uri,login_username,login_password,login_totp";
+
+describe("Bitwarden CSV import", () => {
+  test("parses quoted fields containing commas, quotes and line breaks", () => {
+    const csv = [
+      CSV_HEADER,
+      'Work,1,login,"Acme, Inc.","Line one\nline ""two"", with comma",,0,https://acme.com,"jane,doe",p@ss,"otpauth://totp/Acme:jane?secret=JBSWY3DPEHPK3PXP&issuer=Acme%2C%20Inc.&period=60"',
+      ',,login,"Bank ""Gold""",,,0,,joe,secret,GEZDGNBVGY3TQOJQ',
+      ",,login,No TOTP,,,0,,someone,pw,",
+      ",,note,A note,text,,0,,,,",
+    ].join("\r\n");
+
+    expect(bitwarden.parse(csv)).toEqual([
+      {
+        type: "totp",
+        account: "jane",
+        issuer: "Acme, Inc.",
+        secret: "JBSWY3DPEHPK3PXP",
+        algorithm: "SHA-1",
+        digits: 6,
+        period: 60,
+      },
+      {
+        type: "totp",
+        account: "joe",
+        issuer: 'Bank "Gold"',
+        secret: "GEZDGNBVGY3TQOJQ",
+        algorithm: "SHA-1",
+        digits: 6,
+        period: 30,
+      },
+    ]);
+  });
+
+  test("uses the CSV name and username when the URI has no label", () => {
+    const csv = `${CSV_HEADER}\n,,login,"Shop, Ltd",,,0,,"a,b",pw,otpauth://totp/?secret=JBSWY3DPEHPK3PXP`;
+    expect(bitwarden.parse(csv)).toEqual([expect.objectContaining({ issuer: "Shop, Ltd", account: "a,b" })]);
+  });
+
+  test("accepts organization exports and a plain `totp` column", () => {
+    const org =
+      "collections,type,name,notes,fields,reprompt,login_uri,login_username,login_password,login_totp\nEng,login,Jira,,,0,,ann,pw,JBSWY3DPEHPK3PXP\n";
+    expect(bitwarden.parse(org)).toEqual([expect.objectContaining({ issuer: "Jira", account: "ann" })]);
+
+    const legacy = "name,uri,username,password,totp\nGitLab,https://gitlab.com,bo,pw,JBSWY3DPEHPK3PXP";
+    expect(bitwarden.parse(legacy)).toEqual([expect.objectContaining({ issuer: "GitLab", account: "bo" })]);
+  });
+
+  test("rejects a CSV without a TOTP column", () => {
+    expect(() => bitwarden.parse("name,login_username\nx,y")).toThrow(/login_totp/);
+  });
+});

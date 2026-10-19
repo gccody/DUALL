@@ -8,7 +8,7 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
-import ProgressBar from "../ProgressBar";
+import ProgressBar from "@/components/ui/ProgressBar";
 import ServiceIcon from "./ServiceIcon";
 
 interface AccountCardProps {
@@ -186,7 +186,7 @@ export default function AccountCard({ service, now, highlighted = false, style, 
                 <ProgressBar
                     progress={remainingPercentage}
                     fillColor={progressBarColor}
-                    backgroundColor={theme.progressBarBackground}
+                    trackColor={theme.progressBarBackground}
                     borderRadius={2}
                     height={5}
                     style={styles.progressBar}

@@ -9,15 +9,13 @@ const SEARCH_OPTIONS: IFuseOptions<Service> = {
 };
 
 /** Fuzzy search over services by name and issuer. An empty query returns all of them. */
-export function useSearch(allServices: Service[]) {
+export function useSearch(services: Service[]) {
   const [query, setQuery] = useState('');
 
-  // Derived during render; React Compiler memoizes it per `allServices`/`query`.
-  const services = query === ''
-    ? allServices
-    : new Fuse(allServices, SEARCH_OPTIONS).search(query).map((result) => result.item);
+  // Derived during render; React Compiler memoizes it per `services`/`query`.
+  const results = query === ''
+    ? services
+    : new Fuse(services, SEARCH_OPTIONS).search(query).map((result) => result.item);
 
-  const handleSearch = (text: string) => setQuery(text);
-
-  return { services, handleSearch };
+  return { results, query, setQuery };
 }

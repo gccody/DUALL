@@ -116,17 +116,20 @@ describe("loading", () => {
     await storage.saveServices([service("a")]);
     const store = createVaultStore();
     const result = await store.addFromUri(uri("x")); // load() not called yet
-    expect(result).toEqual({ result: "added", index: 1 });
+    expect(result).toMatchObject({ result: "added", index: 1 });
     expect(await stored()).toEqual(["a", "x"]);
   });
 });
 
 describe("addFromUri", () => {
-  test("adds a TOTP account and returns its index", async () => {
+  test("adds a TOTP account and returns its uid and index", async () => {
     const store = createVaultStore();
-    expect(await store.addFromUri(uri("x"))).toEqual({ result: "added", index: 0 });
-    expect(await store.addFromUri(uri("y"))).toEqual({ result: "added", index: 1 });
-    expect(store.getState().services.map((s) => s.name)).toEqual(["x", "y"]);
+    const x = await store.addFromUri(uri("x"));
+    const y = await store.addFromUri(uri("y"));
+    const services = store.getState().services;
+    expect(x).toEqual({ result: "added", uid: services[0].uid, index: 0 });
+    expect(y).toEqual({ result: "added", uid: services[1].uid, index: 1 });
+    expect(services.map((s) => s.name)).toEqual(["x", "y"]);
     expect(await stored()).toEqual(["x", "y"]);
   });
 
@@ -135,7 +138,8 @@ describe("addFromUri", () => {
     await store.addFromUri(uri("x"));
     await store.addFromUri(uri("y"));
     mock.secureStoreMock.setItemAsync.mockClear();
-    expect(await store.addFromUri(uri("X"))).toEqual({ result: "duplicate", index: 0 });
+    const existing = store.getState().services[0];
+    expect(await store.addFromUri(uri("X"))).toEqual({ result: "duplicate", uid: existing.uid, index: 0 });
     expect(mock.secureStoreMock.setItemAsync).not.toHaveBeenCalled();
     expect(store.getState().services).toHaveLength(2);
   });

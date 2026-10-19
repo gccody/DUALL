@@ -10,11 +10,11 @@ interface ServiceIconProps {
     service: Service;
     size?: number;
     style?: StyleProp<ViewStyle>;
+    /** Tapping opens the icon picker, which saves the choice to the vault */
     editable?: boolean;
-    onIconSelected?: (domain: string, icon: any, updatedService?: Service) => Promise<void>;
 }
 
-function ServiceIcon({ service, size = 40, style, editable = false, onIconSelected }: ServiceIconProps) {
+function ServiceIcon({ service, size = 40, style, editable = false }: ServiceIconProps) {
     const { theme } = useTheme();
     const [showFaviconPicker, setShowFaviconPicker] = useState(false);
 
@@ -39,12 +39,6 @@ function ServiceIcon({ service, size = 40, style, editable = false, onIconSelect
     const handlePress = () => {
         if (editable) {
             setShowFaviconPicker(true);
-        }
-    };
-
-    const handleFaviconSelected = async (domain: string, icon: any, updatedService?: Service) => {
-        if (onIconSelected) {
-            await onIconSelected(domain, icon, updatedService);
         }
     };
 
@@ -93,7 +87,6 @@ function ServiceIcon({ service, size = 40, style, editable = false, onIconSelect
                     service={service}
                     isVisible={showFaviconPicker}
                     onClose={() => setShowFaviconPicker(false)}
-                    onIconSelected={handleFaviconSelected}
                 />
             )}
         </>
@@ -110,8 +103,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Custom comparator: ignore onIconSelected (only fired on tap, never during scroll).
-// Re-render only when the visible state actually changes.
+// Custom comparator: re-render only when the visible state actually changes.
 export default React.memo(ServiceIcon, (prev, next) =>
     prev.service.uid === next.service.uid &&
     prev.service.icon?.label === next.service.icon?.label &&

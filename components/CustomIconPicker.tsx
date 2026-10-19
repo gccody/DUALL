@@ -1,10 +1,12 @@
 import { useTheme } from '@/context/ThemeContext';
+import { useVault } from '@/context/VaultContext';
 import { Service } from '@/types';
 import { searchCustomIcons } from '@/utils/customIconMatcher';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
   Image,
   Modal,
@@ -20,7 +22,6 @@ interface CustomIconPickerProps {
   service: Service;
   isVisible: boolean;
   onClose: () => void;
-  onIconSelected: (domain: string, icon: any, updatedService?: Service) => Promise<void>;
 }
 
 interface CustomIconItem {
@@ -29,8 +30,10 @@ interface CustomIconItem {
   icon: any;
 }
 
-export default function CustomIconPicker({ service, isVisible, onClose, onIconSelected }: CustomIconPickerProps) {
+/** Lets the user pick a bundled icon for `service`; the choice is saved immediately. */
+export default function CustomIconPicker({ service, isVisible, onClose }: CustomIconPickerProps) {
   const { theme } = useTheme();
+  const { updateService } = useVault();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredIcons, setFilteredIcons] = useState<CustomIconItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -63,14 +66,11 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
   const handleIconSelect = async (item: CustomIconItem) => {
     setLoading(true);
     try {
-      const updatedService: Service = {
-        ...service,
-        icon: { label: item.domain }
-      };
-      await onIconSelected(item.domain, item.icon, updatedService);
+      await updateService(service.uid, { icon: { label: item.domain } });
       onClose();
     } catch (error) {
       console.error('Error selecting icon:', error);
+      Alert.alert('Error', 'Failed to save the icon. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -79,13 +79,11 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
   const handleRemoveCustomIcon = async () => {
     setLoading(true);
     try {
-      const updatedService: Service = {
-        ...service,
-        icon: { label: 'none' }
-      };
-      await onIconSelected('none', null, updatedService);
+      // 'none' records that the user removed the icon (no auto-match either)
+      await updateService(service.uid, { icon: { label: 'none' } });
     } catch (error) {
       console.error('Error removing icon:', error);
+      Alert.alert('Error', 'Failed to remove the icon. Please try again.');
     } finally {
       setLoading(false);
       onClose();

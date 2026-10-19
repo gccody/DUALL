@@ -32,37 +32,32 @@ export default function EditCodeModal({
   const { theme } = useTheme();
   const [issuer, setIssuer] = useState(service?.otp.issuer || '');
   const [label, setLabel] = useState(service?.name || '');
-  const [currentService, setCurrentService] = useState(service);
 
-  // Update local state when service changes
+  // Reset the form when the modal opens or shows another service, but not when
+  // the shown service changes (an icon pick is saved immediately).
+  const uid = service?.uid;
   React.useEffect(() => {
     if (service) {
       setIssuer(service.otp.issuer);
       setLabel(service.name);
-      setCurrentService(service);
     }
-  }, [service]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uid, visible]);
 
   const handleSave = () => {
-    if (!currentService) return;
+    if (!service) return;
 
     const updatedService: Service = {
-      ...currentService,
+      ...service,
       name: label,
       otp: {
-        ...currentService.otp,
+        ...service.otp,
         issuer: issuer
       }
     };
 
     onSave(updatedService);
     onClose();
-  };
-
-  const handleIconSelected = async (domain: string, icon: any, updatedService?: Service) => {
-    if (updatedService) {
-      setCurrentService(updatedService);
-    }
   };
 
   const handleDelete = () => {
@@ -88,7 +83,7 @@ export default function EditCodeModal({
     );
   };
 
-  if (!service || !currentService) return null;
+  if (!service) return null;
 
   return (
     <Modal
@@ -108,10 +103,9 @@ export default function EditCodeModal({
         <View style={styles.content}>
           <View style={styles.iconContainer}>
             <ServiceIcon
-              service={currentService || service}
+              service={service}
               size={64}
               editable={true}
-              onIconSelected={handleIconSelected}
             />
           </View>
 

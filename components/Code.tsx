@@ -1,14 +1,12 @@
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
-import { generateTotp, TotpCode } from "@/core/otp/totp";
-import { getTotpParams } from "@/core/service";
+import { useTotp } from "@/hooks/useTotp";
 import { Service } from "@/types";
 import { formatOtp, maskOtp } from "@/utils/formatOtp";
-import { getTimeRemaining } from "@/utils/time";
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
 import ProgressBar from "./ProgressBar";
 import ServiceIcon from "./ServiceIcon";
@@ -26,9 +24,7 @@ const PERCENTAGE_LEFT_REVEAL = 0.2;
 export default function Code({ service, globalTimestamp, style, onLongPress, onIconPress }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
-    const [otpData, setOtpData] = useState<TotpCode>({ otp: '------', expires: Date.now() });
-    const [nextOtpData, setNextOtpData] = useState<TotpCode>({ otp: '------', expires: Date.now() })
-    const [isError, setIsError] = useState(false);
+    const { code, nextCode, digits, secondsLeft: timeLeft, fraction: remainingPercentage, error: isError } = useTotp(service, globalTimestamp);
     const [hideToken, setHideToken] = useState(settings.hideTokens);
 
     // Animation values for the next token slide-in
@@ -43,52 +39,6 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
         setHideToken(settings.hideTokens);
     }, [settings.hideTokens]);
 
-    // Derive TOTP parameters from the account itself (getTotpParams normalizes
-    // legacy stored data). Memoized on the values so codes only regenerate
-    // after an edit.
-    const { algorithm, digits, period } = getTotpParams(service);
-    const totpOptions = useMemo(() => ({ algorithm, digits, period }), [algorithm, digits, period]);
-
-    // Calculate the next token
-    const calculateNextToken = useCallback((currentExpires: number) => {
-        try {
-            // Set the timestamp to just after the current token expires
-            const nextTimestamp = currentExpires + 1;
-            const nextOtp = generateTotp(service.secret, totpOptions, nextTimestamp);
-            setNextOtpData(nextOtp);
-        } catch (e) {
-            console.error("Failed to generate next token:", e);
-        }
-    }, [service.secret, totpOptions]);
-
-    const generateAndSetOTP = useCallback(() => {
-        try {
-            const newOtp = generateTotp(service.secret, totpOptions);
-            setOtpData(newOtp);
-            setIsError(false);
-
-            // Calculate the next token whenever we generate a new one
-            calculateNextToken(newOtp.expires);
-        } catch (e) {
-            console.error(e);
-            setIsError(true);
-            setOtpData({ otp: 'Error!', expires: Date.now() + totpOptions.period * 1000 });
-        }
-    }, [service.secret, totpOptions, calculateNextToken]);
-
-    // Regenerate immediately when the secret or OTP options change (e.g. after an edit)
-    useEffect(() => {
-        generateAndSetOTP();
-    }, [generateAndSetOTP]);
-
-    // Refresh OTP when it expires
-    useEffect(() => {
-        if (globalTimestamp >= otpData.expires) {
-            generateAndSetOTP();
-        }
-    }, [globalTimestamp, otpData.expires, generateAndSetOTP]);
-
-    const { seconds: timeLeft, fraction: remainingPercentage } = getTimeRemaining(otpData.expires, globalTimestamp, totpOptions.period);
     const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
     const showNextToken = settings.showNextToken && remainingPercentage < PERCENTAGE_LEFT_REVEAL && !isError && !hideToken;
 
@@ -135,7 +85,7 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
     // Format the OTP code with a space in the middle
     const formattedOTP = (code: string) => {
         if (hideToken) {
-            return maskOtp(totpOptions.digits);
+            return maskOtp(digits);
         }
         return formatOtp(code);
     };
@@ -150,7 +100,7 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
         // Keyboard.dismiss();
 
         // Copy code to clipboard
-        await Clipboard.setStringAsync(otpData.otp);
+        await Clipboard.setStringAsync(code);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         // Show notification if enabled
@@ -189,7 +139,7 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
                         </View>
                         <View style={styles.codeContainer}>
                             <Text style={[styles.codeText, { color: theme.text }]}>
-                                {formattedOTP(otpData.otp)}
+                                {formattedOTP(code)}
                             </Text>
                             <TouchableOpacity
                                 onPress={toggleHideToken}
@@ -214,7 +164,7 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
                                 >
                                     <FontAwesome name="arrow-right" size={14} color={theme.accent} style={styles.nextTokenIcon} />
                                     <Text style={[styles.nextTokenText, { color: theme.accent }]}>
-                                        {formattedOTP(nextOtpData.otp)}
+                                        {formattedOTP(nextCode)}
                                     </Text>
                                 </Animated.View>
                             )}

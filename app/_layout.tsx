@@ -2,9 +2,9 @@ import LoadingView from "@/components/LoadingView";
 import PinAuthView from "@/components/PinAuthView";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
 import { ThemeProvider, useTheme } from "@/context/ThemeContext";
+import { hasPin } from "@/utils/pin";
 import * as LocalAuthentication from 'expo-local-authentication';
 import { Stack } from "expo-router";
-import * as SecureStore from 'expo-secure-store';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -18,10 +18,9 @@ function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkPinAndAuthenticate = async () => {
-      // await SecureStore.deleteItemAsync('user_pin');     // Un-comment in order to reset the pin during dev
       // Check if PIN exists
-      const storedPin = await SecureStore.getItemAsync('user_pin');
-      setPinExists(!!storedPin);
+      const storedPin = await hasPin();
+      setPinExists(storedPin);
 
       if (!storedPin) {
         // No PIN exists, show PIN setup

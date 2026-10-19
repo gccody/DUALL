@@ -1,6 +1,6 @@
 import { useTheme } from '@/context/ThemeContext';
+import * as PinStore from '@/utils/pin';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
@@ -41,8 +41,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   }, []);
 
   const checkExistingPin = async () => {
-    const storedPin = await SecureStore.getItemAsync('user_pin');
-    if (!storedPin) {
+    if (!(await PinStore.hasPin())) {
       setIsSettingNewPin(true);
     } else {
       setIsSettingNewPin(false);
@@ -110,7 +109,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       }
 
       // Save the PIN to secure storage
-      await savePinToSecureStorage(originalPin);
+      await PinStore.setPin(originalPin);
       onPinSuccess();
     }
   };
@@ -119,17 +118,14 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     // Use the submitted PIN or fall back to state
     const pinToCheck = submittedPin || pin;
 
-    // Verify against stored PIN
-    const storedPin = await SecureStore.getItemAsync('user_pin');
-
-    if (!storedPin) {
+    if (!(await PinStore.hasPin())) {
       // No PIN stored, this shouldn't happen in normal flow
       setErrorMessage('No PIN found. Please reset your PIN.');
       setShowError(true);
       return;
     }
 
-    if (pinToCheck === storedPin) {
+    if (await PinStore.verifyPin(pinToCheck)) {
       onPinSuccess();
     } else {
       const newAttempts = attempts + 1;
@@ -145,11 +141,6 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
         setPin('');
       }
     }
-  };
-
-  const savePinToSecureStorage = async (pinToSave: string) => {
-    // Save the PIN to secure storage
-    await SecureStore.setItemAsync('user_pin', pinToSave);
   };
 
   const handleBackspace = () => {

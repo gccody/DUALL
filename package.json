@@ -1,18 +1,16 @@
 {
-  "name": "totp",
+  "name": "duall",
   "main": "expo-router/entry",
   "version": "1.0.0-alpha2",
   "homepage": "https://github.com/gccody/DUALL",
   "scripts": {
     "start": "bun x expo start",
     "start:remote": "bun x expo start --tunnel",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "bun x expo run:android",
     "build:dev:android": "EAS_SKIP_AUTO_FINGERPRINT=1 bun x eas-cli@latest build --platform android --profile development",
     "build:dev:ios": "EAS_SKIP_AUTO_FINGERPRINT=1 bun x eas-cli@latest build --platform ios --profile development",
     "build:dev": "EAS_SKIP_AUTO_FINGERPRINT=1 bun x eas-cli@latest build --profile development",
     "ios": "bun x expo run:ios",
-    "web": "bun x expo start --web",
     "test": "jest --runInBand --passWithNoTests",
     "lint": "bun x expo lint",
     "fetch:data": "bun run scripts/scrapeTotp.ts",
@@ -29,9 +27,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "@shopify/flash-list": "2.0.2",
     "crypto-es": "^2.1.0",
-    "crypto-js": "^4.2.0",
     "expo": "~57.0.6",
-    "expo-blur": "~57.0.2",
     "expo-clipboard": "~57.0.1",
     "expo-constants": "~57.0.5",
     "expo-crypto": "~57.0.1",
@@ -61,10 +57,7 @@
     "react-native-screens": "4.25.2",
     "react-native-svg": "15.15.4",
     "react-native-vision-camera": "^4.6.4",
-    "react-native-web": "^0.21.2",
-    "react-native-webview": "13.16.1",
-    "react-native-worklets": "0.10.0",
-    "uuid": "^11.1.0"
+    "react-native-worklets": "0.10.0"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.11.6",

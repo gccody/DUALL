@@ -19,12 +19,14 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 
 ## 🧰 Tech Stack
 
-- Expo (SDK 48+)  
+- Expo (SDK 57) with a custom dev client  
 - React Native & TypeScript  
 - expo-secure-store for encrypted storage  
-- react-native-crypto / js-otp for TOTP  
+- crypto-es / hi-base32 for TOTP generation  
 - expo-local-authentication for biometrics  
-- react-navigation for screen flows  
+- expo-router for screen flows  
+- react-native-vision-camera for QR scanning  
+- Bun for package management and scripts, Jest (jest-expo) for tests  
 
 ---
 
@@ -40,43 +42,73 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 
 ### Prerequisites
 
-- Node.js ≥ 16.x  
-- Yarn or npm  
-- Expo CLI  
-- iOS Simulator or Android Emulator (or a physical device)
+- [Bun](https://bun.sh) ≥ 1.4 (package manager and script runner)  
+- Node.js LTS (used by the Expo CLI under the hood)  
+- Xcode (iOS) and/or Android Studio with an emulator, or a physical device  
+- An [Expo](https://expo.dev) account if you want to build with EAS  
 
-```bash
-npm install --global expo-cli
-```
+No global Expo CLI is needed; every command runs the project-local CLI through `bun x expo`.
+
+> DUALL uses native modules (camera, secure store, biometrics) that are not part of Expo Go,
+> so it runs in a custom **development build** rather than in Expo Go.
 
 ### Installation
 
 ```bash
-git clone https://github.com/<your-username>/duall.git
-cd duall
-yarn install
+git clone https://github.com/gccody/DUALL.git
+cd DUALL
+bun install
 ```
 
 ### Running the App
 
-Start Metro bundler:
+Build and install the dev client locally, then launch it (needs Xcode / Android Studio):
 
 ```bash
-yarn start
-```
-
-Then, in the Expo DevTools:
-
-- Press **a** to launch on Android emulator/device  
-- Press **i** to launch on iOS simulator/device  
-
-Or run directly:
-
-```bash
-expo run:android
+bun run android
 # or
-expo run:ios
+bun run ios
 ```
+
+Once a development build is installed on your device or simulator, you only need Metro:
+
+```bash
+bun run start          # start Metro for the dev client
+bun run start:remote   # same, through a tunnel (device on another network)
+```
+
+In the Metro terminal press **a** to open Android or **i** to open iOS.
+
+### Development Builds with EAS
+
+If you don't want to build locally, EAS can build and host the dev client for you:
+
+```bash
+bun run build:dev:android   # Android development build
+bun run build:dev:ios       # iOS development build (registered devices)
+bun run build:dev           # both platforms
+```
+
+These scripts set `EAS_SKIP_AUTO_FINGERPRINT=1` with POSIX shell syntax, so on Windows run them
+from Git Bash or WSL.
+
+### Scripts
+
+| Command | What it does |
+| --- | --- |
+| `bun run start` | Start Metro for the development build |
+| `bun run android` / `bun run ios` | Build the native app locally and run it |
+| `bun run build:dev[:android\|:ios]` | Create a development build on EAS |
+| `bun run test` | Run the Jest test suite |
+| `bun run lint` | Lint the project with ESLint (`expo lint`) |
+| `bun run fetch:data` | Refresh the bundled service icons from the 2FA directory and regenerate `utils/iconRegistry.generated.ts` (`bun run fetch:data --offline` regenerates it without network) |
+
+### Versioning
+
+`package.json` is the single source of the app version. `app.config.js` passes its `x.y.z` core
+to the native builds (iOS requires a numeric version) and exposes the full string, prerelease tag
+included, as `extra.displayVersion`, which the Settings screen shows. Build numbers are managed
+remotely by EAS.
 
 ---
 
@@ -98,26 +130,6 @@ expo run:ios
 4. **Backup / Restore**  
    - Export encrypted backup file (.json) to local storage  
    - Import via file picker or AirDrop  
-
----
-
-## ⚙️ Configuration
-
-You can tweak default settings in `app.json` under the `"expo.extra"` section:
-
-```json
-{
-  "expo": {
-    "extra": {
-      "defaultPeriod": 30,
-      "defaultDigits": 6,
-      "enableBiometrics": true
-    }
-  }
-}
-```
-
-At runtime these values are available via `Constants.expoConfig.extra`.
 
 ---
 

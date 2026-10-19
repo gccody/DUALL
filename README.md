@@ -19,7 +19,7 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 
 ## 🧰 Tech Stack
 
-- Expo (SDK 57) with a custom dev client  
+- Expo (SDK 58) with a custom dev client  
 - React Native & TypeScript  
 - expo-secure-store for encrypted storage  
 - crypto-es / hi-base32 for TOTP generation  
@@ -43,7 +43,7 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 ### Prerequisites
 
 - [Bun](https://bun.sh) ≥ 1.4 (package manager and script runner)  
-- Node.js LTS (used by the Expo CLI under the hood)  
+- Node.js 22.13+ or 24.3+ (used by the Expo CLI under the hood)  
 - Xcode (iOS) and/or Android Studio with an emulator, or a physical device  
 - An [Expo](https://expo.dev) account if you want to build with EAS  
 

@@ -192,7 +192,7 @@ export default function SettingsScreen() {
             // Create a temporary file
             const date = new Date();
             const file = new File(Paths.cache, `duall-${date.toISOString()}.txt`)
-            file.write(uris.join("\n"));
+            await file.write(uris.join("\n"));
 
             // Share the file
             if (await Sharing.isAvailableAsync()) {

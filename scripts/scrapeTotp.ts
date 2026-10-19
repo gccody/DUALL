@@ -71,7 +71,7 @@ async function main(): Promise<void> {
         .toFile(filePath);
 
       totps.push({ name: siteName, domain });
-    } catch (error) {
+    } catch {
       continue;
     }
     bar.increment();

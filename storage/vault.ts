@@ -92,7 +92,6 @@ export function loadServices(): Promise<Service[]> {
     const raws = await Promise.all(index.order.map((uid) => SecureStore.getItemAsync(secretKey(uid))));
     const services: Service[] = [];
     const baseline = new Map<string, string>();
-    const corrupt: string[] = [];
     index.order.forEach((uid, i) => {
       const raw = raws[i];
       if (raw === null) return;
@@ -103,7 +102,6 @@ export function loadServices(): Promise<Service[]> {
         // The index is authoritative for the uid; a mismatch is rewritten on the next save.
         services.push(stored.uid === uid ? stored : { ...stored, uid });
       } catch {
-        corrupt.push(uid);
         console.error(`Dropping unreadable stored service ${uid}`);
       }
     });

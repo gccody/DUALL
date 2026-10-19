@@ -4,8 +4,9 @@ import SubText from '@/components/SubText';
 import { useOtpData } from '@/context/OtpDataContext';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
-import { providerRegistry } from '@/parsers/registry';
-import { convertToService } from '@/parsers/utils';
+import { importProviders, parseImport, type ImportProvider, type ImportResult } from '@/core/import';
+import { createService, isDuplicateService, serviceToUri } from '@/core/service';
+import type { Service } from '@/types';
 import Constants from 'expo-constants';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
@@ -16,7 +17,6 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useRef } from 'react';
 import { ActionSheetIOS, ActivityIndicator, Alert, Platform, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import pkg from '../../../package.json';
-import { generateTOTPUrl } from '@/utils';
 
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
@@ -136,8 +136,7 @@ export default function SettingsScreen() {
     }
 
     const importCodes = async () => {
-        // Get all available providers
-        const providers = providerRegistry.getAllProviders();
+        const providers = importProviders;
 
         // Use the native action sheet on iOS
         if (Platform.OS === 'ios') {
@@ -150,7 +149,7 @@ export default function SettingsScreen() {
                     cancelButtonIndex: options.length - 1,
                 },
                 (index) => {
-                    if (index < providers.length) importFromProvider(providers[index].name);
+                    if (index < providers.length) importFromProvider(providers[index]);
                 }
             );
             return;
@@ -159,7 +158,7 @@ export default function SettingsScreen() {
         // Create provider selection options
         const providerOptions = providers.map(provider => ({
             text: provider.displayName,
-            onPress: () => importFromProvider(provider.name)
+            onPress: () => importFromProvider(provider)
         }));
 
         // Show provider selection dialog
@@ -187,7 +186,7 @@ export default function SettingsScreen() {
         try {
             const uris: string[] = []
             for (const service of services) {
-                uris.push(generateTOTPUrl(service))
+                uris.push(serviceToUri(service))
             }
 
             // Create a temporary file
@@ -211,7 +210,7 @@ export default function SettingsScreen() {
         }
     }
 
-    const importFromProvider = async (providerName: string | null) => {
+    const importFromProvider = async (provider: ImportProvider) => {
         try {
             const result = await DocumentPicker.getDocumentAsync({
                 type: ['application/json', 'text/plain', 'text/csv', 'com.2fas.auth'],
@@ -228,47 +227,25 @@ export default function SettingsScreen() {
             const response = await fetch(file.uri);
             const content = await response.text();
 
-            let parseResult;
-
-            if (providerName) {
-                // Parse with specific provider
-                const provider = providerRegistry.getProvider(providerName);
-                if (!provider) {
-                    Alert.alert("Error", `Provider ${providerName} not found`);
-                    return;
-                }
-
-                try {
-                    const data = provider.parse(content);
-                    parseResult = {
-                        provider: provider.displayName,
-                        data
-                    };
-                } catch (error) {
-                    console.error(`Failed to parse with ${providerName}:`, error);
-                    Alert.alert("Parse Error", `Failed to parse the file with ${provider.displayName}. Please make sure you selected the correct provider.`);
-                    return;
-                }
-            } else {
-                // Auto-detect provider
-                try {
-                    parseResult = providerRegistry.parseAuto(content);
-                } catch (error) {
-                    console.error('Auto-detection failed:', error);
-                    Alert.alert("Detection Error", "Could not detect the format of the selected file. Please try selecting the specific app you're importing from.");
-                    return;
-                }
+            let parseResult: ImportResult;
+            try {
+                parseResult = parseImport(provider.id, content);
+            } catch (error) {
+                console.error(`Failed to parse with ${provider.id}:`, error);
+                const reason = error instanceof Error ? error.message : 'Unknown error';
+                Alert.alert("Parse Error", `Failed to parse the file with ${provider.displayName}. ${reason}`);
+                return;
             }
 
-            // Convert to Service format
-            const newServices = parseResult.data.map((otpData: any, index: number) =>
-                convertToService(otpData, index)
-            );
+            const { services: entries, skippedHotp } = parseResult;
+            const hotpNote = skippedHotp > 0
+                ? `\n\n${skippedHotp} counter-based (HOTP) code${skippedHotp === 1 ? '' : 's'} will be skipped because ${skippedHotp === 1 ? "it isn't" : "they aren't"} supported.`
+                : '';
 
             // Show confirmation dialog
             Alert.alert(
-                `Import from ${parseResult.provider}`,
-                `Found ${newServices.length} codes to import. Do you want to add them to your existing codes?`,
+                `Import from ${provider.displayName}`,
+                `Found ${entries.length} codes to import. Do you want to add them to your existing codes?${hotpNote}`,
                 [
                     {
                         text: 'Cancel',
@@ -279,10 +256,27 @@ export default function SettingsScreen() {
                         text: 'Import',
                         onPress: async () => {
                             try {
-                                // Combine the latest existing services with the new ones
-                                const updatedServices = [...(servicesRef.current || []), ...newServices];
-                                await updateServices(updatedServices);
-                                Alert.alert("Success", `Successfully imported ${newServices.length} codes from ${parseResult.provider}`);
+                                // Append to the latest existing services, skipping codes already present
+                                const existing = servicesRef.current || [];
+                                const added: Service[] = [];
+                                for (const entry of entries) {
+                                    const service = createService(entry, existing.length + added.length);
+                                    if (!isDuplicateService(existing, service) && !isDuplicateService(added, service)) {
+                                        added.push(service);
+                                    }
+                                }
+                                await updateServices([...existing, ...added]);
+
+                                const duplicates = entries.length - added.length;
+                                const skipped = [
+                                    duplicates > 0 ? `${duplicates} already in DUALL` : '',
+                                    skippedHotp > 0 ? `${skippedHotp} unsupported HOTP` : '',
+                                ].filter(Boolean).join(', ');
+                                Alert.alert(
+                                    "Success",
+                                    `Successfully imported ${added.length} codes from ${provider.displayName}` +
+                                    (skipped ? ` (skipped: ${skipped})` : '')
+                                );
                             } catch (error) {
                                 console.error('Failed to import codes:', error);
                                 Alert.alert("Error", "Failed to import codes. Please try again.");

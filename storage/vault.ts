@@ -1,6 +1,7 @@
 import type { Service } from "@/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
+import { readLegacyConfig, removeLegacyConfig } from "./legacy";
 
 /**
  * Persistence for services.
@@ -177,8 +178,9 @@ export function saveServices(services: readonly Service[]): Promise<void> {
 }
 
 /**
- * Deletes every stored service and the index. The index is first emptied (but
- * still tracks every entry) so an interruption leaves nothing unswept.
+ * Deletes every stored service, the index and any legacy config. The index is
+ * first emptied (but still tracks every entry) so an interruption leaves
+ * nothing unswept.
  * Throws if any entry couldn't be deleted.
  */
 export function eraseAllServices(): Promise<void> {
@@ -189,6 +191,12 @@ export function eraseAllServices(): Promise<void> {
     } catch (error) {
       console.error("Unreadable vault index while erasing:", error);
     }
+    try {
+      // Not yet migrated data (normally migrated at startup) is erased too.
+      tracked = unique([...tracked, ...((await readLegacyConfig())?.uids ?? [])]);
+    } catch (error) {
+      console.error("Unreadable legacy config while erasing:", error);
+    }
     await writeIndex([], tracked);
 
     const failed = await deleteSecrets(tracked);
@@ -196,6 +204,7 @@ export function eraseAllServices(): Promise<void> {
       await writeIndex([], failed);
       throw new Error(`Failed to erase ${failed.length} stored service(s)`);
     }
+    await removeLegacyConfig();
     await AsyncStorage.removeItem(VAULT_INDEX_KEY);
     cachedIndex = null;
     persisted = new Map();

@@ -365,7 +365,7 @@ export default function SettingsScreen() {
 
             <SettingCategory name='About'>
                 <SettingItem iconName='info-circle' text='App Version'>
-                    <SubText text={Constants.expoConfig?.version?.toString() ?? "1.0.0"} />
+                    <SubText text={String(Constants.expoConfig?.extra?.displayVersion ?? Constants.expoConfig?.version ?? "1.0.0")} />
                 </SettingItem>
                 <TouchableOpacity onPress={openGithub}>
                     <SettingItem iconName='github' text='Github Repo'>

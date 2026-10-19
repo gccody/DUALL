@@ -3,28 +3,20 @@ import { join, dirname } from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
+// package.json is the single source of truth for the app version;
+// app.config.js derives the native version and extra.displayVersion from it.
+
 // Get current directory (compatible with both Node and Bun)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 interface PackageJson {
   version: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
-interface AppJson {
-  expo: {
-    version: string;
-    [key: string]: any;
-  };
-  [key: string]: any;
-}
-
-// Read package.json
 const packageJsonPath = join(__dirname, '..', 'package.json');
 const packageJson: PackageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
-
-// Get the current version
 const currentVersion = packageJson.version;
 
 // Get the last committed version
@@ -41,31 +33,25 @@ try {
 console.log(`Current version: ${currentVersion}`);
 console.log(`Last committed version: ${lastCommittedVersion}`);
 
-// Check if version has changed
 if (currentVersion !== lastCommittedVersion) {
   console.log('Version has been manually updated. No auto-bump needed.');
   process.exit(0);
 }
 
-// Version hasn't changed, so bump it
 console.log('Version has not changed. Auto-bumping...');
 
-// Parse version and bump the appropriate part
+// Bump the prerelease number (1.0.1-beta1 -> 1.0.1-beta2) or the patch (1.0.1 -> 1.0.2).
 function bumpVersion(version: string): string {
-  // Check if it's a pre-release version (e.g., 1.0.1-beta1)
-  const preReleaseMatch = version.match(/^(\d+\.\d+\.\d+)-([\w]+)(\d+)$/);
+  const preReleaseMatch = version.match(/^(\d+\.\d+\.\d+)-([A-Za-z]+)(\d+)$/);
   if (preReleaseMatch) {
     const [, baseVersion, preReleaseType, preReleaseNumber] = preReleaseMatch;
-    const newPreReleaseNumber = parseInt(preReleaseNumber) + 1;
-    return `${baseVersion}-${preReleaseType}${newPreReleaseNumber}`;
+    return `${baseVersion}-${preReleaseType}${parseInt(preReleaseNumber, 10) + 1}`;
   }
 
-  // Regular version (e.g., 1.0.1)
   const versionMatch = version.match(/^(\d+)\.(\d+)\.(\d+)$/);
   if (versionMatch) {
     const [, major, minor, patch] = versionMatch;
-    const newPatch = parseInt(patch) + 1;
-    return `${major}.${minor}.${newPatch}`;
+    return `${major}.${minor}.${parseInt(patch, 10) + 1}`;
   }
 
   throw new Error(`Invalid version format: ${version}`);
@@ -74,15 +60,7 @@ function bumpVersion(version: string): string {
 const newVersion = bumpVersion(currentVersion);
 console.log(`Bumping version from ${currentVersion} to ${newVersion}`);
 
-// Update package.json
 packageJson.version = newVersion;
 writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
 
-// Update app.json
-const appJsonPath = join(__dirname, '..', 'app.json');
-const appJson: AppJson = JSON.parse(readFileSync(appJsonPath, 'utf8'));
-appJson.expo.version = newVersion;
-writeFileSync(appJsonPath, JSON.stringify(appJson, null, 2) + '\n');
-
-console.log('Version bumped successfully!');
-console.log(`New version: ${newVersion}`);
+console.log(`Version bumped successfully! New version: ${newVersion}`);

@@ -101,7 +101,7 @@ from Git Bash or WSL.
 | `bun run build:dev[:android\|:ios]` | Create a development build on EAS |
 | `bun run test` | Run the Jest test suite |
 | `bun run lint` | Lint the project with ESLint (`expo lint`) |
-| `bun run fetch:data` | Refresh the bundled service icons from the 2FA directory |
+| `bun run fetch:data` | Refresh the bundled service icons from the 2FA directory and regenerate `utils/iconRegistry.generated.ts` (`bun run fetch:data --offline` regenerates it without network) |
 
 ### Versioning
 

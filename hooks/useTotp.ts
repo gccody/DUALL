@@ -58,6 +58,8 @@ export interface TotpState {
 export function useTotp(service: Service, now: number): TotpState {
   const { algorithm, digits, period } = getTotpParams(service);
   const counter = getPeriodCounter(now, period);
+  // Kept explicit (not left to the compiler): this is the contract that the
+  // HMACs run once per time step, not on every tick of `now`.
   const { code, nextCode, expires, error } = useMemo(
     () => computePeriodCodes(service.secret, { algorithm, digits, period }, counter),
     [service.secret, algorithm, digits, period, counter]

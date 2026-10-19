@@ -33,26 +33,67 @@ export default function SettingsScreen() {
     }
 
     const deleteCodes = async () => {
-        Alert.prompt(
+        const count = data?.services.length;
+        const target = count === undefined ? 'all codes' : `${count} code${count === 1 ? '' : 's'}`;
+
+        const performDelete = async () => {
+            await updateServices([]);
+            Alert.alert("Codes are deleted");
+        };
+
+        if (Platform.OS === 'ios') {
+            Alert.prompt(
+                "Danger!",
+                `Are you sure you want to delete everything (${target})? Type: Delete Codes`,
+                [
+                    {
+                        text: 'Cancel',
+                        style: 'cancel',
+                        isPreferred: true
+                    },
+                    {
+                        text: 'Delete',
+                        style: 'destructive',
+                        onPress: async (text?: string) => {
+                            if (text !== "Delete Codes") return Alert.alert("Did not delete codes");
+                            return performDelete();
+                        }
+                    }
+                ],
+            );
+            return;
+        }
+
+        // Alert.prompt is iOS-only, so require two explicit confirmations elsewhere.
+        Alert.alert(
             "Danger!",
-            "Are you sure you want to delete everything? Type: Delete Codes",
+            "Delete all codes?",
             [
                 {
                     text: 'Cancel',
-                    style: 'cancel',
-                    isPreferred: true
+                    style: 'cancel'
                 },
                 {
-                    text: 'Delete',
+                    text: 'Continue',
                     style: 'destructive',
-                    onPress: async (text?: string) => {
-                        if (text !== "Delete Codes") return Alert.alert("Did not delete codes");
-                        await updateServices([]);
-                        return Alert.alert("Codes are deleted");
-                    }
+                    onPress: () => Alert.alert(
+                        "Are you absolutely sure?",
+                        `This cannot be undone. Delete ${target}?`,
+                        [
+                            {
+                                text: 'Cancel',
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'Delete',
+                                style: 'destructive',
+                                onPress: performDelete
+                            }
+                        ],
+                    )
                 }
             ],
-        )
+        );
     }
 
     const resetPin = async () => {

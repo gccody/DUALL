@@ -108,14 +108,8 @@ export default function HomeScreen() {
   const handleSaveService = (updatedService: Service) => {
     updateService(updatedService.uid, {
       name: updatedService.name,
-      icon: updatedService.icon,
       otp: { issuer: updatedService.otp.issuer },
     }).catch(reportSaveError);
-  };
-
-  // Handle icon change from ServiceIcon
-  const handleIconChange = async (serviceUid: string, updatedService: Service) => {
-    await updateService(serviceUid, { icon: updatedService.icon }).catch(reportSaveError);
   };
 
   // Handle delete from modal
@@ -162,7 +156,6 @@ export default function HomeScreen() {
             isHighlighted={recentCodeIndex === index}
             isFirstItem={index === 0}
             onLongPress={() => handleLongPress(item)}
-            onIconChange={handleIconChange}
           />
         )}
         keyExtractor={(item) => item.uid}

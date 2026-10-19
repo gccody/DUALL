@@ -8,3 +8,7 @@ export function generateTOTPUrl(service: Service) {
   return `otpauth://${service.otp.tokenType}/${service.name}?secret=${service.secret}&issuer=${service.otp.issuer}&algorithm=${service.otp.algorithm}&digits=${service.otp.digits}&period=${service.otp.period}`
 }
 
+export function isOtpAuthUri(value: string): boolean {
+  return /^otpauth:\/\//i.test(value.trim());
+}
+

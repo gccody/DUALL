@@ -1,13 +1,14 @@
 import SettingsRow from '@/components/settings/SettingsRow';
 import SettingsSection from '@/components/settings/SettingsSection';
 import SettingsSwitch from '@/components/settings/SettingsSwitch';
+import CenteredMessage from '@/components/ui/CenteredMessage';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { useCodeTransfer } from '@/hooks/useCodeTransfer';
 import { useDangerActions } from '@/hooks/useDangerActions';
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import pkg from '../../../package.json';
 
 const APP_VERSION = String(Constants.expoConfig?.extra?.displayVersion ?? Constants.expoConfig?.version ?? '1.0.0');
@@ -21,13 +22,7 @@ export default function SettingsScreen() {
     const { importCodes, exportCodes } = useCodeTransfer();
     const { deleteCodes, resetPin } = useDangerActions();
 
-    if (isLoading) {
-        return (
-            <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
-                <ActivityIndicator size="large" color={theme.accent} />
-            </View>
-        );
-    }
+    if (isLoading) return <CenteredMessage spinner />;
 
     return (
         <ScrollView
@@ -68,10 +63,5 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    loadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 });

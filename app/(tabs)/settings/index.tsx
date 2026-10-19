@@ -9,7 +9,7 @@ import { convertToService } from '@/parsers/utils';
 import Constants from 'expo-constants';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
-import * as SecureStore from 'expo-secure-store';
+import { clearPin } from '@/utils/pin';
 import * as Sharing from 'expo-sharing';
 import * as WebBrowser from 'expo-web-browser';
 import { useRouter } from 'expo-router';
@@ -118,7 +118,7 @@ export default function SettingsScreen() {
                     style: 'destructive',
                     onPress: async () => {
                         try {
-                            await SecureStore.deleteItemAsync('user_pin');
+                            await clearPin();
                             Alert.alert("PIN Reset", "Your PIN has been reset successfully. Please set up a new PIN.");
                             router.push('/pin-setup');
                         } catch (error) {

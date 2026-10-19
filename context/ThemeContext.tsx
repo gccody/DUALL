@@ -1,5 +1,6 @@
 import { darkTheme, lightTheme, type Theme } from '@/constants/theme';
 import { useSettings } from '@/context/SettingsContext';
+import { StatusBar } from 'expo-status-bar';
 import { ReactNode, createContext, use, useEffect } from 'react';
 import { Appearance } from 'react-native';
 
@@ -15,7 +16,7 @@ const ThemeContext = createContext<ThemeContextType>({
     isDark: true,
 });
 
-/** Provides the palette for the `darkMode` setting. */
+/** Provides the palette for the `darkMode` setting and applies it to the native UI and status bar. */
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const { settings } = useSettings();
     const isDark = settings.darkMode;
@@ -28,6 +29,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     return (
         <ThemeContext value={{ theme, isDark }}>
+            <StatusBar style={isDark ? 'light' : 'dark'} />
             {children}
         </ThemeContext>
     );

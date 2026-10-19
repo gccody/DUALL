@@ -4,6 +4,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { Service, TOTPOptions, TOTPResult } from "@/types";
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
+import * as Haptics from 'expo-haptics';
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
 import ProgressBar from "./ProgressBar";
@@ -155,6 +156,7 @@ export default function Code({ service, opts, globalTimestamp, style, onLongPres
 
         // Copy code to clipboard
         await Clipboard.setStringAsync(otpData.otp);
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         // Show notification if enabled
         if (settings.notifyWhenTokenCopied) {

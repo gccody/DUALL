@@ -1,6 +1,7 @@
 import { useTheme } from '@/context/ThemeContext';
 import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
+import * as Haptics from 'expo-haptics';
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Polygon, Svg } from 'react-native-svg';
@@ -31,6 +32,7 @@ export default function Add() {
             const url = codes[0].value;
             if (!url)
                 return setCameraActive(true);
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             router.push({ pathname: '/', params: { otpurl: url } });
         }
     })

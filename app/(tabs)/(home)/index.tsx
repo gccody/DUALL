@@ -1,17 +1,13 @@
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FlashList, FlashListRef } from '@shopify/flash-list';
-import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 import CodeItem from "@/components/CodeItem";
 import EditCodeModal from "@/components/EditCodeModal";
 import ErrorView from "@/components/ErrorView";
 import LoadingView from "@/components/LoadingView";
-import { SearchBar } from "@/components/SearchBar";
-import SearchButton from "@/components/SearchButton";
 
 import { useCodeManager } from "@/hooks/useCodeManager";
 import { useOtpData } from "@/hooks/useOtpData";
@@ -39,8 +35,7 @@ export default function HomeScreen() {
   }, [servicesData]);
 
   // Search functionality
-  const [searchBarVisible, setSearchBarVisible] = useState<boolean>(settings.searchOnStartup);
-  const { services, search, handleSearch } = useSearch(servicesData);
+  const { services, handleSearch } = useSearch(servicesData);
 
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
@@ -55,11 +50,6 @@ export default function HomeScreen() {
 
   // Reference for auto-scrolling
   const flashListRef = useRef<FlashListRef<Service>>(null);
-
-  // Update searchBarVisible when searchOnStartup setting changes
-  useEffect(() => {
-    setSearchBarVisible(settings.searchOnStartup);
-  }, [settings.searchOnStartup]);
 
   // Handle URL parameter for adding new code
   useEffect(() => {
@@ -80,9 +70,6 @@ export default function HomeScreen() {
       fetchData();
     }, [fetchData])
   );
-
-  // Handle search toggle
-  const toggleSearch = () => setSearchBarVisible(!searchBarVisible);
 
   // Handle touch on the list to reset recent code index
   const handleListTouch = () => {
@@ -136,18 +123,28 @@ export default function HomeScreen() {
 
   // Display list of codes
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background, paddingTop: searchBarVisible ? 60 : 0 }]} edges={['top', 'left', 'right']}>
-      <SearchBar
-        text={search}
-        isVisible={searchBarVisible}
-        onSearch={handleSearch}
+    <>
+      <Stack.SearchBar
+        placeholder="Search accounts"
+        onChangeText={(event) => handleSearch(event.nativeEvent.text)}
+        onCancelButtonPress={() => handleSearch('')}
+        autoFocus={settings.searchOnStartup}
+        hideWhenScrolling={false}
+        autoCapitalize="none"
+        tintColor={theme.accent}
+        textColor={theme.text}
+        hintTextColor={theme.subText}
+        headerIconColor={theme.subText}
       />
 
       <FlashList
         ref={flashListRef}
+        style={{ backgroundColor: theme.background }}
+        contentInsetAdjustmentBehavior="automatic"
         onTouchStart={handleListTouch}
         keyboardShouldPersistTaps="handled"
-        data={searchBarVisible ? services : data.services}
+        keyboardDismissMode="on-drag"
+        data={services}
         renderItem={({ item, index }) => (
           <CodeItem
             service={item}
@@ -162,7 +159,6 @@ export default function HomeScreen() {
         drawDistance={500}
         extraData={[timestamp, recentCodeIndex]}
       />
-      <SearchButton onPress={toggleSearch} />
       <EditCodeModal
         visible={modalVisible}
         service={selectedService}
@@ -170,23 +166,6 @@ export default function HomeScreen() {
         onSave={handleSaveService}
         onDelete={handleDeleteService}
       />
-    </SafeAreaView>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative'
-  },
-  headerContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
-  },
-  headerText: {
-    fontSize: 14,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-  }
-});

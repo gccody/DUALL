@@ -116,6 +116,10 @@ export default function RootLayout() {
           <AuthenticationWrapper>
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="pin-setup"
+                options={{ headerShown: false, presentation: 'fullScreenModal', gestureEnabled: false }}
+              />
             </Stack>
           </AuthenticationWrapper>
         </ThemeProvider>

@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface CustomIconPickerProps {
   service: Service;
@@ -130,97 +131,82 @@ export default function CustomIconPicker({ service, isVisible, onClose, onIconSe
     <Modal
       visible={isVisible}
       animationType="slide"
-      transparent={true}
+      presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
-        <View style={[styles.modalContent, { backgroundColor: theme.cardBackground }]}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={[styles.title, { color: theme.text }]}>Select Custom Icon</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <FontAwesome name="times" size={20} color={theme.text} />
-            </TouchableOpacity>
-          </View>
-
-          {/* Search Input */}
-          <View style={styles.searchContainer}>
-            <FontAwesome name="search" size={16} color={theme.subText} style={styles.searchIcon} />
-            <TextInput
-              style={[styles.searchInput, { color: theme.text, borderColor: theme.border }]}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              placeholder="Search for service name or domain..."
-              placeholderTextColor={theme.subText}
-              autoCorrect={false}
-              autoCapitalize="none"
-            />
-            {searchQuery.length > 0 && (
-              <TouchableOpacity
-                onPress={() => setSearchQuery('')}
-                style={styles.clearButton}
-              >
-                <FontAwesome name="times-circle" size={16} color={theme.subText} />
-              </TouchableOpacity>
-            )}
-          </View>
-
-          {/* Icons Grid */}
-          <View style={styles.iconsContainer}>
-            {loading ? (
-              <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color={theme.accent} />
-                <Text style={[styles.loadingText, { color: theme.subText }]}>
-                  Loading icons...
-                </Text>
-              </View>
-            ) : filteredIcons.length > 0 ? (
-              <FlatList
-                data={filteredIcons}
-                renderItem={renderIconItem}
-                keyExtractor={(item) => item.domain}
-                numColumns={2}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.iconsList}
-              />
-            ) : (
-              renderEmptyState()
-            )}
-          </View>
-
-          {/* Footer info */}
-          <View style={styles.footer}>
-            <TouchableOpacity
-              style={[styles.removeButton, { backgroundColor: theme.danger }]}
-              onPress={handleRemoveCustomIcon}
-              disabled={loading}
-            >
-              <Text style={styles.removeButtonText}>Remove Icon</Text>
-            </TouchableOpacity>
-          </View>
+      <SafeAreaView style={[styles.modalContent, { backgroundColor: theme.cardBackground }]}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: theme.text }]}>Select Custom Icon</Text>
+          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <FontAwesome name="times" size={20} color={theme.text} />
+          </TouchableOpacity>
         </View>
-      </View>
+
+        {/* Search Input */}
+        <View style={styles.searchContainer}>
+          <FontAwesome name="search" size={16} color={theme.subText} style={styles.searchIcon} />
+          <TextInput
+            style={[styles.searchInput, { color: theme.text, borderColor: theme.border }]}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search for service name or domain..."
+            placeholderTextColor={theme.subText}
+            autoCorrect={false}
+            autoCapitalize="none"
+          />
+          {searchQuery.length > 0 && (
+            <TouchableOpacity
+              onPress={() => setSearchQuery('')}
+              style={styles.clearButton}
+            >
+              <FontAwesome name="times-circle" size={16} color={theme.subText} />
+            </TouchableOpacity>
+          )}
+        </View>
+
+        {/* Icons Grid */}
+        <View style={styles.iconsContainer}>
+          {loading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color={theme.accent} />
+              <Text style={[styles.loadingText, { color: theme.subText }]}>
+                Loading icons...
+              </Text>
+            </View>
+          ) : filteredIcons.length > 0 ? (
+            <FlatList
+              data={filteredIcons}
+              renderItem={renderIconItem}
+              keyExtractor={(item) => item.domain}
+              numColumns={2}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.iconsList}
+            />
+          ) : (
+            renderEmptyState()
+          )}
+        </View>
+
+        {/* Footer info */}
+        <View style={[styles.footer, { borderTopColor: theme.border }]}>
+          <TouchableOpacity
+            style={[styles.removeButton, { backgroundColor: theme.danger }]}
+            onPress={handleRemoveCustomIcon}
+            disabled={loading}
+          >
+            <Text style={styles.removeButtonText}>Remove Icon</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
   modalContent: {
-    width: '100%',
-    height: '80%',
-    borderRadius: 12,
+    flex: 1,
     padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   header: {
     flexDirection: 'row',
@@ -332,8 +318,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.1)',
+    borderTopWidth: StyleSheet.hairlineWidth,
     marginTop: 16,
     alignItems: 'center',
   },

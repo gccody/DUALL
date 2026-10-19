@@ -2,108 +2,66 @@ import LoadingView from "@/components/LoadingView";
 import PinAuthView from "@/components/PinAuthView";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
 import { ThemeProvider, useTheme } from "@/context/ThemeContext";
-import * as LocalAuthentication from 'expo-local-authentication';
+import { useAppLock } from "@/hooks/useAppLock";
 import { Stack } from "expo-router";
-import * as SecureStore from 'expo-secure-store';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { BackHandler, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { FullWindowOverlay } from "react-native-screens";
+
+/**
+ * Covers the whole app, including natively presented modals (which on iOS sit
+ * above the React root view, so they need a separate window to be covered).
+ */
+function LockOverlay({ children }: { children: React.ReactNode }) {
+  if (Platform.OS === 'ios') {
+    return (
+      <FullWindowOverlay unstable_accessibilityContainerViewIsModal>
+        {children}
+      </FullWindowOverlay>
+    );
+  }
+  return <View style={StyleSheet.absoluteFill}>{children}</View>;
+}
 
 function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const [pinExists, setPinExists] = useState<null | boolean>(null);
-  const [showPinAuth, setShowPinAuth] = useState(false);
   const { settings, isLoading } = useSettings();
   const { isDark } = useTheme();
+  const { status, hasUnlockedOnce, unlock, resetSession } = useAppLock({
+    ready: !isLoading,
+    useBiometrics: settings.useBiometrics,
+  });
+  const isLocked = status !== 'unlocked';
 
+  // While the lock screen covers the app, don't let the Android back button
+  // navigate the screens underneath it.
   useEffect(() => {
-    const checkPinAndAuthenticate = async () => {
-      // await SecureStore.deleteItemAsync('user_pin');     // Un-comment in order to reset the pin during dev
-      // Check if PIN exists
-      const storedPin = await SecureStore.getItemAsync('user_pin');
-      setPinExists(!!storedPin);
-
-      if (!storedPin) {
-        // No PIN exists, show PIN setup
-        setShowPinAuth(true);
-        return;
-      }
-
-      // PIN exists, check if biometrics is enabled
-      if (settings.useBiometrics) {
-        try {
-          // Try biometric authentication first
-          const biometricResult = await LocalAuthentication.authenticateAsync({
-            promptMessage: 'Authenticate with biometrics'
-          });
-
-          if (biometricResult.success) {
-            setAuthenticated(true);
-            setShowPinAuth(false);
-          } else {
-            // Biometric failed, show PIN auth as fallback
-            setShowPinAuth(true);
-          }
-        } catch (error) {
-          console.error('Biometric authentication error:', error);
-          // Error with biometrics, show PIN auth as fallback
-          setShowPinAuth(true);
-        }
-      } else {
-        // Biometrics disabled, go directly to PIN auth
-        setShowPinAuth(true);
-      }
-    };
-
-    if (!isLoading) {
-      checkPinAndAuthenticate();
-    }
-  }, [settings.useBiometrics, isLoading]);
-
-  const handlePinSuccess = () => {
-    setAuthenticated(true);
-    setShowPinAuth(false);
-  };
+    if (!isLocked || !hasUnlockedOnce) return;
+    const subscription = BackHandler.addEventListener('hardwareBackPress', () => true);
+    return () => subscription.remove();
+  }, [isLocked, hasUnlockedOnce]);
 
   const handlePinFailure = (error: string) => {
     console.error('PIN authentication failed:', error);
-    // Could implement additional logic here like app lockout
   };
 
-  if (isLoading || pinExists === null) {
-    return (
-      <>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <LoadingView />
-      </>
-    );
-  }
-
-  if (showPinAuth) {
-    return (
-      <>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <PinAuthView
-          onPinSuccess={handlePinSuccess}
-          onPinFailure={handlePinFailure}
-        />
-      </>
-    );
-  }
-
-  if (authenticated === true) {
-    return (
-      <>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        {children}
-      </>
-    );
-  }
+  const lockScreen = status === 'pin'
+    ? (
+      <PinAuthView
+        onPinSuccess={unlock}
+        onPinFailure={handlePinFailure}
+        onDataErased={resetSession}
+      />
+    )
+    : <LoadingView />;
 
   return (
     <>
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      <LoadingView />
+      {/* Keep the navigation tree mounted when re-locking so its state survives. */}
+      {hasUnlockedOnce && children}
+      {isLocked && (hasUnlockedOnce ? <LockOverlay>{lockScreen}</LockOverlay> : lockScreen)}
     </>
   );
 }

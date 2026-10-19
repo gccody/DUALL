@@ -17,6 +17,8 @@ interface PinAuthViewProps {
   onPinFailure: (error: string) => void;
   maxAttempts?: number;
   pinLength?: number;
+  /** Always show the "set a PIN" flow, even if a PIN is already stored. */
+  forceSetup?: boolean;
 }
 
 const PinAuthView: React.FC<PinAuthViewProps> = ({
@@ -24,6 +26,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   onPinFailure,
   maxAttempts = 3,
   pinLength = 4,
+  forceSetup = false,
 }) => {
   const { theme } = useTheme();
   const [pin, setPin] = useState('');
@@ -41,7 +44,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   }, []);
 
   const checkExistingPin = async () => {
-    if (!(await PinStore.hasPin())) {
+    if (forceSetup || !(await PinStore.hasPin())) {
       setIsSettingNewPin(true);
     } else {
       setIsSettingNewPin(false);

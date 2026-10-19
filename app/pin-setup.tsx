@@ -6,6 +6,7 @@ export default function PinSetupScreen() {
 
     return (
         <PinAuthView
+            forceSetup
             onPinSuccess={() => router.back()}
             onPinFailure={(error) => {
                 console.error('PIN setup failed:', error);

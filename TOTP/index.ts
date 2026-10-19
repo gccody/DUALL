@@ -38,6 +38,40 @@ interface OtpData {
   originalUrl: string;
 }
 
+/**
+ * Normalizes algorithm names to match our type system
+ */
+export function normalizeAlgorithm(
+  algorithm?: string
+): TOTPAlgorithm {
+  if (!algorithm) return "SHA-1";
+
+  const normalized = algorithm.toUpperCase().replace(/[^A-Z0-9]/g, "");
+
+  switch (normalized) {
+    case "SHA1":
+      return "SHA-1";
+    case "SHA256":
+      return "SHA-256";
+    case "SHA384":
+      return "SHA-384";
+    case "SHA512":
+      return "SHA-512";
+    default:
+      return "SHA-1";
+  }
+}
+
+/**
+ * Parses a strictly positive integer, returning the fallback when invalid
+ */
+function parsePositiveInt(value: string | null, fallback: number, max?: number): number {
+  if (!value || !/^\d+$/.test(value.trim())) return fallback;
+  const parsed = parseInt(value, 10);
+  if (parsed < 1 || (max !== undefined && parsed > max)) return fallback;
+  return parsed;
+}
+
 export class OTPUtils {
   protected static parseKey(
     key: string,
@@ -108,7 +142,10 @@ export class OTPUtils {
       const parsedUrl = new URL(url);
 
       // Extract OTP type (totp or hotp)
-      const type = url.replace("otpauth://", "").split("/")[0] as OtpType;
+      const type = url
+        .replace("otpauth://", "")
+        .split("/")[0]
+        .toLowerCase() as OtpType;
       if (type !== "totp" && type !== "hotp") {
         throw new Error(
           `Invalid OTP type: ${type}. Must be 'totp' or 'hotp'`
@@ -120,7 +157,10 @@ export class OTPUtils {
 
       // Parse the parameters
       const params = new URLSearchParams(parsedUrl.search);
-      const secret = params.get("secret");
+      // Base32 secrets are often exported with spaces and/or in lowercase
+      const secret = (params.get("secret") || "")
+        .replace(/\s+/g, "")
+        .toUpperCase();
 
       if (!secret) {
         throw new Error("Missing required parameter: secret");
@@ -140,19 +180,23 @@ export class OTPUtils {
       }
 
       // Parse other parameters
-      const algorithm = (params.get("algorithm") || "SHA-1") as TOTPAlgorithm;
-      const digits = parseInt(params.get("digits") || "6", 10);
+      const algorithm = normalizeAlgorithm(params.get("algorithm") || undefined);
+      // A 31-bit truncated HMAC yields at most 10 decimal digits
+      const digits = parsePositiveInt(params.get("digits"), 6, 10);
 
       // Parse type-specific parameters
       let period: number | undefined;
       let counter: number | undefined;
 
       if (type === "totp") {
-        period = parseInt(params.get("period") || "30", 10);
+        period = parsePositiveInt(params.get("period"), 30);
       } else if (type === "hotp") {
         const counterParam = params.get("counter");
         if (!counterParam) {
           throw new Error("Missing required parameter for HOTP: counter");
+        }
+        if (!/^\d+$/.test(counterParam.trim())) {
+          throw new Error(`Invalid HOTP counter: ${counterParam}`);
         }
         counter = parseInt(counterParam, 10);
       }

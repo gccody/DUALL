@@ -1,4 +1,3 @@
-import PinAuthView from '@/components/PinAuthView';
 import SettingCategory from '@/components/SettingCategory';
 import SettingItem from '@/components/SettingItem';
 import SubText from '@/components/SubText';
@@ -7,52 +6,29 @@ import { useTheme } from '@/context/ThemeContext';
 import { useOtpData } from '@/hooks/useOtpData';
 import { providerRegistry } from '@/parsers/registry';
 import { convertToService } from '@/parsers/utils';
-import { useNavigation } from 'expo-router/react-navigation';
 import Constants from 'expo-constants';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
 import * as SecureStore from 'expo-secure-store';
 import * as Sharing from 'expo-sharing';
 import * as WebBrowser from 'expo-web-browser';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, ScrollView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import pkg from '../../package.json';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { ActionSheetIOS, ActivityIndicator, Alert, Platform, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
+import pkg from '../../../package.json';
 import { generateTOTPUrl } from '@/utils';
 
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
     const { settings, updateSetting, isLoading } = useSettings();
     const { data, loading, updateServices } = useOtpData();
-    const [showPinSetup, setShowPinSetup] = useState(false);
-    const [pinSetupKey, setPinSetupKey] = useState(0);
-    const navigation = useNavigation();
-
-    // Hide tab bar when PIN setup is shown
-    useEffect(() => {
-        if (showPinSetup) {
-            // Hide tab bar by setting the parent route options
-            navigation.setOptions({
-                tabBarStyle: { display: 'none' }
-            });
-
-            // Return cleanup function
-            return () => {
-                navigation.setOptions({
-                    tabBarStyle: {
-                        display: 'flex',
-                        backgroundColor: theme.tabBarBackground
-                    }
-                });
-            };
-        }
-    }, [showPinSetup, navigation, theme.tabBarBackground]);
+    const router = useRouter();
 
     if (isLoading) {
         return (
-            <SafeAreaView style={[styles.loadingContainer, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
+            <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
                 <ActivityIndicator size="large" color={theme.accent} />
-            </SafeAreaView>
+            </View>
         );
     }
 
@@ -96,8 +72,7 @@ export default function SettingsScreen() {
                         try {
                             await SecureStore.deleteItemAsync('user_pin');
                             Alert.alert("PIN Reset", "Your PIN has been reset successfully. Please set up a new PIN.");
-                            setPinSetupKey(prev => prev + 1); // Force re-render with new key
-                            setShowPinSetup(true);
+                            router.push('/pin-setup');
                         } catch (error) {
                             console.error('Failed to reset PIN:', error);
                             Alert.alert("Error", "Failed to reset PIN. Please try again.");
@@ -115,6 +90,23 @@ export default function SettingsScreen() {
     const importCodes = async () => {
         // Get all available providers
         const providers = providerRegistry.getAllProviders();
+
+        // Use the native action sheet on iOS
+        if (Platform.OS === 'ios') {
+            const options = [...providers.map(provider => provider.displayName), 'Cancel'];
+            ActionSheetIOS.showActionSheetWithOptions(
+                {
+                    title: "Import Codes",
+                    message: "Select the app you're importing from:",
+                    options,
+                    cancelButtonIndex: options.length - 1,
+                },
+                (index) => {
+                    if (index < providers.length) importFromProvider(providers[index].name);
+                }
+            );
+            return;
+        }
 
         // Create provider selection options
         const providerOptions = providers.map(provider => ({
@@ -260,109 +252,89 @@ export default function SettingsScreen() {
         }
     }
 
-    // If PIN setup is shown, render PIN setup view
-    if (showPinSetup) {
-        return (
-            <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
-                <PinAuthView
-                    key={pinSetupKey}
-                    onPinSuccess={() => setShowPinSetup(false)}
-                    onPinFailure={(error) => {
-                        console.error('PIN setup failed:', error);
-                        setShowPinSetup(false);
-                    }}
-                />
-            </SafeAreaView>
-        );
-    }
-
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <SettingCategory name='Appearance'>
-                    <SettingItem iconName={isDark ? "moon-o" : "sun-o"} text='Dark Mode'>
-                        <Switch
-                            value={isDark}
-                            onValueChange={() => updateSetting('darkMode', !settings.darkMode)}
-                            trackColor={{ false: '#767577', true: '#6C63FF' }}
-                            thumbColor={'#f4f3f4'}
-                        />
-                    </SettingItem>
-                </SettingCategory>
+        <ScrollView
+            style={[styles.container, { backgroundColor: theme.background }]}
+            contentInsetAdjustmentBehavior="automatic"
+            showsVerticalScrollIndicator={false}
+        >
+            <SettingCategory name='Appearance'>
+                <SettingItem iconName={isDark ? "moon-o" : "sun-o"} text='Dark Mode'>
+                    <Switch
+                        value={isDark}
+                        onValueChange={() => updateSetting('darkMode', !settings.darkMode)}
+                        trackColor={{ true: theme.accent }}
+                    />
+                </SettingItem>
+            </SettingCategory>
 
-                <SettingCategory name='Tokens'>
-                    <SettingItem iconName='eye-slash' text='Hide Tokens'>
-                        <Switch
-                            value={settings.hideTokens}
-                            onValueChange={(value) => updateSetting('hideTokens', value)}
-                            trackColor={{ false: '#767577', true: '#6C63FF' }}
-                            thumbColor={'#f4f3f4'}
-                        />
-                    </SettingItem>
-                    <SettingItem iconName='forward' text='Show Next Token'>
-                        <Switch
-                            value={settings.showNextToken}
-                            onValueChange={(value) => updateSetting('showNextToken', value)}
-                            trackColor={{ false: '#767577', true: '#6C63FF' }}
-                            thumbColor={'#f4f3f4'}
-                        />
-                    </SettingItem>
-                    <SettingItem iconName='bell' text='Notify When Token Copied'>
-                        <Switch
-                            value={settings.notifyWhenTokenCopied}
-                            onValueChange={(value) => updateSetting('notifyWhenTokenCopied', value)}
-                            trackColor={{ false: '#767577', true: '#6C63FF' }}
-                            thumbColor={'#f4f3f4'}
-                        />
-                    </SettingItem>
-                </SettingCategory>
+            <SettingCategory name='Tokens'>
+                <SettingItem iconName='eye-slash' text='Hide Tokens'>
+                    <Switch
+                        value={settings.hideTokens}
+                        onValueChange={(value) => updateSetting('hideTokens', value)}
+                        trackColor={{ true: theme.accent }}
+                    />
+                </SettingItem>
+                <SettingItem iconName='forward' text='Show Next Token'>
+                    <Switch
+                        value={settings.showNextToken}
+                        onValueChange={(value) => updateSetting('showNextToken', value)}
+                        trackColor={{ true: theme.accent }}
+                    />
+                </SettingItem>
+                <SettingItem iconName='bell' text='Notify When Token Copied'>
+                    <Switch
+                        value={settings.notifyWhenTokenCopied}
+                        onValueChange={(value) => updateSetting('notifyWhenTokenCopied', value)}
+                        trackColor={{ true: theme.accent }}
+                    />
+                </SettingItem>
+            </SettingCategory>
 
-                <SettingCategory name='Application'>
-                    <SettingItem iconName='user' text='Use Biometrics'>
-                        <Switch
-                            value={settings.useBiometrics}
-                            onValueChange={(value) => updateSetting('useBiometrics', value)}
-                            trackColor={{ false: '#767577', true: '#6C63FF' }}
-                            thumbColor={'#f4f3f4'}
-                        />
-                    </SettingItem>
-                    <SettingItem iconName='search' text='Search On Startup'>
-                        <Switch
-                            value={settings.searchOnStartup}
-                            onValueChange={(value) => updateSetting('searchOnStartup', value)}
-                            trackColor={{ false: '#767577', true: '#6C63FF' }}
-                            thumbColor={'#f4f3f4'}
-                        />
-                    </SettingItem>
-                    <TouchableOpacity onPress={importCodes}>
-                        <SettingItem iconName='download' text='Import Codes' />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={exportCodes}>
-                        <SettingItem iconName='upload' text='Export Codes' />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={resetPin}>
-                        <SettingItem iconName='refresh' text='Reset PIN' color={theme.danger} />
-                    </TouchableOpacity>
-                </SettingCategory>
+            <SettingCategory name='Application'>
+                <SettingItem iconName='user' text='Use Biometrics'>
+                    <Switch
+                        value={settings.useBiometrics}
+                        onValueChange={(value) => updateSetting('useBiometrics', value)}
+                        trackColor={{ true: theme.accent }}
+                    />
+                </SettingItem>
+                <SettingItem iconName='search' text='Search On Startup'>
+                    <Switch
+                        value={settings.searchOnStartup}
+                        onValueChange={(value) => updateSetting('searchOnStartup', value)}
+                        trackColor={{ true: theme.accent }}
+                    />
+                </SettingItem>
+                <TouchableOpacity onPress={importCodes}>
+                    <SettingItem iconName='download' text='Import Codes' />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={exportCodes}>
+                    <SettingItem iconName='upload' text='Export Codes' />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={resetPin}>
+                    <SettingItem iconName='refresh' text='Reset PIN' color={theme.danger} />
+                </TouchableOpacity>
+            </SettingCategory>
 
-                <SettingCategory name='About'>
-                    <SettingItem iconName='info-circle' text='App Version'>
-                        <SubText text={Constants.expoConfig?.version?.toString() ?? "1.0.0"} />
+            <SettingCategory name='About'>
+                <SettingItem iconName='info-circle' text='App Version'>
+                    <SubText text={Constants.expoConfig?.version?.toString() ?? "1.0.0"} />
+                </SettingItem>
+                <TouchableOpacity onPress={openGithub}>
+                    <SettingItem iconName='github' text='Github Repo'>
+                        <SubText text={pkg.homepage.replace("https://github.com/", "")} />
                     </SettingItem>
-                    <TouchableOpacity onPress={openGithub}>
-                        <SettingItem iconName='github' text='Github Repo'>
-                            <SubText text={pkg.homepage.replace("https://github.com/", "")} />
-                        </SettingItem>
-                    </TouchableOpacity>
-                </SettingCategory>
+                </TouchableOpacity>
+            </SettingCategory>
 
-                <SettingCategory name='Danger!!!'>
-                    <TouchableOpacity onPress={deleteCodes}>
-                        <SettingItem iconName='exclamation-triangle' text='Delete Codes' color={theme.danger} />
-                    </TouchableOpacity>
-                </SettingCategory>
-            </ScrollView>
-        </SafeAreaView>
+            <SettingCategory name='Danger!!!'>
+                <TouchableOpacity onPress={deleteCodes}>
+                    <SettingItem iconName='exclamation-triangle' text='Delete Codes' color={theme.danger} />
+                </TouchableOpacity>
+            </SettingCategory>
+        </ScrollView>
     );
 }
 

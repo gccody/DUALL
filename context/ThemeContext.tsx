@@ -1,6 +1,6 @@
 import { useSettings } from '@/context/SettingsContext';
 import { ReactNode, createContext, use, useEffect, useState } from 'react';
-import { ColorSchemeName } from 'react-native';
+import { Appearance, ColorSchemeName } from 'react-native';
 
 // Define theme colors
 export const lightTheme = {
@@ -77,6 +77,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         setColorScheme(settings.darkMode ? 'dark' : 'light');
     }, [settings.darkMode]);
+
+    // Keep native UI (tab bar, headers, switches, sheets) in sync with the app's theme
+    useEffect(() => {
+        Appearance.setColorScheme(isDark ? 'dark' : 'light');
+    }, [isDark]);
 
     // Toggle theme function
     const toggleTheme = async () => {

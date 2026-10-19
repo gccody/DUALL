@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import ServiceIcon from './ServiceIcon';
 
 interface EditCodeModalProps {
@@ -92,122 +93,97 @@ export default function EditCodeModal({
   return (
     <Modal
       visible={visible}
-      transparent={true}
-      animationType="fade"
+      animationType="slide"
+      presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <TouchableOpacity
-        style={styles.overlay}
-        activeOpacity={1}
-        onPress={onClose}
-      >
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={(e) => e.stopPropagation()}
-          style={[styles.modalContainer, { backgroundColor: theme.cardBackground }]}
-        >
-          <View style={styles.header}>
-            <Text style={[styles.title, { color: theme.text }]}>Edit Code</Text>
-            <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
-              <FontAwesome name="times" size={24} color={theme.text} />
+      <SafeAreaView style={[styles.modalContainer, { backgroundColor: theme.cardBackground }]}>
+        <View style={[styles.header, { borderBottomColor: theme.border }]}>
+          <Text style={[styles.title, { color: theme.text }]}>Edit Code</Text>
+          <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+            <FontAwesome name="times" size={24} color={theme.text} />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.content}>
+          <View style={styles.iconContainer}>
+            <ServiceIcon
+              service={currentService || service}
+              size={64}
+              editable={true}
+              onIconSelected={handleIconSelected}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={[styles.label, { color: theme.subText }]}>Issuer</Text>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  backgroundColor: theme.background,
+                  color: theme.text,
+                  borderColor: theme.border
+                }
+              ]}
+              value={issuer}
+              onChangeText={setIssuer}
+              placeholder="Enter issuer name"
+              placeholderTextColor={theme.subText}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={[styles.label, { color: theme.subText }]}>Label</Text>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  backgroundColor: theme.background,
+                  color: theme.text,
+                  borderColor: theme.border
+                }
+              ]}
+              value={label}
+              onChangeText={setLabel}
+              placeholder="Enter label"
+              placeholderTextColor={theme.subText}
+            />
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[styles.button, styles.deleteButton, { backgroundColor: theme.danger }]}
+              onPress={handleDelete}
+            >
+              <FontAwesome name="trash" size={18} color="#fff" style={styles.buttonIcon} />
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, styles.saveButton, { backgroundColor: theme.accent }]}
+              onPress={handleSave}
+            >
+              <FontAwesome name="check" size={18} color="#fff" style={styles.buttonIcon} />
+              <Text style={styles.saveButtonText}>Save</Text>
             </TouchableOpacity>
           </View>
-
-          <View style={styles.content}>
-            <View style={styles.iconContainer}>
-              <ServiceIcon
-                service={currentService || service}
-                size={64}
-                editable={true}
-                onIconSelected={handleIconSelected}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: theme.subText }]}>Issuer</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  {
-                    backgroundColor: theme.background,
-                    color: theme.text,
-                    borderColor: theme.border
-                  }
-                ]}
-                value={issuer}
-                onChangeText={setIssuer}
-                placeholder="Enter issuer name"
-                placeholderTextColor={theme.subText}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={[styles.label, { color: theme.subText }]}>Label</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  {
-                    backgroundColor: theme.background,
-                    color: theme.text,
-                    borderColor: theme.border
-                  }
-                ]}
-                value={label}
-                onChangeText={setLabel}
-                placeholder="Enter label"
-                placeholderTextColor={theme.subText}
-              />
-            </View>
-
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.deleteButton, { backgroundColor: theme.danger }]}
-                onPress={handleDelete}
-              >
-                <FontAwesome name="trash" size={18} color="#fff" style={styles.buttonIcon} />
-                <Text style={styles.deleteButtonText}>Delete</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.button, styles.saveButton, { backgroundColor: theme.accent }]}
-                onPress={handleSave}
-              >
-                <FontAwesome name="check" size={18} color="#fff" style={styles.buttonIcon} />
-                <Text style={styles.saveButtonText}>Save</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </TouchableOpacity>
+        </View>
+      </SafeAreaView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
   modalContainer: {
-    width: '100%',
-    maxWidth: 400,
-    borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   title: {
     fontSize: 20,

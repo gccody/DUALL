@@ -2,8 +2,9 @@ import { useTheme } from '@/context/ThemeContext';
 import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
 import * as Haptics from 'expo-haptics';
-import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { isOtpAuthUri } from '@/utils';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Polygon, Svg } from 'react-native-svg';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner, } from 'react-native-vision-camera';
 
@@ -14,6 +15,8 @@ interface QRPoints {
 export default function Add() {
     const [cameraActive, setCameraActive] = useState(true);
     const [qrPoints, setQrPoints] = useState<QRPoints[]>([]);
+    // onCodeScanned can fire several times before the camera deactivates
+    const scanHandledRef = useRef(false);
     const {
         hasPermission: cameraHasPermission,
         requestPermission: requestCameraPermission,
@@ -25,6 +28,8 @@ export default function Add() {
     const codeScanner = useCodeScanner({
         codeTypes: ['qr'],
         onCodeScanned: (codes) => {
+            if (scanHandledRef.current)
+                return;
             setCameraActive(false);
             const corners = codes[0].corners;
             if (corners)
@@ -32,12 +37,30 @@ export default function Add() {
             const url = codes[0].value;
             if (!url)
                 return setCameraActive(true);
+            scanHandledRef.current = true;
+            if (!isOtpAuthUri(url)) {
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+                Alert.alert(
+                    'Not an authenticator QR code',
+                    'Scan a QR code that sets up two-factor authentication.',
+                    [{ text: 'OK', onPress: resumeScanning }],
+                    { onDismiss: resumeScanning }
+                );
+                return;
+            }
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             router.push({ pathname: '/', params: { otpurl: url } });
         }
     })
 
+    const resumeScanning = () => {
+        scanHandledRef.current = false;
+        setQrPoints([]);
+        setCameraActive(true);
+    }
+
     const handleTabSelected = () => {
+        scanHandledRef.current = false;
         setCameraActive(true);
     }
 

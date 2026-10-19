@@ -18,12 +18,11 @@ interface CodeProps {
     globalTimestamp: number;
     style?: StyleProp<ViewStyle>;
     onLongPress?: () => void;
-    onIconChange?: (serviceUid: string, updatedService: Service) => Promise<void>;
 }
 
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
-export default function Code({ service, globalTimestamp, style, onLongPress, onIconChange }: CodeProps) {
+export default function Code({ service, globalTimestamp, style, onLongPress }: CodeProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
     const [otpData, setOtpData] = useState<TotpCode>({ otp: '------', expires: Date.now() });
@@ -87,12 +86,6 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
             generateAndSetOTP();
         }
     }, [globalTimestamp, otpData.expires, generateAndSetOTP]);
-
-    const handleIconSelected = useCallback(async (domain: string, icon: any, updatedService?: Service) => {
-        if (onIconChange && updatedService) {
-            await onIconChange(service.uid, updatedService);
-        }
-    }, [onIconChange, service.uid]);
 
     const { seconds: timeLeft, fraction: remainingPercentage } = getTimeRemaining(otpData.expires, globalTimestamp, totpOptions.period);
     const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
@@ -181,7 +174,6 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
                                 size={32}
                                 style={styles.serviceIcon}
                                 editable={true}
-                                onIconSelected={handleIconSelected}
                             />
                             <View style={styles.issuerTextContainer}>
                                 <Text style={[styles.issuerText, { color: theme.text }]}>

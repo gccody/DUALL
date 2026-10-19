@@ -1,5 +1,5 @@
 import { useTheme } from '@/context/ThemeContext';
-import { FileHandler } from '@/utils/fileHandler';
+import { eraseAllServices } from '@/storage/vault';
 import * as PinStore from '@/utils/pin';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -214,7 +214,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
 
   const eraseAndReset = async () => {
     try {
-      await FileHandler.removeData();
+      await eraseAllServices();
     } catch (error) {
       // Never drop the PIN unless the codes it protects are really gone.
       console.error('Failed to erase data:', error);

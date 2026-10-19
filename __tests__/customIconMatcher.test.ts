@@ -18,10 +18,8 @@ function serviceWithIssuer(issuer: string, label?: string): Service {
     secret: "JBSWY3DPEHPK3PXP",
     icon: label ? { label } : undefined,
     otp: {
-      link: "",
       algorithm: "SHA-1",
       period: 30,
-      tokenType: "TOTP",
       issuer,
       digits: 6,
     },

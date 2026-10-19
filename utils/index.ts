@@ -62,3 +62,7 @@ export function generateTOTPUrl(service: Service) {
   });
 }
 
+export function isOtpAuthUri(value: string): boolean {
+  return /^otpauth:\/\//i.test(value.trim());
+}
+

@@ -2,7 +2,7 @@ import { useOtpData } from "@/context/OtpDataContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FlashList, FlashListRef } from '@shopify/flash-list';
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import CodeItem from "@/components/CodeItem";
@@ -45,18 +45,29 @@ export default function HomeScreen() {
   const timestamp = useTimestamp();
 
   // Handle adding new codes via URL - use full servicesData, not filtered results
-  const { otpurl } = useLocalSearchParams<{ otpurl: string }>();
+  const { otpurl, scanId } = useLocalSearchParams<{ otpurl?: string; scanId?: string }>();
+  const router = useRouter();
+  const handledScanRef = useRef<string | null>(null);
   const { recentCodeIndex, addCode, resetRecentCodeIndex } = useCodeManager(servicesData, updateServices);
 
   // Reference for auto-scrolling
   const flashListRef = useRef<FlashListRef<Service>>(null);
 
-  // Handle URL parameter for adding new code
+  // Handle URL parameter for adding new code. Consume it exactly once per scan:
+  // addCode changes whenever services change, so without this guard deleting or
+  // editing a code would re-run the effect and re-add the scanned code.
   useEffect(() => {
-    if (otpurl) {
-      addCode(otpurl);
+    if (!otpurl) {
+      handledScanRef.current = null;
+      return;
     }
-  }, [otpurl, addCode]);
+    const scanKey = scanId ?? otpurl;
+    // Wait for stored codes to load so the new code isn't saved over them
+    if (!data || handledScanRef.current === scanKey) return;
+    handledScanRef.current = scanKey;
+    router.setParams({ otpurl: undefined, scanId: undefined });
+    addCode(otpurl);
+  }, [otpurl, scanId, data, addCode, router]);
 
   // Scroll to recently added code
   useEffect(() => {

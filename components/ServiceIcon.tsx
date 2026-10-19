@@ -1,7 +1,6 @@
 import { useTheme } from '@/context/ThemeContext';
 import { Service } from '@/types';
-import { getCustomIcon } from '@/utils/customIconMatcher';
-import { customIcons } from '@/utils/customIcons';
+import { getCustomIcon, getIconSource } from '@/utils/customIconMatcher';
 import React, { useMemo, useState } from 'react';
 import { Image, StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import CustomIconPicker from './CustomIconPicker';
@@ -28,7 +27,7 @@ function ServiceIcon({ service, size = 40, style, editable = false, onIconSelect
 
         // Explicit selection stored on the service (user-picked or auto-set at add time)
         if (service.icon?.label) {
-            return customIcons[`${service.icon.label}.avif`] ?? null;
+            return getIconSource(service.icon.label);
         }
 
         // No icon set yet — try auto-match (backward compat for older services)

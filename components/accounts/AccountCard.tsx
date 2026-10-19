@@ -8,12 +8,15 @@ import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../ProgressBar";
 import ServiceIcon from "./ServiceIcon";
 
-interface CodeProps {
+interface AccountCardProps {
     service: Service;
-    globalTimestamp: number;
+    /** Current time (epoch ms), ticking so the code and countdown stay live */
+    now: number;
+    /** Outline the card, e.g. for a just-added account */
+    highlighted?: boolean;
     style?: StyleProp<ViewStyle>;
     onLongPress?: () => void;
     onIconPress?: () => void;
@@ -21,10 +24,11 @@ interface CodeProps {
 
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
-export default function Code({ service, globalTimestamp, style, onLongPress, onIconPress }: CodeProps) {
+/** An account's live code: tap to copy, eye to hide, countdown and next-code preview. */
+export default function AccountCard({ service, now, highlighted = false, style, onLongPress, onIconPress }: AccountCardProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
-    const { code, nextCode, digits, secondsLeft: timeLeft, fraction: remainingPercentage, error: isError } = useTotp(service, globalTimestamp);
+    const { code, nextCode, digits, secondsLeft: timeLeft, fraction: remainingPercentage, error: isError } = useTotp(service, now);
     const [hideToken, setHideToken] = useState(settings.hideTokens);
 
     // Animation values for the next token slide-in
@@ -111,7 +115,12 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
 
     return (
         <TouchableHighlight
-            style={[styles.buttonContainer, { backgroundColor: theme.cardBackground }, style]}
+            style={[
+                styles.buttonContainer,
+                { backgroundColor: theme.cardBackground },
+                highlighted && { borderColor: theme.accent, borderWidth: 2 },
+                style,
+            ]}
             onPress={handleCopyToClipboard}
             onLongPress={onLongPress}
             underlayColor={theme.border}

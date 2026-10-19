@@ -1,4 +1,4 @@
-import ServiceIcon from '@/components/ServiceIcon';
+import ServiceIcon from '@/components/accounts/ServiceIcon';
 import { useTheme } from '@/context/ThemeContext';
 import { useVault } from '@/context/VaultContext';
 import { useAccountRoute } from '@/hooks/useAccountRoute';

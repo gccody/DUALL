@@ -6,7 +6,7 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
 
-import CodeItem from "@/components/CodeItem";
+import AccountCard from "@/components/accounts/AccountCard";
 import ErrorView from "@/components/ErrorView";
 import LoadingView from "@/components/LoadingView";
 
@@ -118,17 +118,17 @@ export default function HomeScreen() {
       <FlashList
         ref={flashListRef}
         style={{ backgroundColor: theme.background }}
+        contentContainerStyle={{ paddingTop: 16 }}
         contentInsetAdjustmentBehavior="automatic"
         onTouchStart={handleListTouch}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         data={services}
         renderItem={({ item, index }) => (
-          <CodeItem
+          <AccountCard
             service={item}
-            globalTimestamp={timestamp}
-            isHighlighted={recentCodeIndex === index}
-            isFirstItem={index === 0}
+            now={timestamp}
+            highlighted={recentCodeIndex === index}
             onLongPress={() => openEditor(item.uid)}
             onIconPress={() => openIconPicker(item.uid)}
           />

@@ -5,12 +5,14 @@ export interface Service {
   updatedAt: number;
   name: string;
   uid: string;
-  icon?: Icon;
+  /** Unset: auto-match a bundled icon by issuer. `null`: the user removed the icon. */
+  icon?: Icon | null;
   otp: ServiceOtp;
   secret: string;
 }
 
 export interface Icon {
+  /** Domain of a bundled icon, e.g. "github.com" (see utils/customIconMatcher) */
   label: string;
 }
 

@@ -2,6 +2,10 @@
   "expo": {
     "name": "DUALL",
     "slug": "totp",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icons/ios-light.png",
     "scheme": "myapp",

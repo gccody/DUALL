@@ -198,17 +198,17 @@ export class FileHandler {
    */
   static async removeData(): Promise<void> {
     try {
-      // Remove config
-      await AsyncStorage.removeItem(CONFIG_KEY);
-      
-      // Load config to get all service UIDs
+      // Load config to get all service UIDs (before it is removed)
       const config = await FileHandler.getConfig();
-      
+
       // Remove all services in parallel
       const deletePromises = config.serviceMetadata.map(meta =>
         FileHandler.deleteService(meta.uid)
       );
       await Promise.all(deletePromises);
+
+      // Remove config
+      await AsyncStorage.removeItem(CONFIG_KEY);
     } catch(error) {
       throw new Error('Failed to remove data: ' + error);
     }
@@ -265,6 +265,7 @@ export class FileHandler {
       
       // Update all metadata in config
       const config = await FileHandler.getConfig();
+      const previousUids = config.serviceMetadata.map(m => m.uid);
       config.serviceMetadata = services.map((s, index) => ({
         uid: s.uid,
         name: s.name,
@@ -281,12 +282,12 @@ export class FileHandler {
       
       await FileHandler.saveConfig(config);
       
-      // Remove any services that are no longer in the list
+      // Remove any services that are no longer in the list (only after the
+      // new config that no longer references them has been persisted)
       const currentUids = new Set(services.map(s => s.uid));
-      const oldMetadata = await FileHandler.getConfig();
-      const deletePromises = oldMetadata.serviceMetadata
-        .filter(m => !currentUids.has(m.uid))
-        .map(m => FileHandler.deleteService(m.uid));
+      const deletePromises = previousUids
+        .filter(uid => !currentUids.has(uid))
+        .map(uid => FileHandler.deleteService(uid));
       
       if (deletePromises.length > 0) {
         await Promise.all(deletePromises);

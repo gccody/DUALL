@@ -1,6 +1,6 @@
 import { hasPin, resetFailures } from '@/utils/pin';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 
 /** How long the app may stay in the background before it has to be unlocked again. */
@@ -31,30 +31,28 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
   // Once true, the app's navigation tree stays mounted and re-locking only covers it.
   const [hasUnlockedOnce, setHasUnlockedOnce] = useState(false);
 
+  // Mirrors `status` synchronously for the AppState listener.
   const statusRef = useRef<AppLockStatus>('checking');
-  const useBiometricsRef = useRef(useBiometrics);
   const backgroundedAt = useRef<number | null>(null);
   const hasStarted = useRef(false);
 
-  useEffect(() => {
-    useBiometricsRef.current = useBiometrics;
-  }, [useBiometrics]);
-
-  const updateStatus = useCallback((next: AppLockStatus) => {
+  const updateStatus = (next: AppLockStatus) => {
     statusRef.current = next;
     setStatus(next);
-  }, []);
+  };
 
-  const unlock = useCallback(() => {
+  const unlock = () => {
     updateStatus('unlocked');
     setHasUnlockedOnce(true);
-  }, [updateStatus]);
+  };
 
-  const authenticate = useCallback(async () => {
+  // An effect event: always sees the latest `useBiometrics` without
+  // re-running the effects that call it.
+  const authenticate = useEffectEvent(async () => {
     updateStatus('checking');
     try {
       // Without a PIN, the PIN view runs its setup flow instead.
-      if (useBiometricsRef.current && (await hasPin())) {
+      if (useBiometrics && (await hasPin())) {
         const result = await LocalAuthentication.authenticateAsync({
           promptMessage: 'Authenticate with biometrics'
         });
@@ -68,7 +66,7 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
       console.error('Biometric authentication error:', error);
     }
     updateStatus('pin');
-  }, [unlock, updateStatus]);
+  });
 
   // Authenticate once on launch. Later settings changes (e.g. toggling
   // biometrics while unlocked) must not lock the app again.
@@ -76,7 +74,7 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
     if (!ready || hasStarted.current) return;
     hasStarted.current = true;
     authenticate();
-  }, [ready, authenticate]);
+  }, [ready]);
 
   // Re-lock when returning after more than the grace period in the background.
   // `inactive` is ignored on purpose: the biometric prompt, permission dialogs
@@ -96,12 +94,10 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
       }
     });
     return () => subscription.remove();
-  }, [authenticate]);
+  }, []);
 
   /** Unmounts the app content (after its data was erased) until the next unlock. */
-  const resetSession = useCallback(() => {
-    setHasUnlockedOnce(false);
-  }, []);
+  const resetSession = () => setHasUnlockedOnce(false);
 
   return { status, hasUnlockedOnce, unlock, resetSession };
 }

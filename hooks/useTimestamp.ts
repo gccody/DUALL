@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useTimestamp() {
-  const [timestamp, setTimestamp] = useState(Date.now());
+  const [timestamp, setTimestamp] = useState(() => Date.now());
 
   useEffect(() => {
     // 250ms is enough for a smooth progress bar and a responsive second countdown;

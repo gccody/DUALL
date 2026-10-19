@@ -11,7 +11,6 @@
     "build:dev:ios": "EAS_SKIP_AUTO_FINGERPRINT=1 bun x eas-cli@latest build --platform ios --profile development",
     "build:dev": "EAS_SKIP_AUTO_FINGERPRINT=1 bun x eas-cli@latest build --profile development",
     "ios": "bun x expo run:ios",
-    "web": "bun x expo start --web",
     "test": "jest --runInBand --passWithNoTests",
     "lint": "bun x expo lint",
     "fetch:data": "bun run scripts/scrapeTotp.ts",
@@ -58,7 +57,6 @@
     "react-native-screens": "4.25.2",
     "react-native-svg": "15.15.4",
     "react-native-vision-camera": "^4.6.4",
-    "react-native-web": "^0.21.2",
     "react-native-worklets": "0.10.0"
   },
   "devDependencies": {

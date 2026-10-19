@@ -1,9 +1,9 @@
 import SettingCategory from '@/components/SettingCategory';
 import SettingItem from '@/components/SettingItem';
 import SubText from '@/components/SubText';
+import { useOtpData } from '@/context/OtpDataContext';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
-import { useOtpData } from '@/hooks/useOtpData';
 import { providerRegistry } from '@/parsers/registry';
 import { convertToService } from '@/parsers/utils';
 import Constants from 'expo-constants';
@@ -13,7 +13,7 @@ import * as SecureStore from 'expo-secure-store';
 import * as Sharing from 'expo-sharing';
 import * as WebBrowser from 'expo-web-browser';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ActionSheetIOS, ActivityIndicator, Alert, Platform, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import pkg from '../../../package.json';
 import { generateTOTPUrl } from '@/utils';
@@ -23,6 +23,13 @@ export default function SettingsScreen() {
     const { settings, updateSetting, isLoading } = useSettings();
     const { data, loading, updateServices } = useOtpData();
     const router = useRouter();
+
+    // Latest services, read when an async flow (e.g. import confirmation) finishes
+    // so codes added elsewhere in the meantime aren't overwritten.
+    const servicesRef = useRef(data?.services);
+    useEffect(() => {
+        servicesRef.current = data?.services;
+    }, [data?.services]);
 
     if (isLoading) {
         return (
@@ -258,9 +265,6 @@ export default function SettingsScreen() {
                 convertToService(otpData, index)
             );
 
-            // Get existing services
-            const existingServices = data?.services || [];
-
             // Show confirmation dialog
             Alert.alert(
                 `Import from ${parseResult.provider}`,
@@ -275,8 +279,8 @@ export default function SettingsScreen() {
                         text: 'Import',
                         onPress: async () => {
                             try {
-                                // Combine existing and new services
-                                const updatedServices = [...existingServices, ...newServices];
+                                // Combine the latest existing services with the new ones
+                                const updatedServices = [...(servicesRef.current || []), ...newServices];
                                 await updateServices(updatedServices);
                                 Alert.alert("Success", `Successfully imported ${newServices.length} codes from ${parseResult.provider}`);
                             } catch (error) {

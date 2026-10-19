@@ -1,5 +1,4 @@
-/// <reference types="jest" />
-import { isOtpAuthUri } from "@/utils";
+import { isOtpAuthUri } from "@/core/otp/uri";
 
 describe("isOtpAuthUri", () => {
   it.each([

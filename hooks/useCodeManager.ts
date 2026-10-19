@@ -12,8 +12,14 @@ export function useCodeManager(
   const [recentCodeIndex, setRecentCodeIndex] = useState<number | null>(null);
 
   const addCode = useCallback((url: string) => {
-    const parsedURL = TOTP.parseUrl(url);
-    
+    // parseUrl throws on invalid input (it never returns null)
+    let parsedURL: ReturnType<typeof TOTP.parseUrl> | null;
+    try {
+      parsedURL = TOTP.parseUrl(url);
+    } catch {
+      parsedURL = null;
+    }
+
     if (!parsedURL) {
       Alert.alert("Error", "Unable to add code!");
       return;

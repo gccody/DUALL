@@ -60,24 +60,13 @@ export default function Add() {
         setCameraActive(true);
     }
 
-    const handleTabSelected = () => {
-        scanHandledRef.current = false;
-        setCameraActive(true);
-    }
-
-    const handleTabDeselected = () => {
-        setCameraActive(false);
-    }
-
+    // Run the camera only while this tab is focused. useFocusEffect re-runs
+    // whenever the callback changes, so it stays explicitly memoized.
     useFocusEffect(
         useCallback(() => {
-
-            handleTabSelected();
-
-            return () => {
-                handleTabDeselected();
-            };
-
+            scanHandledRef.current = false;
+            setCameraActive(true);
+            return () => setCameraActive(false);
         }, [])
     );
 

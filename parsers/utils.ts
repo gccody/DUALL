@@ -1,30 +1,9 @@
+import { normalizeAlgorithm } from "@/TOTP";
 import type { OTP, OtpAuthData, Service, TOTPAlgorithm } from "@/types";
 import { getCustomIconDomain } from '@/utils/customIconMatcher';
 import * as Crypto from 'expo-crypto';
 
-/**
- * Normalizes algorithm names to match our type system
- */
-export function normalizeAlgorithm(
-  algorithm?: string
-): TOTPAlgorithm {
-  if (!algorithm) return "SHA-1";
-
-  const normalized = algorithm.toUpperCase().replace(/[^A-Z0-9]/g, "");
-
-  switch (normalized) {
-    case "SHA1":
-      return "SHA-1";
-    case "SHA256":
-      return "SHA-256";
-    case "SHA384":
-      return "SHA-384";
-    case "SHA512":
-      return "SHA-512";
-    default:
-      return "SHA-1";
-  }
-}
+export { normalizeAlgorithm };
 
 /**
  * Parses otpauth:// URI format (common across many providers)

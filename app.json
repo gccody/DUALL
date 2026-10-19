@@ -8,7 +8,7 @@
     ],
     "orientation": "portrait",
     "icon": "./assets/icons/ios-light.png",
-    "scheme": "myapp",
+    "scheme": "duall",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,

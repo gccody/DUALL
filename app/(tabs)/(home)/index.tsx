@@ -3,7 +3,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { useVault } from "@/context/VaultContext";
 import { FlashList, FlashListRef } from '@shopify/flash-list';
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import { Alert } from "react-native";
 
 import AccountCard from "@/components/accounts/AccountCard";
@@ -35,8 +35,8 @@ export default function HomeScreen() {
   // Real-time clock update
   const timestamp = useTimestamp();
 
-  // Index of a just scanned code, highlighted until the list is touched
-  const [recentCodeIndex, setRecentCodeIndex] = useState<number | null>(null);
+  // A just scanned account, highlighted until the list is touched
+  const [highlightedUid, setHighlightedUid] = useState<string | null>(null);
 
   const addCode = useCallback(async (url: string) => {
     try {
@@ -47,7 +47,7 @@ export default function HomeScreen() {
         Alert.alert("Error", "HOTP is not supported yet");
       } else {
         // New code, or the existing one for a duplicate
-        setRecentCodeIndex(outcome.index);
+        setHighlightedUid(outcome.uid);
       }
     } catch (err) {
       reportSaveError(err);
@@ -76,17 +76,16 @@ export default function HomeScreen() {
   // Reference for auto-scrolling
   const flashListRef = useRef<FlashListRef<Service>>(null);
 
-  // Scroll to recently added code
-  useEffect(() => {
-    if (recentCodeIndex !== null) {
-      flashListRef.current?.scrollToIndex({ index: recentCodeIndex, animated: true });
+  // Scroll to the highlighted account within the list as shown (it may be filtered by a search)
+  const scrollToAccount = useEffectEvent((uid: string) => {
+    const index = services.findIndex((service) => service.uid === uid);
+    if (index !== -1) {
+      flashListRef.current?.scrollToIndex({ index, animated: true });
     }
-  }, [recentCodeIndex]);
-
-  // Handle touch on the list to reset recent code index
-  const handleListTouch = () => {
-    setRecentCodeIndex(null);
-  };
+  });
+  useEffect(() => {
+    if (highlightedUid !== null) scrollToAccount(highlightedUid);
+  }, [highlightedUid]);
 
   const openEditor = (uid: string) => router.push({ pathname: '/account/[uid]', params: { uid } });
   const openIconPicker = (uid: string) => router.push({ pathname: '/account/[uid]/icon', params: { uid } });
@@ -120,22 +119,22 @@ export default function HomeScreen() {
         style={{ backgroundColor: theme.background }}
         contentContainerStyle={{ paddingTop: 16 }}
         contentInsetAdjustmentBehavior="automatic"
-        onTouchStart={handleListTouch}
+        onTouchStart={() => setHighlightedUid(null)}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         data={services}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <AccountCard
             service={item}
             now={timestamp}
-            highlighted={recentCodeIndex === index}
+            highlighted={item.uid === highlightedUid}
             onLongPress={() => openEditor(item.uid)}
             onIconPress={() => openIconPicker(item.uid)}
           />
         )}
         keyExtractor={(item) => item.uid}
         drawDistance={500}
-        extraData={[timestamp, recentCodeIndex]}
+        extraData={[timestamp, highlightedUid]}
       />
     </>
   );

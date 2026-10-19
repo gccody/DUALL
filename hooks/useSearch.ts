@@ -1,37 +1,23 @@
-import { Service } from '@/types';
-import Fuse from 'fuse.js';
-import { useEffect, useMemo, useState } from "react";
+import type { Service } from '@/types';
+import Fuse, { type IFuseOptions } from 'fuse.js';
+import { useState } from 'react';
 
-export function useSearch(initialData: Service[]) {
-  const [filteredServices, setFilteredServices] = useState<Service[]>(initialData);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+const SEARCH_OPTIONS: IFuseOptions<Service> = {
+  isCaseSensitive: false,
+  keys: ['name', 'otp.issuer'],
+  distance: 0.4,
+};
 
-  // Memoize Fuse instance - use initialData directly
-  const fuse = useMemo(
-    () => new Fuse(initialData, {
-      isCaseSensitive: false,
-      keys: ["name", "otp.issuer"],
-      distance: 0.4
-    }),
-    [initialData]
-  );
+/** Fuzzy search over services by name and issuer. An empty query returns all of them. */
+export function useSearch(allServices: Service[]) {
+  const [query, setQuery] = useState('');
 
-  // Update search results when query or initialData changes
-  useEffect(() => {
-    if (searchQuery === '') {
-      setFilteredServices(initialData);
-    } else {
-      const searchedData = fuse.search(searchQuery);
-      setFilteredServices(searchedData.map((val) => val.item));
-    }
-  }, [searchQuery, initialData, fuse]);
+  // Derived during render; React Compiler memoizes it per `allServices`/`query`.
+  const services = query === ''
+    ? allServices
+    : new Fuse(allServices, SEARCH_OPTIONS).search(query).map((result) => result.item);
 
-  const handleSearch = (text: string) => setSearchQuery(text);
+  const handleSearch = (text: string) => setQuery(text);
 
-  return {
-    services: filteredServices,
-    search: searchQuery,
-    setSearch: setSearchQuery,
-    handleSearch
-  };
+  return { services, handleSearch };
 }

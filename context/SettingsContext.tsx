@@ -1,7 +1,7 @@
 import { ensureMigrated } from '@/storage/migrations';
 import { DEFAULT_SETTINGS, loadSettings, saveSettings } from '@/storage/settings';
 import { Settings } from '@/types';
-import { ReactNode, createContext, use, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, createContext, use, useEffect, useRef, useState } from 'react';
 
 type SettingsContextType = {
     settings: Settings;
@@ -18,14 +18,10 @@ export const SettingsContext = createContext<SettingsContextType>({
 export function SettingsProvider({ children }: { children: ReactNode }) {
     const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
     const [isLoading, setIsLoading] = useState(true);
+    // The latest settings, so quick successive updates build on each other.
     const settingsRef = useRef<Settings>(DEFAULT_SETTINGS);
     // Saves run one after another so a slow write can't overwrite a newer one.
     const saveQueue = useRef<Promise<void>>(Promise.resolve());
-
-    const apply = useCallback((next: Settings) => {
-        settingsRef.current = next;
-        setSettings(next);
-    }, []);
 
     useEffect(() => {
         let cancelled = false;
@@ -38,7 +34,10 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
             }
             try {
                 const stored = await loadSettings();
-                if (!cancelled) apply(stored);
+                if (!cancelled) {
+                    settingsRef.current = stored;
+                    setSettings(stored);
+                }
             } catch (error) {
                 console.error('SettingsContext: Failed to load settings:', error);
             } finally {
@@ -48,9 +47,14 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         return () => {
             cancelled = true;
         };
-    }, [apply]);
+    }, []);
 
-    const updateSetting = useCallback(async <K extends keyof Settings>(key: K, value: Settings[K]) => {
+    const apply = (next: Settings) => {
+        settingsRef.current = next;
+        setSettings(next);
+    };
+
+    const updateSetting = async <K extends keyof Settings>(key: K, value: Settings[K]) => {
         const next = { ...settingsRef.current, [key]: value };
         apply(next);
         const save = saveQueue.current.then(() => saveSettings(next));
@@ -61,7 +65,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
             console.error(`Failed to update ${String(key)} setting:`, error);
             apply(await loadSettings().catch(() => settingsRef.current));
         }
-    }, [apply]);
+    };
 
     return (
         <SettingsContext value={{ settings, isLoading, updateSetting }}>

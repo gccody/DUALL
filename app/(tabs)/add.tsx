@@ -3,7 +3,7 @@ import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
 import * as Crypto from 'expo-crypto';
 import * as Haptics from 'expo-haptics';
-import { isOtpAuthUri } from '@/utils';
+import { isOtpAuthUri } from '@/core/otp/uri';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
 import { Polygon, Svg } from 'react-native-svg';

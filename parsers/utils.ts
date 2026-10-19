@@ -1,4 +1,5 @@
 import type { OTP, OtpAuthData, Service, TOTPAlgorithm } from "@/types";
+import { buildOtpAuthUri } from '@/utils';
 import { getCustomIconDomain } from '@/utils/customIconMatcher';
 import * as Crypto from 'expo-crypto';
 
@@ -88,7 +89,16 @@ export function parseLabel(label: string): { issuer?: string; account: string } 
 export function convertToService(otpData: OtpAuthData, position: number = 0): Service {
   const now = Date.now();
   const otp: OTP = {
-    link: `otpauth://${otpData.type}/${encodeURIComponent(otpData.label)}?secret=${otpData.secret}&algorithm=${otpData.algorithm}&digits=${otpData.digits}`,
+    link: buildOtpAuthUri({
+      type: otpData.type,
+      secret: otpData.secret,
+      account: otpData.label,
+      issuer: otpData.issuer,
+      algorithm: otpData.algorithm,
+      digits: otpData.digits,
+      period: otpData.type === "totp" ? otpData.period : undefined,
+      counter: otpData.type === "hotp" ? otpData.counter : undefined,
+    }),
     algorithm: otpData.algorithm,
     period: otpData.type === "totp" ? otpData.period : undefined,
     tokenType: otpData.type.toUpperCase() as "TOTP" | "HOTP",

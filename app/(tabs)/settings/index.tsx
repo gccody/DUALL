@@ -1,12 +1,11 @@
 import SettingCategory from '@/components/SettingCategory';
 import SettingItem from '@/components/SettingItem';
 import SubText from '@/components/SubText';
-import { useOtpData } from '@/context/OtpDataContext';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
+import { useVault } from '@/context/VaultContext';
 import { importProviders, parseImport, type ImportProvider, type ImportResult } from '@/core/import';
-import { createService, isDuplicateService, serviceToUri } from '@/core/service';
-import type { Service } from '@/types';
+import { serviceToUri } from '@/core/service';
 import Constants from 'expo-constants';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
@@ -14,22 +13,15 @@ import { clearPin } from '@/utils/pin';
 import * as Sharing from 'expo-sharing';
 import * as WebBrowser from 'expo-web-browser';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { ActionSheetIOS, ActivityIndicator, Alert, Platform, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import pkg from '../../../package.json';
 
 export default function SettingsScreen() {
     const { theme, isDark } = useTheme();
     const { settings, updateSetting, isLoading } = useSettings();
-    const { data, loading, updateServices } = useOtpData();
+    const { services, status, importServices, clear } = useVault();
     const router = useRouter();
-
-    // Latest services, read when an async flow (e.g. import confirmation) finishes
-    // so codes added elsewhere in the meantime aren't overwritten.
-    const servicesRef = useRef(data?.services);
-    useEffect(() => {
-        servicesRef.current = data?.services;
-    }, [data?.services]);
 
     if (isLoading) {
         return (
@@ -40,12 +32,17 @@ export default function SettingsScreen() {
     }
 
     const deleteCodes = async () => {
-        const count = data?.services.length;
+        const count = status === 'ready' ? services.length : undefined;
         const target = count === undefined ? 'all codes' : `${count} code${count === 1 ? '' : 's'}`;
 
         const performDelete = async () => {
-            await updateServices([]);
-            Alert.alert("Codes are deleted");
+            try {
+                await clear();
+                Alert.alert("Codes are deleted");
+            } catch (error) {
+                console.error('Failed to delete codes:', error);
+                Alert.alert("Error", "Failed to delete codes. Please try again.");
+            }
         };
 
         if (Platform.OS === 'ios') {
@@ -177,10 +174,9 @@ export default function SettingsScreen() {
     }
 
     const exportCodes = async () => {
-        if (loading)
+        if (status === 'loading')
             return Alert.alert("Still loading codes. Please wait");
-        const services = data?.services;
-        if (!services || services.length === 0)
+        if (services.length === 0)
             return Alert.alert("Couldn't find any codes to export")
 
         try {
@@ -256,25 +252,15 @@ export default function SettingsScreen() {
                         text: 'Import',
                         onPress: async () => {
                             try {
-                                // Append to the latest existing services, skipping codes already present
-                                const existing = servicesRef.current || [];
-                                const added: Service[] = [];
-                                for (const entry of entries) {
-                                    const service = createService(entry, existing.length + added.length);
-                                    if (!isDuplicateService(existing, service) && !isDuplicateService(added, service)) {
-                                        added.push(service);
-                                    }
-                                }
-                                await updateServices([...existing, ...added]);
-
-                                const duplicates = entries.length - added.length;
+                                // Appends to the latest codes, skipping ones already present
+                                const { added, duplicates } = await importServices(entries);
                                 const skipped = [
                                     duplicates > 0 ? `${duplicates} already in DUALL` : '',
                                     skippedHotp > 0 ? `${skippedHotp} unsupported HOTP` : '',
                                 ].filter(Boolean).join(', ');
                                 Alert.alert(
                                     "Success",
-                                    `Successfully imported ${added.length} codes from ${provider.displayName}` +
+                                    `Successfully imported ${added} codes from ${provider.displayName}` +
                                     (skipped ? ` (skipped: ${skipped})` : '')
                                 );
                             } catch (error) {

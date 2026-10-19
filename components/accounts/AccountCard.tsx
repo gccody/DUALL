@@ -1,3 +1,4 @@
+import ProgressBar from "@/components/ui/ProgressBar";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { useTotp } from "@/hooks/useTotp";
@@ -6,9 +7,9 @@ import { formatOtp, maskOtp } from "@/utils/formatOtp";
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
-import ProgressBar from "@/components/ui/ProgressBar";
+import { useEffect, useState } from "react";
+import { Alert, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import ServiceIcon from "./ServiceIcon";
 
 interface AccountCardProps {
@@ -22,92 +23,33 @@ interface AccountCardProps {
     onIconPress?: () => void;
 }
 
+/** Below this fraction of the period left, the bar turns red and the next code is previewed. */
 const PERCENTAGE_LEFT_REVEAL = 0.2;
 
 /** An account's live code: tap to copy, eye to hide, countdown and next-code preview. */
 export default function AccountCard({ service, now, highlighted = false, style, onLongPress, onIconPress }: AccountCardProps) {
     const { theme } = useTheme();
     const { settings } = useSettings();
-    const { code, nextCode, digits, secondsLeft: timeLeft, fraction: remainingPercentage, error: isError } = useTotp(service, now);
-    const [hideToken, setHideToken] = useState(settings.hideTokens);
+    const { code, nextCode, digits, secondsLeft, fraction, error } = useTotp(service, now);
 
-    // Animation values for the next token slide-in
-    const slideAnim = useRef(new Animated.Value(-50)).current;
-    const opacityAnim = useRef(new Animated.Value(0)).current;
-
-    // Last state of showNextToken for animation trigger
-    const lastShowNextTokenRef = useRef(false);
-
-    // Update hideToken when settings change
-    useEffect(() => {
-        setHideToken(settings.hideTokens);
-    }, [settings.hideTokens]);
-
-    const progressBarColor = remainingPercentage < PERCENTAGE_LEFT_REVEAL ? theme.dangerProgressBarFill : theme.progressBarFill;
-    const showNextToken = settings.showNextToken && remainingPercentage < PERCENTAGE_LEFT_REVEAL && !isError && !hideToken;
-
-    // Animate next token when it appears or disappears
-    useEffect(() => {
-        if (showNextToken && !lastShowNextTokenRef.current) {
-            // Reset animation values when transitioning to visible
-            slideAnim.setValue(-50);
-            opacityAnim.setValue(0);
-
-            // Run animations in parallel
-            Animated.parallel([
-                Animated.timing(slideAnim, {
-                    toValue: 0,
-                    duration: 300,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(opacityAnim, {
-                    toValue: 1,
-                    duration: 300,
-                    useNativeDriver: true,
-                }),
-            ]).start();
-        } else if (!showNextToken && lastShowNextTokenRef.current) {
-            // Animate out if needed
-            Animated.parallel([
-                Animated.timing(slideAnim, {
-                    toValue: -50,
-                    duration: 200,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(opacityAnim, {
-                    toValue: 0,
-                    duration: 200,
-                    useNativeDriver: true,
-                }),
-            ]).start();
-        }
-
-        // Update ref for next check
-        lastShowNextTokenRef.current = showNextToken;
-    }, [showNextToken, slideAnim, opacityAnim]);
-
-    // Format the OTP code with a space in the middle
-    const formattedOTP = (code: string) => {
-        if (hideToken) {
-            return maskOtp(digits);
-        }
-        return formatOtp(code);
-    };
-
-    // Toggle visibility of token
+    // The eye button overrides the "Hide Tokens" setting for this account until
+    // the setting changes. Keyed by uid, as the list recycles cards.
+    const [hideOverride, setHideOverride] = useState<{ uid: string; setting: boolean; hidden: boolean } | null>(null);
+    const hideToken = hideOverride?.uid === service.uid && hideOverride.setting === settings.hideTokens
+        ? hideOverride.hidden
+        : settings.hideTokens;
     const toggleHideToken = () => {
-        setHideToken(!hideToken);
+        setHideOverride({ uid: service.uid, setting: settings.hideTokens, hidden: !hideToken });
     };
+
+    const isEnding = fraction < PERCENTAGE_LEFT_REVEAL;
+    const showNextToken = settings.showNextToken && isEnding && !error && !hideToken;
+    const displayCode = (value: string) => (hideToken ? maskOtp(digits) : formatOtp(value));
 
     const handleCopyToClipboard = async () => {
-        // Dismiss keyboard if it's open to ensure the copy happens immediately
-        // Keyboard.dismiss();
-
-        // Copy code to clipboard
         await Clipboard.setStringAsync(code);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
-        // Show notification if enabled
         if (settings.notifyWhenTokenCopied) {
             Alert.alert('Success', 'Code was copied to clipboard!');
         }
@@ -148,12 +90,12 @@ export default function AccountCard({ service, now, highlighted = false, style, 
                         </View>
                         <View style={styles.codeContainer}>
                             <Text style={[styles.codeText, { color: theme.text }]}>
-                                {formattedOTP(code)}
+                                {displayCode(code)}
                             </Text>
                             <TouchableOpacity
                                 onPress={toggleHideToken}
                                 style={styles.eyeButton}
-                                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+                                hitSlop={15}
                             >
                                 <FontAwesome
                                     name={hideToken ? "eye" : "eye-slash"}
@@ -161,31 +103,16 @@ export default function AccountCard({ service, now, highlighted = false, style, 
                                     color={theme.subText}
                                 />
                             </TouchableOpacity>
-                            {(showNextToken && !hideToken) && (
-                                <Animated.View
-                                    style={[
-                                        styles.nextTokenContainer,
-                                        {
-                                            opacity: opacityAnim,
-                                            transform: [{ translateX: slideAnim }]
-                                        }
-                                    ]}
-                                >
-                                    <FontAwesome name="arrow-right" size={14} color={theme.accent} style={styles.nextTokenIcon} />
-                                    <Text style={[styles.nextTokenText, { color: theme.accent }]}>
-                                        {formattedOTP(nextCode)}
-                                    </Text>
-                                </Animated.View>
-                            )}
+                            {showNextToken && <NextCode code={displayCode(nextCode)} color={theme.accent} />}
                         </View>
                     </View>
                     <View style={styles.timerContainer}>
-                        <Text style={[styles.timerText, { color: theme.text }]}>{timeLeft}s</Text>
+                        <Text style={[styles.timerText, { color: theme.text }]}>{secondsLeft}s</Text>
                     </View>
                 </View>
                 <ProgressBar
-                    progress={remainingPercentage}
-                    fillColor={progressBarColor}
+                    progress={fraction}
+                    fillColor={isEnding ? theme.dangerProgressBarFill : theme.progressBarFill}
                     trackColor={theme.progressBarBackground}
                     borderRadius={2}
                     height={5}
@@ -193,6 +120,27 @@ export default function AccountCard({ service, now, highlighted = false, style, 
                 />
             </View>
         </TouchableHighlight>
+    );
+}
+
+/** The upcoming code, sliding in from the left when it appears. */
+function NextCode({ code, color }: { code: string; color: string }) {
+    const reveal = useSharedValue(0);
+
+    useEffect(() => {
+        reveal.set(withTiming(1, { duration: 300 }));
+    }, [reveal]);
+
+    const revealStyle = useAnimatedStyle(() => ({
+        opacity: reveal.get(),
+        transform: [{ translateX: (reveal.get() - 1) * 50 }],
+    }));
+
+    return (
+        <Animated.View style={[styles.nextTokenContainer, revealStyle]}>
+            <FontAwesome name="arrow-right" size={14} color={color} style={styles.nextTokenIcon} />
+            <Text style={[styles.nextTokenText, { color }]}>{code}</Text>
+        </Animated.View>
     );
 }
 
@@ -252,7 +200,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginLeft: 5,
-        // marginTop: 6,
     },
     nextTokenIcon: {
         marginRight: 6,
@@ -272,5 +219,5 @@ const styles = StyleSheet.create({
     },
     progressBar: {
         marginTop: 16,
-    }
+    },
 });

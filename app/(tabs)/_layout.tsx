@@ -1,5 +1,5 @@
-import { OtpDataProvider } from '@/context/OtpDataContext';
 import { useTheme } from '@/context/ThemeContext';
+import { VaultProvider } from '@/context/VaultContext';
 import { NativeTabs } from 'expo-router/native-tabs';
 import { Platform } from 'react-native';
 
@@ -7,7 +7,7 @@ export default function TabLayout() {
     const { theme } = useTheme();
 
     return (
-        <OtpDataProvider>
+        <VaultProvider>
             <NativeTabs
                 tintColor={theme.tabBarActive}
                 iconColor={{ default: theme.tabBarInactive, selected: theme.tabBarActive }}
@@ -32,6 +32,6 @@ export default function TabLayout() {
                     <NativeTabs.Trigger.Icon sf={{ default: 'gearshape', selected: 'gearshape.fill' }} md="settings" />
                 </NativeTabs.Trigger>
             </NativeTabs>
-        </OtpDataProvider>
+        </VaultProvider>
     );
 }

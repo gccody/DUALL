@@ -1,9 +1,11 @@
-import { useTheme } from '@/context/ThemeContext';
+import CenteredMessage from '@/components/ui/CenteredMessage';
 import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
+import * as Crypto from 'expo-crypto';
 import * as Haptics from 'expo-haptics';
-import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { isOtpAuthUri } from '@/core/otp/uri';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Polygon, Svg } from 'react-native-svg';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner, } from 'react-native-vision-camera';
 
@@ -14,17 +16,20 @@ interface QRPoints {
 export default function Add() {
     const [cameraActive, setCameraActive] = useState(true);
     const [qrPoints, setQrPoints] = useState<QRPoints[]>([]);
+    // onCodeScanned can fire several times before the camera deactivates
+    const scanHandledRef = useRef(false);
     const {
         hasPermission: cameraHasPermission,
         requestPermission: requestCameraPermission,
     } = useCameraPermission();
     const router = useRouter();
-    const { theme } = useTheme();
 
     const device = useCameraDevice('back');
     const codeScanner = useCodeScanner({
         codeTypes: ['qr'],
         onCodeScanned: (codes) => {
+            if (scanHandledRef.current)
+                return;
             setCameraActive(false);
             const corners = codes[0].corners;
             if (corners)
@@ -32,28 +37,36 @@ export default function Add() {
             const url = codes[0].value;
             if (!url)
                 return setCameraActive(true);
+            scanHandledRef.current = true;
+            if (!isOtpAuthUri(url)) {
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+                Alert.alert(
+                    'Not an authenticator QR code',
+                    'Scan a QR code that sets up two-factor authentication.',
+                    [{ text: 'OK', onPress: resumeScanning }],
+                    { onDismiss: resumeScanning }
+                );
+                return;
+            }
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            router.push({ pathname: '/', params: { otpurl: url } });
+            // scanId makes every scan distinct so re-scanning the same code still triggers
+            router.push({ pathname: '/', params: { otpurl: url, scanId: Crypto.randomUUID() } });
         }
     })
 
-    const handleTabSelected = () => {
+    const resumeScanning = () => {
+        scanHandledRef.current = false;
+        setQrPoints([]);
         setCameraActive(true);
     }
 
-    const handleTabDeselected = () => {
-        setCameraActive(false);
-    }
-
+    // Run the camera only while this tab is focused. useFocusEffect re-runs
+    // whenever the callback changes, so it stays explicitly memoized.
     useFocusEffect(
         useCallback(() => {
-
-            handleTabSelected();
-
-            return () => {
-                handleTabDeselected();
-            };
-
+            scanHandledRef.current = false;
+            setCameraActive(true);
+            return () => setCameraActive(false);
         }, [])
     );
 
@@ -63,37 +76,9 @@ export default function Add() {
         }
     }, [cameraHasPermission, requestCameraPermission]);
 
-    if (!cameraHasPermission) {
-        return (
-            <View style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: theme.background
-            }}>
-                <Text style={{
-                    color: theme.text
-                }}>
-                    Do not have permission to use the camera
-                </Text>
-            </View>
-        )
-    }
+    if (!cameraHasPermission) return <CenteredMessage message="Do not have permission to use the camera" />;
+    if (!device) return <CenteredMessage message="Unable to use Camera" />;
 
-    if (!device) return (
-        <View style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: theme.background
-        }}>
-            <Text style={{
-                color: theme.text
-            }}>
-                Unable to use Camera
-            </Text>
-        </View>
-    )
     return (
         <View style={{ flex: 1 }}>
             <Camera

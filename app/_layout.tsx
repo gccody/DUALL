@@ -1,119 +1,15 @@
-import LoadingView from "@/components/LoadingView";
-import PinAuthView from "@/components/PinAuthView";
-import { SettingsProvider, useSettings } from "@/context/SettingsContext";
-import { ThemeProvider, useTheme } from "@/context/ThemeContext";
-import * as LocalAuthentication from 'expo-local-authentication';
+import AppLockGate from "@/components/AppLockGate";
+import { SettingsProvider } from "@/context/SettingsContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { Stack } from "expo-router";
-import * as SecureStore from 'expo-secure-store';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
-function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const [pinExists, setPinExists] = useState<null | boolean>(null);
-  const [showPinAuth, setShowPinAuth] = useState(false);
-  const { settings, isLoading } = useSettings();
-  const { isDark } = useTheme();
-
-  useEffect(() => {
-    const checkPinAndAuthenticate = async () => {
-      // await SecureStore.deleteItemAsync('user_pin');     // Un-comment in order to reset the pin during dev
-      // Check if PIN exists
-      const storedPin = await SecureStore.getItemAsync('user_pin');
-      setPinExists(!!storedPin);
-
-      if (!storedPin) {
-        // No PIN exists, show PIN setup
-        setShowPinAuth(true);
-        return;
-      }
-
-      // PIN exists, check if biometrics is enabled
-      if (settings.useBiometrics) {
-        try {
-          // Try biometric authentication first
-          const biometricResult = await LocalAuthentication.authenticateAsync({
-            promptMessage: 'Authenticate with biometrics'
-          });
-
-          if (biometricResult.success) {
-            setAuthenticated(true);
-            setShowPinAuth(false);
-          } else {
-            // Biometric failed, show PIN auth as fallback
-            setShowPinAuth(true);
-          }
-        } catch (error) {
-          console.error('Biometric authentication error:', error);
-          // Error with biometrics, show PIN auth as fallback
-          setShowPinAuth(true);
-        }
-      } else {
-        // Biometrics disabled, go directly to PIN auth
-        setShowPinAuth(true);
-      }
-    };
-
-    if (!isLoading) {
-      checkPinAndAuthenticate();
-    }
-  }, [settings.useBiometrics, isLoading]);
-
-  const handlePinSuccess = () => {
-    setAuthenticated(true);
-    setShowPinAuth(false);
-  };
-
-  const handlePinFailure = (error: string) => {
-    console.error('PIN authentication failed:', error);
-    // Could implement additional logic here like app lockout
-  };
-
-  if (isLoading || pinExists === null) {
-    return (
-      <>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <LoadingView />
-      </>
-    );
-  }
-
-  if (showPinAuth) {
-    return (
-      <>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        <PinAuthView
-          onPinSuccess={handlePinSuccess}
-          onPinFailure={handlePinFailure}
-        />
-      </>
-    );
-  }
-
-  if (authenticated === true) {
-    return (
-      <>
-        <StatusBar style={isDark ? 'light' : 'dark'} />
-        {children}
-      </>
-    );
-  }
-
-  return (
-    <>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
-      <LoadingView />
-    </>
-  );
-}
 
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <SettingsProvider>
         <ThemeProvider>
-          <AuthenticationWrapper>
+          <AppLockGate>
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen
@@ -121,7 +17,7 @@ export default function RootLayout() {
                 options={{ headerShown: false, presentation: 'fullScreenModal', gestureEnabled: false }}
               />
             </Stack>
-          </AuthenticationWrapper>
+          </AppLockGate>
         </ThemeProvider>
       </SettingsProvider>
     </SafeAreaProvider>

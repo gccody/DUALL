@@ -1,134 +1,128 @@
 import { Service } from '@/types';
-import totpData from '../assets/totp.json';
-import { customIcons } from './customIcons';
-
-// Interface for TOTP service data
-interface TotpServiceData {
-  name: string;
-  domain: string;
-}
-
-// Cache for domain lookups to improve performance
-const domainCache = new Map<string, string | null>();
+import type { ImageSourcePropType } from 'react-native';
+import { ICONS } from './iconRegistry.generated';
 
 /**
  * Normalize a string for comparison by converting to lowercase and removing special characters
  */
 function normalizeString(str: string | undefined): string {
   if (!str) return '';
-  return str.toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-    .trim();
+  return str.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+interface IndexedIcon {
+  domain: string;
+  name: string;
+  normalizedName: string;
+  /** Domain with every non-alphanumeric character (dots included) removed, e.g. "githubcom". */
+  normalizedDomain: string;
+}
+
+// Normalized once at module load, in registry order (ties keep the first match).
+const ICON_INDEX: IndexedIcon[] = Object.entries(ICONS).map(([domain, { name }]) => ({
+  domain,
+  name,
+  normalizedName: normalizeString(name),
+  normalizedDomain: normalizeString(domain),
+}));
+
+// Cache for issuer lookups, keyed by normalized issuer
+const domainCache = new Map<string, string | null>();
+
+function hasIcon(domain: string): boolean {
+  return Object.prototype.hasOwnProperty.call(ICONS, domain);
 }
 
 /**
  * Extract domain from issuer using various heuristics
  */
-function extractDomainFromIssuer(issuer: string | undefined): string | null {
-  if (!issuer) return null;
-  
+function extractDomainFromIssuer(issuer: string): string | null {
   const normalized = issuer.toLowerCase().trim();
-  
-  // Direct domain patterns
+
   const domainPatterns = [
     // Match domains with TLD
     /([a-z0-9-]+\.[a-z]{2,})/,
     // Match subdomains
     /([a-z0-9-]+\.[a-z0-9-]+\.[a-z]{2,})/,
   ];
-  
+
   for (const pattern of domainPatterns) {
     const match = normalized.match(pattern);
     if (match) {
       return match[1];
     }
   }
-  
+
   return null;
 }
 
 /**
- * Find matching domain from totp.json based on issuer
+ * Find the best matching icon domain for an issuer
  */
 function findMatchingDomain(issuer: string | undefined): string | null {
   if (!issuer) return null;
-  
-  // Check cache first
-  const cacheKey = normalizeString(issuer);
-  if (domainCache.has(cacheKey)) {
-    return domainCache.get(cacheKey) || null;
-  }
-  
+
   const normalizedIssuer = normalizeString(issuer);
+  const cached = domainCache.get(normalizedIssuer);
+  if (cached !== undefined) return cached;
+
+  // Issuer that looks like a domain we have an icon for
+  const directDomain = extractDomainFromIssuer(issuer);
+  if (directDomain && hasIcon(directDomain)) {
+    domainCache.set(normalizedIssuer, directDomain);
+    return directDomain;
+  }
+
   let bestMatch: string | null = null;
   let bestScore = 0;
-  
-  // Try exact issuer match first
-  const directDomain = extractDomainFromIssuer(issuer);
-  if (directDomain) {
-    const exactMatch = (totpData as TotpServiceData[]).find(
-      service => service.domain === directDomain
-    );
-    if (exactMatch) {
-      domainCache.set(cacheKey, exactMatch.domain);
-      return exactMatch.domain;
+  const consider = (domain: string, score: number) => {
+    if (score > bestScore) {
+      bestMatch = domain;
+      bestScore = score;
     }
-  }
-  
-  // Search through all services for matches
-  for (const service of totpData as TotpServiceData[]) {
-    const normalizedName = normalizeString(service.name);
-    const normalizedDomain = normalizeString(service.domain);
-    
+  };
+
+  for (const { domain, normalizedName, normalizedDomain } of ICON_INDEX) {
     // Exact name match (highest priority)
     if (normalizedName === normalizedIssuer) {
-      bestMatch = service.domain;
+      bestMatch = domain;
       bestScore = 100;
       break;
     }
-    
+
     // Domain contains issuer
-    if (normalizedDomain.includes(normalizedIssuer) && normalizedIssuer.length > 2) {
-      const score = (normalizedIssuer.length / normalizedDomain.length) * 80;
-      if (score > bestScore) {
-        bestMatch = service.domain;
-        bestScore = score;
-      }
+    if (normalizedIssuer.length > 2 && normalizedDomain.includes(normalizedIssuer)) {
+      consider(domain, (normalizedIssuer.length / normalizedDomain.length) * 80);
     }
-    
-    // Issuer contains domain (without TLD)
-    const domainWithoutTld = normalizedDomain.replace(/\.[a-z]{2,}$/, '');
-    if (normalizedIssuer.includes(domainWithoutTld) && domainWithoutTld.length > 2) {
-      const score = (domainWithoutTld.length / normalizedIssuer.length) * 70;
-      if (score > bestScore) {
-        bestMatch = service.domain;
-        bestScore = score;
-      }
+
+    // Issuer contains domain. The normalized domain has no dots, so this compares
+    // against e.g. "githubcom" (the TLD is not stripped).
+    if (normalizedDomain.length > 2 && normalizedIssuer.includes(normalizedDomain)) {
+      consider(domain, (normalizedDomain.length / normalizedIssuer.length) * 70);
     }
-    
+
     // Name contains issuer
-    if (normalizedName.includes(normalizedIssuer) && normalizedIssuer.length > 2) {
-      const score = (normalizedIssuer.length / normalizedName.length) * 60;
-      if (score > bestScore) {
-        bestMatch = service.domain;
-        bestScore = score;
-      }
+    if (normalizedIssuer.length > 2 && normalizedName.includes(normalizedIssuer)) {
+      consider(domain, (normalizedIssuer.length / normalizedName.length) * 60);
     }
-    
+
     // Issuer contains name
-    if (normalizedIssuer.includes(normalizedName) && normalizedName.length > 2) {
-      const score = (normalizedName.length / normalizedIssuer.length) * 50;
-      if (score > bestScore) {
-        bestMatch = service.domain;
-        bestScore = score;
-      }
+    if (normalizedName.length > 2 && normalizedIssuer.includes(normalizedName)) {
+      consider(domain, (normalizedName.length / normalizedIssuer.length) * 50);
     }
   }
-  
+
   // Only return matches with a reasonable confidence score
   const result = bestScore >= 30 ? bestMatch : null;
-  domainCache.set(cacheKey, result);
+  domainCache.set(normalizedIssuer, result);
   return result;
+}
+
+/**
+ * Get the bundled icon for a domain (e.g. "github.com"), or null if there is none
+ */
+export function getIconSource(domain: string): ImageSourcePropType | null {
+  return hasIcon(domain) ? ICONS[domain].source : null;
 }
 
 /**
@@ -140,11 +134,11 @@ export function getCustomIconDomain(service: Service): string | null {
 
 /**
  * Pre-populate the domain cache for a list of services so first-scroll icon
- * resolution is O(1) rather than iterating totp.json per item.
+ * resolution is O(1) rather than scanning the icon list per item.
  */
 export function warmIconCache(services: Service[]): void {
   for (const service of services) {
-    if (!service.icon?.label || service.icon.label === 'none') {
+    if (service.icon !== null && !service.icon?.label) {
       findMatchingDomain(service.otp.issuer);
     }
   }
@@ -153,65 +147,34 @@ export function warmIconCache(services: Service[]): void {
 /**
  * Get custom icon for a service based on its issuer
  */
-export function getCustomIcon(service: Service): any | null {
-  try {
-    const domain = findMatchingDomain(service.otp.issuer);
-    if (!domain) {
-      return null;
-    }
-    
-    const iconKey = `${domain}.avif`;
-    return customIcons[iconKey] || null;
-  } catch (error) {
-    console.error('Error getting custom icon:', error);
-    return null;
-  }
+export function getCustomIcon(service: Service): ImageSourcePropType | null {
+  const domain = findMatchingDomain(service.otp.issuer);
+  return domain ? getIconSource(domain) : null;
 }
 
 /**
- * Check if a custom icon exists for a service
+ * Search for custom icons by domain or name, sorted by name
  */
-export function hasCustomIcon(service: Service): boolean {
-  return getCustomIcon(service) !== null;
-}
-
-/**
- * Get all available custom icon domains
- */
-export function getAvailableCustomIconDomains(): string[] {
-  return Object.keys(customIcons).map(key => key.replace('.avif', ''));
-}
-
-/**
- * Search for custom icons by domain or name
- */
-export function searchCustomIcons(query: string): { domain: string; name: string; icon: any }[] {
+export function searchCustomIcons(query: string): { domain: string; name: string; icon: ImageSourcePropType }[] {
   const normalizedQuery = normalizeString(query);
-  const results: { domain: string; name: string; icon: any }[] = [];
-  
-  for (const service of totpData as TotpServiceData[]) {
-    const normalizedName = normalizeString(service.name);
-    const normalizedDomain = normalizeString(service.domain);
-    const iconKey = `${service.domain}.avif`;
-    
-    if (customIcons[iconKey] && 
-        (normalizedName.includes(normalizedQuery) || 
-         normalizedDomain.includes(normalizedQuery))) {
-      results.push({
-        domain: service.domain,
-        name: service.name,
-        icon: customIcons[iconKey]
-      });
-    }
-  }
-  
-  return results.sort((a, b) => a.name.localeCompare(b.name));
+
+  return ICON_INDEX
+    .filter(({ normalizedName, normalizedDomain }) =>
+      normalizedName.includes(normalizedQuery) || normalizedDomain.includes(normalizedQuery))
+    .map(({ domain, name }) => ({ domain, name, icon: ICONS[domain].source }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** Label older versions stored to mean "the user removed the icon" (now `icon: null`). */
+const LEGACY_REMOVED_LABEL = 'none';
+
 /**
- * Get service name from domain (reverse lookup)
+ * The icon to show for a service: its chosen bundled icon, nothing if the user
+ * removed it, or the auto-matched icon when none was chosen.
  */
-export function getServiceNameFromDomain(domain: string): string | null {
-  const service = (totpData as TotpServiceData[]).find(s => s.domain === domain);
-  return service?.name || null;
+export function resolveIcon(service: Service): ImageSourcePropType | null {
+  const { icon } = service;
+  if (icon === null || icon?.label === LEGACY_REMOVED_LABEL) return null;
+  if (icon?.label) return getIconSource(icon.label);
+  return getCustomIcon(service);
 }

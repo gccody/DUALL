@@ -28,9 +28,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "@shopify/flash-list": "2.0.2",
     "crypto-es": "^2.1.0",
-    "crypto-js": "^4.2.0",
     "expo": "~57.0.6",
-    "expo-blur": "~57.0.2",
     "expo-clipboard": "~57.0.1",
     "expo-constants": "~57.0.5",
     "expo-crypto": "~57.0.1",
@@ -61,9 +59,7 @@
     "react-native-svg": "15.15.4",
     "react-native-vision-camera": "^4.6.4",
     "react-native-web": "^0.21.2",
-    "react-native-webview": "13.16.1",
-    "react-native-worklets": "0.10.0",
-    "uuid": "^11.1.0"
+    "react-native-worklets": "0.10.0"
   },
   "devDependencies": {
     "@types/cli-progress": "^3.11.6",

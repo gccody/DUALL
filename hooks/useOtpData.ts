@@ -3,7 +3,9 @@ import { Group, Service, Settings, TOTPFile } from '@/types';
 import { FileHandler } from '@/utils/fileHandler';
 import { useCallback, useEffect, useState } from 'react';
 
-export const useOtpData = () => {
+// Owns the OTP data state. Only OtpDataProvider should call this; screens read
+// the shared copy through useOtpData() from '@/context/OtpDataContext'.
+export const useOtpDataState = () => {
   const [data, setData] = useState<TOTPFile | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

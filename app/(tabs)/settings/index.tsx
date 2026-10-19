@@ -1,9 +1,9 @@
 import SettingCategory from '@/components/SettingCategory';
 import SettingItem from '@/components/SettingItem';
 import SubText from '@/components/SubText';
+import { useOtpData } from '@/context/OtpDataContext';
 import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
-import { useOtpData } from '@/hooks/useOtpData';
 import { providerRegistry } from '@/parsers/registry';
 import { convertToService } from '@/parsers/utils';
 import Constants from 'expo-constants';

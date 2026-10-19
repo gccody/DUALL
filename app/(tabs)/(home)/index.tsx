@@ -1,8 +1,9 @@
+import { useOtpData } from "@/context/OtpDataContext";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { FlashList, FlashListRef } from '@shopify/flash-list';
-import { Stack, useFocusEffect, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import CodeItem from "@/components/CodeItem";
 import EditCodeModal from "@/components/EditCodeModal";
@@ -10,7 +11,6 @@ import ErrorView from "@/components/ErrorView";
 import LoadingView from "@/components/LoadingView";
 
 import { useCodeManager } from "@/hooks/useCodeManager";
-import { useOtpData } from "@/hooks/useOtpData";
 import { useSearch } from "@/hooks/useSearch";
 import { useTimestamp } from "@/hooks/useTimestamp";
 
@@ -22,7 +22,7 @@ export default function HomeScreen() {
   const { settings } = useSettings();
 
   // Get OTP data from context
-  const { data, loading, error, updateServices, fetchData } = useOtpData();
+  const { data, loading, error, updateServices } = useOtpData();
 
   // Memoize services array to prevent unnecessary re-renders
   const servicesData = useMemo(() => data?.services || [], [data?.services]);
@@ -64,12 +64,6 @@ export default function HomeScreen() {
       flashListRef.current?.scrollToIndex({ index: recentCodeIndex, animated: true });
     }
   }, [recentCodeIndex]);
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchData();
-    }, [fetchData])
-  );
 
   // Handle touch on the list to reset recent code index
   const handleListTouch = () => {

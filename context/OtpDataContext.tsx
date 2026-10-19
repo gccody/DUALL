@@ -1,24 +1,24 @@
 // OtpDataContext.tsx
-import { useOtpData } from '@/hooks/useOtpData';
-import { Group, Service, Settings, TOTPFile } from '@/types';
-import { createContext, ReactNode } from 'react';
+import { useOtpDataState } from '@/hooks/useOtpData';
+import { createContext, ReactNode, use } from 'react';
 
-interface OtpDataContextProps {
-  data: TOTPFile | null;
-  loading: boolean;
-  error: string | null;
-  updateServices: (services: Service[]) => Promise<void>;
-  updateGroups: (groups: Group[]) => Promise<void>;
-  updateSettings: (settings: Settings) => Promise<void>;
-}
+type OtpDataContextProps = ReturnType<typeof useOtpDataState>;
 
 export const OtpDataContext = createContext<OtpDataContextProps | undefined>(undefined);
 
 export const OtpDataProvider = ({ children }: { children: ReactNode }) => {
-  const otpData = useOtpData();
+  const otpData = useOtpDataState();
   return (
     <OtpDataContext value={otpData}>
       {children}
     </OtpDataContext>
   );
+};
+
+export const useOtpData = () => {
+  const context = use(OtpDataContext);
+  if (!context) {
+    throw new Error('useOtpData must be used within an OtpDataProvider');
+  }
+  return context;
 };

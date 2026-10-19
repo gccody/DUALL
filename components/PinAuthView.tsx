@@ -1,6 +1,8 @@
 import { useTheme } from '@/context/ThemeContext';
+import { FileHandler } from '@/utils/fileHandler';
 import * as PinStore from '@/utils/pin';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import * as LocalAuthentication from 'expo-local-authentication';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Alert,
@@ -19,6 +21,8 @@ interface PinAuthViewProps {
   pinLength?: number;
   /** Always show the "set a PIN" flow, even if a PIN is already stored. */
   forceSetup?: boolean;
+  /** Called after "Forgot PIN?" erased all codes, before the new PIN is set. */
+  onDataErased?: () => void;
 }
 
 const PinAuthView: React.FC<PinAuthViewProps> = ({
@@ -26,6 +30,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   onPinFailure,
   pinLength = 4,
   forceSetup = false,
+  onDataErased,
 }) => {
   const { theme } = useTheme();
   const [pin, setPin] = useState('');
@@ -196,6 +201,92 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     }
   };
 
+  const startNewPinSetup = () => {
+    setLockedUntil(null);
+    setShowError(false);
+    setErrorMessage('');
+    setPin('');
+    setConfirmPin('');
+    setOriginalPin('');
+    setIsConfirming(false);
+    setIsSettingNewPin(true);
+  };
+
+  const eraseAndReset = async () => {
+    try {
+      await FileHandler.removeData();
+    } catch (error) {
+      // Never drop the PIN unless the codes it protects are really gone.
+      console.error('Failed to erase data:', error);
+      Alert.alert('Error', 'Failed to erase your codes. Your PIN has not been reset.');
+      return;
+    }
+
+    try {
+      await PinStore.clearPin();
+    } catch (error) {
+      // Setting the new PIN below overwrites the old one anyway.
+      console.error('Failed to clear PIN:', error);
+    }
+    startNewPinSetup();
+    onDataErased?.();
+  };
+
+  const confirmEraseAndReset = () => {
+    Alert.alert(
+      'Forgot PIN',
+      'Your PIN cannot be recovered. The only way to reset it is to erase all codes stored in this app. This cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          isPreferred: true
+        },
+        {
+          text: 'Erase & Reset',
+          style: 'destructive',
+          onPress: eraseAndReset
+        }
+      ],
+    );
+  };
+
+  const handleForgotPin = async () => {
+    let canUseBiometrics = false;
+    try {
+      const [hasHardware, isEnrolled] = await Promise.all([
+        LocalAuthentication.hasHardwareAsync(),
+        LocalAuthentication.isEnrolledAsync(),
+      ]);
+      canUseBiometrics = hasHardware && isEnrolled;
+    } catch (error) {
+      console.error('Failed to check biometrics:', error);
+    }
+
+    if (!canUseBiometrics) {
+      confirmEraseAndReset();
+      return;
+    }
+
+    try {
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: 'Verify your identity to reset your PIN'
+      });
+      if (result.success) {
+        await PinStore.resetFailures();
+        startNewPinSetup();
+        return;
+      }
+      if (result.error === 'user_cancel' || result.error === 'system_cancel' || result.error === 'app_cancel') {
+        return;
+      }
+    } catch (error) {
+      console.error('Biometric authentication error:', error);
+    }
+    // Biometrics are unusable right now; erasing is the only remaining option.
+    confirmEraseAndReset();
+  };
+
   const handleBackspace = () => {
     if (isSubmitting.current || isLocked) return;
 
@@ -328,7 +419,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
         {!isSettingNewPin && (
           <TouchableOpacity
             style={styles.forgotPinButton}
-            onPress={() => Alert.alert('Forgot PIN', 'Contact support to reset your PIN')}
+            onPress={handleForgotPin}
           >
             <Text style={[styles.forgotPinText, { color: theme.accent }]}>
               Forgot PIN?

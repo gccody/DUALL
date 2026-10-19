@@ -1,11 +1,11 @@
-import { useTheme } from '@/context/ThemeContext';
+import CenteredMessage from '@/components/ui/CenteredMessage';
 import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
 import * as Crypto from 'expo-crypto';
 import * as Haptics from 'expo-haptics';
 import { isOtpAuthUri } from '@/core/otp/uri';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { Polygon, Svg } from 'react-native-svg';
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner, } from 'react-native-vision-camera';
 
@@ -23,7 +23,6 @@ export default function Add() {
         requestPermission: requestCameraPermission,
     } = useCameraPermission();
     const router = useRouter();
-    const { theme } = useTheme();
 
     const device = useCameraDevice('back');
     const codeScanner = useCodeScanner({
@@ -88,37 +87,9 @@ export default function Add() {
         }
     }, [cameraHasPermission, requestCameraPermission]);
 
-    if (!cameraHasPermission) {
-        return (
-            <View style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: theme.background
-            }}>
-                <Text style={{
-                    color: theme.text
-                }}>
-                    Do not have permission to use the camera
-                </Text>
-            </View>
-        )
-    }
+    if (!cameraHasPermission) return <CenteredMessage message="Do not have permission to use the camera" />;
+    if (!device) return <CenteredMessage message="Unable to use Camera" />;
 
-    if (!device) return (
-        <View style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: theme.background
-        }}>
-            <Text style={{
-                color: theme.text
-            }}>
-                Unable to use Camera
-            </Text>
-        </View>
-    )
     return (
         <View style={{ flex: 1 }}>
             <Camera

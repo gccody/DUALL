@@ -1,4 +1,4 @@
-import LoadingView from "@/components/LoadingView";
+import CenteredMessage from "@/components/ui/CenteredMessage";
 import PinAuthView from "@/components/PinAuthView";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
 import { ThemeProvider, useTheme } from "@/context/ThemeContext";
@@ -54,7 +54,7 @@ function AuthenticationWrapper({ children }: { children: React.ReactNode }) {
         onDataErased={resetSession}
       />
     )
-    : <LoadingView />;
+    : <CenteredMessage spinner message="Loading..." />;
 
   return (
     <>

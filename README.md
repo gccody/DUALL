@@ -136,20 +136,35 @@ remotely by EAS.
 ## 🗂 Project Structure
 
 ```
-/duall
-├── App.tsx              # Entry point
-├── src/
-│   ├── screens/         # All React screens
-│   ├── components/      # Reusable UI components
-│   ├── hooks/           # Custom React hooks
-│   ├── utils/           # TOTP logic, storage helpers
-│   └── assets/          # Icons, images
-├── docs/
-│   └── screenshots/     # Demo images
-├── app.json             # Expo config
-├── package.json
-└── tsconfig.json
+app/                     # expo-router routes (screens only — no business logic)
+├── _layout.tsx          # Providers + root stack
+├── pin-setup.tsx
+└── (tabs)/              # Native tabs: (home), add, settings
+    └── (home)/account/[uid]/   # Edit sheet and icon picker routes
+core/                    # Pure TypeScript domain logic (no React), fully unit-tested
+├── otp/                 # TOTP generation, otpauth:// parsing and building
+├── import/              # One file per import provider (Google, 2FAS, Ente, Bitwarden, LastPass)
+├── service.ts           # Service factory, duplicate detection, TOTP params
+├── vault.ts             # Pure list operations (add, merge import, update, remove)
+└── export.ts
+storage/                 # Persistence: SecureStore secrets, AsyncStorage index/settings, migrations
+context/                 # VaultProvider (accounts), SettingsProvider, ThemeProvider
+hooks/                   # Screen-level behavior (useTotp, useCodeTransfer, useAppLock, …)
+components/
+├── accounts/            # AccountCard, ServiceIcon
+├── settings/            # SettingsSection, SettingsRow, SettingsSwitch
+└── ui/                  # Generic pieces (CenteredMessage, ProgressBar)
+constants/theme.ts       # Light/dark palettes
+utils/                   # PIN storage, icon matching, formatting helpers
+scripts/                 # Icon registry generator, version bump
+__tests__/               # Jest tests (bun run test)
 ```
+
+Where to make common changes:
+
+- **New import source** → add a provider in `core/import/providers/` and register it in `core/import/index.ts`.
+- **New setting** → add the key to `Settings` (`types/index.ts`) and `DEFAULT_SETTINGS` (`storage/settings.ts`), then a `SettingsSwitch` row.
+- **Account data changes** → go through `useVault()` actions; storage format changes need a step in `storage/migrations.ts`.
 
 ---
 

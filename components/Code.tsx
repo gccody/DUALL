@@ -3,6 +3,7 @@ import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { normalizeAlgorithm } from "@/parsers/utils";
 import { Service, TOTPResult } from "@/types";
+import { formatOtp, maskOtp } from "@/utils/formatOtp";
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
@@ -153,12 +154,9 @@ export default function Code({ service, globalTimestamp, style, onLongPress, onI
     // Format the OTP code with a space in the middle
     const formattedOTP = (code: string) => {
         if (hideToken) {
-            return '• • •  • • •';
+            return maskOtp(totpOptions.digits);
         }
-        if (code.length === 6) {
-            return `${code.substring(0, 3)} ${code.substring(3)}`;
-        }
-        return code;
+        return formatOtp(code);
     };
 
     // Toggle visibility of token

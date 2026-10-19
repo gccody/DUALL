@@ -1,6 +1,5 @@
 import AccountCard from "@/components/accounts/AccountCard";
-import ErrorView from "@/components/ErrorView";
-import LoadingView from "@/components/LoadingView";
+import CenteredMessage from "@/components/ui/CenteredMessage";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { useVault } from "@/context/VaultContext";
@@ -48,11 +47,11 @@ export default function HomeScreen() {
   const openIconPicker = (uid: string) => router.push({ pathname: '/account/[uid]/icon', params: { uid } });
 
   if (status === 'error') {
-    return <ErrorView message={error ?? 'Failed to load your codes'} />;
+    return <CenteredMessage title="Error" message={error ?? 'Failed to load your codes'} />;
   }
 
   if (status === 'loading') {
-    return <LoadingView />;
+    return <CenteredMessage spinner message="Loading..." />;
   }
 
   return (

@@ -2,9 +2,7 @@ import {
   Group,
   Service,
   Settings,
-  TOTPAlgorithm,
   TOTPFile,
-  TokenType,
 } from '@/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
@@ -24,14 +22,7 @@ interface OTPConfig {
 interface ServiceMetadata {
   uid: string;
   name: string;
-  otp: {
-    link: string;
-    algorithm: TOTPAlgorithm;
-    period: number | undefined;
-    tokenType: TokenType;
-    issuer: string;
-    digits: number;
-  };
+  otp: Service['otp'];
   order?: number;
 }
 
@@ -165,10 +156,8 @@ export class FileHandler {
         uid: s.uid,
         name: s.name,
         otp: {
-          link: s.otp.link,
           algorithm: s.otp.algorithm,
           period: s.otp.period,
-          tokenType: s.otp.tokenType,
           issuer: s.otp.issuer,
           digits: s.otp.digits,
         },
@@ -230,10 +219,8 @@ export class FileHandler {
         uid: service.uid,
         name: service.name,
         otp: {
-          link: service.otp.link,
           algorithm: service.otp.algorithm,
           period: service.otp.period,
-          tokenType: service.otp.tokenType,
           issuer: service.otp.issuer,
           digits: service.otp.digits,
         },
@@ -270,10 +257,8 @@ export class FileHandler {
         uid: s.uid,
         name: s.name,
         otp: {
-          link: s.otp.link,
           algorithm: s.otp.algorithm,
           period: s.otp.period,
-          tokenType: s.otp.tokenType,
           issuer: s.otp.issuer,
           digits: s.otp.digits,
         },

@@ -1,8 +1,6 @@
 import { normalizeAlgorithm } from "@/TOTP";
-import type { OTP, OtpAuthData, Service, TOTPAlgorithm } from "@/types";
-import { buildOtpAuthUri } from '@/utils';
-import { getCustomIconDomain } from '@/utils/customIconMatcher';
-import * as Crypto from 'expo-crypto';
+import { createService } from "@/core/service";
+import type { OtpAuthData, Service, TOTPAlgorithm } from "@/types";
 
 export { normalizeAlgorithm };
 
@@ -66,37 +64,13 @@ export function parseLabel(label: string): { issuer?: string; account: string } 
  * Converts OtpAuthData to Service format for the app
  */
 export function convertToService(otpData: OtpAuthData, position: number = 0): Service {
-  const now = Date.now();
-  const otp: OTP = {
-    link: buildOtpAuthUri({
-      type: otpData.type,
-      secret: otpData.secret,
-      account: otpData.label,
-      issuer: otpData.issuer,
-      algorithm: otpData.algorithm,
-      digits: otpData.digits,
-      period: otpData.type === "totp" ? otpData.period : undefined,
-      counter: otpData.type === "hotp" ? otpData.counter : undefined,
-    }),
-    algorithm: otpData.algorithm,
-    period: otpData.type === "totp" ? otpData.period : undefined,
-    tokenType: otpData.type.toUpperCase() as "TOTP" | "HOTP",
+  return createService({
+    type: otpData.type,
+    account: otpData.label,
     issuer: otpData.issuer || "",
-    digits: otpData.digits,
-  };
-
-  const tempService: Service = {
-    position,
-    updatedAt: now,
-    name: otpData.label,
-    uid: Crypto.randomUUID(),
-    otp,
     secret: otpData.secret,
-  };
-
-  const matchedDomain = getCustomIconDomain(tempService);
-  return {
-    ...tempService,
-    ...(matchedDomain ? { icon: { label: matchedDomain } } : {})
-  };
+    algorithm: otpData.algorithm,
+    digits: otpData.digits,
+    period: otpData.type === "totp" ? otpData.period : undefined,
+  }, position);
 }

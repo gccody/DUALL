@@ -1,31 +1,7 @@
 import { buildOtpAuthUri, parseOtpAuthUri } from "@/core/otp/uri";
-import { convertToService } from "@/parsers/utils";
-import type { Service, TOTPAlgorithm } from "@/types";
-import { generateTOTPUrl } from "@/utils";
-
-jest.mock("expo-crypto", () => ({ randomUUID: () => "test-uuid" }));
+import type { TOTPAlgorithm } from "@/types";
 
 const SECRET = "JBSWY3DPEHPK3PXP";
-
-function makeService(overrides: Partial<Service> = {}, otp: Partial<Service["otp"]> = {}): Service {
-  return {
-    position: 0,
-    updatedAt: 0,
-    uid: "uid",
-    name: "alice@example.com",
-    secret: SECRET,
-    ...overrides,
-    otp: {
-      link: "",
-      algorithm: "SHA-1",
-      period: 30,
-      tokenType: "TOTP",
-      issuer: "Example",
-      digits: 6,
-      ...otp,
-    },
-  };
-}
 
 describe("buildOtpAuthUri", () => {
   test("produces the Key URI format with lowercase type and issuer prefix", () => {
@@ -102,38 +78,6 @@ describe("buildOtpAuthUri", () => {
     expect(parsed?.digits).toBe(8);
     expect(parsed?.period).toBe(60);
     expect(parsed?.account).toBe(account);
-  });
-});
-
-describe("generateTOTPUrl", () => {
-  test("builds a spec-compliant URI from a Service", () => {
-    const uri = generateTOTPUrl(makeService({ name: "Tom & Jerry" }, { issuer: "Acme Corp", algorithm: "SHA-512" }));
-    expect(uri).toBe(
-      `otpauth://totp/Acme%20Corp:Tom%20%26%20Jerry?secret=${SECRET}&issuer=Acme%20Corp&algorithm=SHA512&digits=6&period=30`
-    );
-  });
-
-  test("omits period when undefined", () => {
-    const uri = generateTOTPUrl(makeService({}, { period: undefined }));
-    expect(uri).not.toContain("undefined");
-    expect(uri).not.toContain("period=");
-  });
-});
-
-describe("convertToService", () => {
-  test("stores a spec-compliant otp.link", () => {
-    const service = convertToService({
-      type: "totp",
-      label: "Acme:alice",
-      secret: SECRET,
-      issuer: "Acme",
-      algorithm: "SHA-256",
-      digits: 6,
-      period: 30,
-    });
-    expect(service.otp.link).toBe(
-      `otpauth://totp/Acme:alice?secret=${SECRET}&issuer=Acme&algorithm=SHA256&digits=6&period=30`
-    );
   });
 });
 

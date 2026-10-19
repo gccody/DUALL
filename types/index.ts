@@ -38,7 +38,7 @@ export interface Service {
   name: string;
   uid: string;
   icon?: Icon;
-  otp: OTP;
+  otp: ServiceOtp;
   secret: string;
 }
 
@@ -46,13 +46,16 @@ export interface Icon {
   label: string;
 }
 
-export interface OTP {
-	link: string;
-	algorithm: TOTPAlgorithm;
-	period: number | undefined;
-	tokenType: TokenType;
+/**
+ * TOTP parameters of a service. Data stored by older versions may still carry
+ * `link`/`tokenType`, an undefined `period` or a non-normalized `algorithm`;
+ * read it through getTotpParams() from "@/core/service".
+ */
+export interface ServiceOtp {
 	issuer: string;
+	algorithm: TOTPAlgorithm;
 	digits: number;
+	period: number;
 }
 
 export interface Group {

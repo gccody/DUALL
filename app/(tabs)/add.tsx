@@ -1,6 +1,7 @@
 import { useTheme } from '@/context/ThemeContext';
 import { useFocusEffect } from 'expo-router/react-navigation';
 import { useRouter } from 'expo-router';
+import * as Crypto from 'expo-crypto';
 import * as Haptics from 'expo-haptics';
 import { isOtpAuthUri } from '@/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -49,7 +50,8 @@ export default function Add() {
                 return;
             }
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            router.push({ pathname: '/', params: { otpurl: url } });
+            // scanId makes every scan distinct so re-scanning the same code still triggers
+            router.push({ pathname: '/', params: { otpurl: url, scanId: Crypto.randomUUID() } });
         }
     })
 

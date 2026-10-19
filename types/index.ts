@@ -1,11 +1,5 @@
 export type TOTPAlgorithm = "SHA-1" | "SHA-256" | "SHA-384" | "SHA-512";
 
-export interface TOTPFile {
-	services: Service[];
-	groups: Group[];
-	settings: Settings;
-}
-
 export interface Service {
   position: number;
   updatedAt: number;
@@ -21,21 +15,16 @@ export interface Icon {
 }
 
 /**
- * TOTP parameters of a service. Data stored by older versions may still carry
- * `link`/`tokenType`, an undefined `period` or a non-normalized `algorithm`;
- * read it through getTotpParams() from "@/core/service".
+ * TOTP parameters of a service. Data written by older versions (with
+ * `link`/`tokenType`, a missing `period` or algorithms like "SHA1") is
+ * normalized by storage/migrations; read the parameters through
+ * getTotpParams() from "@/core/service", which still guards against bad values.
  */
 export interface ServiceOtp {
 	issuer: string;
 	algorithm: TOTPAlgorithm;
 	digits: number;
 	period: number;
-}
-
-export interface Group {
-	defaultExpanded: boolean;
-	uid: string;
-	name: string;
 }
 
 export interface Settings {

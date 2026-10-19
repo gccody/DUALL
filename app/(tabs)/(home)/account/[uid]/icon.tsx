@@ -25,7 +25,7 @@ export default function IconPickerScreen() {
   // An empty search suggests icons for the account's issuer.
   const icons = searchCustomIcons(query || service.otp.issuer || 'OTP');
 
-  const saveIcon = async (icon: Icon) => {
+  const saveIcon = async (icon: Icon | null) => {
     setSaving(true);
     try {
       await updateService(service.uid, { icon });
@@ -102,7 +102,7 @@ export default function IconPickerScreen() {
       <View style={[styles.footer, { borderTopColor: theme.border, paddingBottom: insets.bottom + 16 }]}>
         <TouchableOpacity
           style={[styles.removeButton, { backgroundColor: theme.danger }]}
-          onPress={() => saveIcon({ label: 'none' })}
+          onPress={() => saveIcon(null)}
           disabled={saving}
         >
           <Text style={styles.removeButtonText}>Remove Icon</Text>

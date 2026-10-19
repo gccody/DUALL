@@ -118,8 +118,12 @@ describe("updateService", () => {
     expect(result[0].otp).toEqual({ ...list[0].otp, issuer: "NewCo" });
   });
 
-  test("sets the icon, including the 'none' sentinel", () => {
-    expect(updateService(list, "b", { icon: { label: "none" } }, 1)[1].icon).toEqual({ label: "none" });
+  test("sets the icon", () => {
+    expect(updateService(list, "a", { icon: { label: "gitlab.com" } }, 1)[0].icon).toEqual({ label: "gitlab.com" });
+  });
+
+  test("removes the icon with null", () => {
+    expect(updateService(list, "b", { icon: null }, 1)[1].icon).toBeNull();
   });
 
   test("leaves fields absent from the patch untouched", () => {

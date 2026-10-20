@@ -30,14 +30,22 @@ function EditAccountForm({ service, close }: EditAccountFormProps) {
   const [label, setLabel] = useState(service.name);
 
   const handleSave = () => {
+    const trimmedIssuer = issuer.trim();
+    const trimmedLabel = label.trim();
+    // An account with neither would have nothing to show in the list.
+    if (!trimmedIssuer && !trimmedLabel) {
+      Alert.alert('Missing Name', 'Please enter an issuer or a label.');
+      return;
+    }
+
     close();
-    updateService(service.uid, { name: label, otp: { issuer } }).catch(reportSaveError);
+    updateService(service.uid, { name: trimmedLabel, otp: { issuer: trimmedIssuer } }).catch(reportSaveError);
   };
 
   const handleDelete = () => {
     Alert.alert(
       'Delete Code',
-      `Are you sure you want to delete ${service.otp.issuer}?`,
+      `Are you sure you want to delete ${service.otp.issuer || service.name || 'this code'}?`,
       [
         { text: 'Cancel', style: 'cancel' },
         {

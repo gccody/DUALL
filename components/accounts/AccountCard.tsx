@@ -3,9 +3,9 @@ import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { useTotp } from "@/hooks/useTotp";
 import { Service } from "@/types";
+import { copyCodeToClipboard } from "@/utils/clipboard";
 import { formatOtp, maskOtp } from "@/utils/formatOtp";
 import { FontAwesome } from '@expo/vector-icons';
-import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { useEffect, useState } from "react";
 import { Alert, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
@@ -46,8 +46,16 @@ export default function AccountCard({ service, now, highlighted = false, style, 
     const showNextToken = settings.showNextToken && isEnding && !error && !hideToken;
     const displayCode = (value: string) => (hideToken ? maskOtp(digits) : formatOtp(value));
 
+    // An empty issuer falls back to the name; the name is only appended when both are set.
+    const issuer = service.otp?.issuer;
+    const title = issuer || service.name || 'Unknown';
+    const showName = !!issuer && !!service.name;
+
     const handleCopyToClipboard = async () => {
-        await Clipboard.setStringAsync(code);
+        // In the error state `code` is a placeholder, not a real code.
+        if (error) return;
+
+        await copyCodeToClipboard(code);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         if (settings.notifyWhenTokenCopied) {
@@ -79,8 +87,8 @@ export default function AccountCard({ service, now, highlighted = false, style, 
                             />
                             <View style={styles.issuerTextContainer}>
                                 <Text style={[styles.issuerText, { color: theme.text }]}>
-                                    {typeof service.otp?.issuer === 'string' ? service.otp.issuer : (service.name || 'Unknown')}
-                                    {service.name && typeof service.otp?.issuer === 'string' && (
+                                    {title}
+                                    {showName && (
                                         <Text style={[styles.labelText, { color: theme.subText }]}>
                                             {' '}({service.name})
                                         </Text>

@@ -30,14 +30,15 @@ export default function Add() {
         onCodeScanned: (codes) => {
             if (scanHandledRef.current)
                 return;
-            setCameraActive(false);
-            const corners = codes[0].corners;
-            if (corners)
-                setQrPoints(corners)
-            const url = codes[0].value;
-            if (!url)
-                return setCameraActive(true);
+            // Ignore frames without a decodable code so the camera keeps running
+            const code = codes.find((c) => !!c.value);
+            const url = code?.value;
+            if (!code || !url)
+                return;
             scanHandledRef.current = true;
+            setCameraActive(false);
+            if (code.corners)
+                setQrPoints(code.corners);
             if (!isOtpAuthUri(url)) {
                 Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
                 Alert.alert(

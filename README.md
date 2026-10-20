@@ -8,11 +8,12 @@ A local-first, privacy-focused 2FA (two-factor authentication) mobile app built 
 ## 🚀 Features
 
 - 🔒 Time-based One-Time Passwords (TOTP) fully managed on-device  
-- 📱 QR code & manual entry for account setup  
+- 📱 QR code scanning for account setup  
 - 🔑 Encrypted local storage of secrets (no cloud dependencies)  
 - 🛡️ Biometric unlock (Face ID / Touch ID)  
-- ⚙️ PIN fallback, dark mode, customizable code length & period  
-- 🔄 Encrypted backup & restore via local file or AirDrop  
+- ⚙️ PIN fallback, dark mode, per-account code length & period  
+- 📥 Import from Google Authenticator, 2FAS, Bitwarden, Ente Auth & LastPass export files  
+- 📤 Export as a plain-text file of `otpauth://` URIs (unencrypted — keep it safe)  
 - 🌐 Offline-first: app works without network access  
 
 ---
@@ -119,17 +120,18 @@ remotely by EAS.
    - Enable Face ID / Touch ID (optional).
 
 2. **Add Account**  
-   - Tap **+**  
-   - Scan the QR code or enter the secret manually  
+   - Open the **Add** tab  
+   - Scan the account's QR code  
    - Assign a friendly name & icon
 
 3. **Generate Codes**  
    - View live TOTP codes on the home screen  
-   - Codes auto-refresh every 30 seconds (configurable)
+   - Codes auto-refresh every period (30 seconds unless the account sets another)
 
-4. **Backup / Restore**  
-   - Export encrypted backup file (.json) to local storage  
-   - Import via file picker or AirDrop  
+4. **Import / Export**  
+   - Import: **Settings → Import Codes**, choose the app and pick its export file  
+   - Export: **Settings → Export Codes** shares a `.txt` file with one `otpauth://` URI per account  
+   - The export is not encrypted: store it somewhere safe and delete it after use  
 
 ---
 

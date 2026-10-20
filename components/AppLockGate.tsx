@@ -1,4 +1,5 @@
 import PinAuthView from '@/components/PinAuthView';
+import PrivacyCover from '@/components/PrivacyCover';
 import CenteredMessage from '@/components/ui/CenteredMessage';
 import { useSettings } from '@/context/SettingsContext';
 import { useAppLock } from '@/hooks/useAppLock';
@@ -21,10 +22,13 @@ function LockOverlay({ children }: { children: ReactNode }) {
     return <View style={StyleSheet.absoluteFill}>{children}</View>;
 }
 
-/** Shows the app only after biometric/PIN authentication, and covers it again when it re-locks. */
+/**
+ * Shows the app only after biometric/PIN authentication, covers it again when it
+ * re-locks, and hides it while the app is not in the foreground.
+ */
 export default function AppLockGate({ children }: { children: ReactNode }) {
     const { settings, isLoading } = useSettings();
-    const { status, hasUnlockedOnce, unlock, resetSession } = useAppLock({
+    const { status, hasUnlockedOnce, isCovered, unlock, resetSession } = useAppLock({
         ready: !isLoading,
         useBiometrics: settings.useBiometrics,
     });
@@ -53,6 +57,12 @@ export default function AppLockGate({ children }: { children: ReactNode }) {
             {/* Keep the navigation tree mounted when re-locking so its state survives. */}
             {hasUnlockedOnce && children}
             {isLocked && (hasUnlockedOnce ? <LockOverlay>{lockScreen}</LockOverlay> : lockScreen)}
+            {/*
+              Hides the codes from the app switcher snapshot. On Android the recents
+              thumbnail may be captured before this renders; only FLAG_SECURE (e.g. via
+              expo-screen-capture) prevents that reliably, but it also blocks screenshots.
+            */}
+            {isCovered && <LockOverlay><PrivacyCover /></LockOverlay>}
         </>
     );
 }

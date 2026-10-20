@@ -1,7 +1,7 @@
 import { hasPin, resetFailures } from '@/utils/pin';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
-import { AppState } from 'react-native';
+import { AppState, type AppStateStatus } from 'react-native';
 
 /** How long the app may stay in the background before it has to be unlocked again. */
 export const RELOCK_GRACE_PERIOD_MS = 30 * 1000;
@@ -20,6 +20,17 @@ export function shouldRelock(backgroundedAt: number, now: number): boolean {
   return elapsed > RELOCK_GRACE_PERIOD_MS || elapsed < 0;
 }
 
+/**
+ * Whether the app content should be hidden behind the privacy cover after
+ * AppState changes to `nextState`, so the app switcher snapshot shows no codes.
+ * Only an unlocked app is covered: the lock screen shows nothing sensitive, and
+ * the biometric prompt (which makes the app inactive) must not flash the cover
+ * when it unlocks the app just before it becomes active again.
+ */
+export function shouldCoverContent(nextState: AppStateStatus, status: AppLockStatus): boolean {
+  return status === 'unlocked' && (nextState === 'inactive' || nextState === 'background');
+}
+
 interface UseAppLockOptions {
   /** False until settings have loaded; authentication starts once it is true. */
   ready: boolean;
@@ -30,6 +41,8 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
   const [status, setStatus] = useState<AppLockStatus>('checking');
   // Once true, the app's navigation tree stays mounted and re-locking only covers it.
   const [hasUnlockedOnce, setHasUnlockedOnce] = useState(false);
+  // True while the unlocked app is out of the foreground (see `shouldCoverContent`).
+  const [isCovered, setIsCovered] = useState(false);
 
   // Mirrors `status` synchronously for the AppState listener.
   const statusRef = useRef<AppLockStatus>('checking');
@@ -79,8 +92,13 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
   // Re-lock when returning after more than the grace period in the background.
   // `inactive` is ignored on purpose: the biometric prompt, permission dialogs
   // and share sheets all briefly make the app inactive on iOS.
+  // Separately, cover the content while the app is inactive or in the background;
+  // the cover only hides it and is removed again as soon as the app is active.
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextState) => {
+      // Updated in the same event as a re-lock below, so the content never flashes in between.
+      setIsCovered(shouldCoverContent(nextState, statusRef.current));
+
       if (nextState === 'background') {
         if (statusRef.current === 'unlocked') {
           backgroundedAt.current = Date.now();
@@ -99,5 +117,5 @@ export function useAppLock({ ready, useBiometrics }: UseAppLockOptions) {
   /** Unmounts the app content (after its data was erased) until the next unlock. */
   const resetSession = () => setHasUnlockedOnce(false);
 
-  return { status, hasUnlockedOnce, unlock, resetSession };
+  return { status, hasUnlockedOnce, isCovered, unlock, resetSession };
 }

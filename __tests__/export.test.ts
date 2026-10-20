@@ -36,7 +36,11 @@ describe("buildExportText", () => {
 });
 
 describe("exportFileName", () => {
-  test("includes the ISO timestamp", () => {
-    expect(exportFileName(new Date("2026-01-02T03:04:05.000Z"))).toBe("duall-2026-01-02T03:04:05.000Z.txt");
+  test("includes the UTC timestamp to the second", () => {
+    expect(exportFileName(new Date("2026-01-02T03:04:05.678Z"))).toBe("duall-2026-01-02T03-04-05Z.txt");
+  });
+
+  test("contains no colons", () => {
+    expect(exportFileName(new Date("2026-10-19T14:03:22.123Z"))).not.toContain(":");
   });
 });

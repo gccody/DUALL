@@ -58,7 +58,22 @@ function confirmImport(provider: ImportProvider, { services, skippedHotp }: Impo
     });
 }
 
-/** Deletes a plaintext export file. Failures are only logged: the export itself already finished. */
+/** Warns that the export file isn't encrypted. Resolves true when the user goes ahead. */
+function confirmExport(count: number): Promise<boolean> {
+    return new Promise((resolve) => {
+        Alert.alert(
+            'Export Codes',
+            `The export file will contain the secrets of all ${count} code${count === 1 ? '' : 's'} unencrypted. ` +
+            'Anyone with the file can generate your codes, so store it somewhere safe and delete it once you no longer need it.',
+            [
+                { text: 'Cancel', style: 'cancel', isPreferred: true, onPress: () => resolve(false) },
+                { text: 'Export', onPress: () => resolve(true) },
+            ],
+        );
+    });
+}
+
+/** Deletes a plaintext export file. Failures are only logged so cleanup never fails an export. */
 function deleteExportFile(file: File) {
     try {
         if (file.exists) file.delete();
@@ -147,12 +162,14 @@ export function useCodeTransfer() {
                 Alert.alert('Error', 'Sharing is not available on this device');
                 return;
             }
+            if (!(await confirmExport(services.length))) return;
 
             deleteStaleExportFiles();
             // The file holds every secret in plaintext, so it only exists while the share sheet is open.
             const file = new File(Paths.cache, exportFileName(new Date()));
             try {
                 await file.write(buildExportText(services));
+                // Resolves the same way when the share sheet is cancelled, so there's no success alert.
                 await Sharing.shareAsync(file.uri, {
                     mimeType: 'text/plain',
                     dialogTitle: 'Export TOTP Codes',
@@ -160,7 +177,6 @@ export function useCodeTransfer() {
             } finally {
                 deleteExportFile(file);
             }
-            Alert.alert('Success', `Successfully exported ${services.length} codes`);
         } catch (error) {
             console.error('Export error:', error);
             Alert.alert('Export Error', 'Failed to export codes. Please try again.');

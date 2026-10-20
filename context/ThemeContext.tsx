@@ -1,5 +1,6 @@
 import { darkTheme, lightTheme, type Theme } from '@/constants/theme';
 import { useSettings } from '@/context/SettingsContext';
+import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, createContext, use, useEffect } from 'react';
 import { Appearance } from 'react-native';
@@ -22,6 +23,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const isDark = settings.darkMode;
     const theme = isDark ? darkTheme : lightTheme;
 
+    // Native stack headers (and their search bars) take their light/dark style from
+    // the navigation theme, not the window, so it must follow the app's theme too.
+    const baseNavigationTheme = isDark ? DarkTheme : DefaultTheme;
+    const navigationTheme = {
+        ...baseNavigationTheme,
+        colors: {
+            ...baseNavigationTheme.colors,
+            primary: theme.accent,
+            background: theme.background,
+            text: theme.text,
+            border: theme.border,
+        },
+    };
+
     // Keep native UI (tab bar, headers, switches, sheets) in sync with the app's theme
     useEffect(() => {
         Appearance.setColorScheme(isDark ? 'dark' : 'light');
@@ -29,8 +44,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     return (
         <ThemeContext value={{ theme, isDark }}>
-            <StatusBar style={isDark ? 'light' : 'dark'} />
-            {children}
+            <NavigationThemeProvider value={navigationTheme}>
+                <StatusBar style={isDark ? 'light' : 'dark'} />
+                {children}
+            </NavigationThemeProvider>
         </ThemeContext>
     );
 }

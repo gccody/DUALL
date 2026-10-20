@@ -26,6 +26,7 @@ export function VaultProvider({ children }: { children: ReactNode }) {
     updateService: store.updateService,
     deleteService: store.deleteService,
     clear: store.clear,
+    retryLoad: store.retryLoad,
   }), [state, store]);
 
   return <VaultContext value={value}>{children}</VaultContext>;

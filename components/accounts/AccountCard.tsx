@@ -3,9 +3,9 @@ import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@/context/ThemeContext";
 import { useTotp } from "@/hooks/useTotp";
 import { Service } from "@/types";
+import { copyCodeToClipboard } from "@/utils/clipboard";
 import { formatOtp, maskOtp } from "@/utils/formatOtp";
 import { FontAwesome } from '@expo/vector-icons';
-import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
 import { useEffect, useState } from "react";
 import { Alert, StyleProp, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View, ViewStyle } from "react-native";
@@ -52,7 +52,10 @@ export default function AccountCard({ service, now, highlighted = false, style, 
     const showName = !!issuer && !!service.name;
 
     const handleCopyToClipboard = async () => {
-        await Clipboard.setStringAsync(code);
+        // In the error state `code` is a placeholder, not a real code.
+        if (error) return;
+
+        await copyCodeToClipboard(code);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
         if (settings.notifyWhenTokenCopied) {

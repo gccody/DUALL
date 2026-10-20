@@ -34,23 +34,18 @@ function hasIcon(domain: string): boolean {
 }
 
 /**
- * Extract domain from issuer using various heuristics
+ * Find a bundled icon domain in a domain-like issuer, trying the full host and
+ * then its parent domains (e.g. "console.aws.amazon.com", then "aws.amazon.com")
  */
 function extractDomainFromIssuer(issuer: string): string | null {
-  const normalized = issuer.toLowerCase().trim();
+  const match = issuer.toLowerCase().trim().match(/[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}/);
+  if (!match) return null;
 
-  const domainPatterns = [
-    // Match domains with TLD
-    /([a-z0-9-]+\.[a-z]{2,})/,
-    // Match subdomains
-    /([a-z0-9-]+\.[a-z0-9-]+\.[a-z]{2,})/,
-  ];
-
-  for (const pattern of domainPatterns) {
-    const match = normalized.match(pattern);
-    if (match) {
-      return match[1];
-    }
+  // Strip leading labels one at a time, stopping before the bare TLD
+  const labels = match[0].split('.');
+  for (let i = 0; i < labels.length - 1; i++) {
+    const candidate = labels.slice(i).join('.');
+    if (hasIcon(candidate)) return candidate;
   }
 
   return null;
@@ -68,7 +63,7 @@ function findMatchingDomain(issuer: string | undefined): string | null {
 
   // Issuer that looks like a domain we have an icon for
   const directDomain = extractDomainFromIssuer(issuer);
-  if (directDomain && hasIcon(directDomain)) {
+  if (directDomain) {
     domainCache.set(normalizedIssuer, directDomain);
     return directDomain;
   }

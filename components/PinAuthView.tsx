@@ -1,3 +1,4 @@
+import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { eraseAllServices } from '@/storage/vault';
 import * as PinStore from '@/utils/pin';
@@ -18,21 +19,26 @@ interface PinAuthViewProps {
   onPinSuccess: () => void;
   /** Called when too many wrong PINs trigger a lockout. */
   onPinFailure?: (error: string) => void;
-  pinLength?: number;
   /** Always show the "set a PIN" flow, even if a PIN is already stored. */
   forceSetup?: boolean;
   /** Called after "Forgot PIN?" erased all codes, before the new PIN is set. */
   onDataErased?: () => void;
+  /**
+   * With `forceSetup`, shows a Cancel button that calls this. The stored PIN
+   * is only replaced once the new one is confirmed, so cancelling keeps it.
+   */
+  onCancel?: () => void;
 }
 
 const PinAuthView: React.FC<PinAuthViewProps> = ({
   onPinSuccess,
   onPinFailure,
-  pinLength = 4,
   forceSetup = false,
   onDataErased,
+  onCancel,
 }) => {
   const { theme } = useTheme();
+  const { settings } = useSettings();
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
   const [originalPin, setOriginalPin] = useState('');
@@ -42,7 +48,11 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
   const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [now, setNow] = useState(() => Date.now());
-  // Set while a complete PIN is being checked, so extra taps can't submit it twice.
+  // The stored PIN's length when entering it, the chosen one when setting a
+  // PIN. Null until known; input is ignored until then.
+  const [pinLength, setPinLength] = useState<number | null>(null);
+  // Set while a complete PIN is being checked or saved (hashing it blocks the
+  // JS thread for a moment), so extra taps can't change or resubmit it.
   const isSubmitting = useRef(false);
 
   const isLocked = lockedUntil !== null;
@@ -57,9 +67,11 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     let cancelled = false;
 
     const checkExistingPin = async () => {
-      const needsSetup = forceSetup || !(await PinStore.hasPin());
+      const storedLength = forceSetup ? null : await PinStore.getPinLength();
       if (cancelled) return;
+      const needsSetup = storedLength === null;
       setIsSettingNewPin(needsSetup);
+      setPinLength(storedLength ?? PinStore.DEFAULT_PIN_LENGTH);
       if (needsSetup) return;
 
       const lockout = await PinStore.getLockout();
@@ -69,7 +81,12 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       }
     };
 
-    checkExistingPin();
+    checkExistingPin().catch((error) => {
+      console.error('Failed to read the stored PIN:', error);
+      if (cancelled) return;
+      setErrorMessage('Could not load your PIN. Please restart the app.');
+      setShowError(true);
+    });
     return () => {
       cancelled = true;
     };
@@ -91,7 +108,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   }, [lockedUntil]);
 
   const handlePinInput = async (value: string) => {
-    if (isSubmitting.current || isLocked) return;
+    if (isSubmitting.current || isLocked || pinLength === null) return;
 
     // Only allow numbers
     const numericValue = value.replace(/[^0-9]/g, '');
@@ -128,12 +145,11 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   };
 
   const handlePinSubmit = async (submittedPin?: string) => {
+    let succeeded = false;
     try {
-      if (isSettingNewPin) {
-        await handleNewPinSetup(submittedPin);
-      } else {
-        await handlePinAuthentication(submittedPin);
-      }
+      succeeded = isSettingNewPin
+        ? await handleNewPinSetup(submittedPin)
+        : await handlePinAuthentication(submittedPin);
     } catch (error) {
       console.error('PIN submission failed:', error);
       setErrorMessage('Something went wrong. Please try again.');
@@ -141,11 +157,13 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       setPin('');
       setConfirmPin('');
     } finally {
-      isSubmitting.current = false;
+      // After success the parent closes this view; keep ignoring input until then.
+      if (!succeeded) isSubmitting.current = false;
     }
   };
 
-  const handleNewPinSetup = async (submittedPin?: string) => {
+  /** Returns true once the new PIN is saved. */
+  const handleNewPinSetup = async (submittedPin?: string): Promise<boolean> => {
     if (!isConfirming) {
       // Use the submitted PIN or fall back to state
       const pinToStore = submittedPin || pin;
@@ -153,24 +171,27 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       setOriginalPin(pinToStore);
       setPin(''); // Clear the pin display for confirmation
       setIsConfirming(true);
-    } else {
-      // Use the submitted PIN or fall back to state
-      const pinToConfirm = submittedPin || confirmPin;
-      if (pinToConfirm !== originalPin) {
-        setErrorMessage('PINs do not match');
-        setShowError(true);
-        setConfirmPin('');
-        setIsConfirming(false);
-        return;
-      }
-
-      // Save the PIN to secure storage
-      await PinStore.setPin(originalPin);
-      onPinSuccess();
+      return false;
     }
+
+    // Use the submitted PIN or fall back to state
+    const pinToConfirm = submittedPin || confirmPin;
+    if (pinToConfirm !== originalPin) {
+      setErrorMessage('PINs do not match');
+      setShowError(true);
+      setConfirmPin('');
+      setIsConfirming(false);
+      return false;
+    }
+
+    // Overwrites any existing PIN in one write; it stays valid until this succeeds.
+    await PinStore.setPin(originalPin);
+    onPinSuccess();
+    return true;
   };
 
-  const handlePinAuthentication = async (submittedPin?: string) => {
+  /** Returns true if the PIN was correct. */
+  const handlePinAuthentication = async (submittedPin?: string): Promise<boolean> => {
     // Use the submitted PIN or fall back to state
     const pinToCheck = submittedPin || pin;
 
@@ -178,13 +199,13 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       // No PIN stored, this shouldn't happen in normal flow
       setErrorMessage('No PIN found. Please reset your PIN.');
       setShowError(true);
-      return;
+      return false;
     }
 
     const result = await PinStore.attemptPin(pinToCheck);
     if (result.ok) {
       onPinSuccess();
-      return;
+      return true;
     }
 
     setPin('');
@@ -199,6 +220,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       setErrorMessage(`Invalid PIN. ${remaining} ${remaining === 1 ? 'attempt' : 'attempts'} remaining`);
       setShowError(true);
     }
+    return false;
   };
 
   const startNewPinSetup = () => {
@@ -210,6 +232,18 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     setOriginalPin('');
     setIsConfirming(false);
     setIsSettingNewPin(true);
+    setPinLength(PinStore.DEFAULT_PIN_LENGTH);
+  };
+
+  // While choosing a new PIN, switches between the allowed lengths.
+  const otherPinLength = PinStore.PIN_LENGTHS.find((length) => length !== pinLength);
+
+  const switchPinLength = () => {
+    if (isSubmitting.current || otherPinLength === undefined) return;
+    setPinLength(otherPinLength);
+    setPin('');
+    setShowError(false);
+    setErrorMessage('');
   };
 
   const eraseAndReset = async () => {
@@ -252,6 +286,14 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   };
 
   const handleForgotPin = async () => {
+    if (isSubmitting.current) return;
+
+    // Biometrics may only stand in for the PIN if the user has allowed them.
+    if (!settings.useBiometrics) {
+      confirmEraseAndReset();
+      return;
+    }
+
     let canUseBiometrics = false;
     try {
       const [hasHardware, isEnrolled] = await Promise.all([
@@ -287,6 +329,12 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     confirmEraseAndReset();
   };
 
+  const handleCancel = () => {
+    // Once the new PIN is being saved, let that finish instead.
+    if (isSubmitting.current) return;
+    onCancel?.();
+  };
+
   const handleBackspace = () => {
     if (isSubmitting.current || isLocked) return;
 
@@ -306,7 +354,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     const currentPin = isConfirming ? confirmPin : pin;
     const dots = [];
 
-    for (let i = 0; i < pinLength; i++) {
+    for (let i = 0; i < (pinLength ?? 0); i++) {
       const isFilled = i < currentPin.length;
       dots.push(
         <View
@@ -390,7 +438,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
           </Text>
           <Text style={[styles.subtitle, { color: theme.subText }]}>
             {isSettingNewPin
-              ? (isConfirming ? 'Re-enter your PIN to confirm' : 'Choose a secure PIN for backup access')
+              ? (isConfirming ? 'Re-enter your PIN to confirm' : `Choose a ${pinLength}-digit PIN for backup access`)
               : 'Use your PIN as an alternative to biometric authentication'
             }
           </Text>
@@ -423,6 +471,28 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
           >
             <Text style={[styles.forgotPinText, { color: theme.accent }]}>
               Forgot PIN?
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {isSettingNewPin && !isConfirming && otherPinLength !== undefined && (
+          <TouchableOpacity
+            style={styles.forgotPinButton}
+            onPress={switchPinLength}
+          >
+            <Text style={[styles.forgotPinText, { color: theme.accent }]}>
+              Use a {otherPinLength}-digit PIN
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {isSettingNewPin && forceSetup && onCancel && (
+          <TouchableOpacity
+            style={styles.forgotPinButton}
+            onPress={handleCancel}
+          >
+            <Text style={[styles.forgotPinText, { color: theme.accent }]}>
+              Cancel
             </Text>
           </TouchableOpacity>
         )}
@@ -470,6 +540,8 @@ const styles = StyleSheet.create({
   pinDotsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    // Keeps the layout steady before the PIN length is known.
+    minHeight: 20,
     marginBottom: 30,
   },
   pinDot: {

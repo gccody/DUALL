@@ -105,11 +105,66 @@ describe("loading", () => {
     expect(store.getState().status).toBe("error");
     expect(store.getState().error).toBeTruthy();
 
+    // Each action retries the load; while that keeps failing nothing is written
     mock.secureStoreMock.setItemAsync.mockClear();
+    mock.failures.get.add("service_a");
     await expect(store.addFromUri(uri("x"))).rejects.toThrow();
+    mock.failures.get.add("service_a");
     await expect(store.clear()).rejects.toThrow();
     expect(mock.secureStoreMock.setItemAsync).not.toHaveBeenCalled();
     expect(mock.secureStore.has("service_a")).toBe(true);
+    expect(store.getState().status).toBe("error");
+  });
+
+  test("a failed load is retried by the next load and the error is cleared", async () => {
+    await storage.saveServices([service("a")]);
+    mock.failures.get.add("service_a");
+    const store = createVaultStore();
+    await expect(store.load()).rejects.toThrow();
+    expect(store.getState().status).toBe("error");
+
+    const retry = store.load();
+    expect(store.getState()).toMatchObject({ status: "loading", error: null });
+    await retry;
+    expect(store.getState()).toMatchObject({ status: "ready", error: null });
+    expect(store.getState().services.map((s) => s.uid)).toEqual(["a"]);
+  });
+
+  test("retryLoad loads again after a failure", async () => {
+    await storage.saveServices([service("a")]);
+    mock.failures.get.add("service_a");
+    const store = createVaultStore();
+    await expect(store.load()).rejects.toThrow();
+
+    store.retryLoad();
+    expect(store.getState().status).toBe("loading");
+    await store.load(); // the retry in progress
+    expect(store.getState()).toMatchObject({ status: "ready", error: null });
+    expect(store.getState().services.map((s) => s.uid)).toEqual(["a"]);
+  });
+
+  test("retryLoad reports a repeated failure through the state without rejecting", async () => {
+    await storage.saveServices([service("a")]);
+    mock.failures.get.add("service_a");
+    const store = createVaultStore();
+    await expect(store.load()).rejects.toThrow();
+
+    mock.failures.get.add("service_a");
+    store.retryLoad();
+    await expect(store.load()).rejects.toThrow();
+    expect(store.getState().status).toBe("error");
+    expect(store.getState().error).toBeTruthy();
+  });
+
+  test("an action after a failed load retries the load and applies its change to the stored list", async () => {
+    await storage.saveServices([service("a")]);
+    mock.failures.get.add("service_a");
+    const store = createVaultStore();
+    await expect(store.load()).rejects.toThrow();
+
+    expect(await store.addFromUri(uri("x"))).toMatchObject({ result: "added", index: 1 });
+    expect(store.getState()).toMatchObject({ status: "ready", error: null });
+    expect(await stored()).toEqual(["a", "x"]);
   });
 
   test("actions called before the load finishes wait for it instead of overwriting stored data", async () => {
@@ -233,15 +288,26 @@ describe("updateService / deleteService / clear", () => {
     expect([...mock.secureStore.keys()]).toEqual([]);
   });
 
-  test("a failed save rejects, sets the error and restores the stored list", async () => {
+  test("a failed save rejects and restores the stored list", async () => {
     mock.failures.set.add(`service_${uids[1]}`);
     await expect(store.updateService(uids[1], { name: "renamed" })).rejects.toThrow();
-    expect(store.getState().error).toBeTruthy();
-    expect(store.getState().status).toBe("ready");
+    expect(store.getState()).toMatchObject({ status: "ready", error: null });
     expect(store.getState().services.map((s) => s.name)).toEqual(["a", "b", "c"]);
 
     // Later changes still work
     await store.updateService(uids[1], { name: "renamed" });
     expect(await stored()).toEqual(["a", "renamed", "c"]);
+  });
+
+  test("if the reload after a failed save fails too, the next action loads again first", async () => {
+    mock.failures.set.add(`service_${uids[1]}`);
+    mock.failures.get.add(`service_${uids[0]}`);
+    await expect(store.updateService(uids[1], { name: "renamed" })).rejects.toThrow();
+    expect(store.getState().status).toBe("error");
+    expect(store.getState().error).toBeTruthy();
+
+    await store.updateService(uids[2], { name: "renamed" });
+    expect(store.getState()).toMatchObject({ status: "ready", error: null });
+    expect(await stored()).toEqual(["a", "b", "renamed"]);
   });
 });

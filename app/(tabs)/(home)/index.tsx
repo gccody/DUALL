@@ -15,7 +15,7 @@ import { useEffect, useEffectEvent, useRef, useState } from "react";
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { settings } = useSettings();
-  const { services: allServices, status, error } = useVault();
+  const { services: allServices, status, error, retryLoad } = useVault();
   const { results: services, setQuery } = useSearch(allServices);
   const timestamp = useTimestamp();
   const router = useRouter();
@@ -47,7 +47,13 @@ export default function HomeScreen() {
   const openIconPicker = (uid: string) => router.push({ pathname: '/account/[uid]/icon', params: { uid } });
 
   if (status === 'error') {
-    return <CenteredMessage title="Error" message={error ?? 'Failed to load your codes'} />;
+    return (
+      <CenteredMessage
+        title="Error"
+        message={error ?? 'Failed to load your codes'}
+        action={{ label: 'Try Again', onPress: retryLoad }}
+      />
+    );
   }
 
   if (status === 'loading') {

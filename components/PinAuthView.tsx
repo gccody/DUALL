@@ -23,6 +23,11 @@ interface PinAuthViewProps {
   forceSetup?: boolean;
   /** Called after "Forgot PIN?" erased all codes, before the new PIN is set. */
   onDataErased?: () => void;
+  /**
+   * With `forceSetup`, shows a Cancel button that calls this. The stored PIN
+   * is only replaced once the new one is confirmed, so cancelling keeps it.
+   */
+  onCancel?: () => void;
 }
 
 const PinAuthView: React.FC<PinAuthViewProps> = ({
@@ -31,6 +36,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   pinLength = 4,
   forceSetup = false,
   onDataErased,
+  onCancel,
 }) => {
   const { theme } = useTheme();
   const [pin, setPin] = useState('');
@@ -128,12 +134,11 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   };
 
   const handlePinSubmit = async (submittedPin?: string) => {
+    let succeeded = false;
     try {
-      if (isSettingNewPin) {
-        await handleNewPinSetup(submittedPin);
-      } else {
-        await handlePinAuthentication(submittedPin);
-      }
+      succeeded = isSettingNewPin
+        ? await handleNewPinSetup(submittedPin)
+        : await handlePinAuthentication(submittedPin);
     } catch (error) {
       console.error('PIN submission failed:', error);
       setErrorMessage('Something went wrong. Please try again.');
@@ -141,11 +146,13 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       setPin('');
       setConfirmPin('');
     } finally {
-      isSubmitting.current = false;
+      // After success the parent closes this view; keep ignoring input until then.
+      if (!succeeded) isSubmitting.current = false;
     }
   };
 
-  const handleNewPinSetup = async (submittedPin?: string) => {
+  /** Returns true once the new PIN is saved. */
+  const handleNewPinSetup = async (submittedPin?: string): Promise<boolean> => {
     if (!isConfirming) {
       // Use the submitted PIN or fall back to state
       const pinToStore = submittedPin || pin;
@@ -153,24 +160,27 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       setOriginalPin(pinToStore);
       setPin(''); // Clear the pin display for confirmation
       setIsConfirming(true);
-    } else {
-      // Use the submitted PIN or fall back to state
-      const pinToConfirm = submittedPin || confirmPin;
-      if (pinToConfirm !== originalPin) {
-        setErrorMessage('PINs do not match');
-        setShowError(true);
-        setConfirmPin('');
-        setIsConfirming(false);
-        return;
-      }
-
-      // Save the PIN to secure storage
-      await PinStore.setPin(originalPin);
-      onPinSuccess();
+      return false;
     }
+
+    // Use the submitted PIN or fall back to state
+    const pinToConfirm = submittedPin || confirmPin;
+    if (pinToConfirm !== originalPin) {
+      setErrorMessage('PINs do not match');
+      setShowError(true);
+      setConfirmPin('');
+      setIsConfirming(false);
+      return false;
+    }
+
+    // Overwrites any existing PIN in one write; it stays valid until this succeeds.
+    await PinStore.setPin(originalPin);
+    onPinSuccess();
+    return true;
   };
 
-  const handlePinAuthentication = async (submittedPin?: string) => {
+  /** Returns true if the PIN was correct. */
+  const handlePinAuthentication = async (submittedPin?: string): Promise<boolean> => {
     // Use the submitted PIN or fall back to state
     const pinToCheck = submittedPin || pin;
 
@@ -178,13 +188,13 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       // No PIN stored, this shouldn't happen in normal flow
       setErrorMessage('No PIN found. Please reset your PIN.');
       setShowError(true);
-      return;
+      return false;
     }
 
     const result = await PinStore.attemptPin(pinToCheck);
     if (result.ok) {
       onPinSuccess();
-      return;
+      return true;
     }
 
     setPin('');
@@ -199,6 +209,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
       setErrorMessage(`Invalid PIN. ${remaining} ${remaining === 1 ? 'attempt' : 'attempts'} remaining`);
       setShowError(true);
     }
+    return false;
   };
 
   const startNewPinSetup = () => {
@@ -285,6 +296,12 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
     }
     // Biometrics are unusable right now; erasing is the only remaining option.
     confirmEraseAndReset();
+  };
+
+  const handleCancel = () => {
+    // Once the new PIN is being saved, let that finish instead.
+    if (isSubmitting.current) return;
+    onCancel?.();
   };
 
   const handleBackspace = () => {
@@ -423,6 +440,17 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
           >
             <Text style={[styles.forgotPinText, { color: theme.accent }]}>
               Forgot PIN?
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {isSettingNewPin && forceSetup && onCancel && (
+          <TouchableOpacity
+            style={styles.forgotPinButton}
+            onPress={handleCancel}
+          >
+            <Text style={[styles.forgotPinText, { color: theme.accent }]}>
+              Cancel
             </Text>
           </TouchableOpacity>
         )}

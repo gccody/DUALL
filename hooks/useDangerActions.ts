@@ -1,5 +1,4 @@
 import { useVault } from '@/context/VaultContext';
-import { clearPin } from '@/utils/pin';
 import { useRouter } from 'expo-router';
 import { Alert, Platform } from 'react-native';
 
@@ -61,23 +60,13 @@ export function useDangerActions() {
     const resetPin = () => {
         Alert.alert(
             'Reset PIN',
-            'Are you sure you want to reset your PIN? You will need to set up a new PIN.',
+            'Are you sure you want to reset your PIN? You will need to set up a new PIN. Your current PIN stays active until the new one is saved.',
             [
                 { text: 'Cancel', style: 'cancel', isPreferred: true },
-                {
-                    text: 'Reset',
-                    style: 'destructive',
-                    onPress: async () => {
-                        try {
-                            await clearPin();
-                            Alert.alert('PIN Reset', 'Your PIN has been reset successfully. Please set up a new PIN.');
-                            router.push('/pin-setup');
-                        } catch (error) {
-                            console.error('Failed to reset PIN:', error);
-                            Alert.alert('Error', 'Failed to reset PIN. Please try again.');
-                        }
-                    },
-                },
+                // The old PIN is never cleared here: the setup screen overwrites
+                // it once the new PIN is confirmed, so leaving setup early
+                // (cancel, back button, app killed) can't leave the app without one.
+                { text: 'Reset', style: 'destructive', onPress: () => router.push('/pin-setup') },
             ],
         );
     };

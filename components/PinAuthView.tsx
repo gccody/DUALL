@@ -1,3 +1,4 @@
+import { useSettings } from '@/context/SettingsContext';
 import { useTheme } from '@/context/ThemeContext';
 import { eraseAllServices } from '@/storage/vault';
 import * as PinStore from '@/utils/pin';
@@ -39,6 +40,7 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   onCancel,
 }) => {
   const { theme } = useTheme();
+  const { settings } = useSettings();
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
   const [originalPin, setOriginalPin] = useState('');
@@ -263,6 +265,14 @@ const PinAuthView: React.FC<PinAuthViewProps> = ({
   };
 
   const handleForgotPin = async () => {
+    if (isSubmitting.current) return;
+
+    // Biometrics may only stand in for the PIN if the user has allowed them.
+    if (!settings.useBiometrics) {
+      confirmEraseAndReset();
+      return;
+    }
+
     let canUseBiometrics = false;
     try {
       const [hasHardware, isEnrolled] = await Promise.all([

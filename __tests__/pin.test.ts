@@ -1,6 +1,7 @@
 /// <reference types="node" />
-// Prefixed with `mock` so the hoisted jest.mock factories may reference it.
-import { createHash as mockCreateHash } from 'crypto';
+// Prefixed with `mock` so the hoisted jest.mock factories may reference them.
+import { createHash as mockCreateHash, pbkdf2Sync as mockPbkdf2Sync } from 'crypto';
+import * as SecureStore from 'expo-secure-store';
 
 import {
   attemptPin,
@@ -9,11 +10,14 @@ import {
   clearPin,
   computeLockout,
   getLockout,
+  getPinLength,
   hasPin,
+  isValidPin,
   LEGACY_PIN_KEY,
   lockoutDurationMs,
   MAX_ATTEMPTS_BEFORE_LOCKOUT,
   MAX_LOCKOUT_MS,
+  PBKDF2_ITERATIONS,
   PIN_FAILURES_KEY,
   PIN_HASH_KEY,
   PIN_LOCKED_UNTIL_KEY,
@@ -48,20 +52,56 @@ jest.mock('expo-crypto', () => ({
   ),
 }));
 
+// crypto-es's PBKDF2 is far too slow under jest's Babel transform to run for
+// every PIN here, so it is swapped for node's. pinHash.test.ts checks the real
+// one gives the same result.
+jest.mock('crypto-es', () => {
+  const actual: typeof import('crypto-es').default = jest.requireActual('crypto-es').default;
+  return {
+    __esModule: true,
+    default: {
+      ...actual,
+      PBKDF2: (
+        password: string,
+        salt: Parameters<typeof actual.enc.Hex.stringify>[0],
+        cfg: { keySize: number; iterations: number; hasher: unknown },
+      ) => {
+        if (cfg.hasher !== actual.algo.SHA256) throw new Error('Expected PBKDF2 with SHA-256');
+        const key = mockPbkdf2Sync(password, Buffer.from(actual.enc.Hex.stringify(salt), 'hex'), cfg.iterations, cfg.keySize * 4, 'sha256');
+        return actual.enc.Hex.parse(key.toString('hex'));
+      },
+    },
+  };
+});
+
 const sha256 = (data: string) => mockCreateHash('sha256').update(data).digest('hex');
+const pbkdf2 = (pin: string, salt: string, iterations: number) =>
+  mockPbkdf2Sync(pin, Buffer.from(salt, 'hex'), iterations, 32, 'sha256').toString('hex');
+
+const RECORD = /^pbkdf2-sha256\$(\d+)\$(\d+)\$([0-9a-f]{32})\$([0-9a-f]{64})$/;
+
+/** Splits the stored record, failing the test if it isn't in the current format. */
+function storedRecord() {
+  const match = RECORD.exec(mockStore.get(PIN_HASH_KEY) ?? '');
+  if (!match) throw new Error(`Unexpected PIN record: ${mockStore.get(PIN_HASH_KEY)}`);
+  const [, iterations, pinLength, salt, hash] = match;
+  return { iterations: Number(iterations), pinLength: Number(pinLength), salt, hash };
+}
 
 beforeEach(() => {
   mockStore.clear();
+  jest.clearAllMocks();
 });
 
 describe('PIN hashing', () => {
-  test('setPin stores a salted hash, never the plaintext PIN', async () => {
-    await setPin('1234');
+  test('setPin stores a PBKDF2-SHA256 record, never the plaintext PIN', async () => {
+    await setPin('123456');
 
-    const record = mockStore.get(PIN_HASH_KEY)!;
-    const [salt, hash] = record.split(':');
-    expect(salt).toMatch(/^[0-9a-f]{32}$/);
-    expect(hash).toBe(sha256(salt + '1234'));
+    const { iterations, pinLength, salt, hash } = storedRecord();
+    expect(iterations).toBe(PBKDF2_ITERATIONS);
+    expect(pinLength).toBe(6);
+    expect(hash).toBe(pbkdf2('123456', salt, PBKDF2_ITERATIONS));
+    expect([...mockStore.values()]).not.toContain('123456');
     expect(mockStore.has(LEGACY_PIN_KEY)).toBe(false);
   });
 
@@ -76,7 +116,18 @@ describe('PIN hashing', () => {
     await setPin('4321');
     await expect(verifyPin('4321')).resolves.toBe(true);
     await expect(verifyPin('1234')).resolves.toBe(false);
+    await expect(verifyPin('432100')).resolves.toBe(false);
     await expect(verifyPin('')).resolves.toBe(false);
+  });
+
+  test('a verified current record is not rewritten', async () => {
+    await setPin('4321');
+    const record = mockStore.get(PIN_HASH_KEY);
+    jest.mocked(SecureStore.setItemAsync).mockClear();
+
+    await expect(verifyPin('4321')).resolves.toBe(true);
+    expect(mockStore.get(PIN_HASH_KEY)).toBe(record);
+    expect(SecureStore.setItemAsync).not.toHaveBeenCalledWith(PIN_HASH_KEY, expect.anything());
   });
 
   test('verifyPin returns false when no PIN is stored', async () => {
@@ -84,9 +135,28 @@ describe('PIN hashing', () => {
     await expect(verifyPin('0000')).resolves.toBe(false);
   });
 
-  test('verifyPin rejects a malformed record', async () => {
-    mockStore.set(PIN_HASH_KEY, 'garbage');
+  test.each([
+    'garbage',
+    'pbkdf2-sha256$abc$4$00$00',
+    'pbkdf2-sha256$0$4$00$00',
+    'pbkdf2-sha256$10000$4$00',
+    'pbkdf2-sha256$10000$4$zz$00',
+  ])('verifyPin rejects the malformed record %s', async (record) => {
+    mockStore.set(PIN_HASH_KEY, record);
     await expect(verifyPin('garbage')).resolves.toBe(false);
+    await expect(verifyPin('0000')).resolves.toBe(false);
+  });
+
+  test('setPin rejects anything but 4 or 6 digits, keeping the old PIN', async () => {
+    await setPin('1234');
+    const record = mockStore.get(PIN_HASH_KEY);
+
+    for (const pin of ['', '123', '12345', '1234567', 'abcd', '12a4']) {
+      await expect(setPin(pin)).rejects.toThrow();
+    }
+    expect(mockStore.get(PIN_HASH_KEY)).toBe(record);
+    expect(isValidPin('1234')).toBe(true);
+    expect(isValidPin('123456')).toBe(true);
   });
 
   test('clearPin removes hashed and legacy PINs', async () => {
@@ -94,6 +164,107 @@ describe('PIN hashing', () => {
     mockStore.set(LEGACY_PIN_KEY, '1234');
     await clearPin();
     await expect(hasPin()).resolves.toBe(false);
+  });
+});
+
+describe('replacing a PIN', () => {
+  test('setPin overwrites the record in one write and never deletes it first', async () => {
+    await setPin('1234');
+    jest.clearAllMocks();
+
+    await setPin('567890');
+
+    expect(SecureStore.deleteItemAsync).not.toHaveBeenCalledWith(PIN_HASH_KEY);
+    expect(jest.mocked(SecureStore.setItemAsync).mock.calls.filter(([key]) => key === PIN_HASH_KEY)).toHaveLength(1);
+    await expect(verifyPin('567890')).resolves.toBe(true);
+    await expect(verifyPin('1234')).resolves.toBe(false);
+  });
+
+  test('if saving the new PIN fails, the old PIN still works', async () => {
+    await setPin('1234');
+    jest.mocked(SecureStore.setItemAsync).mockRejectedValueOnce(new Error('disk full'));
+
+    await expect(setPin('567890')).rejects.toThrow('disk full');
+    await expect(hasPin()).resolves.toBe(true);
+    await expect(getPinLength()).resolves.toBe(4);
+    await expect(verifyPin('1234')).resolves.toBe(true);
+  });
+});
+
+describe('PIN length', () => {
+  test('is null without a PIN', async () => {
+    await expect(getPinLength()).resolves.toBeNull();
+  });
+
+  test('is stored with the PIN', async () => {
+    await setPin('123456');
+    await expect(getPinLength()).resolves.toBe(6);
+    await setPin('1234');
+    await expect(getPinLength()).resolves.toBe(4);
+  });
+
+  test('defaults to 4 for PINs stored before the length was recorded', async () => {
+    mockStore.set(PIN_HASH_KEY, `abcd:${sha256('abcd1234')}`);
+    await expect(getPinLength()).resolves.toBe(4);
+
+    mockStore.clear();
+    mockStore.set(LEGACY_PIN_KEY, '2580');
+    await expect(getPinLength()).resolves.toBe(4);
+  });
+});
+
+describe('salted SHA-256 PIN upgrade', () => {
+  const salt = '0123456789abcdef0123456789abcdef';
+  const oldRecord = `${salt}:${sha256(salt + '2580')}`;
+
+  beforeEach(() => {
+    mockStore.set(PIN_HASH_KEY, oldRecord);
+  });
+
+  test('a wrong PIN does not touch the old record', async () => {
+    await expect(verifyPin('0000')).resolves.toBe(false);
+    expect(mockStore.get(PIN_HASH_KEY)).toBe(oldRecord);
+  });
+
+  test('the correct PIN verifies and upgrades the record to PBKDF2', async () => {
+    await expect(verifyPin('2580')).resolves.toBe(true);
+
+    const { iterations, pinLength, salt: newSalt, hash } = storedRecord();
+    expect(iterations).toBe(PBKDF2_ITERATIONS);
+    expect(pinLength).toBe(4);
+    expect(newSalt).not.toBe(salt);
+    expect(hash).toBe(pbkdf2('2580', newSalt, PBKDF2_ITERATIONS));
+
+    await expect(verifyPin('2580')).resolves.toBe(true);
+    await expect(verifyPin('0000')).resolves.toBe(false);
+  });
+
+  test('a failed upgrade still unlocks and keeps the old record', async () => {
+    jest.mocked(SecureStore.setItemAsync).mockRejectedValueOnce(new Error('disk full'));
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    await expect(verifyPin('2580')).resolves.toBe(true);
+    expect(consoleError).toHaveBeenCalled();
+    consoleError.mockRestore();
+    expect(mockStore.get(PIN_HASH_KEY)).toBe(oldRecord);
+
+    // Retried on the next unlock.
+    await expect(verifyPin('2580')).resolves.toBe(true);
+    storedRecord();
+  });
+});
+
+describe('weaker PBKDF2 record upgrade', () => {
+  test('a record with fewer iterations is rehashed on the next successful unlock', async () => {
+    const salt = '0123456789abcdef0123456789abcdef';
+    const weak = `pbkdf2-sha256$1000$6$${salt}$${pbkdf2('135790', salt, 1000)}`;
+    mockStore.set(PIN_HASH_KEY, weak);
+
+    await expect(verifyPin('000000')).resolves.toBe(false);
+    expect(mockStore.get(PIN_HASH_KEY)).toBe(weak);
+
+    await expect(verifyPin('135790')).resolves.toBe(true);
+    expect(storedRecord()).toMatchObject({ iterations: PBKDF2_ITERATIONS, pinLength: 6 });
   });
 });
 
@@ -112,12 +283,13 @@ describe('legacy plaintext PIN migration', () => {
     expect(mockStore.has(PIN_HASH_KEY)).toBe(false);
   });
 
-  test('the correct PIN migrates to a salted hash and deletes the plaintext', async () => {
+  test('the correct PIN migrates to a PBKDF2 record and deletes the plaintext', async () => {
     await expect(verifyPin('2580')).resolves.toBe(true);
 
     expect(mockStore.has(LEGACY_PIN_KEY)).toBe(false);
-    const [salt, hash] = mockStore.get(PIN_HASH_KEY)!.split(':');
-    expect(hash).toBe(sha256(salt + '2580'));
+    const { pinLength, salt, hash } = storedRecord();
+    expect(pinLength).toBe(4);
+    expect(hash).toBe(pbkdf2('2580', salt, PBKDF2_ITERATIONS));
 
     await expect(verifyPin('2580')).resolves.toBe(true);
     await expect(verifyPin('0000')).resolves.toBe(false);

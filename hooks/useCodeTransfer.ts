@@ -1,5 +1,5 @@
 import { useVault } from '@/context/VaultContext';
-import { buildExportText, exportFileName } from '@/core/export';
+import { buildExportText, exportFileName, isExportFileName } from '@/core/export';
 import { importProviders, parseImport, type ImportProvider, type ImportResult } from '@/core/import';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
@@ -56,6 +56,41 @@ function confirmImport(provider: ImportProvider, { services, skippedHotp }: Impo
             ],
         );
     });
+}
+
+/** Warns that the export file isn't encrypted. Resolves true when the user goes ahead. */
+function confirmExport(count: number): Promise<boolean> {
+    return new Promise((resolve) => {
+        Alert.alert(
+            'Export Codes',
+            `The export file will contain the secrets of all ${count} code${count === 1 ? '' : 's'} unencrypted. ` +
+            'Anyone with the file can generate your codes, so store it somewhere safe and delete it once you no longer need it.',
+            [
+                { text: 'Cancel', style: 'cancel', isPreferred: true, onPress: () => resolve(false) },
+                { text: 'Export', onPress: () => resolve(true) },
+            ],
+        );
+    });
+}
+
+/** Deletes a plaintext export file. Failures are only logged so cleanup never fails an export. */
+function deleteExportFile(file: File) {
+    try {
+        if (file.exists) file.delete();
+    } catch (error) {
+        console.warn('Failed to delete export file:', error);
+    }
+}
+
+/** Deletes export files left in the cache by a previous run that didn't get to clean up. */
+function deleteStaleExportFiles() {
+    try {
+        for (const entry of Paths.cache.list()) {
+            if (entry instanceof File && isExportFileName(entry.name)) deleteExportFile(entry);
+        }
+    } catch (error) {
+        console.warn('Failed to clean up old export files:', error);
+    }
 }
 
 /** Import from another authenticator app's export file, and export as otpauth:// URIs. */
@@ -127,14 +162,21 @@ export function useCodeTransfer() {
                 Alert.alert('Error', 'Sharing is not available on this device');
                 return;
             }
+            if (!(await confirmExport(services.length))) return;
 
+            deleteStaleExportFiles();
+            // The file holds every secret in plaintext, so it only exists while the share sheet is open.
             const file = new File(Paths.cache, exportFileName(new Date()));
-            await file.write(buildExportText(services));
-            await Sharing.shareAsync(file.uri, {
-                mimeType: 'text/plain',
-                dialogTitle: 'Export TOTP Codes',
-            });
-            Alert.alert('Success', `Successfully exported ${services.length} codes`);
+            try {
+                await file.write(buildExportText(services));
+                // Resolves the same way when the share sheet is cancelled, so there's no success alert.
+                await Sharing.shareAsync(file.uri, {
+                    mimeType: 'text/plain',
+                    dialogTitle: 'Export TOTP Codes',
+                });
+            } finally {
+                deleteExportFile(file);
+            }
         } catch (error) {
             console.error('Export error:', error);
             Alert.alert('Export Error', 'Failed to export codes. Please try again.');

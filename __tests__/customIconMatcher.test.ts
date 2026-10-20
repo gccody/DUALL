@@ -46,6 +46,16 @@ describe("getCustomIconDomain", () => {
     expect(getCustomIconDomain(serviceWithIssuer("https://GitHub.com"))).toBe("github.com");
   });
 
+  test("prefers the full host of a domain-looking issuer", () => {
+    expect(getCustomIconDomain(serviceWithIssuer("mail.google.com"))).toBe("mail.google.com");
+    expect(getCustomIconDomain(serviceWithIssuer("aws.amazon.com"))).toBe("aws.amazon.com");
+  });
+
+  test("strips leading subdomains until a host has an icon", () => {
+    expect(getCustomIconDomain(serviceWithIssuer("signin.accounts.github.com"))).toBe("github.com");
+    expect(getCustomIconDomain(serviceWithIssuer("eu-west-1.console.aws.amazon.com"))).toBe("aws.amazon.com");
+  });
+
   test("returns null when nothing matches", () => {
     expect(getCustomIconDomain(serviceWithIssuer("zzqx-no-such-service-qq"))).toBeNull();
     expect(getCustomIconDomain(serviceWithIssuer(""))).toBeNull();

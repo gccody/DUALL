@@ -14,3 +14,8 @@ export function exportFileName(date: Date): string {
   const timestamp = date.toISOString().replace(/\.\d{3}Z$/, "Z").replace(/:/g, "-");
   return `duall-${timestamp}.txt`;
 }
+
+/** Whether `name` looks like a file created by exportFileName (any version). */
+export function isExportFileName(name: string): boolean {
+  return /^duall-.+\.txt$/.test(name);
+}

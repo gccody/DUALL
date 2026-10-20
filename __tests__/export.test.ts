@@ -1,4 +1,4 @@
-import { buildExportText, exportFileName } from "@/core/export";
+import { buildExportText, exportFileName, isExportFileName } from "@/core/export";
 import { parseOtpAuthUri } from "@/core/otp/uri";
 import type { Service } from "@/types";
 
@@ -42,5 +42,18 @@ describe("exportFileName", () => {
 
   test("contains no colons", () => {
     expect(exportFileName(new Date("2026-10-19T14:03:22.123Z"))).not.toContain(":");
+  });
+});
+
+describe("isExportFileName", () => {
+  test("matches current and older export file names", () => {
+    expect(isExportFileName(exportFileName(new Date()))).toBe(true);
+    expect(isExportFileName("duall-2026-01-02T03:04:05.000Z.txt")).toBe(true);
+  });
+
+  test("ignores other cache files", () => {
+    expect(isExportFileName("duall-.txt")).toBe(false);
+    expect(isExportFileName("duall-2026-01-02T03-04-05Z.json")).toBe(false);
+    expect(isExportFileName("export.txt")).toBe(false);
   });
 });

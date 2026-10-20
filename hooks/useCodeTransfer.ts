@@ -1,5 +1,5 @@
 import { useVault } from '@/context/VaultContext';
-import { buildExportText, exportFileName } from '@/core/export';
+import { buildExportText, exportFileName, isExportFileName } from '@/core/export';
 import { importProviders, parseImport, type ImportProvider, type ImportResult } from '@/core/import';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
@@ -56,6 +56,26 @@ function confirmImport(provider: ImportProvider, { services, skippedHotp }: Impo
             ],
         );
     });
+}
+
+/** Deletes a plaintext export file. Failures are only logged: the export itself already finished. */
+function deleteExportFile(file: File) {
+    try {
+        if (file.exists) file.delete();
+    } catch (error) {
+        console.warn('Failed to delete export file:', error);
+    }
+}
+
+/** Deletes export files left in the cache by a previous run that didn't get to clean up. */
+function deleteStaleExportFiles() {
+    try {
+        for (const entry of Paths.cache.list()) {
+            if (entry instanceof File && isExportFileName(entry.name)) deleteExportFile(entry);
+        }
+    } catch (error) {
+        console.warn('Failed to clean up old export files:', error);
+    }
 }
 
 /** Import from another authenticator app's export file, and export as otpauth:// URIs. */
@@ -128,12 +148,18 @@ export function useCodeTransfer() {
                 return;
             }
 
+            deleteStaleExportFiles();
+            // The file holds every secret in plaintext, so it only exists while the share sheet is open.
             const file = new File(Paths.cache, exportFileName(new Date()));
-            await file.write(buildExportText(services));
-            await Sharing.shareAsync(file.uri, {
-                mimeType: 'text/plain',
-                dialogTitle: 'Export TOTP Codes',
-            });
+            try {
+                await file.write(buildExportText(services));
+                await Sharing.shareAsync(file.uri, {
+                    mimeType: 'text/plain',
+                    dialogTitle: 'Export TOTP Codes',
+                });
+            } finally {
+                deleteExportFile(file);
+            }
             Alert.alert('Success', `Successfully exported ${services.length} codes`);
         } catch (error) {
             console.error('Export error:', error);

@@ -46,6 +46,11 @@ export default function AccountCard({ service, now, highlighted = false, style, 
     const showNextToken = settings.showNextToken && isEnding && !error && !hideToken;
     const displayCode = (value: string) => (hideToken ? maskOtp(digits) : formatOtp(value));
 
+    // An empty issuer falls back to the name; the name is only appended when both are set.
+    const issuer = service.otp?.issuer;
+    const title = issuer || service.name || 'Unknown';
+    const showName = !!issuer && !!service.name;
+
     const handleCopyToClipboard = async () => {
         await Clipboard.setStringAsync(code);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -79,8 +84,8 @@ export default function AccountCard({ service, now, highlighted = false, style, 
                             />
                             <View style={styles.issuerTextContainer}>
                                 <Text style={[styles.issuerText, { color: theme.text }]}>
-                                    {typeof service.otp?.issuer === 'string' ? service.otp.issuer : (service.name || 'Unknown')}
-                                    {service.name && typeof service.otp?.issuer === 'string' && (
+                                    {title}
+                                    {showName && (
                                         <Text style={[styles.labelText, { color: theme.subText }]}>
                                             {' '}({service.name})
                                         </Text>

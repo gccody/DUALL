@@ -10,7 +10,7 @@ export interface VaultState {
   /** All services in display order */
   services: Service[];
   status: VaultStatus;
-  /** Message of the last load/save failure, if any */
+  /** Why loading failed while `status` is 'error', otherwise null */
   error: string | null;
 }
 
@@ -37,12 +37,17 @@ export interface VaultActions {
   deleteService: (uid: string) => Promise<void>;
   /** Deletes every service. */
   clear: () => Promise<void>;
+  /** Loads again after a failure; the outcome is reported through `status`/`error`. */
+  retryLoad: () => void;
 }
 
 export interface VaultStore extends VaultActions {
   getState: () => VaultState;
   subscribe: (listener: () => void) => () => void;
-  /** Runs migrations and loads the services, once. Rejects if loading failed. */
+  /**
+   * Runs migrations and loads the services, once. Rejects if loading failed;
+   * the next call then tries again.
+   */
   load: () => Promise<void>;
 }
 
@@ -50,8 +55,9 @@ export interface VaultStore extends VaultActions {
  * Holds the list of services. Changes are applied in memory immediately and
  * then persisted (storage serializes the writes). Each change is computed
  * from the latest list, so concurrent actions never work on stale data.
- * Actions wait for the initial load and reject if it failed; a failed save
- * rejects too, sets `error` and reloads the list from storage.
+ * Actions wait for the load (retrying it if it failed) and reject if it
+ * fails. A failed save rejects too and reloads the list from storage; if
+ * that reload fails, the store is back in the 'error' status.
  */
 export function createVaultStore(): VaultStore {
   let state: VaultState = { services: [], status: 'loading', error: null };
@@ -63,17 +69,26 @@ export function createVaultStore(): VaultStore {
     listeners.forEach((listener) => listener());
   };
 
+  /** Marks the list as not loaded, so the next load() reads it again. */
+  const fail = (error: unknown) => {
+    console.error('Failed to load codes:', error);
+    loading = null;
+    setState({ status: 'error', error: 'Failed to load your codes' });
+  };
+
   const load = () => {
-    loading ??= (async () => {
-      try {
-        await ensureMigrated();
-        setState({ services: await loadServices(), status: 'ready' });
-      } catch (error) {
-        console.error('Failed to load codes:', error);
-        setState({ status: 'error', error: 'Failed to load your codes' });
-        throw error;
-      }
-    })();
+    if (!loading) {
+      if (state.status === 'error') setState({ status: 'loading', error: null });
+      loading = (async () => {
+        try {
+          await ensureMigrated();
+          setState({ services: await loadServices(), status: 'ready', error: null });
+        } catch (error) {
+          fail(error);
+          throw error;
+        }
+      })();
+    }
     return loading;
   };
 
@@ -81,8 +96,7 @@ export function createVaultStore(): VaultStore {
     try {
       setState({ services: await loadServices() });
     } catch (error) {
-      console.error('Failed to reload codes:', error);
-      setState({ status: 'error' });
+      fail(error);
     }
   };
 
@@ -98,7 +112,6 @@ export function createVaultStore(): VaultStore {
       await saveServices(next);
     } catch (error) {
       console.error('Failed to save codes:', error);
-      setState({ error: 'Failed to save your changes' });
       await reload();
       throw error;
     }
@@ -114,6 +127,11 @@ export function createVaultStore(): VaultStore {
       return () => listeners.delete(listener);
     },
     load,
+    retryLoad: () => {
+      load().catch(() => {
+        // Reported through `status`/`error`.
+      });
+    },
 
     addFromUri: async (uri) => {
       const parsed = parseOtpAuthUri(uri);
